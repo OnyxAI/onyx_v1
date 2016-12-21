@@ -3,7 +3,6 @@ all: setup
 venv/bin/activate:
 	if which virtualenv-3.5 >/dev/null; then virtualenv-3.5 venv; else virtualenv -p python3 venv; fi
 
-
 start : python3 manage.py runserver -h 0.0.0.0 -p 80 -d -r
 
 startdebug : venv/bin/activate requirements.txt
@@ -12,13 +11,11 @@ startdebug : venv/bin/activate requirements.txt
 startprod : venv/bin/activate requirements.txt
 	. venv/bin/activate; python3 manage.py runserver -h 0.0.0.0 -p 80
 
-
 run: venv/bin/activate requirements.txt
 	. venv/bin/activate; python3 manage.py runserver -h 0.0.0.0 -p 80 -d -r
 
 setup: venv/bin/activate requirements.txt
 	. venv/bin/activate; pip3 install -Ur requirements.txt
-	cd static && bower install
 
 init: venv/bin/activate requirements.txt
 
@@ -34,7 +31,6 @@ babel: venv/bin/activate
 # lazy babel scan
 lazybabel: venv/bin/activate
 	. venv/bin/activate; pybabel extract -F babel.cfg -k lazy_gettext -o onyx/translations/messages.pot onyx
-
 
 # run: 
 # $ LANG=en make addlang
