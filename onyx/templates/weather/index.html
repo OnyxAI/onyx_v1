@@ -1,0 +1,25 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Weather") %}
+
+{% block body %}
+<div class="card-panel white">
+	<h1>{{ _("Weather") }}</h1>
+	<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src=""> </iframe> 
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+	$.get("http://ipinfo.io", function (response) {
+		loc = response.loc.split(',');
+		lat = loc[0];
+		lon = loc[1];
+		city = response.city
+		document.getElementById("forecast_embed").src = "http://forecast.io/embed/#lat=" +lat+ "&lon=" +lon+ "&name=" +city+ "&units=ca";
+	}, "jsonp");
+
+</script>
+
+{% endblock %}

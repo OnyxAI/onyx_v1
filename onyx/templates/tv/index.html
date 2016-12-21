@@ -1,0 +1,11 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("TV") %}
+
+{% block body %}
+<div class="card-panel white">
+<h1>{{_("TV Program")}}</h1>
+
+<center><iframe src="http://www.programme-tv.net/widget-tv/programme-tele.html?size=960x755&bouquet=2&title=212121&title_rollover=cd0001&bg=f4f4f4" style="width:960px;height:755px;border:none;margin-bottom:0;display:block" frameborder="0" scrolling="no"></iframe><noframes>Votre navigateur ne supporte pas le format iframe</noframes><div style="display:block;height:13px;width:960px;background-color:#1c1c1c;text-align:center;font-family:Arial;font-size:9px;color:#b6b6b6;line-height:12px;border:0 none;padding:0;margin-top:0;background-position:0 0"></div></center>
+</div>
+{% endblock %}

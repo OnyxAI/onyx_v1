@@ -1,0 +1,22 @@
+{% extends "layout/login.html" %}
+
+{% set title = _("Register") %}
+
+{% block body %}
+
+<link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" type="text/css" />
+
+<form method="post" action="">
+  <h1>{{ _("Register | Onyx") }}</h1>
+  <input placeholder="{{_('Name')}}" type="text" id="username" name="username" required>
+  <input placeholder="{{_('Email')}}" type="text" id="email" name="email" required>
+  <input placeholder="{{_('Password')}}" type="password" id="password" name="password"  required>
+  <input placeholder="{{_('Confirm password')}}" type="password" id="verifpassword" name="verifpassword"  required>
+  <button>{{_("Register")}}</button>
+</form>
+
+
+
+
+
+{% endblock %}

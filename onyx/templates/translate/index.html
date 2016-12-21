@@ -1,0 +1,39 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Translate") %}
+
+{% block body %}
+<h1>{{_("Translate")}}</h1>
+
+
+
+<ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header">{{_("Translate")}}</div>
+    <div class="collapsible-body">
+     <iframe style="border:0px #FFFFFF none;" frameborder="1" scrolling="no" width="100%" height="400px" src="http://www.bing.com/translator/?from=fr&to=en"></iframe>
+   </div>
+ </li>
+ <li>
+  <div class="collapsible-header">WordReference</div>
+  <div class="collapsible-body"><div id="content">
+    <iframe style="border:0px #FFFFFF none;" frameborder="1" width="100%" height="900px" src="http://mini.wordreference.com/mini/index.aspx?dict=fren&u=1" name="WRmini"></iframe>
+  </div></div>
+</li>
+
+</ul>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false 
+    });
+  });
+</script>
+
+{% endblock %}

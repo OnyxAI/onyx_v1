@@ -1,0 +1,194 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Options") %}
+
+{% block body %}
+
+<h1>{{_("Options")}}</h1>
+
+
+<div class="row">
+  <div class="col s12">
+      <ul class="tabs">
+          <li class="tab col s3"><a class="active" href="#system">{{_('System')}}</a></li>
+          <li class="tab col s3"><a href="#param">{{_('Parameter')}}</a></li>
+          {% if g.admin == 1 %}
+            <li class="tab col s3"><a href="#admin">{{_('Admin')}}</a></li>
+          {% endif %}
+    </ul>
+</div>
+<br><br>
+<div id="system" >
+<div class="card-panel white">
+      <table class="white responsive-table">
+        <thead>
+          <tr>
+              <th data-field="name">{{_('Parameter')}}</th>
+              <th data-field="info">{{_('Informations')}}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>{{ _('Hostname') }}</td>
+            <td>{{ getHost }}</td>
+          </tr>
+          <tr>
+            <td>{{ _('Platform') }}</td>
+            <td>{{ getPlat }}</td>
+          </tr>
+          <tr>
+            <td>{{ _('RAM') }}</td>
+            <td> <div class="progress">
+                  <div class="determinate" style="{{ g.ram  }}"></div>
+              </div></td>
+          </tr>
+          <tr>
+            <td>{{ _('IP') }}</td>
+            <td>{{ g.ip }}</td>
+          </tr>
+          <tr>
+            <td>{{ _('Disk') }}</td>
+            <td><div class="progress">
+                  <div class="determinate" style="{{ g.disk }}"></div>
+              </div></td>
+          </tr>
+          <tr>
+            <td>{{ _('UpTime') }}</td>
+            <td>{{ g.uptime }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>
+
+</div>
+<div id="param" >
+<div class="card-panel white">
+      <br>
+      <form class="form" method=post action="">
+         <div class="container">
+
+            <form class="form" method=post action="">
+               <label for="color" >{{_("Color")}}</label>
+                  <br>
+
+                  <input name="color" type="radio" id="red darken-1" value="red darken-1"/>
+                  <label for="red darken-1" ><a class="btn red darken-1"></a></label>
+
+                  <input name="color" type="radio" id="pink" value="pink" />
+                  <label for="pink" ><a class="btn pink"></a></label>
+
+                  <input name="color" type="radio" id="purple darken-1" value="purple darken-1"/>
+                  <label for="purple darken-1" ><a class="btn purple darken-1"></a></label>
+
+                  <input name="color" type="radio" id="deep-purple darken-1" value="deep-purple darken-1"/>
+                  <label for="deep-purple darken-1" ><a class="btn deep-purple darken-1"></a></label>
+                  <br><br>
+                  <input name="color" type="radio" id="indigo darken-1" value="indigo darken-1"/>
+                  <label for="indigo darken-1" ><a class="btn indigo darken-1"></a></label>
+
+                  <input name="color" type="radio" id="blue darken-1" value="blue darken-1"/>
+                  <label for="blue darken-1" ><a class="btn blue darken-1"></a></label>
+
+                  <input name="color" type="radio" id="light-blue darken-1" value="light-blue darken-1"/>
+                  <label for="light-blue darken-1" ><a class="btn light-blue darken-1"></a></label>
+
+                  <input name="color" type="radio" id="cyan darken-1" value="cyan darken-1"/>
+                  <label for="cyan darken-1" ><a class="btn cyan darken-1"></a></label>
+                  <br><br>
+                  <input name="color" type="radio" id="teal darken-1" value="teal darken-1"/>
+                  <label for="teal darken-1" ><a class="btn teal darken-1"></a></label>
+
+                  <input name="color" type="radio" id="green darken-1" value="green darken-1"/>
+                  <label for="green darken-1" ><a class="btn green darken-1"></a></label>
+
+                  <input name="color" type="radio" id="light-green darken-1" value="light-green darken-1"/>
+                  <label for="light-green darken-1" ><a class="btn light-green darken-1"></a></label>
+
+                  <input name="color" type="radio" id="lime darken-1 darken-1" value="lime darken-1 darken-1"/>
+                  <label for="lime darken-1 darken-1" ><a class="btn lime darken-1 darken-1"></a></label>
+
+
+                  <br><br>
+                  <input name="color" type="radio" id="yellow darken-1" value="yellow darken-1"/>
+                  <label for="yellow darken-1" ><a class="btn yellow darken-1"></a></label>
+
+                  <input name="color" type="radio" id="amber darken-1" value="amber darken-1"/>
+                  <label for="amber darken-1" ><a class="btn amber darken-1"></a></label>
+
+                  <input name="color" type="radio" id="orange darken-1" value="orange darken-1"/>
+                  <label for="orange darken-1" ><a class="btn orange darken-1"></a></label>
+
+                  <input name="color" type="radio" id="deep-orange darken-1" value="deep-orange darken-1"/>
+                  <label for="deep-orange darken-1" ><a class="btn deep-orange darken-1"></a></label>
+                  <br><br>
+                  <input name="color" type="radio" id="brown darken-1 darken-1" value="brown darken-1 darken-1"/>
+                  <label for="brown darken-1 darken-1" ><a class="btn brown darken-1"></a></label>
+
+                  <input name="color" type="radio" id="default" value="None"/>
+                  <label for="default" ><a class="btn"></a></label>
+
+
+
+                  <br>
+                  <br>
+
+
+                  <label for="lang" >{{_("Langue")}}</label>
+                  <select name="lang" class="browser-default">
+                        <option value="fr">{{_("French")}}</option>
+                        <option value="en">{{_("English")}}</option> 
+                  </select>
+            </div>
+            <br><br>
+            <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
+      </form>
+
+</div>
+
+</div>
+
+
+<div id="admin" >
+ {% if g.admin == 1 %}
+ <div class="card-panel white">
+   
+  <br><br>
+  <h4>{{ _("Admin Options") }}</h4><br><br>
+  <a href="{{ url_for('core.maj') }}" class="btn {{ buttonColor }}">{{_("Update Onyx")}}</a>
+  <a href="{{ url_for('core.shutdown') }}" class="btn {{ buttonColor }}">{{_("Close Onyx")}}</a>
+  <a href="{{ url_for('auth.account_manage') }}" class="btn {{ buttonColor }}">{{_("Manage Account")}}</a>
+
+
+  
+</div>
+{% endif %}
+</div>
+
+</div>
+
+
+
+
+
+<br><br>
+
+
+
+
+
+
+
+{% endblock %}
+{% block script %}
+
+<script>
+  $(document).ready(function(){
+    $('ul.tabs').tabs();
+});
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>     
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    {% include 'dependencies/css.html' %}  <!-- Include css files -->
+    
+    {% include 'dependencies/flash.html' %}  <!-- Include flash -->
+    <title>{{ title + ' | Onyx'|default('Onyx') }}</title>
+</head>
+<body>    
+    <div class="loader"></div>
+
+    
+    <div class="navbar">{% include 'layout/navbar.html' %}</div> <!-- Include navbar -->
+    <div class="main">  
+        <div class="content">
+          <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </div> <!-- Include body -->
+</div>     
+</div>
+{% include 'dependencies/js.html' %}  <!-- Include js files -->
+{% block script %}{% endblock %}
+</body>  
+</html>

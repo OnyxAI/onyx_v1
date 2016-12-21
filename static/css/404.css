@@ -1,0 +1,36 @@
+	
+body{
+	font-family: 'Open Sans', sans-seriff;
+	font-size: 14px;
+	color: #c33a2c; 
+	background-color: #EEEEEE;
+}
+
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Open Sans', sans-seriff;
+	font-weight: 700;
+}
+
+h1{font-size: 150px; margin-top: 0px;}
+
+.center{
+	text-align: center;
+}
+
+.capital{
+	text-transform: uppercase;
+}
+
+.f1{font-size: 34px}
+
+
+
+.row1 p{
+	font-size: 35px;
+}
+
+
+
+
+

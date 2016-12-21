@@ -1,0 +1,25 @@
+{% extends 'layout/default.html' %}
+
+{% block body %}
+<br>
+<div class="card-panel white">
+<br>
+<form method="post" action="">
+	<label for="metrostation">Nom de la station : </label> 
+	<select name="metrostation" class="browser-default" id="metrostation">
+		<option value="--Choisissez votre station--">--Choisissez votre station--</option>
+		{% block station %}{% endblock %}
+	</select>
+	<label for="metrodirection">Direction : </label>
+	<select name="metrodirection" class="browser-default" id="metrodirection">
+
+		<option value="--Choisissez votre station--">--Choisissez votre direction--</option>
+		{% block direction %}{% endblock %}
+	</select>
+	<button class="btn {{ buttonColor }}" type="submit"><span class="glyphicon glyphicon-ok-sign"></span>Envoyer</button>
+	<br>
+</form>
+</br>
+</div>
+
+{% endblock %}

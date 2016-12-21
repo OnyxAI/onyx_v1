@@ -1,0 +1,16 @@
+{% macro get_js(nom_fichiers , extension='js') -%}
+{% for fichier in nom_fichiers %}
+<script src="{{ url_for('static', filename='js/' + fichier + '.' + extension) }}"></script>
+{% endfor %}
+{%- endmacro %}
+
+{{ get_js(['jquery.min', 'jquery-ui.min', 'lang-all', 'gcal', 'wikipedia', 'actions', 'utilities']) }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<!-- Scripts -->
+
+
+<script type="text/javascript">$(window).load(function(){ $(".loader").fadeOut("200"); });</script>
+<script type="text/javascript">$('.button-collapse').sideNav();</script>

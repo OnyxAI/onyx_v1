@@ -1,0 +1,174 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Task") %}
+
+{% block body %}
+
+<link rel="stylesheet" href="http://todomvc.com/examples/jquery/node_modules/todomvc-app-css/index.css">
+
+
+<div class="row">
+	
+	<h1>{{ _('To Do')}}</h1>
+	
+	<input id="text" placeholder="{{_('What do you want to do ?')}}" autofocus>
+	<input id="date" type="date" class="datepicker" placeholder="Date">
+	<input type="checkbox" name="calendar" id="calendar" />
+	<label for="calendar">{{_("Add to Calendar")}}</label>
+	<br>
+	<button class="btn {{ buttonColor }}" onclick="runScript()">{{ _('Send')}}</button>
+	
+	<ul id="todo-list">
+		{% for task in tasks %}
+		<div id="content"></div>
+		<li id="{{ task.id }}">
+			<div class="view">
+				<label class="taskText">{{task.text}} {{ split(task.date)| first }} </label>
+
+				<button  class="destroy" onclick="destroy('{{ task.id }}' , '{{ task.idCalendar }}');"></button>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+	
+</div>
+
+<script src="http://todomvc.com/examples/jquery/node_modules/todomvc-common/base.js"></script>
+<script src="http://todomvc.com/examples/jquery/node_modules/jquery/dist/jquery.js"></script>
+<script src="http://todomvc.com/examples/jquery/node_modules/handlebars/dist/handlebars.js"></script>
+<script src="http://todomvc.com/examples/jquery/node_modules/director/build/director.js"></script>
+<script src="http://todomvc.com/examples/jquery/js/app.js"></script>
+
+{% endblock %}
+{% block script %}
+
+<script>
+	
+
+	$( window ).load(function() {
+		
+			$('.datepicker').pickadate({
+				format: 'yyyy-mm-dd',
+				lang: 'fr',
+			    selectMonths: true, // Creates a dropdown to control month
+			    selectYears: 15 // Creates a dropdown of 15 years to control year
+			});
+
+		$('#main').toggle(todos.length > 0);
+	});
+	
+
+	
+
+
+	function runScript() {
+		
+		
+
+		
+		var text = document.getElementById("text");
+		var textvalue = text.value;
+		
+		
+		var date = document.getElementById("date");
+		var datevalue = date.value;
+		
+		
+		if(textvalue == ""){
+			alert("Vous n'avez rien rentrer");
+		}else{
+			
+			if(datevalue == "yyyy-mm-dd"){
+				var url = 'submit=1&text=' + textvalue + '&calendar=0';
+			}else{
+				if(document.getElementById('calendar').checked == true){
+
+					var url = 'submit=1&text=' + textvalue + '&date=' + datevalue + '&calendar=1';
+				}
+				else{
+					var url = 'submit=1&text=' + textvalue + '&date=' + datevalue + '&calendar=0';
+				}
+				
+			}
+			
+		}
+		
+		date.value = "";
+		text.value = "";
+		
+		
+		
+		$.ajax({
+			type: "POST",
+			url: "{{ url_for('core.tasks') }}",
+			data: url,
+			success: function(reponse){
+				var rep = JSON.parse(reponse)
+
+
+				var d1 = document.getElementById('todo-list');
+				if(rep.calendar == "true"){
+					d1.insertAdjacentHTML('beforeend', '<li id="'+rep.id+'"><div class="view"><label class="taskText">'+textvalue+' '+datevalue+'</label><div id="'+rep.id+'"></div><div idCalendar="'+rep.idCalendar+'"></div></div></li>');
+				}else{
+					d1.insertAdjacentHTML('beforeend', '<li id="'+rep.id+'"><div class="view"><label class="taskText">'+textvalue+' '+datevalue+'</label><div id="'+rep.id+'"></div></div></li>');
+				}
+				
+				var btn = document.createElement("button");        
+
+				btn.onclick = function() { 
+					if(rep.calendar == "true"){
+						destroy(rep.id , rep.idCalendar);
+					}else{
+						destroy(rep.id , "false");
+					}
+					
+				};
+				btn.classList.add("destroy");
+
+				var foo = document.getElementById(rep.id);
+
+				foo.appendChild(btn);
+
+
+				
+			}
+
+
+
+		});
+
+
+		
+	}
+	
+
+	function destroy(id , idCalendar){
+
+		if(idCalendar == "false" || idCalendar == "None"){
+			
+			var info = 'id=' + id + '&idCalendar=false';
+
+		}else{
+			
+			var info = 'id=' + id + '&idCalendar='+idCalendar;
+			
+		}
+		
+		$.ajax({
+			type: "PUT",
+			url: "{{ url_for('core.tasks') }}",
+			data: info,
+			success: function(){
+				
+				$("#"+id).fadeOut("slow");
+			}
+		});
+
+
+		return false;
+
+	}
+	
+</script>
+
+{% endblock %}

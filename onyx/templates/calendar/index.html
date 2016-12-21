@@ -1,0 +1,253 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Calendar") %}
+
+{% block body %}
+
+<h1>Calendrier</h1>
+
+<!-- Page Content -->
+
+
+<div id="calendar" class="col-centered">
+  
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form class="form-horizontal" method="POST" action="{{ url_for('core.calendars') }}">
+          
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">{{_("Add an event")}}</h4>
+          </div>
+          <div class="modal-body">
+            
+            <div class="form-group">
+             <label for="title" class="col-sm-2 control-label">{{_("Title")}}</label>
+             <div class="col-sm-10">
+              <input type="text" name="title" class="form-control" id="title" placeholder="{{_('Title')}}">
+            </div>
+            <label for="notes" class="col-sm-2 control-label">{{_("Notes")}}</label>
+            <div class="col-sm-10">
+              <input type="text" name="notes" class="form-control" id="notes" placeholder="{{_('Notes')}}">
+            </div>
+            <label for="lieu" class="col-sm-2 control-label">{{_("Place")}}</label>
+            <div class="col-sm-10">
+              <input type="text" name="lieu" class="form-control" id="lieu" placeholder="{{_('Place')}}">
+            </div>
+          </div>
+          
+          
+          <div class="form-group">
+            <label for="color" class="col-sm-2 control-label">{{_("Color")}}</label>
+            <div class="col-sm-10">
+              <select name="color" class="browser-default" id="color">
+                <option value="">{{_("Choose")}}</option>
+                <option style="color:#0071c5;" value="#0071c5">&#9724; {{_("Dark blue")}}</option>
+                <option style="color:#40E0D0;" value="#40E0D0">&#9724; {{_("Turquoise")}}</option>
+                <option style="color:#008000;" value="#008000">&#9724; {{_("Green")}}</option>             
+                <option style="color:#FFD700;" value="#FFD700">&#9724; {{_("Yellow")}}</option>
+                <option style="color:#FF8C00;" value="#FF8C00">&#9724; {{_("Orange")}}</option>
+                <option style="color:#FF0000;" value="#FF0000">&#9724; {{_("Red")}}</option>
+                <option style="color:#000;" value="#000">&#9724; {{_("Black")}}</option>
+                
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-10">
+              <input type="hidden" name="start" class="form-control" id="start" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-10">
+              <input type="hidden" name="end" class="form-control" id="end" readonly>
+            </div>
+          </div>
+          
+          
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">{{_("Close")}}</a>
+          <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{{_("Save")}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="form-horizontal" method="POST" action="{{ url_for('core.calendar', id=1) }}">
+        <div class="modal-header">
+
+          <h4 class="modal-title" id="myModalLabel">{{_("Change")}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">{{_("Title")}}</label>
+            <div class="col-sm-10">
+             <input type="text" name="title" class="form-control" id="title" placeholder="{{_('Title')}}">
+           </div>
+           <label for="notes" class="col-sm-2 control-label">{{_("Notes")}}</label>
+           <div class="col-sm-10">
+            <input type="text" name="notes" class="form-control" id="notes" placeholder="{{_('Notes')}}">
+          </div>
+          <label for="lieu" class="col-sm-2 control-label">{{_("Place")}}</label>
+          <div class="col-sm-10">
+            <input type="text" name="lieu" class="form-control" id="lieu" placeholder="{{_('Place')}}">
+          </div>
+          
+        </div>
+        <div class="form-group">
+          <label for="color" class="col-sm-2 control-label">{{_("Color")}}</label>
+          <div class="col-sm-10"> 
+           <select name="color" class="browser-default" id="color">
+            <option value="">{{_("Choose")}}</option>
+            <option style="color:#0071c5;" value="#0071c5">&#9724; {{_("Dark blue")}}</option>
+            <option style="color:#40E0D0;" value="#40E0D0">&#9724; {{_("Turquoise")}}</option>
+            <option style="color:#008000;" value="#008000">&#9724; {{_("Green")}}</option>             
+            <option style="color:#FFD700;" value="#FFD700">&#9724; {{_("Yellow")}}</option>
+            <option style="color:#FF8C00;" value="#FF8C00">&#9724; {{_("Orange")}}</option>
+            <option style="color:#FF0000;" value="#FF0000">&#9724; {{_("Red")}}</option>
+            <option style="color:#000;" value="#000">&#9724; {{_("Black")}}</option>
+          </select>
+          <br>
+        </div>
+      </div>
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <input type="checkbox" name="delete" id="delete" />
+            <label for="delete">{{_("Delete event")}}</label>
+            
+          </div>
+        </div>
+      </div>
+      
+      <input type="hidden" name="id" class="form-control" id="id">
+      
+      
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">{{_("Close")}}</a>
+      <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{{_("Save")}}</button>
+    </div>
+  </form>
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+
+
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month agendaWeek agendaDay ,'
+      },
+      lang:'{{g.lang}}',
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end) {
+        
+        $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+        $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+        $('#ModalAdd').openModal();
+      },
+      eventRender: function(event, element) {
+        element.bind('dblclick', function() {
+          
+          $('#ModalEdit #id').val(event.id);
+          $('#ModalEdit #title').val(event.title);
+          $('#ModalEdit #notes').val(event.notes);
+          $('#ModalEdit #lieu').val(event.lieu);
+          $('#ModalEdit #color').val(event.color);
+          $('#ModalEdit').openModal();
+        });
+      },
+      eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+        edit(event);
+
+      },
+      eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
+
+        edit(event);
+
+      },
+      events: [
+      
+      {% for event in events %}
+      {% set start = split(event["start"]) %}
+      {% set end = split(event["end"]) %}
+      {% if start[1] == '00:00:00' %}
+      {% set start = start[0] %}
+      {% else %}
+      {% set start = event["start"] %}
+      {% endif %}
+      {% if end[1] == '00:00:00' %}
+      {% set end = end[0] %}
+      {% else %}
+      {% set end = event["end"] %}
+      {% endif %}
+      {
+        id: '{{ event["id"] }}',
+        title: '{{ event["title"] }}',
+        notes: '{{ event["notes"] }}',
+        lieu: '{{ event["lieu"] }}',
+        start: '{{start}}',
+        end: '{{end}}',
+        color: '{{event["color"]}}',
+      },
+      {% endfor %}
+      
+      ]
+    });
+    
+    function edit(event){
+      start = event.start.format('YYYY-MM-DD HH:mm:ss');
+      if(event.end){
+        end = event.end.format('YYYY-MM-DD HH:mm:ss');
+      }else{
+        end = start;
+      }
+      
+      id =  event.id;
+      idAccount = '{{currentID}}'
+      
+      $.ajax({
+       url: '{{ url_for("core.calendars") }}',
+       type: "PUT",
+       data: {id:id,idAccount:idAccount,start:start,end:end},
+       success: function(rep) {
+        
+       }
+     });
+    }
+    
+  });
+
+</script>
+{% endblock %}
+
+

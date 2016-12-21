@@ -1,0 +1,50 @@
+# base  
+pytz
+vine
+jsonschema
+kombu
+billiard
+wtforms
+aniso8601
+pylibmc
+Babel
+Flask==0.10
+onyxbabel
+Flask-FlatPages
+Flask-Mail
+Flask-Script
+Flask-WTF
+Jinja2
+Markdown
+PyYAML
+Werkzeug
+itsdangerous
+requests
+speaklater
+flask_restplus
+pycrypto
+
+# Cache and Celery
+Flask-Cache
+redis
+celery
+
+# SQLAlchemy
+flask-restless
+Flask-SQLAlchemy
+flask_migrate
+SQLAlchemy-migrate
+
+# auth
+Flask-Login
+
+
+wikipedia
+migrate
+
+bs4
+python-memcached
+psutil
+uptime
+configparser
+flask-apidoc

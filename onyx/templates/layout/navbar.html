@@ -1,0 +1,159 @@
+
+
+<ul class="right hide-on-med-and-down">
+  <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 8%;">
+   <a href="{{ url_for('auth.change_account') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{_('My Account')}}">
+    <i class="large fa fa-user  " aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 13%;">
+  <a href="{{ url_for('core.options') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Options")}}'>
+    <i class="large fa fa-cogs" aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 24%;">
+  <a href="{{ url_for('core.help') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Help")}}'>
+    <i class="large fa fa-question-circle" aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 29%;">
+  <a href="{{ url_for('core.info') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("News")}}'>
+    <i class="large fa fa-info" aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 34%;">
+  <a href="{{ url_for('core.map') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Map")}}' >
+    <i class="large material-icons">navigation</i>
+  </a>
+
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 62%;">
+  <a href="{{ url_for('core.tasks') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Tasks")}}'>
+    <i class="large fa fa-tasks" aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 67%;">
+  <a href="{{ url_for('core.weather') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Weather")}}'>
+    <i class="large fa fa-tint" aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 72%;">
+  <a href="{{ url_for('core.calendars') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Calendar")}}' >
+    <i class="large fa fa-calendar-o" aria-hidden="true"></i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 83%;">
+  <a href="{{ url_for('core.store') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Store")}}'>
+    <i class="large material-icons">store</i>
+  </a>
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 88%;">
+ <a href="{{ url_for('core.utilities') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Utilities")}}' >
+  <i class="large fa fa-wrench" aria-hidden="true"></i>
+</a>
+
+</div>
+
+<div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: 93%;">
+  <a href="{{ url_for('core.app') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{_('App')}}">
+    <i class="large material-icons">widgets</i>
+  </a>
+</div>
+
+
+<div class="fixed-action-btn" style="bottom: 100px; right: 3%;">
+  <a href="" class="button-collapse" data-activates="slide-out"><img class="circle" src="{{ g.avatar }}"></a>
+</div>
+
+</ul>
+<ul id="nav-mobile" class="side-nav">
+  <li><a href="{{url_for('core.app')}}">{{_("My App")}}</a></li>
+  <li><a href="{{url_for('core.utilities')}}">{{_("Utilities")}}</a></li>
+  <li><a href="{{ url_for('core.map') }}">{{_("Map")}}</a></li>
+  <li><a href="{{ url_for('core.calendars') }}">{{_("Calendar")}}</a></li>
+  <li><a href="{{ url_for('core.tasks') }}">{{_("Tasks")}}</a></li>
+  <li><a href="{{ url_for('core.weather') }}">{{_("Weather")}}</a></li>
+  <li><a href="{{ url_for('core.info') }}">{{_("News")}}</a></li>
+  <li><a href="{{ url_for('core.store') }}">{{_("Store")}}</a></li>
+  <li><a href="{{ url_for('core.help') }}">{{_("Help")}}</a></li>
+  <li><a href="{{ url_for('core.options') }}">{{_("Options")}}</a></li>
+  <li><a href="{{ url_for('auth.change_account') }}">{{_("My Account")}}</a></li>
+  <li><a href="{{ url_for('auth.logout') }}">{{_("Log Out")}}</a></li>
+
+</ul>
+<div class="fixed-action-btn" style="height: 50px; top: 70px; right: 3%;">
+  <a href="" data-activates="nav-mobile" class=" button-collapse btn-floating btn-large {{ buttonColor }}">
+    <i class="large material-icons">reorder</i>
+  </a>
+</div>
+
+</div>
+</div>
+</nav>
+</div>
+
+<div class="main">   
+  <a href="{{ url_for('core.index') }}">
+    <img   style="max-width: 100%; height:250px; " class="responsive-img" src="{{ url_for('static', filename='img/logo/'+buttonColor+'.png') }}" alt="LOGO"/>
+  </a>  
+</div>
+
+
+
+
+
+<ul id="slide-out" class="side-nav">
+  <li> <div class="userView">
+    <img src="{{ url_for('static', filename='img/nav.png') }}" alt="" class="background">
+    <a href="{{ url_for('auth.change_account') }}"><img class="circle" src="{{ g.avatar }}"></a>
+    <span class="white-text name">{{ g.user }}</span>
+    <span class="white-text email">{{ g.email }}</span>
+  </div></li>
+  <li><a href="{{ url_for('auth.change_account') }}">{{_("My Account")}}</a></li>
+  <li><div class="divider"></div></li>
+  <li><a href="{{ url_for('auth.logout') }}">{{_("Log Out")}}</a></li>
+
+</ul>
+
+
+
+
+
+
+<div class="row">
+  <div class="container">
+    <div id="search">
+      <form method=post action="">
+        <input id="searchInput" class="autocomplete" type="search" name="action" placeholder="{{_('What I can do for you ?')}}"  />
+      </form>
+
+      <p id="searchResult"></p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+  $( function() {
+    var action = {{ g.action | tojson }};
+    var tab = [];
+    for (var key in action)
+    {
+      tab.push(key);
+    }   
+    $( ".autocomplete" ).autocomplete({
+      source: tab
+    });
+  } );
+
+
+</script>
+<script type="text/javascript">$('.button-collapse').sideNav();</script>

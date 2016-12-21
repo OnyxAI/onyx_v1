@@ -1,0 +1,25 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Metro") %}
+
+{% block body %} 
+
+<br>
+<a href="{{ url_for('core.metro', name='1') }}"><img src="{{ url_for('static', filename='img/ratp/M1.png') }}"></a>
+<a href="{{ url_for('core.metro', name='2') }}"><img src="{{ url_for('static', filename='img/ratp/M2.png') }}"></a>
+<a href="{{ url_for('core.metro', name='3') }}"><img src="{{ url_for('static', filename='img/ratp/M3.png') }}"></a>
+<a href="{{ url_for('core.metro', name='3b') }}"><img src="{{ url_for('static', filename='img/ratp/M3b.png') }}"></a>
+<a href="{{ url_for('core.metro', name='4') }}"><img src="{{ url_for('static', filename='img/ratp/M4.png') }}"></a>
+<a href="{{ url_for('core.metro', name='5') }}"><img src="{{ url_for('static', filename='img/ratp/M5.png') }}"></a>
+<a href="{{ url_for('core.metro', name='6') }}"><img src="{{ url_for('static', filename='img/ratp/M6.png') }}"></a>
+<a href="{{ url_for('core.metro', name='7') }}"><img src="{{ url_for('static', filename='img/ratp/M7.png') }}"></a>
+<a href="{{ url_for('core.metro', name='7b') }}"><img src="{{ url_for('static', filename='img/ratp/M7b.png') }}"></a>
+<a href="{{ url_for('core.metro', name='8') }}"><img src="{{ url_for('static', filename='img/ratp/M8.png') }}"></a>
+<a href="{{ url_for('core.metro', name='9') }}"><img src="{{ url_for('static', filename='img/ratp/M9.png') }}"></a>
+<a href="{{ url_for('core.metro', name='10') }}"><img src="{{ url_for('static', filename='img/ratp/M10.png') }}"></a>
+<a href="{{ url_for('core.metro', name='11') }}"><img src="{{ url_for('static', filename='img/ratp/M11.png') }}"></a>
+<a href="{{ url_for('core.metro', name='12') }}"><img src="{{ url_for('static', filename='img/ratp/M12.png') }}"></a>
+<a href="{{ url_for('core.metro', name='13') }}"><img src="{{ url_for('static', filename='img/ratp/M13.png') }}"></a>
+<a href="{{ url_for('core.metro', name='14') }}"><img src="{{ url_for('static', filename='img/ratp/M14.png') }}"></a>
+
+{% endblock %}

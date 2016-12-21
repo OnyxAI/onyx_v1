@@ -1,0 +1,11 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Transport") %}
+
+{% block body %}
+
+<br>
+<a href="{{ url_for('core.metros') }}" class="waves-effect waves-light btn {{ buttonColor }}">Metro</a>
+<a href="{{ url_for('core.rers') }}" class="waves-effect waves-light btn {{ buttonColor }}">RER</a>
+
+{% endblock %}

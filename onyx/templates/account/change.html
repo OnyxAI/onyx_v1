@@ -1,0 +1,39 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Account") %}
+
+{% block body %}
+		
+    <div class="card-panel white">
+		        <h2>{{username}}</h2>		 
+
+    <h5>{{_("Email")}}</h5>{{ email }}
+		<h3>{{_("Change information")}} :</h3> <br>
+
+		          <form class="form" method=post action="">
+	  <div class="container">
+
+
+
+	  <label for="username" >{{_("New name")}}</label>
+	  <input type="text" id="username" name="username" value="{{ request.form.username }}">
+
+	  <label for="password" >{{_("New password")}}</label>
+      <input type="password" id="password"  name="password" value="{{ request.form.password }}">
+
+      <label for="email" >{{_("New email")}}</label>
+      <input type="email" id="email" name="email" value="{{ request.form.email }}">
+      
+      
+      </div>
+
+      <br>
+      <br>
+
+      <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
+    </form>
+
+  
+
+		 
+{% endblock %}

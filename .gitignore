@@ -1,0 +1,14 @@
+*.py[co]
+__pycache__
+
+*.mo
+*.dropbox.attr
+venv
+onyxproject.egg-info
+dist
+
+/onyx/flask_config.py
+/onyx/data/*
+!/onyx/data/.gitkeep
+/data/*
+!/data/.gitkeep

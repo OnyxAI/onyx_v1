@@ -1,0 +1,41 @@
+{% extends 'transport/ratp/metro/layout.html' %}
+
+{% set title = _("M1") %}
+
+{% block station %} 
+
+<option value="argentine">Argentine</option>
+<option value="bastille">Bastille</option>
+<option value="berault">Berault</option>
+<option value="champs+elysees+clemenceau">Champs-Elysees Clemenceau</option>
+<option value="charles+de+gaulle+etoile">Charles de Gaulle Etoile</option>
+<option value="chateau+de+vincennes">Chateau de Vincennes</option>
+<option value="chatelet">Chatelet</option>
+<option value="concorde">Concorde</option>
+<option value="esplanade+de+la+defense">Esplanade de La Defense</option>
+<option value="franklin+d+roosevelt">Franklin D. Roosevelt</option>
+<option value="gare+de+lyon">Gare de Lyon</option>
+<option value="george+v">George V</option>
+<option value="hotel+de+ville">Hôtel de Ville</option>
+<option value="la+defense">La Defense</option>
+<option value="les+sablons">Les Sablons</option>
+<option value="louvre+rivoli">Louvre - Rivoli</option>
+<option value="nation">Nation</option>
+<option value="palais+royal+musee+du+louvre">Palais Royal Musee du Louvre</option>
+<option value="pont+de+neuilly">Pont de Neuilly</option>
+<option value="porte+maillot">Porte Maillot</option>
+<option value="porte+de+vincennes">Porte de Vincennes</option>
+<option value="reuilly+diderot">Reuilly-Diderot</option>
+<option value="saint+mande">Saint-Mande</option>
+<option value="saint+paul">Saint-Paul</option>
+<option value="tuileries">Tuileries</option>
+
+
+{% endblock %}
+
+{% block direction %}
+
+<option value="A">La Défense</option>
+<option value="R">Chateau de Vincennes</option>
+
+{% endblock %}

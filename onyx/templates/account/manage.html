@@ -1,0 +1,35 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Manage") %}
+
+{% block body %}
+		
+  <div class="card-panel white">
+
+  {% if g.admin == 1 %}
+		<h2>{{_("Accounts")}}</h2>		 
+		
+		<ul class="collection">		
+			{% for tab in id %}					
+				<li class="collection-item avatar">
+					<img src="{{ urlPicAvatar(tab.id) }}" alt="" class="circle">
+					<span class="title">{{ tab.username }}</span>
+					<p>{{tab.email}} <br>
+						<a href="{{ url_for('auth.account_manage_id' , id=tab.id) }}">{{_("Modify")}}</a></br>
+					</p>
+					<a href="{{ url_for('auth.delete_account' , id_delete=tab.id) }}" class="secondary-content"><i class="fa fa-times" aria-hidden="true"></i></a>
+				</li>
+   		{% endfor %}
+  </ul>
+		
+
+  {% else %}
+
+  	<h3>{{_("You're not an administrator so we can't delete accounts")}}</h3>
+  {% endif %}
+		        
+		        
+		 </div>
+
+		 
+{% endblock %}

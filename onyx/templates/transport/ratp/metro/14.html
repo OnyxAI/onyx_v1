@@ -1,0 +1,24 @@
+{% extends 'transport/ratp/metro/layout.html' %}
+
+{% set title = _("M14") %}
+
+{% block station %} 
+
+<option value="bercy">Bercy</option>
+<option value="bibliotheque+francois+mitterrand">Bibliotheque François Mitterrand</option>
+<option value="cour+saint+emilion">Cour Saint-Emilion</option>
+<option value="madeleine">Madeleine</option>
+<option value="olympiades">Olympiades</option>
+<option value="pyramides">Pyramides</option>
+<option value="saint+lazare">Saint-Lazare</option>
+<option value="chatelet">Chatelet</option>
+<option value="gare+de+lyon">Gare de Lyon</option>
+
+{% endblock %}
+
+{% block direction %}
+
+<option value="A">Saint-Lazare</option>
+<option value="R">Olympiades</option>
+
+{% endblock %}

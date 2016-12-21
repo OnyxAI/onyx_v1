@@ -1,0 +1,9 @@
+{
+  "name": "Onyx REST API",
+  "version": "0.1.0",
+  "description": "Onyx Documentation Route",
+  "apidoc": {
+  	"title": "Onyx REST API",
+  	"url": "http://onyxproject.fr"
+  }
+}

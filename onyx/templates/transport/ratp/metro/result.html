@@ -1,0 +1,19 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Result") %}
+
+{% block body %}
+
+<br>
+<div class="card-panel white">
+	<br>
+	<div class="collection">
+		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire1 }}</span>{{ result.name1 }}</a>
+		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire2 }}</span>{{ result.name2 }}</a>
+		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire3 }}</span>{{ result.name3 }}</a>
+		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire4 }}</span>{{ result.name4 }}</a>
+	</div>
+
+	<a href="{{ url_for('core.transport') }}" class='btn {{ buttonColor }}'>{{_('Return to Home')}}</a>
+</div>
+{% endblock %}

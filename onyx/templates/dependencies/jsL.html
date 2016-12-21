@@ -1,0 +1,7 @@
+{% macro get_js(nom_fichiers , extension='js') -%}
+{% for fichier in nom_fichiers %}
+<script src="{{ url_for('static', filename='js/' + fichier + '.' + extension) }}"></script>
+{% endfor %}
+{%- endmacro %}
+
+{{ get_js(['jquery.min', 'moment.min', 'materialize.min']) }}

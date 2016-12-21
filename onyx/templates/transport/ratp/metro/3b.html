@@ -1,0 +1,19 @@
+{% extends 'transport/ratp/metro/layout.html' %}
+
+{% set title = _("M3b") %}
+
+{% block station %} 
+
+<option value="gambetta">Gambetta</option>
+<option value="pelleport">Pelleport</option>
+<option value="porte+des+lilas">Porte des Lilas</option>
+<option value="saint+fargeau">Saint-Fargeau</option>
+
+{% endblock %}
+
+{% block direction %}
+
+<option value="A">Gambetta</option>
+<option value="R">Porte des Lilas</option>
+
+{% endblock %}

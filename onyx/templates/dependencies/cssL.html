@@ -1,0 +1,9 @@
+<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+{% macro get_css(nom_fichiers , extension='css') -%}
+{% for fichier in nom_fichiers %}
+<link href="{{ url_for('static', filename='css/' + fichier + '.' + extension) }}" rel="stylesheet" type="text/css" />
+{% endfor %}
+{%- endmacro %}
+
+{{ get_css(['animate.min', 'font-awesome', 'icon']) }}
+

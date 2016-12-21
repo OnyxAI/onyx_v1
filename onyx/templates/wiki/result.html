@@ -1,0 +1,60 @@
+{% extends "layout/default.html" %} 
+
+{% set title = _("Wiki") %}
+
+{% block body %}
+
+<div class="card-panel white">
+	<h1>Wiki</h1>
+
+	<form method="post">
+		<input type="text" class="searchbox" value="Recherche ..." onblur="if(this.value == '') { this.value = 'Recherche ...'; }" onfocus="if(this.value == 'Recherche ...') { this.value = ''; }" name="search">
+		<button type="submit" class="btn {{ buttonColor }}">{{_("Submit")}}</button>
+	</form>
+
+
+
+	<h3>{{_("Result")}}</h3>
+
+	<div class="summary well">
+		<br>
+
+		<h4>
+			<span class="title"> {{head}}</span>
+		</h4>
+
+		<p class="summary">{{summary}}</p>
+		<br>
+		{% if url is defined %}
+		<p class="url">{{_("See all article in ")}} : <a href="{{url}}">{{url}}</a></p>
+		{% endif %}
+
+
+	</div>
+	
+</div>
+
+
+
+
+{% endblock %} {% block script %}
+<script type="text/javascript">
+	$(".searchbox").autocomplete({
+		source: function(request, response) {
+			console.log(request.term);
+			$.ajax({
+				url: "http://fr.wikipedia.org/w/api.php",
+				dataType: "jsonp",
+				data: {
+					'action': "opensearch",
+					'format': "json",
+					'search': request.term
+				},
+				success: function(data) {
+					response(data[1]);
+				}
+			});
+		}
+	});
+</script>
+{% endblock %}

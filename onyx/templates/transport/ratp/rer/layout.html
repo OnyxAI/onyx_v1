@@ -1,0 +1,26 @@
+{% extends 'layout/default.html' %}
+
+{% block body %}
+
+<br>
+<div class="card-panel white">
+	<br>
+	<form method="post" action="">
+
+		<label for="rerstation">Nom de la station : </label>
+		<select name="rerstation" class="browser-default" id="rerstation">
+			<option value="--Choisissez votre station--" selected="selected">--Choisissez votre station--</option>
+			{% block station %}{% endblock %}
+
+		</select>
+		<label for="rerdirection">Direction : </label> 
+		<select name="rerdirection" class="browser-default" id="rerdirection">
+			<option value="--Choisissez votre direction--" selected="selected">--Choisissez votre direction--</option>
+			{% block direction %}{% endblock %}
+		</select>
+		<button class="btn {{ buttonColor }}" type="submit"><span class="glyphicon glyphicon-ok-sign"></span>Envoyer</button>
+	</form>
+</br>
+
+
+{% endblock %}

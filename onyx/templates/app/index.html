@@ -1,0 +1,85 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("App") %}
+
+{% block body %}
+
+<h1>{{_("My Apps")}}</h1>
+
+<ul class="collapsible" data-collapsible="accordion">
+	<li>
+		<div class="collapsible-header">{{_("Search")}}</div>
+		<div class="collapsible-body">
+			<br>
+			
+			<div class="row">
+				
+
+				<div class="col s2 offset-s4">
+					<a href="{{ url_for('core.wiki') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Wiki")}}' title="Wikipédia">
+						<i class="large fa fa-wikipedia-w" aria-hidden="true"></i>
+					</a>
+				</div>
+
+				<div class="col s2">
+					<a href="{{ url_for('core.translate') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Translate")}}' title="Traduction">
+						<i class="large material-icons">g_translate</i>
+					</a>
+				</div>
+
+				<br><br>
+
+			</div>
+
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">{{_("Transports")}}</div>
+		<div class="collapsible-body"><div id="content">
+			<br>
+			<div class="row">
+				
+				<div class="center">
+					<a href="{{ url_for('core.transport') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Transport")}}' title="Transports en commun"> 
+						<i class="large fa fa-train" aria-hidden="true"></i>
+					</a>
+				</div>
+			</div>
+			<br>
+		</div>
+	</div>
+</li>
+<li>
+	<div class="collapsible-header">{{_("Other Apps")}}</div>
+	<div class="collapsible-body"><div id="content">
+		<br>
+		<div class="row">
+			
+			<div class="center">
+				<a href="{{ url_for('core.tv') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Tv Program")}}' title="Programme Tv">
+					<i class="large material-icons">tv</i>
+				</a>
+			</div>
+		</div>
+		<br>
+	</div>
+</li>
+
+</ul>
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+	
+
+
+	$(document).ready(function(){
+		$('.collapsible').collapsible({
+			accordion : false 
+		});
+	});
+</script>
+
+
+{% endblock %}
+
