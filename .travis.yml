@@ -6,8 +6,8 @@ python:
 # command to install dependencies
 
 before_install:
-  - sh install_travis.sh
+  - sudo sh install_travis.sh
 
-install: pip install -r requirements.txt
+install: sudo pip install -r requirements.txt
 # command to run tests
-script: sh run.sh
+script: sudo sh run.sh
