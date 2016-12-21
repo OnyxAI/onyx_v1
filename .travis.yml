@@ -2,12 +2,11 @@ language: python
 python:
   - "3.4"
   - "3.5"
-  - "pypy3"
 # command to install dependencies
 
 before_install:
   - sudo sh install_travis.sh
 
-install: make
+install: sudo make
 # command to run tests
-script: make run
+script: sudo make run
