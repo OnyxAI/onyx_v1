@@ -8,6 +8,6 @@ python:
 before_install:
   - sudo sh install_travis.sh
 
-install: sudo pip install -r requirements.txt
+install: sudo pip install onyxproject
 # command to run tests
-script: sudo sh run.sh
+script: sudo onyxstart
