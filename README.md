@@ -1,5 +1,8 @@
 # Onyx
 <snippet>
+[![Build Status](https://travis-ci.org/OnyxProject/Onyx.svg?branch=master)](https://travis-ci.org/OnyxProject/Onyx)
+
+
 ![Alt](http://nsa38.casimages.com/img/2016/05/22/160522121516524814.png)
 
 Onyx a pour but de vous simplifier la vie , son but premier est de tout réunir en un seul endroit
