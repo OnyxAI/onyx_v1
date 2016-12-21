@@ -6,7 +6,7 @@ python:
 # command to install dependencies
 
 before_install:
-  - sudo sh install.sh
+  - sudo sh install_travis.sh
 
 install: make
 # command to run tests
