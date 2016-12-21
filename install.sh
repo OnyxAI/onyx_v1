@@ -11,7 +11,3 @@ echo "***"
 apt-get --assume-yes update
 apt-get --assume-yes install build-essential python3 python-software-properties python3-pip python-setuptools python-dev python-virtualenv  curl git git-core openssl libssl-dev memcached python-memcache libmemcached-dev zlib1g-dev libffi-dev
 
-
-echo "Pip Dependencies"
-
-pip3 install -r requirements.txt

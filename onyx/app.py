@@ -24,18 +24,6 @@ from onyx.config import get_config
 from onyx.api.server import *
 
 
-installConfig = get_config('install')
-if installConfig.getboolean('Install', 'install'):
-    from onyx.core.controllers.base import core
-    from onyx.core.controllers.auth import auth
-    BLUEPRINTS = [core,auth]
-    blueprint_name = 'core'
-else:
-    from onyx.core.controllers.install import install
-    BLUEPRINTS = install
-    blueprint_name = 'install'
-
-
 __all__ = ('create_app', 'create_celery', )
 
 def create_app(config=None, app_name='onyx', blueprints=None):
@@ -44,13 +32,21 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'),
         template_folder = 'templates'
     )    
-    try:
-        app.config.from_object('Onyx.onyx.flask_config')
-    except:
-        app.config.from_object('onyx.flask_config')
+    app.config.from_object('onyx.flask_config')
     app.config.from_pyfile('../local.cfg', silent=True)
     if config:
         app.config.from_pyfile(config)
+
+    installConfig = get_config('install')
+    if installConfig.getboolean('Install', 'install'):
+        from onyx.core.controllers.base import core
+        from onyx.core.controllers.auth import auth
+        BLUEPRINTS = [core,auth]
+        blueprint_name = 'core'
+    else:
+        from onyx.core.controllers.install import install
+        BLUEPRINTS = install
+        blueprint_name = 'install'
 
     if blueprints is None:
         blueprints = BLUEPRINTS
@@ -64,7 +60,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
 
     with app.app_context():
         from migrate.versioning import api
-
+        db.create_all()
         try:
             if not os.path.exists(app.config['SQLALCHEMY_MIGRATE_REPO']):
                 api.create(app.config['SQLALCHEMY_MIGRATE_REPO'], 'database repository')

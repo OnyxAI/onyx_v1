@@ -11,7 +11,6 @@ from flask import flash, request, redirect, url_for
 from flask.ext.login import login_user, current_user, LoginManager
 from onyxbabel import gettext as _
 from onyx.extensions import db, login_manager
-from onyx.config import get_config , get_path
 from onyx.core.models import *
 import os
 import hashlib
@@ -27,11 +26,5 @@ def setInstall():
 	except:
 		flash('Une erreur est survenue !' , 'error')
 		return redirect(url_for('install.index'))
-	configPath = get_path('install')
-	installConfig = get_config('install')
-	installConfig['Install']['install'] = 'True'
-
-	with open(configPath, 'w') as configfile:
-		installConfig.write(configfile)
 	flash('Onyx a bien été installé !' , 'success')
 	return redirect(url_for("install.finish"))

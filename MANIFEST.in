@@ -1,0 +1,17 @@
+exclude *.pyc
+exclude *.dropbox.attr
+
+
+recursive-include onyx/api *
+recursive-include onyx/config *
+recursive-include onyx/core *
+include onyx/data/.gitkeep
+recursive-include onyx/translations *
+recursive-include onyx/templates *
+recursive-include static/js *
+recursive-include static/css *
+recursive-include static/fonts *
+recursive-include static/img *
+
+
+

@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "pypy3"
+# command to install dependencies
+
+before_install:
+  - sudo sh install.sh
+
+install: make
+# command to run tests
+script: make run

@@ -10,14 +10,11 @@ import configparser
 import os 
 
 
-
 #Config Path
 def get_path(name):
-	try:
-		import Onyx
-		return str(Onyx.__path__[0]) + "/onyx/config/" + name + '.cfg'
-	except:
-		return os.path.dirname(os.path.dirname(__file__)) + '/config/' + name + '.cfg'
+	import onyx.config
+	return str(onyx.config.__path__[0]) + "/" + name + '.cfg'
+
 		
 
 #Import all Config

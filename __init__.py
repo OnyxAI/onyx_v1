@@ -6,14 +6,12 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import Onyx
 import os
 import pip
-
 
 from .onyx import create_app
 from .onyx.extensions import db

@@ -14,6 +14,15 @@ from onyx.extensions import db
 def maj_pip():
 	try:
 		pip.main(['install', '--upgrade' , "onyxproject"])
+		migrateDB()
+		flash(gettext("Onyx is now upgrade !"),'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext("An error has occured !"), 'error')
+		return redirect(url_for('core.options'))
+
+def migrateDB():
+	try:
 		from onyx.flask_config import SQLALCHEMY_DATABASE_URI
 		from onyx.flask_config import SQLALCHEMY_MIGRATE_REPO
 		from migrate.versioning import api

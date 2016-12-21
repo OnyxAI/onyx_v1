@@ -50,7 +50,7 @@ def getG(app):
 			g.avatar = getAvatar()
 		except:
 			g.user = 'username'
-			g.lang = 'lang'
+			g.lang = 'fr'
 			g.email = 'email'
 			g.id = 'id'
 			g.admin = 'admin'
@@ -110,8 +110,6 @@ def getContext(app,babel):
 
 	@babel.localeselector
 	def get_locale():
-		if g.user:
-			if hasattr(g.user, 'lang'):
-				return g.user.lang
-			accept_languages = app.config.get('ACCEPT_LANGUAGES')
-		return request.accept_languages.best_match(accept_languages)
+		if g.lang:
+			return g.lang
+		return 'fr'
