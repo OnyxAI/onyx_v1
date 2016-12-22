@@ -1,7 +1,6 @@
 # Onyx
 <snippet>
-[![Build Status](https://travis-ci.org/OnyxProject/Onyx.svg?branch=master)](https://travis-ci.org/OnyxProject/Onyx)
-
+[![Build Status](https://travis-ci.org/OnyxProject/Onyx.svg?branch=master)](https://travis-ci.org/OnyxProject/Onyx)[![Code Climate](https://codeclimate.com/github/OnyxProject/Onyx/badges/gpa.svg)](https://codeclimate.com/github/OnyxProject/Onyx)[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg)](https://github.com/OnyxProject/Onyx)[![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/OnyxProject/Onyx)
 
 ![Alt](http://nsa38.casimages.com/img/2016/05/22/160522121516524814.png)
 
@@ -38,6 +37,10 @@ sudo onyxstart
 - [Le blog](http://blog.onyxlabs.fr)
 - [Le trello](https://trello.com/b/1HObWTNb/onyx-development)
 - [Le twitter](https://twitter.com/LabsOnyx)
+
+## Social Media
+
+[![Github](https://github.frapsoft.com/social/github.png)](https://github.com/OnyxProject/Onyx)[![Docker](https://github.frapsoft.com/social/docker.png)](https://hub.docker.com/r/onyxproject/onyx/)[![Twitter](https://github.frapsoft.com/social/twitter.png)](https://twitter.com/LabsOnyx)[![Facebook](https://github.frapsoft.com/social/facebook.png)](https://www.facebook.com/LabsOnyx/)[![Gitter](https://github.frapsoft.com/social/gitter.png)](https://gitter.im/onyxproject)
 
 
 </snippet>
