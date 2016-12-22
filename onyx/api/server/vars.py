@@ -58,6 +58,7 @@ def getG(app):
 
 	@app.before_request
 	def gvariables():
+		g.version = "0.3.9"
 		g.ram = "width: "+str(get_ram())+"%"
 		g.uptime = get_up_stats()
 		g.disk = "width: "+str(get_disk())+"%"
