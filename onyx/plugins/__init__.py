@@ -16,7 +16,6 @@ import onyx
 path = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
 path.remove('__pycache__')
 
-
 plugin = []
 for module in path:
 	plugin.append(importlib.import_module('onyx.plugins.'+module))

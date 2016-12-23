@@ -7,5 +7,12 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from onyx.api.plugins.install import *
-from onyx.api.plugins.uninstall import *
+import shutil
+import onyx
+
+def uninstall(name):
+	try:
+		shutil.rmtree(onyx.__path__[0] + "/plugins/" + name)
+		print('Done') 
+	except:
+		print('Error')

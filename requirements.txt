@@ -48,3 +48,4 @@ psutil
 uptime
 configparser
 flask-apidoc
+gitpython

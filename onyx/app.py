@@ -24,6 +24,9 @@ from onyx.config import get_config
 from onyx.api.server import *
 
 
+#from onyx.plugins.speak import speak
+#speak('Bonjour bienvenue sur Onyx')
+
 __all__ = ('create_app', 'create_celery')
 
 def create_app(config=None, app_name='onyx', blueprints=None):

@@ -1,0 +1,52 @@
+"""
+Onyx Project
+http://onyxproject.fr
+Software under licence Creative Commons 3.0 France 
+http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
+You may not use this software for commercial purposes.
+@author :: Cassim Khouani
+"""
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from .. import core
+from flask import render_template, request , redirect , url_for, flash
+from flask.ext.login import login_required
+from onyx.api.plugins import *
+from onyxbabel import gettext
+import onyx
+import os
+from onyx.api.assets import decodeJSON
+
+@core.route('plugins')
+@login_required
+def plugins():
+	plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
+	plugins.remove('__pycache__')
+	plug = []
+	for plugin in plugins:
+		data = decodeJSON.package(plugin)
+		e = {}
+		e['name'] = data['name']
+		e['raw'] = data['raw']
+		e['desc'] = data['description']
+		e['version'] = data['version']
+		plug.append(e)
+	lists = decodeJSON.decodeURL('http://onyxproject.fr/en/plugin_json')
+	return render_template('plugins/index.html', plugins=plug, lists=lists)
+
+@core.route('plugins/install/<string:name>')
+def install_plugin(name):
+	install(name,request.args['url'])
+	flash(gettext('Plugin Installed !'), 'success')
+	return redirect(url_for('core.plugins'))
+
+@core.route('plugins/uninstall/<string:name>')
+def uninstall_plugin(name):
+	try:
+		uninstall(name)
+		flash(gettext('Plugin Uninstalled !'), 'success')
+		return redirect(url_for('core.plugins'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.plugins'))
