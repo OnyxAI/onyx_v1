@@ -17,13 +17,9 @@ from os.path import dirname, abspath, join
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-try:
-	import Onyx
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///'+str(list(Onyx.__path__)[0]) + "/onyx/data/data.db"
-	SQLALCHEMY_MIGRATE_REPO = str(list(Onyx.__path__)[0]) + "/onyx/data/db_repository"
-except:
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///data/data.db'
-	SQLALCHEMY_MIGRATE_REPO = os.path.join(os.path.join('data') , 'db_repository')
+import onyx
+SQLALCHEMY_DATABASE_URI = 'sqlite:///'+str(list(onyx.__path__)[0]) + "/data/data.db"
+SQLALCHEMY_MIGRATE_REPO = str(list(onyx.__path__)[0]) + "/data/db_repository"
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # flatpages

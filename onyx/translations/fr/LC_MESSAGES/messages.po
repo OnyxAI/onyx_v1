@@ -514,9 +514,6 @@ msgstr "Voir tout l'article sur "
 
 #~ msgid "Hello ! If you ask a new password click in this link if not ignore it"
 #~ msgstr ""
-#~ "Bonjour ! Si vous avez demander un"
-#~ " nouveau mot de passe , cliquer "
-#~ "sur ce lien sinon ignorez le"
 
 #~ msgid "Change password"
 #~ msgstr "Changer mon mot de passe"

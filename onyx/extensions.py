@@ -14,7 +14,7 @@ You may not use this software for commercial purposes.
 from flask_mail import Mail
 mail = Mail()
 
-from flask.ext.sqlalchemy import SQLAlchemy
+from onyx_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 from flask_flatpages import FlatPages

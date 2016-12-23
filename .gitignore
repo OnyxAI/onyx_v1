@@ -14,3 +14,5 @@ dist
 !/onyx/data/.gitkeep
 /data/*
 !/data/.gitkeep
+/onyx/plugins/*
+!/onyx/plugins/__init__.py

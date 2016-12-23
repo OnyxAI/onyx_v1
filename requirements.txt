@@ -31,7 +31,7 @@ celery
 
 # SQLAlchemy
 flask-restless
-Flask-SQLAlchemy
+onyx_sqlalchemy
 flask_migrate
 SQLAlchemy-migrate
 

@@ -24,7 +24,7 @@ from onyx.config import get_config
 from onyx.api.server import *
 
 
-__all__ = ('create_app', 'create_celery', )
+__all__ = ('create_app', 'create_celery')
 
 def create_app(config=None, app_name='onyx', blueprints=None):
 
@@ -41,7 +41,14 @@ def create_app(config=None, app_name='onyx', blueprints=None):
     if installConfig.getboolean('Install', 'install'):
         from onyx.core.controllers.base import core
         from onyx.core.controllers.auth import auth
+        from onyx.plugins import plugin
         BLUEPRINTS = [core,auth]
+        for module in plugin:
+            try:
+                BLUEPRINTS.append(module.get_blueprint())
+            except:
+                print('No Blueprint for module : ' + module.get_name())
+        
         blueprint_name = 'core'
     else:
         from onyx.core.controllers.install import install
