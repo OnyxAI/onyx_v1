@@ -9,10 +9,13 @@ You may not use this software for commercial purposes.
 
 import shutil
 import onyx
+import importlib
 
 def uninstall(name):
 	try:
 		shutil.rmtree(onyx.__path__[0] + "/plugins/" + name)
+		plugin = importlib.import_module('onyx.plugins.'+name)
+		plugin.uninstall()
 		print('Done') 
 	except:
-		print('Error')
+		print('Error') 

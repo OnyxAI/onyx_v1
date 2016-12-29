@@ -18,8 +18,8 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 import onyx
-SQLALCHEMY_DATABASE_URI = 'sqlite:///'+str(list(onyx.__path__)[0]) + "/data/data.db"
-SQLALCHEMY_MIGRATE_REPO = str(list(onyx.__path__)[0]) + "/data/db_repository"
+SQLALCHEMY_DATABASE_URI = 'sqlite:///'+str(list(onyx.__path__)[0]) + "/db/data.db"
+SQLALCHEMY_MIGRATE_REPO = str(list(onyx.__path__)[0]) + "/db/db_repository"
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # flatpages

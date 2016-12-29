@@ -17,7 +17,6 @@ def runserver():
 	import os
 	import pip
 
-
 	from .extensions import db
 
 
@@ -30,10 +29,14 @@ def runserver():
 	print('| |_| | | | \  |   / /     / /\ \ ')
 	print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
 	try:
-		os.rename(str(Onyx.__path__[0]) + "/config_example.py" , str(Onyx.__path__[0]) + "/flask_config.py")
+		os.rename(str(Onyx.__path__[0]) + "/onyx/config_example.py" , str(Onyx.__path__[0]) + "/onyx/flask_config.py")
 		print('Config File Create')
 	except:
 		print('Config File Already Create')
+	try:
+		os.remove(str(Onyx.__path__[0]) + "/onyx/config.py")
+	except:
+		print('Already Delete')
 	print("Check Update")
 	pip.main(['install', '--upgrade' , "onyxproject"])
 	app = create_app()

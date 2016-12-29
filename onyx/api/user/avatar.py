@@ -25,7 +25,7 @@ def getAvatar():
 		url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
 		return url
 	except:
-		url = "http://www.gravatar.com/avatar"
+		url = "http://www.gravatar.com/avatar?s=60"
 		return url
 
 def getAvatarById(id):
@@ -37,5 +37,5 @@ def getAvatarById(id):
 		url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
 		return url
 	except:
-		url = "http://www.gravatar.com/avatar"
+		url = "http://www.gravatar.com/avatar?s=60"
 		return url

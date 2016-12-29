@@ -41,6 +41,10 @@ def index():
 		@apiError AlreadyExist This User already Exist
 		
 		"""
+		try:
+			get_data()
+		except:
+			print('Error Git')
 		return setInstall()
     
 @install.route('finish')

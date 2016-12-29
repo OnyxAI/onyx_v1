@@ -94,4 +94,5 @@ def maj():
 	@apiError NoPip No Pip Install
 	"""
 	return maj_pip()
+
 	

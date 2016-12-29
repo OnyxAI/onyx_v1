@@ -23,7 +23,6 @@ from os.path import dirname, abspath, join
 from onyx.config import get_config
 from onyx.api.server import *
 
-
 #from onyx.plugins.speak import speak
 #speak('Bonjour bienvenue sur Onyx')
 
@@ -39,6 +38,8 @@ def create_app(config=None, app_name='onyx', blueprints=None):
     app.config.from_pyfile('../local.cfg', silent=True)
     if config:
         app.config.from_pyfile(config)
+
+    extensions_fabrics(app)
 
     installConfig = get_config('install')
     if installConfig.getboolean('Install', 'install'):
@@ -63,7 +64,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
 
     blueprints_fabrics(app, blueprints)
     
-    extensions_fabrics(app)
+    
     error_pages(app , blueprint_name)
     gvars(app)
     
@@ -81,6 +82,15 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         except:
             print("Migrate Already Done")
         print ("Base de donnee initialisee")
+        
+
+    from onyx.plugins import plugin
+    for module in plugin:
+        try:
+            module.init(app)
+        except:
+            module.init()
+
 
     return app
   
@@ -99,6 +109,7 @@ def extensions_fabrics(app):
     pages.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app)
+
 
 def gvars(app):
 
@@ -122,4 +133,5 @@ def error_pages(app , name):
     @app.errorhandler(500)
     def server_error_page(error):
         return render_template("404html", blueprint=name), 500
+
 

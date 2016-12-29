@@ -8,3 +8,4 @@ You may not use this software for commercial purposes.
 """
 
 from onyx.api.install.set import *
+from onyx.api.install.data import *

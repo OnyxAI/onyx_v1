@@ -1,6 +1,6 @@
 document.onkeydown = keydown;
 function keydown(evt){
-  if (evt.ctrlKey){
+  if (evt.ctrlKey && evt.keyCode == 32){
     var search = document.getElementById('search');
     search.className = 'open';
     document.getElementById('searchInput').focus();

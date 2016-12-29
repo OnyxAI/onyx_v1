@@ -24,8 +24,9 @@ def install_dep(name):
 	print("Install Dependencies")
 	data = decodeJSON.package(name)
 	deps = data["dependencies"]
+	os.system('apt-get update --assume-yes')
 	for dep in deps:
-		os.system('apt-get install '+dep)
+		os.system('apt-get install --assume-yes '+dep)
 
 
 def install_pip(name):

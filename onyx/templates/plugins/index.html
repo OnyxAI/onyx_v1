@@ -11,6 +11,7 @@
       <ul class="tabs">
           <li class="tab col s3"><a class="active" href="#get">{{_('Plugins')}}</a></li>
           <li class="tab col s3"><a href="#install">{{_('Install')}}</a></li>
+          <li class="tab col s3"><a href="#install_url">{{_('Install With URL')}}</a></li>
     </ul>
     </div>
 </div>
@@ -21,6 +22,10 @@
 
 
 <div class="row">
+
+{% if plugins == [] %}
+<h4>{{ _('You have not install some plugin') }}</h4>
+{% else %}
 {% for plugin in plugins %}
 <div class="col s4">
 <h2 class="header">{{plugin['name']}}</h2>
@@ -31,13 +36,18 @@
 				<p>{{plugin['version']}}</p>
 			</div>
 			<div class="card-action">
+				{% if plugin['index'] is defined %}<a href="{{ url_for(plugin['index']) }}">{{ _("View") }}</a>{% endif %}
 				<a href="{{ url_for('core.uninstall_plugin', name=plugin['raw']) }}">{{ _("Uninstall") }}</a>
+				<a href="{{ url_for('core.update_plugin', name=plugin['raw']) }}">{{ _("Update") }}</a>
 				<a href="#">{{ _("Config") }}</a>
 			</div>
 		</div>
 	</div>
 </div>
 {% endfor %}
+{% endif %}
+
+
 </div>
 
 
@@ -48,7 +58,6 @@
 
 <div id="install" >
 <div class="card-panel white">
-
 <div class="row">
 
 {% for list in lists %}
@@ -74,8 +83,21 @@
 {% endfor %}
 
 </div>
+</div>
+</div>
 
+<div id="install_url" >
+<div class="card-panel white">
 
+<form action="{{ url_for('core.install_url') }}" method="post">
+ 	<label for="url">{{ _('URL') }}</label>
+	<input type="text" placeholder="{{ _('URL') }}" name="url" id="url">
+
+	<label for="name">{{ _('Plugin Name') }}</label>
+	<input type="text" placeholder="{{ _('Plugin Name') }}" name="name" id="name"><br>
+
+	<button class="btn {{buttonColor}}">{{ _('Send') }}</button>
+</form>
 
 </div>
 </div>

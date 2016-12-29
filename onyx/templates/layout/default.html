@@ -11,7 +11,7 @@
 <body>    
     <div class="loader"></div>
 
-    
+
     <div class="navbar">{% include 'layout/navbar.html' %}</div> <!-- Include navbar -->
     <div class="main">  
         <div class="content">
@@ -22,6 +22,7 @@
 </div>     
 </div>
 {% include 'dependencies/js.html' %}  <!-- Include js files -->
+{% include 'layout/action.html' %} <!-- Include actions -->
 {% block script %}{% endblock %}
 </body>  
 </html>

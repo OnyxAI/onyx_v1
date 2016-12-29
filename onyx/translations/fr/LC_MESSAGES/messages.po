@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-10 02:50-0500\n"
+"POT-Creation-Date: 2016-12-28 19:08-0500\n"
 "PO-Revision-Date: 2016-11-01 01:32+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,425 +18,655 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: onyx/app.py:116
-msgid "Quel temps fait il ?"
-msgstr "Quel temps fait il ?"
+#: onyx/decorators.py:20
+msgid "You're not admin"
+msgstr "Vous n'êtes pas Administrateur !"
 
-#: onyx/app.py:116 onyx/templates/layout/navbar.html:48
-#: onyx/templates/layout/navbar.html:95 onyx/templates/weather.html:4
-msgid "Weather"
-msgstr "Météo"
-
-#: onyx/auth/views.py:70 onyx/auth/views.py:82
-msgid "Account Added !"
-msgstr "Compte Ajouté !"
-
-#: onyx/auth/views.py:73 onyx/auth/views.py:85 onyx/auth/views.py:215
-msgid "Passwords are not same !"
-msgstr "Les mots de passe de sont pas les même !"
-
-#: onyx/auth/views.py:103
-msgid "Incorrect email or password !"
-msgstr "Mauvais email ou mot de passe !"
-
-#: onyx/auth/views.py:107
-msgid "You are now connected"
-msgstr "Vous êtes maintenant connecté"
-
-#: onyx/auth/views.py:110 onyx/auth/views.py:154 onyx/auth/views.py:183
-#: onyx/controllers/views/ActionController.py:20
-#: onyx/controllers/views/ActionController.py:23
-msgid "An error has occurred !"
-msgstr "Une erreur est survenue !"
-
-#: onyx/auth/views.py:151
-msgid "Account deleted !"
-msgstr "Compte supprimé !"
-
-#: onyx/auth/views.py:180
-msgid "Account changed !"
-msgstr "Le compte a bien été modifié"
-
-#: onyx/auth/views.py:212 onyx/controllers/views/OptionsController.py:39
+#: onyx/api/account/change.py:36 onyx/api/options/account.py:28
 msgid "Account changed successfully"
 msgstr "Compte changé !"
 
-#: onyx/auth/views.py:218
+#: onyx/api/account/change.py:39 onyx/api/account/register.py:27
+msgid "Passwords are not same !"
+msgstr "Les mots de passe de sont pas les même !"
+
+#: onyx/api/account/change.py:42
 msgid "Another user use data"
 msgstr "Un autre utilisateur utilise ces informations"
 
-#: onyx/auth/views.py:227
+#: onyx/api/account/delete.py:30
+msgid "Account deleted !"
+msgstr "Compte supprimé !"
+
+#: onyx/api/account/delete.py:33 onyx/api/account/manage.py:49
+msgid "An error has occurred !"
+msgstr "Une erreur est survenue !"
+
+#: onyx/api/account/login.py:25 onyx/api/account/login.py:36
+msgid "Incorrect email or password !"
+msgstr "Mauvais email ou mot de passe !"
+
+#: onyx/api/account/login.py:29 onyx/api/account/login.py:40
+msgid "You are now connected"
+msgstr "Vous êtes maintenant connecté"
+
+#: onyx/api/account/logout.py:24
 msgid "You are now log out"
 msgstr "Vous êtes maintenant deconnecté !"
 
-#: onyx/auth/templates/change.html:7 onyx/auth/templates/login.html:17
-#: onyx/auth/templates/manage.html:9 onyx/auth/templates/register.html:46
-msgid "Email"
-msgstr "Email"
+#: onyx/api/account/manage.py:46
+msgid "Account changed !"
+msgstr "Le compte a bien été modifié"
 
-#: onyx/auth/templates/change.html:8
-msgid "Change information"
-msgstr "Changer les informations"
+#: onyx/api/account/register.py:24
+msgid "Account Added !"
+msgstr "Compte Ajouté !"
 
-#: onyx/auth/templates/change.html:15 onyx/auth/templates/manage.html:17
-msgid "New name"
-msgstr "Nouveau pseudo"
+#: onyx/api/account/register.py:31
+msgid "A Account with this informations already exist !"
+msgstr "Un compte avec ces informations existe déjà !"
 
-#: onyx/auth/templates/change.html:18 onyx/auth/templates/manage.html:20
-msgid "New password"
-msgstr "Nouveau mot de passe"
+#: onyx/api/action/get.py:22
+msgid "This is not a Onyx action !"
+msgstr "Ce n'est pas une action référencé dans Onyx !"
 
-#: onyx/auth/templates/change.html:21 onyx/auth/templates/manage.html:23
-msgid "New email"
-msgstr "Nouvel email"
+#: onyx/api/action/get.py:25 onyx/api/server/maj.py:21
+#: onyx/api/server/maj.py:43 onyx/api/transport/metro.py:25
+#: onyx/api/transport/rer.py:25
+#: onyx/core/controllers/base/views/PluginsController.py:59
+#: onyx/core/controllers/base/views/PluginsController.py:73
+#: onyx/core/controllers/base/views/PluginsController.py:86
+#: onyx/core/controllers/base/views/PluginsController.py:98
+msgid "An error has occured !"
+msgstr "Une erreur est survenue !"
 
-#: onyx/auth/templates/change.html:30 onyx/auth/templates/manage.html:35
-#: onyx/templates/calendar/index.html:75 onyx/templates/calendar/index.html:131
-#: onyx/templates/calendar/view.html:80 onyx/templates/calendar/view.html:139
-#: onyx/templates/options/index.html:88
-msgid "Save"
-msgstr "Sauvegarder"
-
-#: onyx/auth/templates/delete.html:7
-msgid "Accounts"
-msgstr "Comptes"
-
-#: onyx/auth/templates/delete.html:15
-msgid "Modify"
-msgstr "Modifier"
-
-#: onyx/auth/templates/delete.html:25
-msgid "You're not an administrator so we can't delete accounts"
-msgstr "Vous n'êtes pas administateur donc vous ne pouvez pas supprimer de comptes"
-
-#: onyx/auth/templates/hello.html:14 onyx/templates/index.html:4
-msgid "Welcome to Onyx"
-msgstr "Bienvenue sur Onyx"
-
-#: onyx/auth/templates/hello.html:16 onyx/auth/templates/hello.html:17
-#: onyx/templates/app.html:8 onyx/templates/wiki/index.html:8
-msgid "Search"
-msgstr "Recherche"
-
-#: onyx/auth/templates/hello.html:20 onyx/auth/templates/register.html:55
-msgid "Login"
-msgstr "Se Connecter"
-
-#: onyx/auth/templates/hello.html:21 onyx/auth/templates/login.html:33
-msgid "Register"
-msgstr "S'inscrire"
-
-#: onyx/auth/templates/login.html:24 onyx/auth/templates/register.html:28
-msgid "Password"
-msgstr "Mot de passe"
-
-#: onyx/auth/templates/login.html:32
-msgid "Forget your password ? Ask Administrator"
-msgstr "Vous avez oublié votre mot de passe ? Contacter l'Administrateur"
-
-#: onyx/auth/templates/login.html:33
-msgid "Not register ?"
-msgstr "Non Inscrit ?"
-
-#: onyx/auth/templates/manage.html:5 onyx/templates/layout/navbar.html:5
-#: onyx/templates/layout/navbar.html:100 onyx/templates/layout/navbar.html:132
-msgid "My Account"
-msgstr "Mon Compte"
-
-#: onyx/auth/templates/manage.html:8 onyx/auth/templates/register.html:19
-msgid "Name"
-msgstr "Pseudo"
-
-#: onyx/auth/templates/manage.html:10
-msgid "Change my account information"
-msgstr "Changer mes informations"
-
-#: onyx/auth/templates/manage.html:26
-msgid "Last password"
-msgstr "Ancien mot de passe"
-
-#: onyx/auth/templates/register.html:37
-msgid "Confirm password"
-msgstr "Confirmer votre mot de passe"
-
-#: onyx/auth/templates/register.html:55
-msgid "Already registered ?"
-msgstr "Déjà inscrit ?"
-
-#: onyx/controllers/views/OptionsController.py:42
+#: onyx/api/options/account.py:31
 msgid "You don't enter param"
 msgstr "Vous n'avez pas entrez tous les paramètres"
 
-#: onyx/controllers/views/OptionsController.py:74
+#: onyx/api/server/maj.py:18 onyx/api/server/maj.py:40
 msgid "Onyx is now upgrade !"
 msgstr "Onyx a été mis à jour !"
 
-#: onyx/controllers/views/OptionsController.py:77
-#: onyx/controllers/views/TransportController.py:30
-#: onyx/controllers/views/TransportController.py:43
-#: onyx/controllers/views/TransportController.py:68
-#: onyx/controllers/views/TransportController.py:81
-#: onyx/controllers/views/TransportController.py:94
-#: onyx/controllers/views/TransportController.py:107
-#: onyx/controllers/views/TransportController.py:120
-#: onyx/controllers/views/TransportController.py:133
-#: onyx/controllers/views/TransportController.py:146
-#: onyx/controllers/views/TransportController.py:159
-#: onyx/controllers/views/TransportController.py:172
-#: onyx/controllers/views/TransportController.py:185
-#: onyx/controllers/views/TransportController.py:198
-#: onyx/controllers/views/TransportController.py:211
-#: onyx/controllers/views/TransportController.py:224
-#: onyx/controllers/views/TransportController.py:237
-#: onyx/controllers/views/TransportController.py:250
-#: onyx/controllers/views/TransportController.py:263
-msgid "An error has occured !"
-msgstr "Une erreur est survenue !"
+#: onyx/core/controllers/base/views/PluginsController.py:56
+#: onyx/core/controllers/base/views/PluginsController.py:70
+msgid "Plugin Installed !"
+msgstr "Plugin installé"
+
+#: onyx/core/controllers/base/views/PluginsController.py:83
+msgid "Plugin Uninstalled !"
+msgstr "Plugin désinstallé"
+
+#: onyx/core/controllers/base/views/PluginsController.py:95
+msgid "Plugin Updated !"
+msgstr "Plugin mis à jour !"
+
+#: onyx/plugins/alarm/templates/delete.html:3
+#: onyx/plugins/alarm/templates/index.html:3
+#: onyx/plugins/alarm/templates/index.html:9
+msgid "Alarm"
+msgstr "Alarme"
+
+#: onyx/plugins/alarm/templates/index.html:14
+msgid "Set Alarms"
+msgstr "Configurer alarmes"
+
+#: onyx/plugins/alarm/templates/index.html:15
+msgid "Add Ring"
+msgstr "Ajouter une sonnerie"
+
+#: onyx/plugins/alarm/templates/index.html:16
+msgid "Delete Ring"
+msgstr "Supprimer une sonnerie"
 
 #: onyx/templates/404.html:19 onyx/templates/404.html:21
 msgid "Page not found ! Return to "
 msgstr "Page non trouvé ! Retourner sur "
 
-#: onyx/templates/app.html:4
+#: onyx/templates/account/change.html:3
+#: onyx/templates/account/manage_account.html:3
+msgid "Account"
+msgstr "Compte"
+
+#: onyx/templates/account/change.html:10 onyx/templates/account/login.html:12
+#: onyx/templates/account/manage_account.html:12
+#: onyx/templates/account/register.html:12
+msgid "Email"
+msgstr "Email"
+
+#: onyx/templates/account/change.html:11
+msgid "Change information"
+msgstr "Changer les informations"
+
+#: onyx/templates/account/change.html:18
+#: onyx/templates/account/manage_account.html:20
+msgid "New name"
+msgstr "Nouveau pseudo"
+
+#: onyx/templates/account/change.html:21
+#: onyx/templates/account/manage_account.html:23
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: onyx/templates/account/change.html:24
+#: onyx/templates/account/manage_account.html:26
+msgid "New email"
+msgstr "Nouvel email"
+
+#: onyx/templates/account/change.html:33
+#: onyx/templates/account/manage_account.html:38
+#: onyx/templates/calendar/index.html:75 onyx/templates/calendar/index.html:141
+#: onyx/templates/options/index.html:145
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: onyx/templates/account/hello.html:3 onyx/templates/index/index.html:3
+msgid "Home"
+msgstr "Accueil"
+
+#: onyx/templates/account/hello.html:24 onyx/templates/index/index.html:8
+msgid "Welcome to Onyx"
+msgstr "Bienvenue sur Onyx"
+
+#: onyx/templates/account/hello.html:26 onyx/templates/account/hello.html:27
+#: onyx/templates/app/index.html:11 onyx/templates/wiki/index.html:11
+msgid "Search"
+msgstr "Recherche"
+
+#: onyx/templates/account/hello.html:30 onyx/templates/account/login.html:3
+#: onyx/templates/account/login.html:14
+msgid "Login"
+msgstr "Se Connecter"
+
+#: onyx/templates/account/hello.html:31 onyx/templates/account/register.html:3
+#: onyx/templates/account/register.html:15
+msgid "Register"
+msgstr "S'inscrire"
+
+#: onyx/templates/account/login.html:11
+msgid "Login | Onyx"
+msgstr "Connection | Onyx"
+
+#: onyx/templates/account/login.html:13 onyx/templates/account/register.html:13
+msgid "Password"
+msgstr "Mot de passe"
+
+#: onyx/templates/account/manage.html:3
+msgid "Manage"
+msgstr "Modifier"
+
+#: onyx/templates/account/manage.html:10
+msgid "Accounts"
+msgstr "Comptes"
+
+#: onyx/templates/account/manage.html:18
+msgid "Modify"
+msgstr "Modifier"
+
+#: onyx/templates/account/manage.html:28
+msgid "You're not an administrator so we can't delete accounts"
+msgstr "Vous n'êtes pas administateur donc vous ne pouvez pas supprimer de comptes"
+
+#: onyx/templates/account/manage_account.html:8
+#: onyx/templates/layout/navbar.html:5 onyx/templates/layout/navbar.html:97
+#: onyx/templates/layout/navbar.html:129
+msgid "My Account"
+msgstr "Mon Compte"
+
+#: onyx/templates/account/manage_account.html:11
+#: onyx/templates/account/register.html:11
+msgid "Name"
+msgstr "Pseudo"
+
+#: onyx/templates/account/manage_account.html:13
+msgid "Change my account information"
+msgstr "Changer mes informations"
+
+#: onyx/templates/account/manage_account.html:29
+msgid "Last password"
+msgstr "Ancien mot de passe"
+
+#: onyx/templates/account/register.html:10
+msgid "Register | Onyx"
+msgstr "S'inscrire | Onyx"
+
+#: onyx/templates/account/register.html:14
+msgid "Confirm password"
+msgstr "Confirmer votre mot de passe"
+
+#: onyx/templates/app/index.html:3 onyx/templates/layout/navbar.html:67
+msgid "App"
+msgstr "Application"
+
+#: onyx/templates/app/index.html:7
 msgid "My Apps"
 msgstr "Mes Applications"
 
-#: onyx/templates/app.html:34
+#: onyx/templates/app/index.html:19 onyx/templates/wiki/index.html:3
+#: onyx/templates/wiki/index.html:8 onyx/templates/wiki/result.html:3
+msgid "Wiki"
+msgstr "Wiki"
+
+#: onyx/templates/app/index.html:25 onyx/templates/translate/index.html:3
+#: onyx/templates/translate/index.html:6 onyx/templates/translate/index.html:12
+msgid "Translate"
+msgstr "Traduire"
+
+#: onyx/templates/app/index.html:37
 msgid "Transports"
 msgstr "Transports en commun"
 
-#: onyx/templates/app.html:50
+#: onyx/templates/app/index.html:43 onyx/templates/transport/index.html:3
+msgid "Transport"
+msgstr "Transports"
+
+#: onyx/templates/app/index.html:53
 msgid "Other Apps"
 msgstr "Autres Applications"
 
-#: onyx/templates/help.html:4
-msgid "If you need help you can go to "
-msgstr "Si vous avez besoin d'aide vous pouvez aller sur "
+#: onyx/templates/app/index.html:59
+msgid "Tv Program"
+msgstr "Programme tv"
 
-#: onyx/templates/help.html:5
-msgid "Or in the forum "
-msgstr "Ou sur le forum "
-
-#: onyx/templates/index.html:5
-msgid "For access to our blog and download Onyx :"
-msgstr "Pour acceder à notre blog et télécharger Onyx :"
-
-#: onyx/templates/info.html:5
-msgid "See website"
-msgstr "Voir le site"
-
-#: onyx/templates/task.html:9
-msgid "To Do"
-msgstr "Mes taches"
-
-#: onyx/templates/task.html:11
-msgid "What do you want to do ?"
-msgstr "Que voulez vous faire ?"
-
-#: onyx/templates/task.html:13 onyx/templates/wiki/index.html:9
-msgid "Send"
-msgstr "Envoyer"
-
-#: onyx/templates/calendar/index.html:4 onyx/templates/layout/navbar.html:55
-#: onyx/templates/layout/navbar.html:93
+#: onyx/templates/calendar/index.html:3 onyx/templates/layout/navbar.html:48
+#: onyx/templates/layout/navbar.html:90
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: onyx/templates/calendar/index.html:31 onyx/templates/calendar/view.html:36
+#: onyx/templates/calendar/index.html:23
 msgid "Add an event"
 msgstr "Ajouter un évenement"
 
-#: onyx/templates/calendar/index.html:36 onyx/templates/calendar/index.html:38
-#: onyx/templates/calendar/index.html:96 onyx/templates/calendar/index.html:98
-#: onyx/templates/calendar/view.html:41 onyx/templates/calendar/view.html:43
-#: onyx/templates/calendar/view.html:104 onyx/templates/calendar/view.html:106
+#: onyx/templates/calendar/index.html:28 onyx/templates/calendar/index.html:30
+#: onyx/templates/calendar/index.html:95 onyx/templates/calendar/index.html:97
 msgid "Title"
 msgstr "Titre"
 
-#: onyx/templates/calendar/index.html:42 onyx/templates/calendar/index.html:102
-#: onyx/templates/calendar/view.html:47 onyx/templates/calendar/view.html:110
+#: onyx/templates/calendar/index.html:32 onyx/templates/calendar/index.html:34
+#: onyx/templates/calendar/index.html:99 onyx/templates/calendar/index.html:101
+msgid "Notes"
+msgstr "Notes"
+
+#: onyx/templates/calendar/index.html:36 onyx/templates/calendar/index.html:38
+#: onyx/templates/calendar/index.html:103
+#: onyx/templates/calendar/index.html:105
+msgid "Place"
+msgstr "Lieu"
+
+#: onyx/templates/calendar/index.html:44 onyx/templates/calendar/index.html:110
+#: onyx/templates/options/index.html:73
 msgid "Color"
 msgstr "Couleur"
 
-#: onyx/templates/calendar/index.html:45 onyx/templates/calendar/index.html:105
-#: onyx/templates/calendar/view.html:50 onyx/templates/calendar/view.html:113
+#: onyx/templates/calendar/index.html:47 onyx/templates/calendar/index.html:113
 msgid "Choose"
 msgstr "Choisir"
 
-#: onyx/templates/calendar/index.html:46 onyx/templates/calendar/index.html:106
-#: onyx/templates/calendar/view.html:51 onyx/templates/calendar/view.html:114
+#: onyx/templates/calendar/index.html:48 onyx/templates/calendar/index.html:114
 msgid "Dark blue"
 msgstr "Bleu sombre"
 
-#: onyx/templates/calendar/index.html:47 onyx/templates/calendar/index.html:107
-#: onyx/templates/calendar/view.html:52 onyx/templates/calendar/view.html:115
+#: onyx/templates/calendar/index.html:49 onyx/templates/calendar/index.html:115
 msgid "Turquoise"
 msgstr "Turquoise"
 
-#: onyx/templates/calendar/index.html:48 onyx/templates/calendar/index.html:108
-#: onyx/templates/calendar/view.html:53 onyx/templates/calendar/view.html:116
+#: onyx/templates/calendar/index.html:50 onyx/templates/calendar/index.html:116
 msgid "Green"
 msgstr "Vert"
 
-#: onyx/templates/calendar/index.html:49 onyx/templates/calendar/index.html:109
-#: onyx/templates/calendar/view.html:54 onyx/templates/calendar/view.html:117
+#: onyx/templates/calendar/index.html:51 onyx/templates/calendar/index.html:117
 msgid "Yellow"
 msgstr "Jaune"
 
-#: onyx/templates/calendar/index.html:50 onyx/templates/calendar/index.html:110
-#: onyx/templates/calendar/view.html:55 onyx/templates/calendar/view.html:118
+#: onyx/templates/calendar/index.html:52 onyx/templates/calendar/index.html:118
 msgid "Orange"
 msgstr "Orange"
 
-#: onyx/templates/calendar/index.html:51 onyx/templates/calendar/index.html:111
-#: onyx/templates/calendar/view.html:56 onyx/templates/calendar/view.html:119
+#: onyx/templates/calendar/index.html:53 onyx/templates/calendar/index.html:119
 msgid "Red"
 msgstr "Rouge"
 
-#: onyx/templates/calendar/index.html:52 onyx/templates/calendar/index.html:112
-#: onyx/templates/calendar/view.html:57 onyx/templates/calendar/view.html:120
+#: onyx/templates/calendar/index.html:54 onyx/templates/calendar/index.html:120
 msgid "Black"
 msgstr "Noir"
 
-#: onyx/templates/calendar/index.html:74 onyx/templates/calendar/index.html:130
-#: onyx/templates/calendar/view.html:79 onyx/templates/calendar/view.html:138
+#: onyx/templates/calendar/index.html:74 onyx/templates/calendar/index.html:140
 #: onyx/templates/options/close.html:16
 msgid "Close"
 msgstr "Fermer"
 
-#: onyx/templates/calendar/index.html:91 onyx/templates/calendar/view.html:99
+#: onyx/templates/calendar/index.html:91
 msgid "Change"
 msgstr "Changer"
 
-#: onyx/templates/calendar/index.html:120 onyx/templates/calendar/view.html:128
+#: onyx/templates/calendar/index.html:129
 msgid "Delete event"
 msgstr "Supprimer l'évenement"
 
-#: onyx/templates/layout/navbar.html:12 onyx/templates/layout/navbar.html:99
-#: onyx/templates/options/index.html:4
-msgid "Options"
-msgstr "Options"
-
-#: onyx/templates/layout/navbar.html:19 onyx/templates/layout/navbar.html:98
+#: onyx/templates/help/index.html:3 onyx/templates/layout/navbar.html:17
+#: onyx/templates/layout/navbar.html:95
 msgid "Help"
 msgstr "Aide"
 
-#: onyx/templates/layout/navbar.html:26 onyx/templates/layout/navbar.html:96
+#: onyx/templates/help/index.html:7
+msgid "If you need help you can go to "
+msgstr "Si vous avez besoin d'aide vous pouvez aller sur "
+
+#: onyx/templates/help/index.html:8
+msgid "Or in the forum "
+msgstr "Ou sur le forum "
+
+#: onyx/templates/index/index.html:9
+msgid "For access to our blog and download Onyx :"
+msgstr "Pour acceder à notre blog et télécharger Onyx :"
+
+#: onyx/templates/info/index.html:3
+msgid "Info"
+msgstr "Informations"
+
+#: onyx/templates/info/index.html:8
+msgid "See website"
+msgstr "Voir le site"
+
+#: onyx/templates/layout/action.html:5
+msgid "What I can do for you ?"
+msgstr "Que puis je faire pour vous"
+
+#: onyx/templates/layout/navbar.html:11 onyx/templates/layout/navbar.html:96
+#: onyx/templates/options/index.html:3 onyx/templates/options/index.html:7
+msgid "Options"
+msgstr "Options"
+
+#: onyx/templates/layout/navbar.html:23 onyx/templates/layout/navbar.html:93
 msgid "News"
 msgstr "Informations"
 
-#: onyx/templates/layout/navbar.html:33 onyx/templates/layout/navbar.html:92
+#: onyx/templates/layout/navbar.html:29 onyx/templates/layout/navbar.html:89
+#: onyx/templates/map/index.html:3
 msgid "Map"
 msgstr "Carte"
 
-#: onyx/templates/layout/navbar.html:41 onyx/templates/layout/navbar.html:94
+#: onyx/templates/layout/navbar.html:36 onyx/templates/layout/navbar.html:91
 msgid "Tasks"
 msgstr "Mes Taches"
 
-#: onyx/templates/layout/navbar.html:62 onyx/templates/layout/navbar.html:97
-#: onyx/templates/store/index.html:4
-msgid "Store"
-msgstr "Magasin"
+#: onyx/templates/layout/navbar.html:42 onyx/templates/layout/navbar.html:92
+#: onyx/templates/weather/index.html:3 onyx/templates/weather/index.html:7
+msgid "Weather"
+msgstr "Météo"
 
-#: onyx/templates/layout/navbar.html:69 onyx/templates/layout/navbar.html:91
-#: onyx/templates/utilities/index.html:7
+#: onyx/templates/layout/navbar.html:54 onyx/templates/layout/navbar.html:94
+#: onyx/templates/plugins/index.html:3 onyx/templates/plugins/index.html:7
+#: onyx/templates/plugins/index.html:12 onyx/templates/plugins/reboot.html:3
+msgid "Plugins"
+msgstr "Modules"
+
+#: onyx/templates/layout/navbar.html:60 onyx/templates/layout/navbar.html:88
+#: onyx/templates/utilities/index.html:3 onyx/templates/utilities/index.html:9
 msgid "Utilities"
 msgstr "Utilitaire"
 
-#: onyx/templates/layout/navbar.html:77 onyx/templates/layout/navbar.html:90
+#: onyx/templates/layout/navbar.html:87
 msgid "My App"
 msgstr "Mes Applications"
 
-#: onyx/templates/layout/navbar.html:101 onyx/templates/layout/navbar.html:134
+#: onyx/templates/layout/navbar.html:98 onyx/templates/layout/navbar.html:131
 msgid "Log Out"
 msgstr "Se Deconnecter"
-
-#: onyx/templates/layout/navbar.html:147
-msgid "What I can do for you ?"
-msgstr "Que puis je faire pour vous"
 
 #: onyx/templates/options/close.html:17
 msgid "Onyx is now close !"
 msgstr "Onyx est maintenant fermé !"
 
-#: onyx/templates/options/index.html:81
+#: onyx/templates/options/index.html:13
+msgid "System"
+msgstr "Système"
+
+#: onyx/templates/options/index.html:14 onyx/templates/options/index.html:26
+msgid "Parameter"
+msgstr "Paramètre"
+
+#: onyx/templates/options/index.html:16
+msgid "Admin"
+msgstr "Administration"
+
+#: onyx/templates/options/index.html:27
+msgid "Informations"
+msgstr "Informations"
+
+#: onyx/templates/options/index.html:33
+msgid "Hostname"
+msgstr "Nom de la machine"
+
+#: onyx/templates/options/index.html:37
+msgid "Platform"
+msgstr "Plateform"
+
+#: onyx/templates/options/index.html:41
+msgid "RAM"
+msgstr "Ram"
+
+#: onyx/templates/options/index.html:47
+msgid "IP"
+msgstr "IP"
+
+#: onyx/templates/options/index.html:51
+msgid "Disk"
+msgstr "Disque"
+
+#: onyx/templates/options/index.html:57
+msgid "UpTime"
+msgstr "UpTIme"
+
+#: onyx/templates/options/index.html:138
 msgid "Langue"
 msgstr "Langue"
 
-#: onyx/templates/options/index.html:83
+#: onyx/templates/options/index.html:140
 msgid "French"
 msgstr "Français"
 
-#: onyx/templates/options/index.html:84
+#: onyx/templates/options/index.html:141
 msgid "English"
 msgstr "Anglais"
 
-#: onyx/templates/options/index.html:93
+#: onyx/templates/options/index.html:158
 msgid "Admin Options"
 msgstr "Options d'aministration"
 
-#: onyx/templates/options/index.html:94
-msgid "Go To the API"
-msgstr "Aller sur l'API"
-
-#: onyx/templates/options/index.html:95
+#: onyx/templates/options/index.html:159
 msgid "Update Onyx"
 msgstr "Mettre à jour Onyx"
 
-#: onyx/templates/options/index.html:96
+#: onyx/templates/options/index.html:160
 msgid "Close Onyx"
 msgstr "Fermer Onyx"
 
-#: onyx/templates/options/index.html:97
-msgid "Remove account"
-msgstr "Supprimer des comptes"
+#: onyx/templates/options/index.html:161
+msgid "Manage Account"
+msgstr "Modifier les comptes"
 
-#: onyx/templates/store/index.html:5
-msgid "Store not available !"
-msgstr "Magasin non disponible pour le moment !"
+#: onyx/templates/plugins/index.html:13
+msgid "Install"
+msgstr "Installer"
 
-#: onyx/templates/translate/index.html:3 onyx/templates/translate/index.html:9
-msgid "Translate"
-msgstr "Traduire"
+#: onyx/templates/plugins/index.html:14
+msgid "Install With URL"
+msgstr "Installer avec une URL"
 
-#: onyx/templates/transport/ratp/metro/result.html:13
-#: onyx/templates/transport/ratp/rer/result.html:13
-msgid "Return to Home"
-msgstr "Retourner à l'accueil"
+#: onyx/templates/plugins/index.html:27
+msgid "You have not install some plugin"
+msgstr "Vous n'avez aucun plugins"
 
-#: onyx/templates/tv/index.html:3
-msgid "TV Program"
-msgstr "Programme TV"
+#: onyx/templates/plugins/index.html:39
+msgid "View"
+msgstr "Vues"
 
-#: onyx/templates/utilities/index.html:13
-msgid "Chronometre"
-msgstr "Chronomètre"
+#: onyx/templates/plugins/index.html:40
+msgid "Uninstall"
+msgstr "Désinstaller"
 
-#: onyx/templates/utilities/index.html:34
-msgid "Randomizer"
-msgstr "Générateur"
+#: onyx/templates/plugins/index.html:41
+msgid "Update"
+msgstr "Mettre à jour"
 
-#: onyx/templates/utilities/index.html:41
-msgid "Converter"
-msgstr "Convertisseur"
+#: onyx/templates/plugins/index.html:42
+msgid "Config"
+msgstr "Configuration"
 
-#: onyx/templates/utilities/index.html:50
-msgid "Calculator"
-msgstr "Calculatrice"
+#: onyx/templates/plugins/index.html:93 onyx/templates/plugins/index.html:94
+msgid "URL"
+msgstr "URL"
 
-#: onyx/templates/wiki/index.html:5
-msgid "Wiki"
-msgstr "Wiki"
+#: onyx/templates/plugins/index.html:96 onyx/templates/plugins/index.html:97
+msgid "Plugin Name"
+msgstr "Nom du module"
 
-#: onyx/templates/wiki/result.html:8
-msgid "Submit"
+#: onyx/templates/plugins/index.html:99 onyx/templates/task/index.html:19
+#: onyx/templates/wiki/index.html:12
+msgid "Send"
 msgstr "Envoyer"
 
-#: onyx/templates/wiki/result.html:13
+#: onyx/templates/plugins/reboot.html:8
+msgid "Reboot"
+msgstr "Redémarrer"
+
+#: onyx/templates/plugins/reboot.html:11
+msgid "Please restart Onyx to clean"
+msgstr "S'il vous plait, redémarrer Onyx"
+
+#: onyx/templates/task/index.html:3
+msgid "Task"
+msgstr "Taches"
+
+#: onyx/templates/task/index.html:12
+msgid "To Do"
+msgstr "Mes taches"
+
+#: onyx/templates/task/index.html:14
+msgid "What do you want to do ?"
+msgstr "Que voulez vous faire ?"
+
+#: onyx/templates/task/index.html:17
+msgid "Add to Calendar"
+msgstr "Ajouter au calendrier"
+
+#: onyx/templates/transport/ratp/metro/1.html:3
+msgid "M1"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/10.html:3
+msgid "M10"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/11.html:3
+msgid "M11"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/12.html:3
+msgid "M12"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/13.html:3
+msgid "M13"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/14.html:3
+msgid "M14"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/2.html:3
+msgid "M2"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/3.html:3
+msgid "M3"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/3b.html:3
+msgid "M3b"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/4.html:3
+msgid "M4"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/5.html:3
+msgid "M5"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/6.html:3
+msgid "M6"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/7.html:3
+msgid "M7"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/7b.html:3
+msgid "M7b"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/8.html:3
+msgid "M8"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/9.html:3
+msgid "M9"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/index.html:3
+msgid "Metro"
+msgstr ""
+
+#: onyx/templates/transport/ratp/metro/result.html:3
+#: onyx/templates/transport/ratp/rer/result.html:3
+#: onyx/templates/wiki/result.html:17
 msgid "Result"
 msgstr "Résultat"
 
-#: onyx/templates/wiki/result.html:25
+#: onyx/templates/transport/ratp/metro/result.html:17
+#: onyx/templates/transport/ratp/rer/result.html:16
+msgid "Return to Home"
+msgstr "Retourner à l'accueil"
+
+#: onyx/templates/transport/ratp/rer/RA.html:3
+msgid "RER A"
+msgstr ""
+
+#: onyx/templates/transport/ratp/rer/RB.html:3
+msgid "RER B"
+msgstr ""
+
+#: onyx/templates/transport/ratp/rer/index.html:3
+msgid "RER"
+msgstr ""
+
+#: onyx/templates/tv/index.html:3
+msgid "TV"
+msgstr ""
+
+#: onyx/templates/tv/index.html:7
+msgid "TV Program"
+msgstr "Programme TV"
+
+#: onyx/templates/utilities/index.html:15
+msgid "Randomizer"
+msgstr "Générateur"
+
+#: onyx/templates/utilities/index.html:22
+msgid "Converter"
+msgstr "Convertisseur"
+
+#: onyx/templates/utilities/index.html:31
+msgid "Calculator"
+msgstr "Calculatrice"
+
+#: onyx/templates/wiki/result.html:12
+msgid "Submit"
+msgstr "Envoyer"
+
+#: onyx/templates/wiki/result.html:29
 msgid "See all article in "
 msgstr "Voir tout l'article sur "
 
@@ -526,4 +756,31 @@ msgstr "Voir tout l'article sur "
 
 #~ msgid "Re Send"
 #~ msgstr "Réenvoyer"
+
+#~ msgid "Quel temps fait il ?"
+#~ msgstr "Quel temps fait il ?"
+
+#~ msgid "Forget your password ? Ask Administrator"
+#~ msgstr "Vous avez oublié votre mot de passe ? Contacter l'Administrateur"
+
+#~ msgid "Not register ?"
+#~ msgstr "Non Inscrit ?"
+
+#~ msgid "Already registered ?"
+#~ msgstr "Déjà inscrit ?"
+
+#~ msgid "Store"
+#~ msgstr "Magasin"
+
+#~ msgid "Go To the API"
+#~ msgstr "Aller sur l'API"
+
+#~ msgid "Remove account"
+#~ msgstr "Supprimer des comptes"
+
+#~ msgid "Store not available !"
+#~ msgstr "Magasin non disponible pour le moment !"
+
+#~ msgid "Chronometre"
+#~ msgstr "Chronomètre"
 

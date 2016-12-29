@@ -12,6 +12,7 @@ from flask.ext.login import login_user, current_user, LoginManager
 from onyxbabel import gettext as _
 from onyx.extensions import db, login_manager
 from onyx.core.models import *
+from onyx.api.install import *
 import os
 import hashlib
 
@@ -24,7 +25,7 @@ def setInstall():
 		db.session.commit()
 		login_user(user)
 	except:
-		flash('Une erreur est survenue !' , 'error')
+		flash('An error has occured !' , 'error')
 		return redirect(url_for('install.index'))
-	flash('Onyx a bien été installé !' , 'success')
+	flash('Onyx is installed !' , 'success')
 	return redirect(url_for("install.finish"))

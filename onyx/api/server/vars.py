@@ -7,6 +7,9 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import g, request
 from flask_login import current_user
 from onyx.api.user import *
@@ -19,6 +22,7 @@ import psutil
 import os
 import socket
 import sys
+from onyx.api.assets import decodeJSON
 
 def get_ram():
 	ram = psutil.virtual_memory()
@@ -38,7 +42,11 @@ def get_ipaddress():
 	return socket.getfqdn()
 
 
+
+
 def getG(app):
+
+
 	@app.before_request
 	def gvar():
 		try:
@@ -58,14 +66,23 @@ def getG(app):
 
 	@app.before_request
 	def gvariables():
-		g.version = "0.3.9"
+		g.version = "0.3.10"
 		g.ram = "width: "+str(get_ram())+"%"
 		g.uptime = get_up_stats()
 		g.disk = "width: "+str(get_disk())+"%"
 		g.ip = get_ipaddress()
 		g.gapi = app.config.get('GAPI')
 		g.gcx = app.config.get('GCX')
-		g.action = { gettext('Quel temps fait il ?'): { "id" : "0" , "type" : "url" , "url" : "weather" }, gettext('Weather'): { "id" : "1" , "type" : "url" , "url" : "weather" } }
+		data = decodeJSON.decode_action(g.lang)
+		try:
+			json_raw = []
+			e = 0
+			while e < len(data):
+				json_raw.append(data[e]['text'])
+				e+=1
+			g.action = json_raw
+		except:
+			g.action = 0
 
 def getContext(app,babel):
 

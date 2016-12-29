@@ -9,3 +9,4 @@ You may not use this software for commercial purposes.
 
 from onyx.api.plugins.install import *
 from onyx.api.plugins.uninstall import *
+from onyx.api.plugins.update import *
