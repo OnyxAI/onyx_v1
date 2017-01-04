@@ -15,4 +15,4 @@ from onyx.api.geolocalisation import *
 def get_weather():
 	geoloc = get_geoloc()
 	result = decodeJSON.decodeURL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(geoloc["lat"]) + "&lon=" + str(geoloc["lon"]) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69")
-	return "Il fait " + str(round(result["list"][0]["temp"]["day"])) + " degres a " + str(result["city"]["name"]) + " !"
+	return "Il fait " + str(round(result["list"][0]["temp"]["day"])) + " degré a " + str(result["city"]["name"]) + " !"

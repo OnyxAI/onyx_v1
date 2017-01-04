@@ -22,8 +22,9 @@ from onyx.api.server import *
 from flask._compat import text_type
 from multiprocessing import Process
 manager = Manager(create_app)
-
 import getopt
+
+
 
 def run():
     port = "5000"
@@ -31,14 +32,22 @@ def run():
     env = "Production"
     argv = sys.argv[1:]
     argv.remove('runserver')
+    if '-d' in argv:
+        env = "Debug"
+    try:
+        argv.remove('-d')
+    except:
+        pass
     myopts, args = getopt.getopt(argv,"h:p:")
     for o, a in myopts:
         if o == '-p':
             port=a
         elif o == '-h':
             ip=a
-        elif o == '-d':
-            env = "Debug"
+        else:
+            pass
+
+
     print(' _____   __   _  __    __ __    __ ')
     print('/  _  \ |  \ | | \ \  / / \ \  / / ')
     print('| | | | |   \| |  \ \/ /   \ \/ /')
