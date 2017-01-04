@@ -13,10 +13,6 @@ import os
 import onyx
 
 path = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
-try:
-	path.remove('__pycache__')
-except:
-	print('No Cache')
 
 plugin = []
 for module in path:

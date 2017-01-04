@@ -8,12 +8,12 @@ You may not use this software for commercial purposes.
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import sys
+sys.dont_write_bytecode = True
 import Onyx
 import os
 import pip
 from multiprocessing import Process
-import sys
 
 from .onyx import create_app
 from .onyx.extensions import db
@@ -35,17 +35,26 @@ def init():
             print('No Init for '+name)
 
 def runserver():
-	#Check Updates
-	print("Onyx is starting")
 	print(' _____   __   _  __    __ __    __ ')
-	print('/  _  \ |  \ | | \ \  / / \ \  / / ')
-	print('| | | | |   \| |  \ \/ /   \ \/ /')
-	print('| | | | | |\   |   \  /     }  {')
-	print('| |_| | | | \  |   / /     / /\ \ ')
-	print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
+    print('/  _  \ |  \ | | \ \  / / \ \  / / ')
+    print('| | | | |   \| |  \ \/ /   \ \/ /')
+    print('| | | | | |\   |   \  /     }  {')
+    print('| |_| | | | \  |   / /     / /\ \ ')
+    print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
+    print('')
+    print('-------------------------------------------------------')
+    print('')
+    print('Environment: Production')
+    print('Port: 8000')
+    print('')
+    print('-------------------------------------------------------')
+    from datetime import datetime
+    print(datetime.utcnow())
+    print('')
+
+    version = get_version()
+    print('Onyx Version : '+version)
 	run_flask = Process(target = run)
 	run_flask.start()
 	init_plugin = Process(target = init)
 	init_plugin.start()
-
-	

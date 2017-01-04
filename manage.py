@@ -10,19 +10,42 @@ You may not use this software for commercial purposes.
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+sys.dont_write_bytecode = True
 from flask import json
 from flask_script import Manager , Server
 from flask_migrate import MigrateCommand
 import time
 from onyx import create_app
 from onyx.extensions import db
+from onyx.api.server import *
 
 from multiprocessing import Process
-import sys
-
 manager = Manager(create_app)
 
 def run():
+    print(' _____   __   _  __    __ __    __ ')
+    print('/  _  \ |  \ | | \ \  / / \ \  / / ')
+    print('| | | | |   \| |  \ \/ /   \ \/ /')
+    print('| | | | | |\   |   \  /     }  {')
+    print('| |_| | | | \  |   / /     / /\ \ ')
+    print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
+    print('')
+    print('-------------------------------------------------------')
+    print('')
+    print('Environment: Production')
+    print('Port: 8000')
+    print('')
+    print('-------------------------------------------------------')
+    from datetime import datetime
+    print(datetime.utcnow())
+    print('')
+
+    version = get_version()
+    print('Onyx Version : '+version)
+    print('')
+    print('-------------------------------------------------------')
+    print('You can close Onyx at any time with Ctrl-C')
     manager.run()
 
 def init():

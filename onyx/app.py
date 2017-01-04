@@ -8,6 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
+
 import os
 import sys
 try:
@@ -25,8 +26,11 @@ from onyx.config import get_config
 from onyx.api.server import *
 from celery import Celery
 
-#from onyx.plugins.speak import speak
-#speak('Bonjour bienvenue sur Onyx')
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
+
 
 __all__ = ('create_app', 'create_celery')
 
@@ -82,11 +86,12 @@ def create_app(config=None, app_name='onyx', blueprints=None):
                 api.version_control(app.config['SQLALCHEMY_DATABASE_URI'], app.config['SQLALCHEMY_MIGRATE_REPO'],
                                     api.version(app.config['SQLALCHEMY_MIGRATE_REPO']))
         except:
-            print("Migrate Already Done")
+            pass
         print ("Base de donnee initialisee")
 
     init_plugin()
 
+    print('Onyx is ready !')
     return app
 
 def create_celery(app):

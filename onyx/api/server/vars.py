@@ -24,6 +24,13 @@ import sys
 from onyx.api.assets import decodeJSON
 from onyx.api.navbar import *
 
+def get_version():
+	try:
+		import Onyx
+		return Onyx.__version__
+	except:
+		return "0.3.12"
+
 def get_ram():
 	ram = psutil.virtual_memory()
 	return ram.percent
