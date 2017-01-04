@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
@@ -18,7 +19,7 @@ def getEvent():
 	events = []
 	query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(str(current_user.id)))
 
-	for fetch in query:	
+	for fetch in query:
 		e = {}
 		e['id'] = fetch.id
 		e['title'] = fetch.title
@@ -28,5 +29,5 @@ def getEvent():
 		e['end'] = fetch.end
 		e['color'] = fetch.color
 		events.append(e)
-		
+
 	return render_template('calendar/index.html' , events=events)

@@ -12,6 +12,7 @@
       <ul class="tabs">
           <li class="tab col s3"><a class="active" href="#system">{{_('System')}}</a></li>
           <li class="tab col s3"><a href="#param">{{_('Parameter')}}</a></li>
+          <li class="tab col s3"><a href="#navbar">{{_('Navbar')}}</a></li>
           {% if g.admin == 1 %}
             <li class="tab col s3"><a href="#admin">{{_('Admin')}}</a></li>
           {% endif %}
@@ -66,9 +67,6 @@
 <div id="param" >
 <div class="card-panel white">
       <br>
-      <form class="form" method=post action="">
-         <div class="container">
-
             <form class="form" method=post action="">
                <label for="color" >{{_("Color")}}</label>
                   <br>
@@ -140,15 +138,43 @@
                         <option value="fr">{{_("French")}}</option>
                         <option value="en">{{_("English")}}</option> 
                   </select>
-            </div>
+           
             <br><br>
             <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
       </form>
-
+   </div>
 </div>
-
 </div>
-
+  
+<div id='navbar'>
+  <div class="card-panel white">
+    <h4>{{ _("Navbar") }}</h4><br><br>
+    {% for nav in g.navbar %}
+    <div class="row">
+    <form class="form" method=post action="{{url_for('core.update_navbar')}}">
+        <div class="col s4">
+          <a href="#" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
+            <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col s4">
+          <input type="hidden" name="last" value="{{nav.id}}">
+          <select name="new" class="browser-default">
+            {% for list in g.list %}
+              {% if list.url != None %}
+               <option value="{{list.id}}">{{ list.tooltip }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col s4">
+          <button class='btn {{buttonColor}}'>{{_('Submit')}}</button>
+        </div>
+    </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
 <div id="admin" >
  {% if g.admin == 1 %}

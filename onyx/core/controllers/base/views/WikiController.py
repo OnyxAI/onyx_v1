@@ -1,14 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from .. import core
 from flask import render_template , request
 from flask.ext.login import login_required
@@ -26,7 +25,7 @@ def wiki():
 		@api {post} /wiki Request Wiki Article
 		@apiName getArticle
 		@apiGroup Wiki
-		@apiPermission authenticated 
+		@apiPermission authenticated
 
 		@apiParam {String} search Search Input
 
@@ -36,8 +35,6 @@ def wiki():
 		@apiSuccess (200) {String} article.summary Article Content
 
 		@apiError NoExist No Article Exist
-		
+
 		"""
     	return getArticle()
-    	
-    

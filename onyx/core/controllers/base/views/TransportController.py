@@ -1,14 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from .. import core
 from flask import render_template, request
 
@@ -33,7 +32,7 @@ def rer(name):
         @api {get} /transport/rer/:string Get Rer Info
         @apiName getRer
         @apiGroup Transport | RER
-        @apiPermission authenticated 
+        @apiPermission authenticated
 
         @apiSuccess (200) {String} name Name of RER
         @apiSuccess (200) {select} station Get Station
@@ -50,7 +49,7 @@ def rer(name):
         @api {post} /transport/rer/:string Get Rer Schedule Info
         @apiName serRer
         @apiGroup Transport | RER
-        @apiPermission authenticated 
+        @apiPermission authenticated
 
         @apiParam {String} name Name of RER
         @apiParam {select} station Station
@@ -61,7 +60,7 @@ def rer(name):
         @apiSuccess (200) {String} result.name Rer Station
 
         @apiError NoExist No Schedule Exist for This Rer
-        
+
         """
         return setRer(name)
 
@@ -71,7 +70,7 @@ def metros():
     if request.method == 'GET':
         return render_template('transport/ratp/metro/index.html')
     elif request.method == 'POST':
-        return redirect('transport/metro/'+request.form['metroline']) 
+        return redirect('transport/metro/'+request.form['metroline'])
 
 
 
@@ -82,7 +81,7 @@ def metro(name):
         @api {get} /transport/metro/:string Get Metro Info
         @apiName getMetro
         @apiGroup Transport | Metro
-        @apiPermission authenticated 
+        @apiPermission authenticated
 
         @apiSuccess (200) {String} name Name of Metro
         @apiSuccess (200) {select} station Get Station
@@ -99,7 +98,7 @@ def metro(name):
         @api {post} /transport/metro/:string Get Metro Schedule Info
         @apiName serMetro
         @apiGroup Transport | Metro
-        @apiPermission authenticated 
+        @apiPermission authenticated
 
         @apiParam {String} name Name of Metro
         @apiParam {select} station Station
@@ -110,6 +109,6 @@ def metro(name):
         @apiSuccess (200) {String} result.name Metro Station
 
         @apiError NoExist No Schedule Exist for This Station
-        
+
         """
         return setMetro(name)

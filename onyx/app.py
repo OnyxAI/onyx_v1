@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-# -*- coding: utf-8 -*-
+
 import os
 import sys
 try:
@@ -22,6 +23,7 @@ from flask_login import current_user
 from os.path import dirname, abspath, join
 from onyx.config import get_config
 from onyx.api.server import *
+from celery import Celery
 
 #from onyx.plugins.speak import speak
 #speak('Bonjour bienvenue sur Onyx')
@@ -33,7 +35,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
     app = Flask(app_name,
         static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'),
         template_folder = 'templates'
-    )    
+    )
     app.config.from_object('onyx.flask_config')
     app.config.from_pyfile('../local.cfg', silent=True)
     if config:
@@ -52,7 +54,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
                 BLUEPRINTS.append(module.get_blueprint())
             except:
                 print('No Blueprint for module : ' + module.get_name())
-        
+
         blueprint_name = 'core'
     else:
         from onyx.core.controllers.install import install
@@ -63,11 +65,11 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         blueprints = BLUEPRINTS
 
     blueprints_fabrics(app, blueprints)
-    
-    
+
+
     error_pages(app , blueprint_name)
     gvars(app)
-    
+
 
     with app.app_context():
         from migrate.versioning import api
@@ -82,18 +84,33 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         except:
             print("Migrate Already Done")
         print ("Base de donnee initialisee")
-        
 
+    init_plugin()
+
+    return app
+
+def create_celery(app):
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
+
+@celery.task(ignore_result=True)
+def init_plugin():
     from onyx.plugins import plugin
     for module in plugin:
         try:
             module.init(app)
         except:
-            module.init()
+            print('No Init')
 
 
-    return app
-  
 def blueprints_fabrics(app, blueprints):
     """Configure blueprints in views."""
     try:
@@ -109,6 +126,7 @@ def extensions_fabrics(app):
     pages.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app)
+    celery.config_from_object(app.config)
 
 
 def gvars(app):
@@ -133,5 +151,3 @@ def error_pages(app , name):
     @app.errorhandler(500)
     def server_error_page(error):
         return render_template("404html", blueprint=name), 500
-
-

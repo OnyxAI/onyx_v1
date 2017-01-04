@@ -1,14 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from .. import core
 from flask import render_template, request , redirect , url_for, flash, g
 from flask.ext.login import login_required
@@ -38,7 +37,7 @@ def plugins():
 		except KeyError:
 			print('No view for ' + data['name'])
 		plug.append(e)
-	
+
 	try:
 		lists = decodeJSON.decodeURL('http://onyxproject.fr/'+g.lang+'/plugin_json')
 	except:
@@ -83,8 +82,9 @@ def uninstall_plugin(name):
 		flash(gettext('Plugin Uninstalled !'), 'success')
 		return redirect(url_for('core.reboot_plugin'))
 	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.plugins'))
+		uninstall(name)
+		flash(gettext('Plugin Uninstalled !'), 'success')
+		return redirect(url_for('core.reboot_plugin'))
 
 @core.route('plugins/update/<string:name>')
 @login_required

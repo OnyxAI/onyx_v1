@@ -1,14 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from .. import core
 from flask import request
 from flask.ext.login import login_required
@@ -23,7 +22,7 @@ def tasks():
 		@api {get} /task Get Task Information
 		@apiName getTask
 		@apiGroup Task
-		@apiPermission authenticated 
+		@apiPermission authenticated
 
 		@apiSuccess (200) {Object[]} tasks List of Task
 		@apiSuccess (200) {Number} tasks.id Id of Task
@@ -41,7 +40,7 @@ def tasks():
 		@api {post} /task Add Task
 		@apiName addTask
 		@apiGroup Task
-		@apiPermission authenticated 
+		@apiPermission authenticated
 
 		@apiSuccess (200) {Number} tasks.idCalendar Calendar Id of Task
 		@apiSuccess (200) {String} tasks.text Text of Task
@@ -55,7 +54,7 @@ def tasks():
 		@apiSuccess (200) redirect Redirect to Task
 
 		@apiError AlreadyExist This Task already Exist
-		
+
 		"""
 		return addTask()
 
@@ -64,13 +63,13 @@ def tasks():
 		@api {delete} /task Delete Task
 		@apiName deleteTask
 		@apiGroup Calendar
-		@apiPermission authenticated 
+		@apiPermission authenticated
 
 		@apiParam {Number} id Id
 		@apiParam {Number} idCalendar Id of Calendar Event
 
 		@apiSuccess (200) redirect Redirect to Task
-		
+
 		"""
 		return deleteTask()
 

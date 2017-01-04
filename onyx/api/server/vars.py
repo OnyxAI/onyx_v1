@@ -1,18 +1,17 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from flask import g, request
 from flask_login import current_user
 from onyx.api.user import *
+from onyx.core.models import *
 from onyxbabel import gettext
 import shutil
 import json
@@ -23,6 +22,7 @@ import os
 import socket
 import sys
 from onyx.api.assets import decodeJSON
+from onyx.api.navbar import *
 
 def get_ram():
 	ram = psutil.virtual_memory()
@@ -35,14 +35,11 @@ def get_disk():
 def get_up_stats():
 	from uptime import uptime
 	m, s = divmod(uptime(), 60)
-	h, m = divmod(m, 60) 
+	h, m = divmod(m, 60)
 	return "%d:%02d:%02d" % (h, m, s)
 
 def get_ipaddress():
 	return socket.getfqdn()
-
-
-
 
 def getG(app):
 
@@ -76,13 +73,17 @@ def getG(app):
 		data = decodeJSON.decode_action(g.lang)
 		try:
 			json_raw = []
-			e = 0
-			while e < len(data):
-				json_raw.append(data[e]['text'])
-				e+=1
+			for key in data:
+				json_raw.append(key['text'])
 			g.action = json_raw
 		except:
 			g.action = 0
+
+		navbar = get_nav()
+		list = get_list()
+		g.navbar = navbar
+		g.list = list
+
 
 def getContext(app,babel):
 
@@ -110,8 +111,8 @@ def getContext(app,babel):
 	def getHost():
 		getHost = socket.gethostname()
 		return dict(getHost=getHost)
-  
-  
+
+
 	@app.context_processor
 	def inject_user():
 		try:

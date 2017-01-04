@@ -1,12 +1,4 @@
-{% with Notif = get_flashed_messages() %}
-{% if Notif %}
-{% for NotifText in Notif %}
-<script type="text/javascript">
-  window.onload = function() { new PNotify('{{ NotifText }}');};
-</script>
-{% endfor %}
-{% endif %}
-{% endwith %}
+
 
 
 {% with errors = get_flashed_messages(category_filter=["error"]) %}

@@ -1,15 +1,12 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-# -*- coding: utf-8 -*-
-
-
 
 from flask_mail import Mail
 mail = Mail()
@@ -44,5 +41,3 @@ cache = Cache()
 
 from celery import Celery
 celery = Celery()
-
-

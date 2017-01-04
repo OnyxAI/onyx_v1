@@ -1,12 +1,12 @@
+# -*- coding: utf-8 -*-
 """
 Onyx Project
 http://onyxproject.fr
-Software under licence Creative Commons 3.0 France 
+Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-# -*- coding: utf-8 -*-
 
 from flask import Blueprint, render_template, redirect, request, current_app, g, flash, url_for
 from flask.ext.login import login_required
@@ -39,14 +39,14 @@ def index():
 		@apiSuccess (200) redirect Redirect to Restart
 
 		@apiError AlreadyExist This User already Exist
-		
+
 		"""
 		try:
 			get_data()
 		except:
 			print('Error Git')
 		return setInstall()
-    
+
 @install.route('finish')
 @login_required
 def finish():
@@ -57,4 +57,3 @@ def finish():
 	with open(configPath, 'w') as configfile:
 		installConfig.write(configfile)
 	return render_template('install/finish.html')
-
