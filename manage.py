@@ -21,6 +21,7 @@ from onyx.extensions import db
 from onyx.api.server import *
 from flask._compat import text_type
 from multiprocessing import Process
+import onyx
 manager = Manager(create_app)
 import getopt
 
@@ -72,6 +73,11 @@ def run():
     print('You can close Onyx at any time with Ctrl-C')
     print('')
     print('-------------------------------------------------------')
+    try:
+        os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
+        print('Config File Create')
+    except:
+        print('Config Already File Create')
     manager.run()
 
 def init():
