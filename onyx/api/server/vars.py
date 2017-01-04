@@ -23,6 +23,9 @@ import socket
 import sys
 from onyx.api.assets import decodeJSON
 from onyx.api.navbar import *
+from onyx.api.house import *
+from onyx.api.room import *
+from onyx.api.machine import *
 
 def get_version():
 	try:
@@ -90,6 +93,12 @@ def getG(app):
 		list = get_list()
 		g.navbar = navbar
 		g.list = list
+		houses = get_house()
+		g.houses = houses
+		rooms = get_room()
+		g.rooms = rooms
+		machines = get_machine()
+		g.machines = machines
 
 
 def getContext(app,babel):

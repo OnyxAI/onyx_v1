@@ -15,6 +15,8 @@ from onyx.decorators import admin_required
 from onyx.api.navbar import *
 from onyx.api.options import *
 from onyx.api.server import *
+from onyx.api.install import data
+from onyx.api.house import *
 
 
 
@@ -93,6 +95,87 @@ def maj():
 	@apiError NoPip No Pip Install
 	"""
 	return maj_pip()
+
+@core.route('data/update')
+@admin_required
+@login_required
+def update_data_git():
+	data.update_data()
+	flash(gettext('Data Modified'), 'success')
+	return redirect(url_for('core.options'))
+
+@core.route('house/add', methods=['POST'])
+@admin_required
+@login_required
+def add_house():
+	try:
+		add_house_db()
+		flash(gettext('House Add'), 'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.options'))
+
+@core.route('house/delete/<int:id>')
+@admin_required
+@login_required
+def delete_house(id):
+	try:
+		delete_house_db(id)
+		flash(gettext('House Deleted'), 'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.options'))
+
+
+@core.route('room/add', methods=['POST'])
+@admin_required
+@login_required
+def add_room():
+	try:
+		add_room_db()
+		flash(gettext('Room Add'), 'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.options'))
+
+@core.route('room/delete/<int:id>')
+@admin_required
+@login_required
+def delete_room(id):
+	try:
+		delete_room_db(id)
+		flash(gettext('Room Deleted'), 'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.options'))
+
+@core.route('machine/add', methods=['POST'])
+@admin_required
+@login_required
+def add_machine():
+	try:
+		add_machine_db()
+		flash(gettext('Machine Add'), 'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.options'))
+
+@core.route('machine/delete/<int:id>')
+@admin_required
+@login_required
+def delete_machine(id):
+	try:
+		delete_machine_db(id)
+		flash(gettext('Machine Deleted'), 'success')
+		return redirect(url_for('core.options'))
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.options'))
 
 @core.route('navbar/update' , methods=['POST'])
 @login_required

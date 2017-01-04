@@ -34,6 +34,7 @@ def run():
     env = "Production"
     argv = sys.argv[1:]
     argv.remove('runserver')
+    argv.remove('-r')
     if '-d' in argv:
         env = "Debug"
     try:
@@ -48,8 +49,6 @@ def run():
             ip=a
         else:
             pass
-
-
     print(' _____   __   _  __    __ __    __ ')
     print('/  _  \ |  \ | | \ \  / / \ \  / / ')
     print('| | | | |   \| |  \ \/ /   \ \/ /')

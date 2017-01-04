@@ -14,6 +14,9 @@
           <li class="tab col s3"><a href="#param">{{_('Parameter')}}</a></li>
           <li class="tab col s3"><a href="#navbar">{{_('Navbar')}}</a></li>
           {% if g.admin == 1 %}
+            <li class="tab col s3"><a href="#house">{{_('House')}}</a></li>
+            <li class="tab col s3"><a href="#room">{{_('Room')}}</a></li>
+            <li class="tab col s3"><a href="#machine">{{_('Machine')}}</a></li>
             <li class="tab col s3"><a href="#admin">{{_('Admin')}}</a></li>
           {% endif %}
     </ul>
@@ -45,8 +48,8 @@
               </div></td>
           </tr>
           <tr>
-            <td>{{ _('IP') }}</td>
-            <td>{{ g.ip }}</td>
+            <td>{{ _('Data') }}</td>
+            <td><a href="{{ url_for('core.update_data_git') }}" class="btn {{buttonColor}}">{{_('Update Data')}}</a></td>
           </tr>
           <tr>
             <td>{{ _('Disk') }}</td>
@@ -136,16 +139,150 @@
                   <label for="lang" >{{_("Langue")}}</label>
                   <select name="lang" class="browser-default">
                         <option value="fr">{{_("French")}}</option>
-                        <option value="en">{{_("English")}}</option> 
+                        <option value="en">{{_("English")}}</option>
                   </select>
-           
+
             <br><br>
             <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
       </form>
    </div>
 </div>
 </div>
-  
+
+<div id="house" >
+<div class="card-panel white">
+  <table class="white responsive-table">
+    <thead>
+      <tr>
+          <th data-field="name">{{_('House')}}</th>
+          <th data-field="address">{{_('Address')}}</th>
+          <th data-field="city">{{_('City')}}</th>
+          <th data-field="postal">{{_('Zip Code')}}</th>
+          <th data-field="country">{{_('Country')}}</th>
+          <th data-field="latitude">{{_('Latitude')}}</th>
+          <th data-field="longitude">{{_('Longitude')}}</th>
+          <th>{{_('Change')}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for house in g.houses %}
+        <tr>
+            <td>{{house.name}}</td>
+            <td>{{house.address}}</td>
+            <td>{{house.city}}</td>
+            <td>{{house.postal}}</td>
+            <td>{{house.country}}</td>
+            <td>{{house.latitude}}</td>
+            <td>{{house.longitude}}</td>
+            <td><a href="{{url_for('core.delete_house', id=house.id)}}" class="btn {{buttonColor}}">{{_('Delete')}}</a></td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <form action="{{url_for('core.add_house')}}" method="post">
+          <td><input placeholder="{{_('House')}}" type="text" id="name" name="name" required></td>
+          <td><input placeholder="{{_('Address')}}" type="text" id="address" name="address" required></td>
+          <td><input placeholder="{{_('City')}}" type="text" id="city" name="city" required></td>
+          <td><input placeholder="{{_('Zip Code')}}" type="text" id="postal" name="postal" required></td>
+          <td><input placeholder="{{_('Country')}}" type="text" id="country" name="country" required></td>
+          <td><input placeholder="{{_('Latitude')}}" type="text" id="latitude" name="latitude" required></td>
+          <td><input placeholder="{{_('Longitude')}}" type="text" id="longitude" name="longitude" required></td>
+          <td><button class="btn {{ buttonColor }}" type="submit" name="button">{{_('Send')}}</button></td>
+        </form>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div id="room" >
+<div class="card-panel white">
+  <table class="white responsive-table">
+    <thead>
+      <tr>
+          <th data-field="name">{{_('Name')}}</th>
+          <th data-field="house">{{_('House')}}</th>
+          <th>{{_('Change')}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for room in g.rooms %}
+        <tr>
+            <td>{{room.name}}</td>
+            <td>{{room.house}}</td>
+            <td><a href="{{url_for('core.delete_room', id=room.id)}}" class="btn {{buttonColor}}">{{_('Delete')}}</a></td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <form action="{{url_for('core.add_room')}}" method="post">
+          <td><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
+          <td>
+              <select name="house" class="browser-default">
+                {% for house in g.houses %}
+                    <option value="{{house.name}}">{{house.name}}</option>
+                {% endfor %}
+              </select>
+          </td>
+          <td><button class="btn {{ buttonColor }}" type="submit" name="button">{{_('Send')}}</button></td>
+        </form>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div id="machine" >
+<div class="card-panel white">
+  <table class="white responsive-table">
+    <thead>
+      <tr>
+          <th data-field="id">{{_('Id')}}</th>
+          <th data-field="name">{{_('Name')}}</th>
+          <th data-field="house">{{_('House')}}</th>
+          <th data-field="room">{{_('Room')}}</th>
+          <th data-field="host">{{_('Host')}}</th>
+          <th>{{_('Change')}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for machine in g.machines %}
+        <tr>
+            <td>{{machine.id}}</td>
+            <td>{{machine.name}}</td>
+            <td>{{machine.house}}</td>
+            <td>{{machine.room}}</td>
+            <td>{{machine.host}}</td>
+            <td><a href="{{url_for('core.delete_machine', id=machine.id)}}" class="btn {{buttonColor}}">{{_('Delete')}}</a></td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <form action="{{url_for('core.add_machine')}}" method="post">
+          <td></td>
+          <td><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
+          <td>
+              <select name="house" class="browser-default">
+                {% for house in g.houses %}
+                    <option value="{{house.name}}">{{house.name}}</option>
+                {% endfor %}
+              </select>
+          </td>
+          <td>
+              <select name="room" class="browser-default">
+                {% for room in g.rooms %}
+                    <option value="{{room.name}}">{{room.name}}</option>
+                {% endfor %}
+              </select>
+          </td>
+          <td><input placeholder="{{_('Host')}}" type="text" id="host" name="host" required></td>
+          <td><button class="btn {{ buttonColor }}" type="submit" name="button">{{_('Send')}}</button></td>
+        </form>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
 <div id='navbar'>
   <div class="card-panel white">
     <h4>{{ _("Navbar") }}</h4><br><br>
@@ -179,7 +316,7 @@
 <div id="admin" >
  {% if g.admin == 1 %}
  <div class="card-panel white">
-   
+
   <br><br>
   <h4>{{ _("Admin Options") }}</h4><br><br>
   <a href="{{ url_for('core.maj') }}" class="btn {{ buttonColor }}">{{_("Update Onyx")}}</a>
@@ -187,7 +324,7 @@
   <a href="{{ url_for('auth.account_manage') }}" class="btn {{ buttonColor }}">{{_("Manage Account")}}</a>
 
 
-  
+
 </div>
 {% endif %}
 </div>
