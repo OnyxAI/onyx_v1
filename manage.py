@@ -61,6 +61,8 @@ def run():
     print('-------------------------------------------------------')
     print('You can access to Onyx with : http://'+ip+':'+port)
     print('You can close Onyx at any time with Ctrl-C')
+    print('')
+    print('-------------------------------------------------------')
     manager.run()
 
 def init():

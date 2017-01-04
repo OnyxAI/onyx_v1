@@ -87,7 +87,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
                                     api.version(app.config['SQLALCHEMY_MIGRATE_REPO']))
         except:
             pass
-        print ("Base de donnee initialisee")
+        print ("Initialized Database")
 
     init_plugin()
 
