@@ -19,11 +19,26 @@ import time
 from onyx import create_app
 from onyx.extensions import db
 from onyx.api.server import *
-
+from flask._compat import text_type
 from multiprocessing import Process
 manager = Manager(create_app)
 
+import getopt
+
 def run():
+    port = "5000"
+    ip = "127.0.0.1"
+    env = "Production"
+    argv = sys.argv[1:]
+    argv.remove('runserver')
+    myopts, args = getopt.getopt(argv,"h:p:")
+    for o, a in myopts:
+        if o == '-p':
+            port=a
+        elif o == '-h':
+            ip=a
+        elif o == '-d':
+            env = "Debug"
     print(' _____   __   _  __    __ __    __ ')
     print('/  _  \ |  \ | | \ \  / / \ \  / / ')
     print('| | | | |   \| |  \ \/ /   \ \/ /')
@@ -33,18 +48,18 @@ def run():
     print('')
     print('-------------------------------------------------------')
     print('')
-    print('Environment: Production')
-    print('Port: 8000')
+    print('Environment: ' + env)
+    print('Port: '+ port)
     print('')
     print('-------------------------------------------------------')
     from datetime import datetime
     print(datetime.utcnow())
     print('')
-
     version = get_version()
     print('Onyx Version : '+version)
     print('')
     print('-------------------------------------------------------')
+    print('You can access to Onyx with : http://'+ip+':'+port)
     print('You can close Onyx at any time with Ctrl-C')
     manager.run()
 

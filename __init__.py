@@ -19,11 +19,47 @@ from .onyx import create_app
 from .onyx.extensions import db
 
 def run():
+	port = "5000"
+    ip = "127.0.0.1"
+    debug = False
+    argv = sys.argv[1:]
+    argv.remove('runserver')
+    myopts, args = getopt.getopt(argv,"h:p:")
+    for o, a in myopts:
+        if o == '-p':
+            port=a
+        elif o == '-h':
+            ip=a
+        elif o == '-d':
+            debug = True
+    print(' _____   __   _  __    __ __    __ ')
+    print('/  _  \ |  \ | | \ \  / / \ \  / / ')
+    print('| | | | |   \| |  \ \/ /   \ \/ /')
+    print('| | | | | |\   |   \  /     }  {')
+    print('| |_| | | | \  |   / /     / /\ \ ')
+    print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
+    print('')
+    print('-------------------------------------------------------')
+    print('')
+    print('Environment: ' + env)
+    print('Port: '+ port)
+    print('')
+    print('-------------------------------------------------------')
+    from datetime import datetime
+    print(datetime.utcnow())
+    print('')
+    version = get_version()
+    print('Onyx Version : '+version)
+    print('')
+    print('-------------------------------------------------------')
+    print('You can access to Onyx with : http://'+ip+':'+port)
+    print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()
 	try:
-		app.run('0.0.0.0' , port=80 , debug=True)
+		app.run(ip , port=int(port) , debug=debug)
 	except:
-		app.run('0.0.0.0' , port=8080 , debug=False)
+		print('Error with Args')
+		sys.exit(2)
 
 def init():
     from onyx.plugins import plugin
@@ -35,25 +71,6 @@ def init():
             print('No Init for '+name)
 
 def runserver():
-	print(' _____   __   _  __    __ __    __ ')
-    print('/  _  \ |  \ | | \ \  / / \ \  / / ')
-    print('| | | | |   \| |  \ \/ /   \ \/ /')
-    print('| | | | | |\   |   \  /     }  {')
-    print('| |_| | | | \  |   / /     / /\ \ ')
-    print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
-    print('')
-    print('-------------------------------------------------------')
-    print('')
-    print('Environment: Production')
-    print('Port: 8000')
-    print('')
-    print('-------------------------------------------------------')
-    from datetime import datetime
-    print(datetime.utcnow())
-    print('')
-
-    version = get_version()
-    print('Onyx Version : '+version)
 	run_flask = Process(target = run)
 	run_flask.start()
 	init_plugin = Process(target = init)
