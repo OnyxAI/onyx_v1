@@ -47,7 +47,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
 
     extensions_fabrics(app)
 
-    installConfig = get_config('install')
+    installConfig = get_config(app.config['INSTALL_FOLDER'])
     if installConfig.getboolean('Install', 'install'):
         from onyx.core.controllers.base import core
         from onyx.core.controllers.auth import auth

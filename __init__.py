@@ -14,22 +14,27 @@ import Onyx
 import os
 import pip
 from multiprocessing import Process
-
+import getopt
 from .onyx import create_app
 from .onyx.extensions import db
+from onyx.api.server import *
+import onyx
 
 def run():
 	port = "5000"
 	ip = "127.0.0.1"
 	debug = False
 	argv = sys.argv[1:]
-	argv.remove('runserver')
+	try:
+		argv.remove('runserver')
+	except:
+		pass
 	if '-d' in argv:
-        env = "Debug"
-    try:
-        argv.remove('-d')
-    except:
-        pass
+        	debug = "True"
+	try:
+		argv.remove('-d')
+	except:
+		pass
 	myopts, args = getopt.getopt(argv,"h:p:")
 	for o, a in myopts:
 		if o == '-p':
@@ -37,7 +42,7 @@ def run():
 		elif o == '-h':
 			ip=a
 		else:
-			pass
+			print('You must give -h <IP> -p <PORT>')
 	print(' _____   __   _  __    __ __    __ ')
 	print('/  _  \ |  \ | | \ \  / / \ \  / / ')
 	print('| | | | |   \| |  \ \/ /   \ \/ /')
@@ -47,7 +52,7 @@ def run():
 	print('')
 	print('-------------------------------------------------------')
 	print('')
-	print('Environment: ' + env)
+	print('Debug ' + str(debug))
 	print('Port: '+ port)
 	print('')
 	print('-------------------------------------------------------')
@@ -58,6 +63,11 @@ def run():
 	print('Onyx Version : '+version)
 	print('')
 	print('-------------------------------------------------------')
+	try:
+		os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
+		print('Config File Create')
+	except:
+		print('Config Already File Create')
 	print('You can access to Onyx with : http://'+ip+':'+port)
 	print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()

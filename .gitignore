@@ -7,10 +7,10 @@ venv
 onyxproject.egg-info
 dist
 
+/onyx/config/install_my.cfg
 /onyx/data/*
 !/onyx/data/.gitkeep
 /onyx/flask_config.py
-/onyx/config/install.cfg
 /onyx/db/*
 !/onyx/db/.gitkeep
 /db/*

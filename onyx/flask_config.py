@@ -8,13 +8,13 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from os.path import exists
-DEBUG = True
-SECRET_KEY = 'change mfgjndfghje please'
-SECURITY_PASSWORD_SALT= 'chanfghfdghge me please'
-
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath, join, exists
 import os
+
+INSTALL_FOLDER = 'install_my'
+SECRET_KEY = 'change me please'
+SECURITY_PASSWORD_SALT= 'change me please'
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 import onyx
