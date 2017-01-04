@@ -64,10 +64,13 @@ def run():
 	print('')
 	print('-------------------------------------------------------')
 	try:
-		os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
-		print('Config File Create')
-	except:
-		print('Config Already File Create')
+        if os.path.exists(str(onyx.__path__[0]) + "/flask_config.py"):
+            print('Config Already File Create')
+        else:
+            os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
+            print('Config File Create')
+    except:
+        print('Config Already File Create')
 	print('You can access to Onyx with : http://'+ip+':'+port)
 	print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()

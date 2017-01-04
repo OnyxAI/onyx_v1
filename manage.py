@@ -16,6 +16,7 @@ from flask import json
 from flask_script import Manager , Server
 from flask_migrate import MigrateCommand
 import time
+import os
 from onyx import create_app
 from onyx.extensions import db
 from onyx.api.server import *
@@ -74,8 +75,11 @@ def run():
     print('')
     print('-------------------------------------------------------')
     try:
-        os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
-        print('Config File Create')
+        if os.path.exists(str(onyx.__path__[0]) + "/flask_config.py"):
+            print('Config Already File Create')
+        else:
+            os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
+            print('Config File Create')
     except:
         print('Config Already File Create')
     manager.run()
