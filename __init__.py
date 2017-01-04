@@ -12,9 +12,27 @@ You may not use this software for commercial purposes.
 import Onyx
 import os
 import pip
+from multiprocessing import Process
+import sys
 
 from .onyx import create_app
 from .onyx.extensions import db
+
+def run():
+	app = create_app()
+	try:
+		app.run('0.0.0.0' , port=80 , debug=True)
+	except:
+		app.run('0.0.0.0' , port=8080 , debug=False)
+
+def init():
+    from onyx.plugins import plugin
+    for module in plugin:
+        try:
+            module.first()
+        except:
+            name = module.get_name()
+            print('No Init for '+name)
 
 def runserver():
 	#Check Updates
@@ -25,16 +43,9 @@ def runserver():
 	print('| | | | | |\   |   \  /     }  {')
 	print('| |_| | | | \  |   / /     / /\ \ ')
 	print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
-	try:
-		os.rename(str(Onyx.__path__[0]) + "/onyx/config_example.py" , str(Onyx.__path__[0]) + "/onyx/flask_config.py")
-		print('Config File Create')
-	except:
-		print('Config File Already Create')
-	print("Check Update")
-	pip.main(['install', '--upgrade' , "onyxproject"])
-	app = create_app()
-	try:
-		app.run('0.0.0.0' , port=80 , debug=False)
-	except:
-		app.run('0.0.0.0' , port=8080 , debug=False)
+	run_flask = Process(target = run)
+	run_flask.start()
+	init_plugin = Process(target = init)
+	init_plugin.start()
+
 	

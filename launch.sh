@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python manage.py runserver -h 0.0.0.0 -p 5008
+python manage.py runserver -h 0.0.0.0 -p 80

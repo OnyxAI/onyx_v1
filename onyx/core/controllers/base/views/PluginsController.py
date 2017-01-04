@@ -23,7 +23,10 @@ from onyx.decorators import admin_required
 @admin_required
 def plugins():
 	plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
-	plugins.remove('__pycache__')
+	try:
+		path.remove('__pycache__')
+	except:
+		print('No Cache')
 	plug = []
 	for plugin in plugins:
 		data = decodeJSON.package(plugin)
