@@ -13,7 +13,7 @@ You may not use this software for commercial purposes.
 import sys
 sys.dont_write_bytecode = True
 from flask import json
-from flask_script import Manager , Server
+from flask_script import Manager
 from flask_migrate import MigrateCommand
 import time
 import os
@@ -26,7 +26,7 @@ import onyx
 manager = Manager(create_app)
 import getopt
 
-
+server = Server()
 
 def run():
     port = "5000"
@@ -34,7 +34,10 @@ def run():
     env = "Production"
     argv = sys.argv[1:]
     argv.remove('runserver')
-    argv.remove('-r')
+    try:
+        argv.remove('-r')
+    except:
+        pass
     if '-d' in argv:
         env = "Debug"
     try:
@@ -65,7 +68,7 @@ def run():
     from datetime import datetime
     print(datetime.utcnow())
     print('')
-    version = get_version()
+    version = server.get_version()
     print('Onyx Version : '+version)
     print('')
     print('-------------------------------------------------------')
@@ -93,7 +96,10 @@ def init():
             print('No Init for '+name)
 
 if __name__=='__main__':
-     run_flask = Process(target = run)
-     run_flask.start()
-     init_plugin = Process(target = init)
-     init_plugin.start()
+    if '-r' in sys.argv[1:]:
+        run()
+    else:
+        run_flask = Process(target = run)
+        run_flask.start()
+        init_plugin = Process(target = init)
+        init_plugin.start()

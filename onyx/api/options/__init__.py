@@ -8,4 +8,28 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from onyx.api.options.account import setAccount
+from flask.ext.login import current_user
+from onyxbabel import gettext
+from onyx.core.models import *
+from onyx.extensions import db
+import json
+
+class Options:
+
+    def __init__(self):
+        self.color = None
+        self.lang = None
+
+    def set_account(self):
+        try:
+            query = UsersModel.User.query.filter_by(id=current_user.id).first()
+
+            query.buttonColor = self.color
+            query.lang = self.lang
+
+            db.session.add(query)
+            db.session.commit()
+            return json.dumps({"status":"success"})
+        except:
+            raise Exception('Error set account')
+            return json.dumps({"status":"error"})

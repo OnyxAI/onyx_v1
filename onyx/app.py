@@ -8,7 +8,6 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-
 import os
 import sys
 try:
@@ -16,6 +15,7 @@ try:
     sys.path.append(str(Onyx.__path__[0]))
 except:
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 
 from flask import Flask, request, render_template , g , abort , redirect , url_for
 from onyx.extensions import (db, mail, pages, manager, login_manager, babel, csrf, cache, celery)
@@ -51,8 +51,9 @@ def create_app(config=None, app_name='onyx', blueprints=None):
     if installConfig.getboolean('Install', 'install'):
         from onyx.core.controllers.base import core
         from onyx.core.controllers.auth import auth
+        from onyx.core.controllers.api import api
         from onyx.plugins import plugin
-        BLUEPRINTS = [core,auth]
+        BLUEPRINTS = [core,auth,api]
         for module in plugin:
             try:
                 BLUEPRINTS.append(module.get_blueprint())
@@ -69,6 +70,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         blueprints = BLUEPRINTS
 
     blueprints_fabrics(app, blueprints)
+
 
 
     error_pages(app , blueprint_name)
@@ -89,7 +91,6 @@ def create_app(config=None, app_name='onyx', blueprints=None):
             pass
         print ("Initialized Database")
 
-    init_plugin()
 
     print('Onyx is ready !')
     return app
@@ -106,14 +107,6 @@ def create_celery(app):
     celery.Task = ContextTask
     return celery
 
-@celery.task(ignore_result=True)
-def init_plugin():
-    from onyx.plugins import plugin
-    for module in plugin:
-        try:
-            module.init(app)
-        except:
-            print('No Init')
 
 
 def blueprints_fabrics(app, blueprints):
@@ -135,9 +128,25 @@ def extensions_fabrics(app):
 
 
 def gvars(app):
-
-    getG(app)
-    getContext(app,babel)
+    server = Server()
+    server.app = app
+    @app.before_request
+    def get_vars():
+        try:
+            server.user = current_user.username
+            server.lang = current_user.lang
+            server.email = current_user.email
+            server.id = current_user.id
+            server.admin = current_user.admin
+            server.get_vars()
+        except:
+            server.user = None
+            server.lang = None
+            server.email = None
+            server.id = None
+            server.admin = None
+            server.get_vars()
+    server.get_context(babel)
 
 def error_pages(app , name):
 

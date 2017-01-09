@@ -10,7 +10,7 @@
     body {
         background-image: url(/static/img/login/login.jpg);
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;      
+        -moz-osx-font-smoothing: grayscale;
     }
     .content{
         text-align: center;
@@ -21,18 +21,14 @@
 
 
 
-	<h1 style="color: white;">{{_("Welcome to Onyx")}}</h1>
-    <form action="http://www.google.com/search" target="_blank" METHOD="GET">
-        <input  type="text" name="q" VALUE SIZE="31" MAXLENGTH="255" placeholder="{{_('Search')}}">
-        <input type="submit" class="btn " value="{{_('Search')}}">
-    </form> 
+	<h1 style="color: white;">{{_("Onyx")}}</h1>
     </br>
-	<a href="{{ url_for('auth.login') }}" class="btn " >{{_("Login")}}</a>
+	<a href="{{ url_for('auth.login',next=next) }}" class="btn " >{{_("Login")}}</a>
 	<a href="{{ url_for('auth.register') }}" class="btn " >{{_("Register")}}</a>
 
-	
 
- 
+
+
 
 
 {% endblock %}

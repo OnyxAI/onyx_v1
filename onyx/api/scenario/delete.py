@@ -8,11 +8,11 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .. import core
-from flask import render_template
-from flask.ext.login import login_required
+from onyx.core.models import *
+from onyx.extensions import db
 
-@core.route('info')
-@login_required
-def info():
-    return "Test"
+def delete_scenario_db(id):
+	query = ScenarioModel.Scenario.query.filter_by(id=id).first()
+
+	db.session.delete(query)
+	db.session.commit()

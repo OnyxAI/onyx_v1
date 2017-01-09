@@ -8,7 +8,92 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from onyx.api.calendar.get import getEvent
-from onyx.api.calendar.add import addEvent
-from onyx.api.calendar.update import updateEvent
-from onyx.api.calendar.update import updateDate
+from flask_login import current_user
+from flask import jsonify
+from time import strftime
+from onyx.core.models import *
+from onyx.extensions import db
+import json
+
+class Calendar:
+
+    def __init__(self):
+        self.id = 0
+        self.title = 'Undefined'
+        self.notes = 'Undefined'
+        self.lieu = 'Home'
+        self.color = '#0071c5'
+        self.startdate = strftime("%Y-%m-%d  %H:%M:%S")
+        self.enddate = strftime("%Y-%m-%d  %H:%M:%S")
+
+    def add(self):
+        
+        try:
+            query = CalendarModel.Calendar(idAccount=current_user.id,\
+                                           title=self.title,\
+                                           notes=self.notes,\
+                                           lieu=self.lieu,\
+                                           start=self.startdate,\
+                                           end=self.enddate,\
+                                           color=self.color)
+            db.session.add(query)
+            db.session.commit()
+            return json.dumps({"status":"success"})
+        except:
+            return json.dumps({"status":"error"})
+
+    def get(self):
+        query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(current_user.id))
+        events = []
+
+        for fetch in query:
+    		e = {}
+    		e['id'] = fetch.id
+    		e['title'] = fetch.title
+    		e['notes'] = fetch.notes
+    		e['lieu'] = fetch.lieu
+    		e['start'] = fetch.start
+    		e['end'] = fetch.end
+    		e['color'] = fetch.color
+    		events.append(e)
+
+        return json.dumps(events)
+
+
+
+    def update_date(self):
+        try:
+            query = CalendarModel.Calendar.query.filter_by(id=self.id,idAccount=current_user.id).first()
+            query.start = self.startdate
+            query.end = self.enddate
+
+            db.session.add(query)
+            db.session.commit()
+
+            return json.dumps({'status':'success'})
+        except:
+            return json.dumps({'status':'error'})
+
+    def delete(self):
+        try:
+            delete = CalendarModel.Calendar.query.filter_by(id=self.id,idAccount=current_user.id).first()
+
+            db.session.delete(delete)
+            db.session.commit()
+            return json.dumps({'status':'success'})
+        except:
+            return json.dumps({'status':'error'})
+
+    def update_event(self):
+        try:
+            update = CalendarModel.Calendar.query.filter_by(id=self.id,idAccount=current_user.id).first()
+            update.title = self.title
+            update.notes = self.notes
+            update.lieu = self.lieu
+            update.color = self.color
+
+            db.session.add(update)
+            db.session.commit()
+            return json.dumps({'status':'success'})
+        except:
+            return json.dumps({'status':'error'})

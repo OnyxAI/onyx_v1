@@ -1,0 +1,137 @@
+{% extends "layout/default.html" %}
+
+{% set title = _("Scenario") %}
+
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <div class="card-panel white">
+<h1>{{_("Scenario")}}</h1>
+
+
+
+
+
+<table class="white responsive-table">
+    <thead>
+      <tr>
+          <th data-field="name">{{_('Name')}}</th>
+          <th>{{_('Change')}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for scenario in g.scenarios %}
+        <tr>
+            <td>{{scenario.name}}</td>
+            <td><a href="{{url_for('core.delete_scenario', id=scenario.id)}}" class="btn {{buttonColor}}">{{_('Delete')}}</a></td>
+        </tr>
+      {% endfor %}
+      <tr>
+          <form enctype='application/json' action="" method="post">
+          <td><input placeholder="{{_('Name')}}" type="text" id="name" name="scenario" required></td>
+          <td><a class="waves-effect waves-light btn modal-trigger {{buttonColor}}" href="#modal">{{_('Create')}}</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+  </div>
+</div>
+
+
+
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h4>{{_('Add')}}</h4>
+    <div class="row">
+      <div class="col s12">
+          <ul class="tabs">
+              <li class="tab col s3"><a class="active" href='#trigger'>{{_('Event')}}</a></li>
+              <li class="tab col s3"><a href="#actions">{{_('Actions')}}</a></li>
+        </ul>
+    </div>
+    <div id='trigger'>
+       <div class="card-panel white">
+         <table class="white responsive-table">
+             <thead>
+               <tr>
+                   <th data-field="name">{{_('Name')}}</th>
+                   <th data-field="description">{{_('Description')}}</th>
+                   <th>{{_('Use')}}</th>
+               </tr>
+             </thead>
+             <tbody>
+               {% for event in events %}
+               <tr>
+                 <th>{{event.name}}</th>
+                 <th>{{event.description}}</th>
+                 <th><p><input name="event" type="radio" id="{{event.name}}" value="{{event.code}}" /><label for="{{event.name}}"></label></p></th>
+               </tr>
+
+
+               <div id="{{event.code}}" class="desc" style="display: none;">
+                   {% for param in event.params %}
+                   <script type="text/javascript">
+                       $(document).ready(function(){
+                          $("input[name='event']").click(function() {
+                              var code = $(this).val();
+                              $(".desc").hide();
+                              $('select[name="param"]').val('');
+                              $('input[name="param"]').val('');
+                              $("#"+code).show();
+                          });
+                        });
+                   </script>
+
+
+
+                   {% if param.type == 'select' %}
+                   <p>{{param.name}}</p>
+                   <select name="param"  class="browser-default">
+                     <option></option>
+                     {% for p in get_params(param.url) %}
+                        <option value="{{param.value}} == {{p.id}}">{{ p[param.variable] }}</option>
+                     {% endfor %}
+                   </select>
+                   {% elif param.type == 'input' %}
+                      <label for="{{event.code}}">{{param.name}}</label>
+                      <input type="text" name="param" placeholder="" value="{{param.value}} == {{request.form.param}}" id="{{param.value}}">
+                   {% endif %}
+                   {% endfor %}
+                 </div>
+
+               {% endfor %}
+
+
+
+             </tbody>
+           </table>
+       </div>
+    </div>
+
+
+    <div id='actions'>
+      <div class="card-panel white">
+          <button type="submit" name="button" class="btn {{buttonColor}}">{{_('Add')}}</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+
+
+<script>
+  $(document).ready(function(){
+    $('.modal-trigger').leanModal();
+  });
+</script>
+{% endblock %}

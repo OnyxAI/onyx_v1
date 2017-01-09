@@ -1,4 +1,4 @@
-# base  
+# base
 pytz
 vine
 jsonschema
@@ -23,6 +23,7 @@ requests
 speaklater
 flask_restplus
 pycrypto
+jsonify
 
 # Cache and Celery
 Flask-Cache

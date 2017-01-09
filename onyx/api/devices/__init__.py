@@ -11,42 +11,39 @@ from onyx.core.models import *
 from onyx.extensions import db
 import json
 
-class House:
+class Devices:
 
     def __init__(self):
         self.id = None
         self.name = None
-        self.address = None
-        self.city = None
-        self.postal = None
-        self.country = None
-        self.latitude = None
-        self.longitude = None
+        self.identifier = None
+        self.protocol = None
+        self.service = None
+        self.room = None
+
 
     def get(self):
         try:
-            query = HouseModel.House.query.all()
-            houses = []
+            query = DevicesModel.Device.query.all()
+            devices = []
             for fetch in query:
-                house = {}
-                house['id'] = fetch.id
-                house['name'] = fetch.name
-                house['address'] = fetch.address
-                house['city'] = fetch.city
-                house['postal'] = fetch.postal
-                house['country'] = fetch.country
-                house['latitude'] = fetch.latitude
-                house['longitude'] = fetch.longitude
-                houses.append(house)
+                device = {}
+                device['id'] = fetch.id
+                device['name'] = fetch.name
+                device['identifier'] = fetch.identifier
+                device['protocol'] = fetch.protocol
+                device['service'] = fetch.service
+                device['room'] = fetch.room
+                devices.append(device)
 
-            return json.dumps(houses)
+            return json.dumps(devices)
         except:
             raise Exception('Get Error')
             return json.dumps({"status":"error"})
 
     def add(self):
         try:
-            query = HouseModel.House(name=self.name,address=self.address,city=self.city,postal=self.postal,country=self.country,latitude=self.latitude,longitude=self.longitude)
+            query = DevicesModel.Device(name=self.name,identifier=self.identifier,protocol=self.protocol,service=self.service,room=self.room)
 
             db.session.add(query)
             db.session.commit()
@@ -57,7 +54,7 @@ class House:
 
     def delete(self):
         try:
-            query = HouseModel.House.query.filter_by(id=self.id).first()
+            query = DevicesModel.Device.query.filter_by(id=self.id).first()
 
             db.session.delete(query)
             db.session.commit()

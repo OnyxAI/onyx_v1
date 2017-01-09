@@ -39,7 +39,15 @@ def decode_action(lang):
 				data = json.load(data_file)
 			return data
 	except:
-		return 0
+		pass
+
+def decode_action_plugin(url):
+	try:
+		with open(onyx.__path__[0] + url) as data_file:
+			data = json.load(data_file)
+		return data
+	except:
+		pass
 
 def decode_navbar():
 	try:
@@ -47,7 +55,7 @@ def decode_navbar():
 			data = json.load(data_file)
 		return data
 	except:
-		return 0
+		pass
 
 def decode_navbar_plugin(folder):
 	try:
@@ -55,4 +63,17 @@ def decode_navbar_plugin(folder):
 			data = json.load(data_file)
 		return data
 	except:
-		return 0
+		pass
+
+def decode_events(lang):
+	try:
+		if lang == None:
+			with open(onyx.__path__[0] + "/data/events/fr.json") as data_file:
+				data = json.load(data_file)
+			return data
+		else:
+			with open(onyx.__path__[0] + "/data/events/"+lang+".json") as data_file:
+				data = json.load(data_file)
+			return data
+	except:
+		pass

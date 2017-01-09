@@ -16,9 +16,9 @@ from onyx.api.navbar import *
 from onyx.api.options import *
 from onyx.api.server import *
 from onyx.api.install import data
-from onyx.api.house import *
 
-
+option = Options()
+server = Server()
 
 @core.route('options' , methods=['GET','POST'])
 @login_required
@@ -59,7 +59,18 @@ def options():
 		@apiError ParamNotFound No Param Found
 
 		"""
-		return setAccount()
+		try:
+			option.lang = request.form['lang']
+			if request.form['color'] == None:
+				option.color = current_user.buttonColor
+			else:
+				option.color = request.form['color']
+			option.set_account()
+			flash(gettext('Account changed successfully' ), 'success')
+			return redirect(url_for('core.options'))
+		except Exception:
+			flash(gettext("You don't enter param"), 'success')
+			return redirect(url_for('core.options'))
 
 @core.route('shutdown')
 @admin_required
@@ -76,7 +87,13 @@ def shutdown():
 
 	@apiError NoPermission No Admin
 	"""
-	return shutdown_flask()
+	try:
+		server.shutdown()
+		return render_template('options/close.html')
+	except Exception:
+		flash(gettext('An error has occured !'),'error')
+		return redirect(url_for('core.index'))
+
 
 @core.route('maj')
 @admin_required
@@ -94,7 +111,13 @@ def maj():
 	@apiError NoPermission No Admin
 	@apiError NoPip No Pip Install
 	"""
-	return maj_pip()
+	try:
+		server.update()
+		flash(gettext("Onyx is now upgrade !"),'success')
+		return redirect(url_for('core.options'))
+	except Exception:
+		flash(gettext("An error has occured !"), 'error')
+		return redirect(url_for('core.options'))
 
 @core.route('data/update')
 @admin_required
@@ -102,84 +125,4 @@ def maj():
 def update_data_git():
 	data.update_data()
 	flash(gettext('Data Modified'), 'success')
-	return redirect(url_for('core.options'))
-
-@core.route('house/add', methods=['POST'])
-@admin_required
-@login_required
-def add_house():
-	try:
-		add_house_db()
-		flash(gettext('House Add'), 'success')
-		return redirect(url_for('core.options'))
-	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
-
-@core.route('house/delete/<int:id>')
-@admin_required
-@login_required
-def delete_house(id):
-	try:
-		delete_house_db(id)
-		flash(gettext('House Deleted'), 'success')
-		return redirect(url_for('core.options'))
-	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
-
-
-@core.route('room/add', methods=['POST'])
-@admin_required
-@login_required
-def add_room():
-	try:
-		add_room_db()
-		flash(gettext('Room Add'), 'success')
-		return redirect(url_for('core.options'))
-	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
-
-@core.route('room/delete/<int:id>')
-@admin_required
-@login_required
-def delete_room(id):
-	try:
-		delete_room_db(id)
-		flash(gettext('Room Deleted'), 'success')
-		return redirect(url_for('core.options'))
-	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
-
-@core.route('machine/add', methods=['POST'])
-@admin_required
-@login_required
-def add_machine():
-	try:
-		add_machine_db()
-		flash(gettext('Machine Add'), 'success')
-		return redirect(url_for('core.options'))
-	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
-
-@core.route('machine/delete/<int:id>')
-@admin_required
-@login_required
-def delete_machine(id):
-	try:
-		delete_machine_db(id)
-		flash(gettext('Machine Deleted'), 'success')
-		return redirect(url_for('core.options'))
-	except:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
-
-@core.route('navbar/update' , methods=['POST'])
-@login_required
-def update_navbar():
-	set_navbar(request.form['last'],request.form['new'])
-	flash(gettext('Modified'), 'success')
 	return redirect(url_for('core.options'))

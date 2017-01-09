@@ -8,11 +8,9 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .. import core
-from flask import render_template
-from flask.ext.login import login_required
+from onyx.core.models import *
+from onyx.extensions import db
 
-@core.route('info')
-@login_required
-def info():
-    return "Test"
+def get_scenario():
+    query = ScenarioModel.Scenario.query.all()
+    return query

@@ -8,100 +8,56 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from flask import request
+from flask import request, render_template, redirect, url_for
 from flask.ext.login import login_required
 from .. import core
 import json
 from onyx.api.calendar import *
 
+events = Calendar()
 
 @core.route('calendar', methods=['GET','POST','PUT'])
 @login_required
 def calendars():
 	if request.method == 'GET':
-		"""
-		@api {get} /calendar Request Events Information
-		@apiName getEvent
-		@apiGroup Calendar
-		@apiPermission authenticated
-
-		@apiSuccess (200) {Object[]} events List of Event
-		@apiSuccess (200) {Number} events.id Id of Event
-		@apiSuccess (200) {String} events.title Title of Event
-		@apiSuccess (200) {String} events.notes Notes of Event
-		@apiSuccess (200) {String} events.lieu Place of Event
-		@apiSuccess (200) {datetime} events.start Start date of Event
-		@apiSuccess (200) {datetime} events.stop Stop date of Event
-		@apiSuccess (200) {String} events.color Color of Event
-
-		@apiError EventNotFound No Event Found
-
-		"""
-		return getEvent()
+		events_list = json.loads(events.get())
+		return render_template('calendar/index.html', events=events_list)
 
 	elif request.method == 'POST':
-		"""
-		@api {post} /calendar Add Event
-		@apiName addEvent
-		@apiGroup Calendar
-		@apiPermission authenticated
-
-		@apiParam {String} title Title of Event
-		@apiParam {String} notes Notes of Event
-		@apiParam {String} lieu Place of Event
-		@apiParam {datetime} start Start date of Event
-		@apiParam {datetime} stop Stop date of Event
-		@apiParam {String} color Color of Event
-
-		@apiSuccess (200) redirect Redirect to Calendar
-
-		@apiError AlreadyExist This Event already Exist
-
-		"""
-		return addEvent()
+		events.title = request.form['title']
+		events.notes = request.form['notes']
+		events.lieu = request.form['lieu']
+		events.color = request.form['color']
+		events.startdate = request.form['start']
+		events.enddate = request.form['end']
+		events.add()
+		return redirect(url_for('core.calendars'))
 
 	elif request.method == 'PUT':
-		"""
-		@api {patch} /calendar Update Date
-		@apiName updateEvent
-		@apiGroup Calendar
-		@apiPermission authenticated
-
-		@apiParam {datetime} start Start date of Event
-		@apiParam {datetime} stop Stop date of Event
-
-		@apiSuccess (200) {json} status Status of Update
-
-		@apiError {json} status An error has occurred
-
-		"""
-		return updateDate()
+		events.id = request.form['id']
+		events.startdate = request.form['start']
+		events.enddate = request.form['end']
+		events.update_date()
+		return redirect(url_for('core.calendars'))
 
 
 @core.route('calendar/<int:id>', methods=['GET','POST'])
 @login_required
 def calendar(id):
 	if request.method == 'POST':
-		"""
-		@api {put} /calendar/:id Update Event
-		@apiName updateEvent
-		@apiGroup Calendar
-		@apiPermission authenticated
+		checked = 'delete' in request.form
+		if checked == True:
+			events.id = request.form['id']
+			events.delete()
 
-		@apiParam {boolean} delete Delete an Event
-		@apiParam {String} title Title of Event
-		@apiParam {String} notes Notes of Event
-		@apiParam {String} lieu Place of Event
-		@apiParam {String} color Color of Event
+		events.id = request.form['id']
+		events.title = request.form['title']
+		events.notes = request.form['notes']
+		events.lieu = request.form['lieu']
+		events.color = request.form['color']
 
-		@apiSuccess (200) redirect Redirect to Calendar
-
-		@apiError AlreadyExist This Event already Exist
-
-		"""
-		return updateEvent()
-
-
+		events.update_event()
+		return redirect(url_for('core.calendars'))
 
 @core.context_processor
 def utility_processor():

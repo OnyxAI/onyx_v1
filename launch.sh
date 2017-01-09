@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python manage.py runserver -h 0.0.0.0 -p 5020 -d -r
+python manage.py runserver -h 0.0.0.0 -p 8000 -d -r

@@ -8,11 +8,6 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .. import core
-from flask import render_template
-from flask.ext.login import login_required
-
-@core.route('info')
-@login_required
-def info():
-    return "Test"
+from onyx.api.scenario.add import *
+from onyx.api.scenario.get import *
+from onyx.api.scenario.delete import *

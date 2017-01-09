@@ -8,11 +8,11 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .. import core
-from flask import render_template
-from flask.ext.login import login_required
+from flask import Blueprint
 
-@core.route('info')
-@login_required
-def info():
-    return "Test"
+api = Blueprint('api', __name__, url_prefix='/api/')
+
+from .views import *
+
+from onyx.api.account import *
+user = User()

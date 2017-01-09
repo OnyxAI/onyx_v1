@@ -8,11 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .. import core
-from flask import render_template
-from flask.ext.login import login_required
+import os
+import glob
 
-@core.route('info')
-@login_required
-def info():
-    return "Test"
+__all__ = [os.path.basename(f)[:-3] for f in glob.glob(os.path.dirname(__file__) + "/*.py")]
