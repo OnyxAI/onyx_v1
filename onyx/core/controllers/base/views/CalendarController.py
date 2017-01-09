@@ -11,16 +11,18 @@ You may not use this software for commercial purposes.
 from flask import request, render_template, redirect, url_for
 from flask.ext.login import login_required
 from .. import core
-import json
+from onyx.api.assets import Json
 from onyx.api.calendar import *
 
+json = Json()
 events = Calendar()
 
 @core.route('calendar', methods=['GET','POST','PUT'])
 @login_required
 def calendars():
 	if request.method == 'GET':
-		events_list = json.loads(events.get())
+		json.json = events.get()
+		events_list = json.decode()
 		return render_template('calendar/index.html', events=events_list)
 
 	elif request.method == 'POST':

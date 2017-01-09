@@ -7,5 +7,15 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
+from onyxbabel import gettext
+import time
 
-from onyx.api.time.get_time import *
+class Time:
+
+    def __init__(self):
+        self.hours = None
+        self.minutes = None
+        self.seconds = None
+
+    def get_str(self):
+        return gettext('He is actually ') + time.strftime("%H : %M")

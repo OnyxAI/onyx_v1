@@ -17,7 +17,6 @@ from os.path import exists
 import os
 import onyx
 from onyx.api.user import *
-from onyx.api.account import *
 import hashlib
 from .. import api
 

@@ -7,8 +7,13 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from onyx.api.assets import decodeJSON
+from onyx.api.assets import Json
+from flask import g
+
+json = Json()
 
 def get_events():
-    data = decodeJSON.decode_events('fr')
+    json.lang = g.lang
+    json.data_name = "events"
+    data = json.decode_data()
     return data

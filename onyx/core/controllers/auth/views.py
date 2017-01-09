@@ -17,7 +17,6 @@ from os.path import exists
 import os
 import onyx
 from onyx.api.user import *
-from onyx.api.account import *
 import hashlib
 
 auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=str(onyx.__path__[0])+'/templates')

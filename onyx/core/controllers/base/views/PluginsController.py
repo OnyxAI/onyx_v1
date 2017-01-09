@@ -13,16 +13,21 @@ from flask import render_template, request , redirect , url_for, flash, g
 from flask.ext.login import login_required
 from onyx.api.plugins import *
 import os
-from onyx.api.assets import decodeJSON
+from onyx.api.assets import Json
 from onyx.decorators import admin_required
 
+json = Json()
 plugin = Plugin()
 
 @core.route('plugins')
 @login_required
 def plugins():
-	plug = decodeJSON.decode(plugin.get())
-	lists = decodeJSON.decode(plugin.get_list())
+	json.json = plugin.get()
+	plug = json.decode()
+
+	json.json = plugin.get_list()
+	lists = json.decode()
+
 	return render_template('plugins/index.html', plugins=plug, lists=lists)
 
 

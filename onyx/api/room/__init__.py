@@ -9,7 +9,9 @@ You may not use this software for commercial purposes.
 """
 from onyx.core.models import *
 from onyx.extensions import db
-import json
+from onyx.api.assets import Json
+
+json = Json()
 
 class Room:
 
@@ -21,9 +23,6 @@ class Room:
     def get(self):
         try:
             query = RoomModel.Room.query.all()
-            return json.dumps(list(query))
-        except:
-            query = RoomModel.Room.query.all()
             rooms = []
             for fetch in query:
                 room = {}
@@ -32,7 +31,11 @@ class Room:
                 room['house'] = fetch.house
                 rooms.append(room)
 
-            return json.dumps(rooms)
+            return json.encode(rooms)
+        except:
+            raise Exception('Get Error')
+            return json.encode({"status":"error"})
+
 
     def add(self):
         try:
@@ -40,10 +43,10 @@ class Room:
 
             db.session.add(query)
             db.session.commit()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Add Error')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})
 
     def delete(self):
         try:
@@ -51,7 +54,7 @@ class Room:
 
             db.session.delete(query)
             db.session.commit()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Delete Error')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})

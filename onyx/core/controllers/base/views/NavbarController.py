@@ -12,12 +12,15 @@ from .. import core
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
 from onyx.decorators import admin_required
-from onyx.api.navbar import *
+from onyx.api.navbar import Navbar
 
+navbar = Navbar()
 
 @core.route('navbar/update' , methods=['POST'])
 @login_required
 def update_navbar():
-	set_navbar(request.form['last'],request.form['new'])
+	navbar.last = request.form['last']
+	navbar.new = request.form['new']
+	navbar.set_navbar()
 	flash(gettext('Modified'), 'success')
 	return redirect(url_for('core.options'))

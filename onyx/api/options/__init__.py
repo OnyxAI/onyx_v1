@@ -12,7 +12,9 @@ from flask.ext.login import current_user
 from onyxbabel import gettext
 from onyx.core.models import *
 from onyx.extensions import db
-import json
+from onyx.api.assets import Json
+
+json = Json()
 
 class Options:
 
@@ -29,7 +31,7 @@ class Options:
 
             db.session.add(query)
             db.session.commit()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Error set account')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})

@@ -9,11 +9,8 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-from flask import request,render_template, url_for,redirect, current_app as app, make_response, jsonify
+from flask import request,render_template, url_for,redirect, current_app as app
 from flask.ext.login import login_required
-from multiprocessing import Process
-from onyx.core.controllers.api.views.User import get_users
-
 
 
 @core.route('/')

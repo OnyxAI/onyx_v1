@@ -7,32 +7,26 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-import pip, imp
+import pip, imp, shutil, platform, subprocess, psutil, os, socket, sys, importlib
 from flask import request
 from onyxbabel import gettext
 from onyx.extensions import db
-import json
 from flask import g, request
 from flask_login import current_user
-from onyx.api.user import *
+from onyx.api.user import User
 from onyx.core.models import *
-import shutil
-import json
-import platform
-import subprocess
-import psutil
-import os
-import socket
-import sys
-from onyx.api.assets import decodeJSON
+from onyx.api.assets import Json
 from onyx.api.navbar import *
 from onyx.api.house import *
 from onyx.api.room import *
 from onyx.api.machine import *
 from onyx.api.devices import *
 from onyx.api.scenario import *
-import importlib
-import json
+
+json = Json()
+user = User()
+navbar = Navbar()
+
 
 class Server:
 
@@ -68,22 +62,22 @@ class Server:
         return "%d:%02d:%02d" % (h, m, s)
 
     def get_vars(self):
-
         g.user = self.user
         g.lang = self.lang
         g.email = self.email
         g.id = self.id
         g.admin = self.admin
-        g.avatar = getAvatar()
-
+        g.avatar = user.get_avatar()
         g.version = self.get_version()
         g.ram = "width: "+str(self.get_ram())+"%"
         g.uptime = self.get_up_stats()
         g.disk = "width: "+str(self.get_disk())+"%"
         g.gapi = self.app.config.get('GAPI')
         g.gcx = self.app.config.get('GCX')
-        data = decodeJSON.decode_action(g.lang)
 
+        json.data_name = 'sentences'
+        json.lang = g.lang
+        data = json.decode_data()
         try:
             json_raw = []
             for key in data:
@@ -92,22 +86,28 @@ class Server:
         except:
             g.action = None
 
-        navbar = get_nav()
-        list = get_list()
-        g.navbar = navbar
-        g.list = list
+        json.json = navbar.get_list()
+        g.list = json.decode()
+
+        json.json = navbar.get()
+        g.navbar = json.decode()
+
 
         houses = House()
-        g.houses = decodeJSON.decode(houses.get())
+        json.json = houses.get()
+        g.houses = json.decode()
 
         rooms = Room()
-        g.rooms = decodeJSON.decode(rooms.get())
+        json.json = rooms.get()
+        g.rooms = json.decode()
 
         machines = Machine()
-        g.machines = decodeJSON.decode(machines.get())
+        json.json = machines.get()
+        g.machines = json.decode()
 
         devices = Devices()
-        g.devices = decodeJSON.decode(devices.get())
+        json.json = devices.get()
+        g.devices = json.decode()
 
         scenarios = get_scenario()
         g.scenarios = scenarios
@@ -119,14 +119,14 @@ class Server:
             def get_params(url):
                 function = getattr(importlib.import_module(self.app.view_functions[url].__module__), self.app.view_functions[url].__name__)
                 execute = function()
-                return json.loads(execute)
+                json.json = execute
+                return json.decode()
             return dict(get_params=get_params)
 
         @self.app.context_processor
         def utility_processor():
             def get_variable(p,variable):
                 v = str(variable.encode('ascii'))
-
                 return p[v]
             return dict(get_variable=get_variable)
 
@@ -140,9 +140,10 @@ class Server:
 
     	@self.app.context_processor
     	def gravatar():
-    		def urlPicAvatar(id):
-    			return getAvatarById(id)
-    		return dict(urlPicAvatar=urlPicAvatar)
+            def urlPicAvatar(id):
+                user.id = id
+                return user.get_avatar_id()
+            return dict(urlPicAvatar=urlPicAvatar)
 
     	@self.app.context_processor
     	def inject_user():
@@ -173,10 +174,10 @@ class Server:
             if func is None:
                 raise RuntimeError('Not running with the Werkzeug Server')
             func()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Error Shutdown')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})
 
 
     #Update
@@ -185,10 +186,10 @@ class Server:
         try:
             pip.main(['install', '--upgrade' , "onyxproject"])
             self.migrate()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Error Update')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})
 
     def migrate(self):
         try:
@@ -206,7 +207,7 @@ class Server:
             v = api.db_version(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
             print('New migration saved as ' + migration)
             print('Current database version: ' + str(v))
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Error Update')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})

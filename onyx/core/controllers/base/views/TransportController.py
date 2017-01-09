@@ -9,9 +9,12 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
+from onyx.api.assets import Json
+from onyx.api.transport import Ratp
 
-from onyx.api.transport import *
+json = Json()
+ratp = Ratp()
 
 @core.route('transport')
 def transport():
@@ -62,7 +65,17 @@ def rer(name):
         @apiError NoExist No Schedule Exist for This Rer
 
         """
-        return setRer(name)
+        ratp.line = name
+        ratp.station = request.form['rerstation']
+        ratp.direction = request.form['rerdirection']
+        json.json = ratp.get_rer_schedule()
+        result = json.decode()
+        try:
+            return render_template('transport/ratp/rer/result.html', result=result)
+        except:
+            flash(gettext('An error has occured !') , 'error')
+            return redirect(url_for('core.transport'))
+
 
 #METRO
 @core.route('transport/metro', methods=['GET', 'POST'])
@@ -111,4 +124,13 @@ def metro(name):
         @apiError NoExist No Schedule Exist for This Station
 
         """
-        return setMetro(name)
+        ratp.line = name
+        ratp.station = request.form['metrostation']
+        ratp.direction = request.form['metrodirection']
+        json.json = ratp.get_metro_schedule()
+        result = json.decode()
+        try:
+            return render_template('transport/ratp/metro/result.html', result=result)
+        except:
+            flash(gettext('An error has occured !') , 'error')
+            return redirect(url_for('core.transport'))

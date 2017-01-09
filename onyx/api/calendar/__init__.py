@@ -9,11 +9,12 @@ You may not use this software for commercial purposes.
 """
 
 from flask_login import current_user
-from flask import jsonify
 from time import strftime
 from onyx.core.models import *
 from onyx.extensions import db
-import json
+from onyx.api.assets import Json
+
+json = Json()
 
 class Calendar:
 
@@ -27,7 +28,7 @@ class Calendar:
         self.enddate = strftime("%Y-%m-%d  %H:%M:%S")
 
     def add(self):
-        
+
         try:
             query = CalendarModel.Calendar(idAccount=current_user.id,\
                                            title=self.title,\
@@ -38,9 +39,9 @@ class Calendar:
                                            color=self.color)
             db.session.add(query)
             db.session.commit()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})
 
     def get(self):
         query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(current_user.id))
@@ -57,7 +58,7 @@ class Calendar:
     		e['color'] = fetch.color
     		events.append(e)
 
-        return json.dumps(events)
+        return json.encode(events)
 
 
 
@@ -70,9 +71,9 @@ class Calendar:
             db.session.add(query)
             db.session.commit()
 
-            return json.dumps({'status':'success'})
+            return json.encode({'status':'success'})
         except:
-            return json.dumps({'status':'error'})
+            return json.encode({'status':'error'})
 
     def delete(self):
         try:
@@ -80,9 +81,9 @@ class Calendar:
 
             db.session.delete(delete)
             db.session.commit()
-            return json.dumps({'status':'success'})
+            return json.encode({'status':'success'})
         except:
-            return json.dumps({'status':'error'})
+            return json.encode({'status':'error'})
 
     def update_event(self):
         try:
@@ -94,6 +95,6 @@ class Calendar:
 
             db.session.add(update)
             db.session.commit()
-            return json.dumps({'status':'success'})
+            return json.encode({'status':'success'})
         except:
-            return json.dumps({'status':'error'})
+            return json.encode({'status':'error'})

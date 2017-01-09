@@ -9,13 +9,17 @@ You may not use this software for commercial purposes.
 """
 
 from flask import g, redirect, flash, url_for
-from onyx.api.assets import decodeJSON
+from onyx.api.assets import Json
 from onyxbabel import gettext
 from onyx.api.action import get_event
 
+json = Json()
+
 def get_action(text):
 	try:
-		data = decodeJSON.decode_action(g.lang)
+		json.lang = g.lang
+		json.data_name = "sentences"
+		data = json.decode_data()
 		e = 0
 		while e < len(data):
 			if data[e]['text'] == text:
@@ -24,11 +28,4 @@ def get_action(text):
 		flash(gettext('This is not a Onyx action !'), 'error')
 		return redirect(url_for('core.index'))
 	except:
-		data = decodeJSON.decode_action(g.lang)
-		e = 0
-		while e < len(data):
-			if data[e]['text'] == text:
-				return get_event.get_event(data[e]['label'],data[e]['api'],data[e]['type'],'next')
-			e+=1
-		flash(gettext('This is not a Onyx action !'), 'error')
-		return redirect(url_for('core.index'))
+		pass

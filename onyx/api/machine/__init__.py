@@ -9,7 +9,9 @@ You may not use this software for commercial purposes.
 """
 from onyx.core.models import *
 from onyx.extensions import db
-import json
+from onyx.api.assets import Json
+
+json = Json()
 
 class Machine:
 
@@ -35,10 +37,10 @@ class Machine:
 
                 machines.append(machine)
 
-            return json.dumps(machines)
+            return json.encode(machines)
         except:
             raise Exception('Get Error')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})
 
     def add(self):
         try:
@@ -49,7 +51,7 @@ class Machine:
             return json.dumps({"status":"success"})
         except:
             raise Exception('Add Error')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})
 
     def delete(self):
         try:
@@ -57,7 +59,7 @@ class Machine:
 
             db.session.delete(query)
             db.session.commit()
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except:
             raise Exception('Delete Error')
-            return json.dumps({"status":"error"})
+            return json.encode({"status":"error"})

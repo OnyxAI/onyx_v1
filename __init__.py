@@ -8,8 +8,9 @@ You may not use this software for commercial purposes.
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys
+reload(sys)
 sys.dont_write_bytecode = True
+sys.setdefaultencoding('utf-8')
 import Onyx
 import os
 import pip
@@ -71,6 +72,14 @@ def run():
 			print('Config File Create')
 	except:
 		print('Config Already File Create')
+	try:
+        if os.path.exists(str(onyx.__path__[0]) + "/data/.gitkeep"):
+            shutil.rmtree(str(onyx.__path__[0]) + "/data/.gitkeep")
+            print('Data Added')
+        else:
+            print('Data Already Add')
+    except:
+        print('Data Already Add')
 	print('You can access to Onyx with : http://'+ip+':'+port)
 	print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()

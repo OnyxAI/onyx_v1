@@ -13,10 +13,11 @@ from flask import request
 from flask.ext.login import login_required
 from onyx.api.plugins import *
 import os
-from onyx.api.assets import decodeJSON
+from onyx.api.assets import Json
 from onyx.decorators import admin_required
 
 plugin = Plugin()
+json = Json
 
 @api.route('plugins')
 @login_required

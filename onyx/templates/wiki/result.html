@@ -1,4 +1,4 @@
-{% extends "layout/default.html" %} 
+{% extends "layout/default.html" %}
 
 {% set title = _("Wiki") %}
 
@@ -23,7 +23,7 @@
 			<span class="title"> {{head}}</span>
 		</h4>
 
-		<p class="summary">{{summary}}</p>
+		<p class="summary">{{summary|safe}}</p>
 		<br>
 		{% if url is defined %}
 		<p class="url">{{_("See all article in ")}} : <a href="{{url}}">{{url}}</a></p>
@@ -31,7 +31,7 @@
 
 
 	</div>
-	
+
 </div>
 
 

@@ -11,7 +11,10 @@ You may not use this software for commercial purposes.
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
+
+reload(sys)
 sys.dont_write_bytecode = True
+sys.setdefaultencoding('utf-8')
 from flask import json
 from flask_script import Manager
 from flask_migrate import MigrateCommand
@@ -23,6 +26,7 @@ from onyx.api.server import *
 from flask._compat import text_type
 from multiprocessing import Process
 import onyx
+import shutil
 manager = Manager(create_app)
 import getopt
 
@@ -84,6 +88,14 @@ def run():
             print('Config File Create')
     except:
         print('Config Already File Create')
+    try:
+        if os.path.exists(str(onyx.__path__[0]) + "/data/.gitkeep"):
+            shutil.rmtree(str(onyx.__path__[0]) + "/data/.gitkeep")
+            print('Data Added')
+        else:
+            print('Data Already Add')
+    except:
+        print('Data Already Add')
     manager.run()
 
 def init():

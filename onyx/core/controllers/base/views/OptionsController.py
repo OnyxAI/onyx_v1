@@ -15,8 +15,9 @@ from onyx.decorators import admin_required
 from onyx.api.navbar import *
 from onyx.api.options import *
 from onyx.api.server import *
-from onyx.api.install import data
+from onyx.api.install import Install
 
+install = Install()
 option = Options()
 server = Server()
 
@@ -123,6 +124,6 @@ def maj():
 @admin_required
 @login_required
 def update_data_git():
-	data.update_data()
+	install.update_data()
 	flash(gettext('Data Modified'), 'success')
 	return redirect(url_for('core.options'))

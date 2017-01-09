@@ -8,7 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .. import core
+from .. import api
 from flask import render_template, request, g
 from flask.ext.login import login_required
 from onyx.api.wiki import Wikipedia
@@ -16,12 +16,10 @@ from onyxbabel import gettext
 
 wikipedia = Wikipedia()
 
-@core.route('wiki', methods=['GET', 'POST'])
+@api.route('wiki', methods=['GET', 'POST'])
 @login_required
 def wiki():
-    if request.method == 'GET':
-    	return render_template('wiki/index.html')
-    elif request.method == 'POST':
+    if request.method == 'POST':
     	"""
 		@api {post} /wiki Request Wiki Article
 		@apiName getArticle
@@ -43,6 +41,6 @@ def wiki():
             wikipedia.search = request.form['search']
             article = wikipedia.get_article()
             summary = wikipedia.get_summary()
-            return render_template('wiki/result.html', head=article.title, url=article.url, summary=summary)
+            return article
         except:
-            return render_template('wiki/result.html', head=gettext("Error"), summary=gettext("This is not an article"))
+            return gettext("An error has occured !")
