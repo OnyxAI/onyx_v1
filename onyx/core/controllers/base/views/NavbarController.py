@@ -13,14 +13,19 @@ from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
 from onyx.decorators import admin_required
 from onyx.api.navbar import Navbar
+from onyx.api.exceptions import *
 
 navbar = Navbar()
 
 @core.route('navbar/update' , methods=['POST'])
 @login_required
 def update_navbar():
-	navbar.last = request.form['last']
-	navbar.new = request.form['new']
-	navbar.set_navbar()
-	flash(gettext('Modified'), 'success')
-	return redirect(url_for('core.options'))
+	try:
+		navbar.last = request.form['last']
+		navbar.new = request.form['new']
+		navbar.set_navbar()
+		flash(gettext('Modified'), 'success')
+		return redirect(url_for('core.options'))
+	except NavbarException:
+		flash(gettext('An error has occured'), 'error')
+		return redirect(url_for('core.options'))

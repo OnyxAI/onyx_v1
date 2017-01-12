@@ -12,14 +12,17 @@ from flask.ext.login import LoginManager, login_required
 from flask import request, render_template, Blueprint, current_app, g, flash, redirect
 from onyxbabel import gettext
 from onyx.extensions import login_manager, db
+from onyx.api.assets import Json
 from onyx.decorators import admin_required
 from os.path import exists
 import os
 import onyx
 from onyx.api.user import *
 import hashlib
+from onyx.api.exceptions import *
 from .. import api
 
+json = Json()
 user = User()
 
 @login_manager.user_loader
@@ -40,8 +43,11 @@ def get_users():
     @apiSuccess (200) {Object[]} user Get All User Information
 
     """
-    users = user.get()
-    return users
+    try:
+        users = user.get()
+        return users
+    except GetException:
+        return None
 
 
 
@@ -72,7 +78,7 @@ def register():
             return register
         elif register == 1:
             return register
-    except Exception:
+    except UserException:
         return register
 
 
@@ -103,7 +109,7 @@ def login():
                 return login
             else:
                 return login
-        except Exception:
+        except UserException:
             return login
 
 #Logout
@@ -184,7 +190,7 @@ def account_manage_id(id):
             else:
                 user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
             return user.manage_user()
-        except Exception:
+        except UserException:
             return user.manage_user()
 
 #Modify Account
@@ -225,5 +231,5 @@ def change_account():
             if change == 0:
                 return change
             return change
-        except Exception:
+        except UserException:
             return change

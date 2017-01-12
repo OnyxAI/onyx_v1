@@ -22,7 +22,10 @@ from onyx.api.room import *
 from onyx.api.machine import *
 from onyx.api.devices import *
 from onyx.api.scenario import *
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 json = Json()
 user = User()
 navbar = Navbar()
@@ -48,20 +51,30 @@ class Server:
             return "0.3.12"
 
     def get_ram(self):
+      try:
         ram = psutil.virtual_memory()
         return ram.percent
-
+      except Exception as e:
+        logger.error('Server error : ' + str(e))
+        
     def get_disk(self):
+      try:
         disk = psutil.disk_usage('/')
         return disk.percent
-
+      except Exception as e:
+        logger.error('Server error : ' + str(e))
+        
     def get_up_stats(self):
+      try:
         from uptime import uptime
         m, s = divmod(uptime(), 60)
         h, m = divmod(m, 60)
         return "%d:%02d:%02d" % (h, m, s)
+      except Exception as e:
+        logger.error('Server error : ' + str(e))
 
     def get_vars(self):
+      try:
         g.user = self.user
         g.lang = self.lang
         g.email = self.email
@@ -86,11 +99,14 @@ class Server:
         except:
             g.action = None
 
-        json.json = navbar.get_list()
-        g.list = json.decode()
+        try:
+          json.json = navbar.get_list()
+          g.list = json.decode()
 
-        json.json = navbar.get()
-        g.navbar = json.decode()
+          json.json = navbar.get()
+          g.navbar = json.decode()
+        except NavbarException:
+          logger.error('No connected to get Navbar')
 
 
         houses = House()
@@ -111,6 +127,8 @@ class Server:
 
         scenarios = get_scenario()
         g.scenarios = scenarios
+      except Exception as e:
+        logger.error('Server Error : ' + str(e))
 
     def get_context(self,babel):
 
@@ -174,9 +192,11 @@ class Server:
             if func is None:
                 raise RuntimeError('Not running with the Werkzeug Server')
             func()
+            logger.info('Shutdown ! Bye !')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Shutdown')
+        except Exception as e:
+            logger.error('Shutdown error : ' + str(e))
+            raise ServerException(str(e))
             return json.encode({"status":"error"})
 
 
@@ -187,8 +207,9 @@ class Server:
             pip.main(['install', '--upgrade' , "onyxproject"])
             self.migrate()
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Update')
+        except Exception as e:
+            logger.error('Update error : ' + str(e))
+            raise ServerException(str(e))
             return json.encode({"status":"error"})
 
     def migrate(self):
@@ -205,9 +226,10 @@ class Server:
             open(migration, "wt").write(script)
             api.upgrade(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
             v = api.db_version(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
-            print('New migration saved as ' + migration)
-            print('Current database version: ' + str(v))
+            logger.info('New migration saved as ' + migration)
+            logger.info('Current database version: ' + str(v))
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Update')
+        except Exception as e:
+            logger.error('Migrate error : ' + str(e))
+            raise ServerException(str(e))
             return json.encode({"status":"error"})

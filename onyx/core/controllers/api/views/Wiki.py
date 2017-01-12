@@ -13,6 +13,7 @@ from flask import render_template, request, g
 from flask.ext.login import login_required
 from onyx.api.wiki import Wikipedia
 from onyxbabel import gettext
+from onyx.api.exceptions import *
 
 wikipedia = Wikipedia()
 
@@ -42,5 +43,5 @@ def wiki():
             article = wikipedia.get_article()
             summary = wikipedia.get_summary()
             return article
-        except:
+        except WikiException:
             return gettext("An error has occured !")

@@ -13,12 +13,15 @@ from flask import request, render_template, Blueprint, current_app, g, flash, re
 from onyxbabel import gettext
 from onyx.extensions import login_manager, db
 from onyx.decorators import admin_required
+from onyx.api.assets import Json
 from os.path import exists
+from onyx.api.exceptions import *
 import os
 import onyx
 from onyx.api.user import *
 import hashlib
 
+json = Json()
 auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=str(onyx.__path__[0])+'/templates')
 user = User()
 
@@ -38,21 +41,6 @@ def register():
     if request.method == 'GET':
         return render_template('account/register.html')
     elif request.method == 'POST':
-        """
-        @api {post} /register Register a User
-        @apiName registerUser
-        @apiGroup User
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} verifpassword User Verification Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect to Hello
-
-        @apiError AlreadyExist This User already Exist
-
-        """
         try:
             user.password = request.form['password']
             user.verifpassword = request.form['verifpassword']
@@ -65,7 +53,7 @@ def register():
             elif register == 1:
                 flash(gettext('Account Added !') , 'success')
                 return redirect(url_for('auth.hello'))
-        except Exception:
+        except UserException:
             flash(gettext('A Account with this informations already exist !') , 'error')
             return redirect(url_for('auth.hello'))
 
@@ -76,21 +64,6 @@ def login():
     if request.method == 'GET':
         return render_template('account/login.html')
     elif request.method == 'POST':
-        """
-        @api {post} /login Login User
-        @apiName registerUser
-        @apiGroup User
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} verifpassword User Verification Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect to Hello
-
-        @apiError AlreadyExist This User already Exist
-
-        """
         try:
             user.email = request.form['email']
             user.password = request.form['password']
@@ -101,7 +74,7 @@ def login():
             else:
                 flash(gettext('You are now connected'), 'success')
                 return redirect(request.args.get('next') or url_for('core.index'))
-        except Exception:
+        except UserException:
             flash(gettext('An error has occured !'), 'error')
             return redirect(url_for('auth.hello'))
 
@@ -111,9 +84,10 @@ def login():
 def logout():
     try:
         user.logout()
+        logger.info('User Logout successfully')
         flash(gettext('You are now log out' ), 'info')
         return redirect(url_for('auth.hello'))
-    except Exception:
+    except UserException:
         flash(gettext('An error has occured !'), 'error')
         return redirect(url_for('auth.hello'))
 
@@ -122,40 +96,21 @@ def logout():
 @admin_required
 @login_required
 def account_manage():
-    """
-    @api {get} /account/manage Manage User
-    @apiName manageAccount
-    @apiGroup User
-    @apiPermission authenticated
-    @apiPermission admin
-
-    @apiSuccess (200) {Object[]} user Get All User Information
-
-    """
     users = user.get()
-    return render_template('account/manage.html', id=decodeJSON.decode(users))
+    json.json = users
+    return render_template('account/manage.html', id=json.decode())
 
 #Delete Accounts (Admin)
 @auth.route('account/delete/<id_delete>')
 @admin_required
 @login_required
 def delete_account(id_delete):
-    """
-    @api {get} /account/delete/:id Delete User
-    @apiName deleteAccount
-    @apiGroup User
-    @apiPermission authenticated
-    @apiPermission admin
-
-    @apiSuccess (200) redirect Redirect To Manage Account
-
-    """
     try:
         user.id = id_delete
         user.delete()
         flash(gettext('Account deleted !') , 'success')
         return redirect(url_for('auth.account_manage'))
-    except Exception:
+    except UserException:
         flash(gettext('An error has occured !'), 'error')
         return redirect(url_for('auth.hello'))
 
@@ -165,39 +120,17 @@ def delete_account(id_delete):
 @login_required
 def account_manage_id(id):
     if request.method == 'GET':
-        """
-        @api {get} /account/manage/:id Manage User
-        @apiName manageUserGet
-        @apiGroup User
-        @apiPermission authenticated
-        @apiPermission admin
-
-        @apiSuccess (200) {Object[]} user Get User Information
-
-        """
         user.id = id
         manage_user = user.get_user()
-        user_decoded = decodeJSON.decode(manage_user)
+        json.json = manage_user
+        user_decoded = json.decode()
         return render_template('account/change.html', username=user_decoded['username'],email=user_decoded['email'])
     elif request.method == 'POST':
-        """
-        @api {post} /account/delete/:id Update User
-        @apiName manageUser
-        @apiGroup User
-        @apiPermission authenticated
-        @apiPermission admin
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect To Manage Account
-
-        """
         try:
             user.id = id
             manage_user = user.get_user()
-            user_decoded = decodeJSON.decode(manage_user)
+            json.json = manage_user
+            user_decoded = json.decode()
             if not request.form['username']:
                 user.username = user_decoded['username']
             else:
@@ -213,7 +146,7 @@ def account_manage_id(id):
             user.manage_user()
             flash(gettext('Account changed !') , 'success')
             return redirect(url_for('auth.account_manage'))
-        except Exception:
+        except UserException:
             flash(gettext('An error has occured !') , 'error')
             return redirect(url_for('auth.account_manage'))
 
@@ -222,30 +155,8 @@ def account_manage_id(id):
 @login_required
 def change_account():
     if request.method == 'GET':
-        """
-        @api {get} /account/change Manage Account
-        @apiName manageAccountGet
-        @apiGroup User
-        @apiPermission admin
-
-        @apiSuccess (200) {Object[]} user Get User Information
-
-        """
         return render_template('account/manage_account.html')
     elif request.method == 'POST':
-        """
-        @api {post} /account/change Update Account
-        @apiName changeAccount
-        @apiGroup User
-        @apiPermission authenticated
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect To Change Account
-
-        """
         try:
             user.id = current_user.id
             user.lastpassword = request.form['lastpassword']
@@ -268,6 +179,6 @@ def change_account():
                 return redirect(url_for('auth.change_account'))
             flash(gettext('Account changed successfully' ), 'success')
             return redirect(url_for('auth.change_account'))
-        except Exception:
+        except UserException:
             flash(gettext('An error has occured !') , 'error')
             return redirect(url_for('auth.account_manage'))

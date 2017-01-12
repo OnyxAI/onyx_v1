@@ -10,11 +10,14 @@ You may not use this software for commercial purposes.
 
 from git import Repo
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
 from flask import g
 from onyx.api.navbar import *
 import importlib
 import onyx, pip, os, git, shutil
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 class Plugin:
@@ -42,8 +45,8 @@ class Plugin:
 
                     plug.append(e)
             return json.encode(plug)
-        except:
-            raise Exception('Error Get')
+        except Exception as e:
+            raise PluginException(str(e))
             return json.encode({"status":"error"})
 
     def get_list(self):
@@ -56,8 +59,8 @@ class Plugin:
                 lists = json.decode_url()
 
             return json.encode(lists)
-        except:
-            raise Exception('Error Get List')
+        except Exception as e:
+            raise PluginException(str(e))
             return json.encode({"status":"error"})
 
     def install(self):
@@ -69,10 +72,11 @@ class Plugin:
             self.install_pip()
             if data['navbar'] == 'True':
                 set_plugin_navbar(self.name)
-            print('Done Install')
+            logger.info('Installation done with success')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Install')
+        except Exception as e:
+            logger.error('Installation error : ' + str(e))
+            raise PluginException(str(e))
             return json.encode({"status":"error"})
 
     def update(self):
@@ -81,30 +85,31 @@ class Plugin:
             repo.pull()
             self.install_dep()
             self.install_pip()
-            print('Done Update')
+            logger.info('Update done with success')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Update')
+        except Exception as e:
+            logger.error('update error : ' + str(e))
+            raise PluginException(str(e))
             return json.encode({"status":"error"})
 
 
     def install_dep(self):
-    	print("Install Dependencies")
-        json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
-        data = json.decode_path()
-    	deps = data["dependencies"]
-    	os.system('apt-get update --assume-yes')
-    	for dep in deps:
-    		os.system('apt-get install --assume-yes '+dep)
+      logger.info('Install dependencies for : ' + self.name)
+      json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
+      data = json.decode_path()
+      deps = data["dependencies"]
+      os.system('apt-get update --assume-yes')
+      for dep in deps:
+        os.system('apt-get install --assume-yes '+dep)
 
 
     def install_pip(self):
-    	print("Install Pip Dependencies")
-    	json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
-        data = json.decode_path()
-    	deps = data["packages"]
-    	for dep in deps:
-    		pip.main(['install', dep])
+      logger.info('Install pip dependencies for : ' + self.name)
+      json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
+      data = json.decode_path()
+      deps = data["packages"]
+      for dep in deps:
+        pip.main(['install', dep])
 
     def uninstall(self):
         try:
@@ -115,8 +120,9 @@ class Plugin:
             plugin = importlib.import_module('onyx.plugins.'+self.name)
             plugin.uninstall()
             shutil.rmtree(onyx.__path__[0] + "/plugins/" + self.name)
-            print('Done Uninstall')
+            logger.info('Uninstall done')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Uninstall')
+        except Exception as e:
+            logger.error('Uninstall error : ' + str(e))
+            raise PluginException(str(e))
             return json.encode({"status":"error"})

@@ -7,17 +7,20 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from flask.ext.login import logout_user, login_user
+from flask.ext.login import logout_user, login_user, current_user
 from flask import request , render_template , redirect , url_for , flash
 from onyxbabel import gettext
 from onyx.core.models import *
 from onyx.extensions import db, login_manager
 from onyx.api.assets import Json
 from onyx.api.navbar import *
+from onyx.api.exceptions import *
 from onyx.plugins import plugin
 import hashlib
 import onyx
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 
@@ -46,10 +49,11 @@ class User:
                 user['password'] = fetch.password
                 user['email'] = fetch.email
                 users.append(user)
-
+            logger.info('Getting users data successfully')
             return json.encode(users)
-        except:
-            raise Exception('Error Get')
+        except Exception as e:
+            logger.error('Getting users data error : ' + str(e))
+            raise GetException(str(e))
             return json.encode({"status":"error"})
 
     def get_user(self):
@@ -64,10 +68,11 @@ class User:
             user['buttonColor'] = query.buttonColor
             user['password'] = query.password
             user['email'] = query.email
-
+            logger.info('Getting user data successfully')
             return json.encode(user)
-        except:
-            raise Exception('Error Get User')
+        except Exception as e:
+            logger.error('Getting user data error : ' + str(e))
+            raise GetException(str(e))
             return json.encode({"status":"error"})
 
 
@@ -81,12 +86,15 @@ class User:
                 db.session.add(user)
                 db.session.commit()
                 init = self.init_navbar()
+                logger.info('User registered : ' + self.username)
                 return 1
             else:
+                logger.error('No same password Error')
                 return 0
-        except:
+        except Exception as e:
             db.session.rollback()
-            raise Exception('Error Register')
+            logger.error('Error in register : ' + str(e))
+            raise UserException(str(e))
             return json.encode({"status":"error"})
 
     def init_navbar(self):
@@ -102,8 +110,9 @@ class User:
                 folder = module.get_raw()
                 set_plugin_navbar_user(folder,self.username)
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error Navbar')
+        except Exception as e:
+            logger.error("User Navbar Init Error : " + str(e))
+            raise NavbarException(str(e))
             return json.encode({"status":"error"})
 
     def login(self):
@@ -111,20 +120,25 @@ class User:
             password = self.password.encode('utf-8')
             registered_user = UsersModel.User.query.filter_by(email=self.email,password=hashlib.sha1(password).hexdigest()).first()
             if registered_user is None:
+                logger.error("Wrong for : " + registered_user.username)
                 return 0
             login_user(registered_user)
             registered_user.authenticated = True
+            logger.info("User Connected : " + registered_user.username)
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error login')
+        except Exception as e:
+            logger.error("User Connected Error : " + str(e))
+            raise UserException(str(e))
             return json.encode({"status":"error"})
 
     def logout(self):
         try:
             login_manager.login_view = 'auth.hello'
             logout_user()
+            logger.info('User logout successfully')
             return json.encode({"status":"success"})
-        except:
+        except Exception as e:
+            logger.error('User logout error : ' + str(e))
             raise Exception('Error logout')
             return json.encode({"status":"error"})
 
@@ -144,9 +158,11 @@ class User:
                 deleteNavbarRow = NavbarModel.Navbar.query.filter_by(id=fetch.id).first()
                 db.session.delete(deleteNavbarRow)
                 db.session.commit()
+            logger.info('Delete ' + query.username + ' successfully')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error delete')
+        except Exception as e:
+            logger.error('Error delete user : ' + str(e))
+            raise UserException(str(e))
             return json.encode({"status":"error"})
 
     def manage_user(self):
@@ -159,9 +175,11 @@ class User:
 
             db.session.add(query)
             db.session.commit()
+            logger.info('Getting users successfully')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error manage')
+        except Exception as e:
+            logger.error('Error getting users : ' + str(e))
+            raise UserException(str(e))
             return json.encode({"status":"error"})
 
     def change_user(self):
@@ -177,12 +195,14 @@ class User:
 
                 db.session.add(query)
                 db.session.commit()
+                logger.info('User data changed successfully')
                 return json.encode({"status":"success"})
             else:
                 return 0
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error manage')
+        except Exception as e:
+            logger.error('User data changed error : ' + str(e))
+            raise UserException(str(e))
             return json.encode({"status":"error"})
 
     def get_avatar(self):
@@ -193,7 +213,7 @@ class User:
             size = 60
             url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
             return url
-        except:
+        except Exception as e:
             url = "http://www.gravatar.com/avatar?s=60"
             return url
 
@@ -205,6 +225,6 @@ class User:
             size = 60
             url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
             return url
-        except:
+        except Exception as e:
             url = "http://www.gravatar.com/avatar?s=60"
             return url

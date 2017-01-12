@@ -14,6 +14,7 @@ from flask.ext.login import login_required
 from onyx.decorators import admin_required
 from onyx.api.devices import *
 from onyxbabel import gettext
+from onyx.api.exceptions import *
 
 devices = Devices()
 
@@ -30,7 +31,7 @@ def add_device():
         devices.add()
         flash(gettext('Devices Add'), 'success')
         return redirect(url_for('core.options'))
-    except Exception:
+    except DevicesException:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.options'))
 
@@ -44,6 +45,6 @@ def delete_device(id):
         devices.delete()
         flash(gettext('Devices Deleted'), 'success')
         return redirect(url_for('core.options'))
-    except Exception:
+    except DevicesException:
         flash(gettext('An error has occured !'), 'error')
         return redirect(url_for('core.options'))

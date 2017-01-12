@@ -8,7 +8,10 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from onyx.api.geolocalisation import Geolocalisation
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 geoloc = Geolocalisation()
 
 
@@ -19,6 +22,9 @@ class Weather:
         self.longitude = geoloc.get_longitude()
 
     def get_str(self):
-        lat =
+      try:
         result = decodeJSON.decodeURL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + self.latitude + "&lon=" + self.longitude + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69")
         return "Il fait " + str(round(result["list"][0]["temp"]["day"])) + " degré a " + str(result["city"]["name"]) + " !"
+      except Exception as e:
+        logger.error('Getting weather error : ' + str(e))
+        raise WeatherException(str(e))

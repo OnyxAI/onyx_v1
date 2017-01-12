@@ -12,6 +12,7 @@ from .. import api
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
 from onyx.decorators import admin_required
+from onyx.api.exceptions import *
 from onyx.api.machine import *
 from onyxbabel import gettext
 
@@ -33,8 +34,8 @@ def add_machine():
         machine.room = request.form['room']
         machine.host = request.form['host']
         return machine.add()
-    except Exception:
-		return machine.add()
+    except MachineException:
+			return machine.add()
 
 
 @api.route('machine/delete/<int:id>')
@@ -44,5 +45,5 @@ def delete_machine(id):
     try:
         machine.id = id
         return machine.delete()
-    except Exception:
+    except MachineException:
         return machine.delete()

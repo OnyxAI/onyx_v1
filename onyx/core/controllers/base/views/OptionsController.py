@@ -15,6 +15,7 @@ from onyx.decorators import admin_required
 from onyx.api.navbar import *
 from onyx.api.options import *
 from onyx.api.server import *
+from onyx.api.exceptions import *
 from onyx.api.install import Install
 
 install = Install()
@@ -25,41 +26,8 @@ server = Server()
 @login_required
 def options():
 	if request.method == 'GET':
-		"""
-		@api {get} /options Request Options
-		@apiName getOptions
-		@apiGroup Options
-		@apiPermission authenticated
-
-		@apiSuccess (200) {String} hostname Get Hostname of Server
-		@apiSuccess (200) {String} platform Get Platform of Server
-		@apiSuccess (200) {String} ram Get Ram of Server
-		@apiSuccess (200) {String} ip Get IP of Server
-		@apiSuccess (200) {String} disk Get Disk Used of Server
-		@apiSuccess (200) {String} uptime Get Uptime of Server
-
-		@apiSuccess (200) {String} color Color of User
-		@apiSuccess (200) {String} lang Lang of User
-
-		@apiError OptionsNotFound No Options Found
-
-		"""
 		return render_template('options/index.html')
 	elif request.method == 'POST':
-		"""
-		@api {post} /options Change Options
-		@apiName setAccount
-		@apiGroup Options
-		@apiPermission authenticated
-
-		@apiParam {String} color Color of User
-		@apiParam {String} lang Lang of User
-
-		@apiSuccess (200) redirect Redirect to Option
-
-		@apiError ParamNotFound No Param Found
-
-		"""
 		try:
 			option.lang = request.form['lang']
 			if request.form['color'] == None:
@@ -69,7 +37,7 @@ def options():
 			option.set_account()
 			flash(gettext('Account changed successfully' ), 'success')
 			return redirect(url_for('core.options'))
-		except Exception:
+		except OptionsException:
 			flash(gettext("You don't enter param"), 'success')
 			return redirect(url_for('core.options'))
 
@@ -77,21 +45,10 @@ def options():
 @admin_required
 @login_required
 def shutdown():
-	"""
-	@api {get} /shutdown Shutdown Server
-	@apiName shutdown()
-	@apiGroup Shutdown
-	@apiPermission authenticated
-	@apiPermission admin
-
-	@apiSuccess (200) shutdown Close Server
-
-	@apiError NoPermission No Admin
-	"""
 	try:
 		server.shutdown()
 		return render_template('options/close.html')
-	except Exception:
+	except ServerException:
 		flash(gettext('An error has occured !'),'error')
 		return redirect(url_for('core.index'))
 
@@ -100,23 +57,11 @@ def shutdown():
 @admin_required
 @login_required
 def maj():
-	"""
-	@api {get} /maj Update Onyx
-	@apiName maj()
-	@apiGroup Update
-	@apiPermission authenticated
-	@apiPermission admin
-
-	@apiSuccess (200) update Update Onyx
-
-	@apiError NoPermission No Admin
-	@apiError NoPip No Pip Install
-	"""
 	try:
 		server.update()
 		flash(gettext("Onyx is now upgrade !"),'success')
 		return redirect(url_for('core.options'))
-	except Exception:
+	except ServerException:
 		flash(gettext("An error has occured !"), 'error')
 		return redirect(url_for('core.options'))
 
@@ -124,6 +69,10 @@ def maj():
 @admin_required
 @login_required
 def update_data_git():
-	install.update_data()
-	flash(gettext('Data Modified'), 'success')
-	return redirect(url_for('core.options'))
+	try:
+		install.update_data()
+		flash(gettext('Data Modified'), 'success')
+		return redirect(url_for('core.options'))
+	except DataException:
+		flash(gettext('An errorhas occured'), 'error')
+		return redirect(url_for('core.options'))

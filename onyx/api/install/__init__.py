@@ -14,13 +14,11 @@ from onyx.extensions import db, login_manager
 from onyx.core.models import *
 from onyx.api.install import *
 from onyx.api.assets import Json
-import git
+from onyx.api.exceptions import *
+import git, pip, onyx, os, hashlib, logging
 from git import Repo
-import pip
-import onyx
-import os
-import hashlib
 
+logger = logging.getLogger()
 json = Json()
 
 class Install:
@@ -38,11 +36,12 @@ class Install:
             db.session.add(user)
             db.session.commit()
             login_user(user)
-            init = self.init_db()
-            print(init)
+            self.init_db()
+            logger.info('Successfully Installation')
             return json.encode({"status":"success"})
-        except:
-            raise Exception("An error has occured")
+        except Exception as e:
+            logger.error('Installation error : ' + str(e))
+            raise InstallException(str(e))
             return json.encode({"status":"error"})
 
     def init_db(self):
@@ -54,16 +53,27 @@ class Install:
                 query = NavbarModel.Navbar(idAccount=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
-            return 'Init Done'
-        except:
-            return 'Init Error'
+            logger.info('Navbar initialized for user : ' + user.username)
+            return json.encode({"status":"success"})
+        except Exception as e:
+            logger.error('Navbar initialisation error : ' + str(e))
+            raise NavbarException(str(e))
+            return json.encode({"status":"error"})
 
     def get_data(self):
-        Repo.clone_from('https://github.com/OnyxProject/Onyx-Data', onyx.__path__[0] + "/data/")
-        print('Done')
+        try:
+            Repo.clone_from('https://github.com/OnyxProject/Onyx-Data', onyx.__path__[0] + "/data/")
+            logger.info('Successfully get Data')
+        except Exception as e:
+            logger.error('Get Data error : ' + str(e))
+            raise DataException(str(e))
 
 
     def update_data(self):
-        repo = git.cmd.Git(onyx.__path__[0] + "/data/")
-        repo.pull()
-        print('Done')
+        try:
+            repo = git.cmd.Git(onyx.__path__[0] + "/data/")
+            repo.pull()
+            logger.info('Updating data successfully')
+        except Exception as e:
+            logger.error('Updating data error : ' + str(e))
+            raise DataException(str(e))

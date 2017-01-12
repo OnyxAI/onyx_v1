@@ -12,8 +12,11 @@ from flask.ext.login import current_user
 from onyxbabel import gettext
 from onyx.core.models import *
 from onyx.extensions import db
+from onyx.api.exceptions import *
 from onyx.api.assets import Json
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 class Options:
@@ -31,7 +34,9 @@ class Options:
 
             db.session.add(query)
             db.session.commit()
+            logger.info('User ' + query.username + ' updated successfully')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Error set account')
+        except Exception as e:
+            logger.error('User update error : ' + str(e))
+            raise OptionsException(str(e))
             return json.encode({"status":"error"})

@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 from .. import core
 from flask import render_template, request, redirect, url_for
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
 from onyx.api.transport import Ratp
 
 json = Json()
@@ -45,7 +46,7 @@ def rer(name):
         """
         try:
             return render_template('transport/ratp/rer/'+name+'.html')
-        except:
+        except TransportException:
             return render_template('transport/ratp/rer/index.html')
     elif request.method == 'POST':
         """
@@ -72,7 +73,7 @@ def rer(name):
         result = json.decode()
         try:
             return render_template('transport/ratp/rer/result.html', result=result)
-        except:
+        except TransportException:
             flash(gettext('An error has occured !') , 'error')
             return redirect(url_for('core.transport'))
 
@@ -104,7 +105,7 @@ def metro(name):
         """
         try:
             return render_template('transport/ratp/metro/'+name+'.html')
-        except:
+        except TransportException:
             return render_template('transport/ratp/metro/index.html')
     elif request.method == 'POST':
         """
@@ -131,6 +132,6 @@ def metro(name):
         result = json.decode()
         try:
             return render_template('transport/ratp/metro/result.html', result=result)
-        except:
+        except TransportException:
             flash(gettext('An error has occured !') , 'error')
             return redirect(url_for('core.transport'))

@@ -14,12 +14,6 @@ mail = Mail()
 from onyx_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-from flask_flatpages import FlatPages
-pages = FlatPages()
-
-import flask_restless
-manager = flask_restless.APIManager()
-
 from flask_login import LoginManager
 login_manager = LoginManager()
 try:
@@ -32,9 +26,6 @@ babel = Babel()
 
 from flask_migrate import Migrate
 migrate = Migrate()
-
-from flask_wtf.csrf import CsrfProtect
-csrf = CsrfProtect()
 
 from flask_cache import Cache
 cache = Cache()

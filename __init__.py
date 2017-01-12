@@ -73,13 +73,13 @@ def run():
 	except:
 		print('Config Already File Create')
 	try:
-        if os.path.exists(str(onyx.__path__[0]) + "/data/.gitkeep"):
-            shutil.rmtree(str(onyx.__path__[0]) + "/data/.gitkeep")
-            print('Data Added')
-        else:
-            print('Data Already Add')
-    except:
-        print('Data Already Add')
+		if os.path.exists(str(onyx.__path__[0]) + "/data/.gitkeep"):
+			shutil.rmtree(str(onyx.__path__[0]) + "/data/.gitkeep")
+			print('Data Added')
+		else:
+			print('Data Already Add')
+	except:
+		print('Data Already Add')
 	print('You can access to Onyx with : http://'+ip+':'+port)
 	print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()

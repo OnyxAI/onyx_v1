@@ -12,6 +12,7 @@ from flask import Blueprint, render_template, redirect, request, current_app, g,
 from flask.ext.login import login_required
 from onyx.extensions import db, login_manager
 from onyx.core.models import *
+from onyx.api.exceptions import *
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
 
@@ -28,27 +29,16 @@ def index():
 	if request.method == 'GET':
 		return render_template('install/index.html')
 	elif request.method == 'POST':
-		"""
-		@api {post} /install Install Form
-		@apiName setInstall
-		@apiGroup Install
-
-		@apiParam {String} username User Name
-		@apiParam {String} password User Password
-		@apiParam {String} email User Email
-
-		@apiSuccess (200) redirect Redirect to Restart
-
-		@apiError AlreadyExist This User already Exist
-
-		"""
-        installation.get_data()
-        installation.username = request.form['username']
-        installation.password = request.form['password']
-        installation.email = request.form['email']
-        installation.set()
-        flash('Onyx is installed !' , 'success')
-        return redirect(url_for("install.finish"))
+        try:
+            installation.get_data()
+            installation.username = request.form['username']
+            installation.password = request.form['password']
+            installation.email = request.form['email']
+            installation.set()
+            flash('Onyx is installed !' , 'success')
+            return redirect(url_for("install.finish"))
+        except (InstallException, DataException):
+            redirect(url_for("install.index"))
 
 
 @install.route('finish')

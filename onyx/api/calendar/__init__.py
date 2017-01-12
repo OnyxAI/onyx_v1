@@ -13,7 +13,10 @@ from time import strftime
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 class Calendar:
@@ -28,7 +31,6 @@ class Calendar:
         self.enddate = strftime("%Y-%m-%d  %H:%M:%S")
 
     def add(self):
-
         try:
             query = CalendarModel.Calendar(idAccount=current_user.id,\
                                            title=self.title,\
@@ -39,26 +41,34 @@ class Calendar:
                                            color=self.color)
             db.session.add(query)
             db.session.commit()
+            logger.info('Event ' + self.title + ' added successfully')
             return json.encode({"status":"success"})
-        except:
+        except Exception as e:
+            logger.error('Event added error : ' + str(e))
+            raise CalendarException(str(e))
             return json.encode({"status":"error"})
 
     def get(self):
-        query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(current_user.id))
-        events = []
+        try:
+            query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(current_user.id))
+            events = []
 
-        for fetch in query:
-    		e = {}
-    		e['id'] = fetch.id
-    		e['title'] = fetch.title
-    		e['notes'] = fetch.notes
-    		e['lieu'] = fetch.lieu
-    		e['start'] = fetch.start
-    		e['end'] = fetch.end
-    		e['color'] = fetch.color
-    		events.append(e)
+            for fetch in query:
+        		e = {}
+        		e['id'] = fetch.id
+        		e['title'] = fetch.title
+        		e['notes'] = fetch.notes
+        		e['lieu'] = fetch.lieu
+        		e['start'] = fetch.start
+        		e['end'] = fetch.end
+        		e['color'] = fetch.color
+        		events.append(e)
 
-        return json.encode(events)
+            return json.encode(events)
+        except Exception as e:
+            logger.error('Getting event error : ' + str(e))
+            raise CalendarException(str(e))
+            return json.encode({"status":"error"})
 
 
 
@@ -70,9 +80,10 @@ class Calendar:
 
             db.session.add(query)
             db.session.commit()
-
             return json.encode({'status':'success'})
-        except:
+        except Exception as e:
+            logger.error('Event update error : ' + str(e))
+            raise CalendarException(str(e))
             return json.encode({'status':'error'})
 
     def delete(self):
@@ -95,6 +106,9 @@ class Calendar:
 
             db.session.add(update)
             db.session.commit()
+            logger.info('Event ' + update.title + ' update')
             return json.encode({'status':'success'})
-        except:
+        except Exception as e:
+            logger.error('Event update error : ' + str(e))
+            raise CalendarException(str(e))
             return json.encode({'status':'error'})

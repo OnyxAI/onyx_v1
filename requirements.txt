@@ -17,6 +17,7 @@ Flask-WTF
 Jinja2
 Markdown
 PyYAML
+colorlog
 Werkzeug
 itsdangerous
 requests

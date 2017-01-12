@@ -15,6 +15,7 @@ from onyx.api.plugins import *
 import os
 from onyx.api.assets import Json
 from onyx.decorators import admin_required
+from onyx.api.exceptions import *
 
 json = Json()
 plugin = Plugin()
@@ -40,7 +41,7 @@ def install_plugin(name):
 		plugin.install()
 		flash(gettext('Plugin Installed !'), 'success')
 		return redirect(url_for('core.reboot_plugin'))
-	except Exception:
+	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.plugins'))
 
@@ -54,7 +55,7 @@ def install_url():
 		plugin.install()
 		flash(gettext('Plugin Installed !'), 'success')
 		return redirect(url_for('core.reboot_plugin'))
-	except Exception:
+	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.plugins'))
 
@@ -67,7 +68,7 @@ def uninstall_plugin(name):
 		plugin.uninstall()
 		flash(gettext('Plugin Uninstalled !'), 'success')
 		return redirect(url_for('core.reboot_plugin'))
-	except Exception:
+	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.reboot_plugin'))
 
@@ -79,7 +80,7 @@ def update_plugin(name):
 		plugin.update()
 		flash(gettext('Plugin Updated !'), 'success')
 		return redirect(url_for('core.reboot_plugin'))
-	except Exception:
+	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.plugins'))
 

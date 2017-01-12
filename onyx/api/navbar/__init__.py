@@ -11,9 +11,12 @@ from flask_login import current_user
 from onyx.core.models import *
 from onyxbabel import gettext
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
 from onyx.extensions import db
 import onyx
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 class Navbar:
@@ -43,8 +46,8 @@ class Navbar:
                 navbar.append(e)
 
             return json.encode(navbar)
-        except:
-            return 0
+        except Exception as e: 
+            raise NavbarException(str(e))
 
     def get_list(self):
         try:
@@ -58,71 +61,88 @@ class Navbar:
                 e['tooltip'] = fetch.tooltip
                 list.append(e)
             return json.encode(list)
-        except:
-            return 0
+        except Exception as e:  
+            raise NavbarException(str(e))
 
     def set_navbar(self):
-        last_nav = NavbarModel.Navbar.query.filter_by(id=self.last).first()
-        new_nav = NavbarModel.Navbar.query.filter_by(id=self.new).first()
+        try:
+            last_nav = NavbarModel.Navbar.query.filter_by(id=self.last).first()
+            new_nav = NavbarModel.Navbar.query.filter_by(id=self.new).first()
 
-        new_url = new_nav.url
-        new_tooltip = new_nav.tooltip
-        new_fa = new_nav.fa
+            new_url = new_nav.url
+            new_tooltip = new_nav.tooltip
+            new_fa = new_nav.fa
 
-        last_url = last_nav.url
-        last_tooltip = last_nav.tooltip
-        last_fa = last_nav.fa
+            last_url = last_nav.url
+            last_tooltip = last_nav.tooltip
+            last_fa = last_nav.fa
 
-        #Update New
-        last_nav.url = new_url
-        last_nav.tooltip = new_tooltip
-        last_nav.fa = new_fa
+            #Update New
+            last_nav.url = new_url
+            last_nav.tooltip = new_tooltip
+            last_nav.fa = new_fa
 
-        #Update Last
-        new_nav.url = last_url
-        new_nav.tooltip = last_tooltip
-        new_nav.fa = last_fa
+            #Update Last
+            new_nav.url = last_url
+            new_nav.tooltip = last_tooltip
+            new_nav.fa = last_fa
 
-        #Update
-        db.session.add(last_nav)
-        db.session.commit()
-        db.session.add(new_nav)
-        db.session.commit()
+            #Update
+            db.session.add(last_nav)
+            db.session.commit()
+            db.session.add(new_nav)
+            db.session.commit()
 
-        print('Done')
-        return True
+            logger.info('Navbar updated successfully')
+            return True
+        except Exception as e:
+            logger.error('Navbar update error : ' + str(e))
+            raise NavbarException(str(e))
+
 
     def set_plugin_navbar(self):
-        json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
-        data = json.decode_path()
-        user = UsersModel.User.query.all()
-        for key in user:
-            for nav in data:
-                query = NavbarModel.Navbar(idAccount=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
-                db.session.add(query)
-                db.session.commit()
-        print('Set Done')
+        try:
+            json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
+            data = json.decode_path()
+            user = UsersModel.User.query.all()
+            for key in user:
+                for nav in data:
+                    query = NavbarModel.Navbar(idAccount=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                    db.session.add(query)
+                    db.session.commit()
+            logger.info('Navbar plugin set with success')
+        except Exception as e:
+            logger.error('Navbar plugin set error : ' + str(e))
+            raise NavbarException(str(e))
 
     def set_plugin_navbar_user(self):
-        json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
-        data = json.decode_path()
-        user = UsersModel.User.query.filter_by(username=self.username).first()
-        for nav in data:
-            query = NavbarModel.Navbar(idAccount=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
-            db.session.add(query)
-            db.session.commit()
-        print('Set Done')
-
-    def delete_plugin_navbar(self):
-        json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
-        data = json.decode_path()
-        user = UsersModel.User.query.all()
-        for key in user:
+        try:
+            json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
+            data = json.decode_path()
+            user = UsersModel.User.query.filter_by(username=self.username).first()
             for nav in data:
-                query = NavbarModel.Navbar.query.filter_by(idAccount=key.id,tooltip=nav['tooltip']).first()
-                query.url = None
-                query.tooltip = "Undefined"
-                query.fa = None
+                query = NavbarModel.Navbar(idAccount=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
                 db.session.add(query)
                 db.session.commit()
-        print('Delete Done')
+            logger.info('Navbar use set with success')
+        except Exception as e:
+            logger.error('Navbar use set error : ' + str(e))
+            raise NavbarException(str(e))
+
+    def delete_plugin_navbar(self):
+        try:
+            json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
+            data = json.decode_path()
+            user = UsersModel.User.query.all()
+            for key in user:
+                for nav in data:
+                    query = NavbarModel.Navbar.query.filter_by(idAccount=key.id,tooltip=nav['tooltip']).first()
+                    query.url = None
+                    query.tooltip = "Undefined"
+                    query.fa = None
+                    db.session.add(query)
+                    db.session.commit()
+            logger.info('Navbar object deleted with success')
+        except Exception as e:
+            logger.error('Navbar delete error : ' + str(e))
+            raise NavbarException(str(e))

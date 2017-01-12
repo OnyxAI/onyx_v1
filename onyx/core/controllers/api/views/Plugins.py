@@ -15,6 +15,7 @@ from onyx.api.plugins import *
 import os
 from onyx.api.assets import Json
 from onyx.decorators import admin_required
+from onyx.api.exceptions import *
 
 plugin = Plugin()
 json = Json
@@ -37,7 +38,7 @@ def install_plugin(name):
 		plugin.name = name
 		plugin.url = request.args['url']
 		return plugin.install()
-	except Exception:
+	except PluginException:
 		return plugin.install()
 
 
@@ -48,7 +49,7 @@ def install_url():
 		plugin.name = request.form['name']
 		plugin.url = request.form['url']
 		return plugin.install()
-	except Exception:
+	except PluginException:
 		return plugin.install()
 
 
@@ -59,7 +60,7 @@ def uninstall_plugin(name):
 		plugin.name = name
 		plugin.uninstall()
 		return plugin.uninstall()
-	except Exception:
+	except PluginException:
 		return plugin.uninstall()
 
 @api.route('plugins/update/<string:name>')
@@ -69,5 +70,5 @@ def update_plugin(name):
 		plugin.name = name
 		plugin.update()
 		return plugin.update()
-	except Exception:
+	except PluginException:
 		plugin.update()

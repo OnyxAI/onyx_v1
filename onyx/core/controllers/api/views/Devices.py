@@ -12,6 +12,7 @@ from .. import api
 from flask import request
 from flask.ext.login import login_required
 from onyx.decorators import admin_required
+from onyx.api.exceptions import *
 from onyx.api.devices import *
 from onyxbabel import gettext
 
@@ -34,7 +35,7 @@ def add_device():
         devices.service = request.form['service']
         devices.room = request.form['room']
         return devices.add()
-    except Exception:
+    except DevicesException:
 		return devices.add()
 
 
@@ -45,5 +46,5 @@ def delete_device(id):
     try:
         devices.id = id
         return devices.delete()
-    except Exception:
+    except DevicesException:
         return devices.delete()

@@ -10,6 +10,10 @@ You may not use this software for commercial purposes.
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
+import logging
+
+logger = logging.getLogger()
 
 json = Json()
 
@@ -32,8 +36,9 @@ class Room:
                 rooms.append(room)
 
             return json.encode(rooms)
-        except:
-            raise Exception('Get Error')
+        except Exception as e:
+            logger.error('Getting room error : ' + str(e))
+            raise RoomException(str(e))
             return json.encode({"status":"error"})
 
 
@@ -43,9 +48,11 @@ class Room:
 
             db.session.add(query)
             db.session.commit()
+            logger.indo('Room ' + query.name + ' added successfuly')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Add Error')
+        except Exception as e:
+            logger.error('Room add error : ' + str(e))
+            raise RoomException(str(e))
             return json.encode({"status":"error"})
 
     def delete(self):
@@ -54,7 +61,9 @@ class Room:
 
             db.session.delete(query)
             db.session.commit()
+            logger.info('Room ' + query.name + ' deleted successfuly')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Delete Error')
+        except Exception as e:
+            logger.error('Room delete error : ' + str(e))
+            raise RoomException(str(e))
             return json.encode({"status":"error"})

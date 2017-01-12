@@ -68,8 +68,13 @@
                  <th>{{event.description}}</th>
                  <th><p><input name="event" type="radio" id="{{event.name}}" value="{{event.code}}" /><label for="{{event.name}}"></label></p></th>
                </tr>
+               {% endfor %}
 
+              
 
+             </tbody>
+           </table>
+          {% for event in events %}
                <div id="{{event.code}}" class="desc" style="display: none;">
                    {% for param in event.params %}
                    <script type="text/javascript">
@@ -102,11 +107,7 @@
                  </div>
 
                {% endfor %}
-
-
-
-             </tbody>
-           </table>
+         
        </div>
     </div>
 

@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 from .. import api
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
+from onyx.api.exceptions import *
 from onyx.decorators import admin_required
 from onyx.api.room import *
 from onyxbabel import gettext
@@ -31,8 +32,8 @@ def add_room():
         room.name = request.form['name']
         room.house = request.form['house']
         return room.add()
-    except Exception:
-		return room.add()
+    except RoomException:
+			return room.add()
 
 
 @api.route('room/delete/<int:id>')
@@ -42,5 +43,5 @@ def delete_room(id):
     try:
         room.id = id
         return room.delete()
-    except Exception:
+    except RoomException:
         return room.delete()

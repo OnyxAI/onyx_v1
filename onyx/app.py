@@ -19,7 +19,7 @@ except:
 
 
 from flask import Flask, request, render_template , g , abort , redirect , url_for
-from onyx.extensions import (db, mail, pages, manager, login_manager, babel, csrf, cache, celery)
+from onyx.extensions import (db, mail, login_manager, babel, cache, celery)
 from os import path
 from flask_login import current_user
 from os.path import dirname, abspath, join
@@ -27,9 +27,12 @@ from onyx.config import get_config
 from onyx.api.server import *
 from celery import Celery
 
+
+#Log
 import logging
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+from logging.handlers import RotatingFileHandler
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 
 
@@ -47,6 +50,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         app.config.from_pyfile(config)
 
     extensions_fabrics(app)
+    log()
 
     installConfig = get_config(app.config['INSTALL_FOLDER'])
     if installConfig.getboolean('Install', 'install'):
@@ -90,11 +94,29 @@ def create_app(config=None, app_name='onyx', blueprints=None):
                                     api.version(app.config['SQLALCHEMY_MIGRATE_REPO']))
         except:
             pass
-        print ("Initialized Database")
+        logger.info("Initialized Database")
 
 
-    print('Onyx is ready !')
+    logger.info('Onyx is ready !')
     return app
+
+def log():
+    LOGFORMAT = "  %(log_color)s%(levelname)-8s%(reset)s | %(log_color)s%(message)s%(reset)s"
+    from colorlog import ColoredFormatter
+    formatter = ColoredFormatter(LOGFORMAT)
+    """
+    file_handler = RotatingFileHandler(os.path.join(os.path.dirname(__file__), '..', 'log/activity.log'), 'a', 1000000, 1)
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    """
+
+
+    steam_handler = logging.StreamHandler()
+    steam_handler.setLevel(logging.DEBUG)
+    logger.addHandler(steam_handler)
+    steam_handler.setFormatter(formatter)
+
 
 def create_celery(app):
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
@@ -122,7 +144,6 @@ def extensions_fabrics(app):
     db.init_app(app)
     mail.init_app(app)
     babel.init_app(app)
-    pages.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app)
     celery.config_from_object(app.config)

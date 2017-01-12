@@ -10,7 +10,10 @@ You may not use this software for commercial purposes.
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 class Machine:
@@ -38,8 +41,9 @@ class Machine:
                 machines.append(machine)
 
             return json.encode(machines)
-        except:
-            raise Exception('Get Error')
+        except Exception as e:
+            logger.error('Getting machine error : ' + str(e))
+            raise GetException(str(e))
             return json.encode({"status":"error"})
 
     def add(self):
@@ -48,9 +52,11 @@ class Machine:
 
             db.session.add(query)
             db.session.commit()
+            logger.info('Machine ' + query.name + ' added successfuly')
             return json.dumps({"status":"success"})
-        except:
-            raise Exception('Add Error')
+        except Exception as e:
+            logger.info('Machine add error : ' + str(e))
+            raise MachineException(str(e))
             return json.encode({"status":"error"})
 
     def delete(self):
@@ -59,7 +65,9 @@ class Machine:
 
             db.session.delete(query)
             db.session.commit()
+            logger.info('Machine ' + query.name + ' deleted successfuly')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Delete Error')
+        except Exception as e:
+            logger.error('Machine delete error : ' + str(e))
+            raise MachineException(str(e))
             return json.encode({"status":"error"})

@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 from .. import core
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
+from onyx.api.exceptions import *
 from onyx.decorators import admin_required
 from onyx.api.room import *
 from onyxbabel import gettext
@@ -27,9 +28,9 @@ def add_room():
         room.add()
         flash(gettext('Room Add'), 'success')
         return redirect(url_for('core.options'))
-    except Exception:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
+    except RoomException:
+			flash(gettext('An error has occured !'), 'error')
+			return redirect(url_for('core.options'))
 
 
 @core.route('room/delete/<int:id>')
@@ -41,6 +42,6 @@ def delete_room(id):
         room.delete()
         flash(gettext('Room Deleted'), 'success')
         return redirect(url_for('core.options'))
-    except Exception:
+    except RoomException:
         flash(gettext('An error has occured !'), 'error')
         return redirect(url_for('core.options'))

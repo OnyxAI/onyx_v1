@@ -7,10 +7,8 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-import os
-import requests
-import json
-import onyx
+from onyx.api.exceptions import *
+import os, requests, json, onyx
 
 class Json:
 
@@ -25,30 +23,30 @@ class Json:
         try:
             data = json.loads(self.json)
             return data
-        except:
-            pass
+        except Exception as e:
+            raise JsonException(str(e))
 
     def encode(self, query):
         try:
             encode = json.dumps(query)
             return encode
-        except:
-            pass
+        except Exception as e:
+            raise JsonException(str(e))
 
     def decode_url(self):
         try:
             data = requests.get(self.url).json()
             return data
-        except:
-            pass
+        except Exception as e:
+            raise JsonException(str(e))
 
     def decode_path(self):
         try:
             with open(self.path) as data_file:
                 data = json.load(data_file)
                 return data
-        except:
-            pass
+        except Exception as e:
+            raise JsonException(str(e))
 
     def decode_data(self):
         try:
@@ -60,5 +58,5 @@ class Json:
                 with open(onyx.__path__[0] + "/data/" + self.data_name + "/" + self.lang + ".json") as data_file:
                     data = json.load(data_file)
                 return data
-        except:
-            pass
+        except Exception as e:
+            raise JsonException(str(e))

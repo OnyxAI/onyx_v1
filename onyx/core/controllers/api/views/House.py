@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 from .. import api
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
+from onyx.api.exceptions import *
 from onyx.decorators import admin_required
 from onyx.api.house import *
 from onyxbabel import gettext
@@ -36,7 +37,7 @@ def add_house():
         house.latitude = request.form['latitude']
         house.longitude = request.form['longitude']
         return house.add()
-    except Exception:
+    except HouseException:
 		return house.add()
 
 
@@ -47,5 +48,5 @@ def delete_house(id):
     try:
         house.id = id
         return house.delete()
-    except Exception:
+    except HouseException:
         return house.delete()

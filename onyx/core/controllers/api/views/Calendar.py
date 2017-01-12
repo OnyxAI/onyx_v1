@@ -14,6 +14,7 @@ from onyx.decorators import admin_required
 from .. import api
 import json
 from onyx.api.calendar import *
+from onyx.api.exceptions import *
 
 events = Calendar()
 
@@ -40,7 +41,10 @@ def calendars():
 		@apiError EventNotFound No Event Found
 
 		"""
-		return events.get()
+		try:
+			return events.get()
+		except CalendarException as e:
+			return "Error : " + e
 
 	elif request.method == 'POST':
 		"""
@@ -61,13 +65,16 @@ def calendars():
 		@apiError AlreadyExist This Event already Exist
 
 		"""
-		events.title = request.form['title']
-		events.notes = request.form['notes']
-		events.lieu = request.form['lieu']
-		events.color = request.form['color']
-		events.startdate = request.form['start']
-		events.enddate = request.form['end']
-		return events.add()
+		try:
+			events.title = request.form['title']
+			events.notes = request.form['notes']
+			events.lieu = request.form['lieu']
+			events.color = request.form['color']
+			events.startdate = request.form['start']
+			events.enddate = request.form['end']
+			return events.add()
+		except CalendarException as e:
+			return 'Error : ' + e
 
 	elif request.method == 'PUT':
 		"""
@@ -84,10 +91,13 @@ def calendars():
 		@apiError {json} status An error has occurred
 
 		"""
-		events.id = request.form['id']
-		events.startdate = request.form['start']
-		events.enddate = request.form['end']
-		return events.update_date()
+		try:
+			events.id = request.form['id']
+			events.startdate = request.form['start']
+			events.enddate = request.form['end']
+			return events.update_date()
+		except CalendarException as e:
+			return 'Error : ' + str(e)
 
 @api.route('calendar/<int:id>', methods=['GET','POST'])
 @login_required
@@ -111,14 +121,17 @@ def calendar(id):
 		@apiError AlreadyExist This Event already Exist
 
 		"""
-		checked = 'delete' in request.form
-		if checked == True:
+		try:
+			checked = 'delete' in request.form
+			if checked == True:
+				events.id = request.form['id']
+				events.delete()
 			events.id = request.form['id']
-			events.delete()
-		events.id = request.form['id']
-		events.title = request.form['title']
-		events.notes = request.form['notes']
-		events.lieu = request.form['lieu']
-		events.color = request.form['color']
+			events.title = request.form['title']
+			events.notes = request.form['notes']
+			events.lieu = request.form['lieu']
+			events.color = request.form['color']
 
-		return events.update_event()
+			return events.update_event()
+		except CalendarException as e:
+			return 'Error : ' + e

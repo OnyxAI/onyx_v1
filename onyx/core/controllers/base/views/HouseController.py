@@ -12,6 +12,7 @@ from .. import core
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
 from onyx.decorators import admin_required
+from onyx.api.exceptions import *
 from onyx.api.house import *
 from onyxbabel import gettext
 
@@ -32,7 +33,7 @@ def add_house():
         house.add()
         flash(gettext('House Add'), 'success')
         return redirect(url_for('core.options'))
-    except Exception:
+    except HouseException:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.options'))
 
@@ -46,6 +47,6 @@ def delete_house(id):
         house.delete()
         flash(gettext('House Deleted'), 'success')
         return redirect(url_for('core.options'))
-    except Exception:
+    except HouseException:
         flash(gettext('An error has occured !'), 'error')
         return redirect(url_for('core.options'))

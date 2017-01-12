@@ -10,7 +10,10 @@ You may not use this software for commercial purposes.
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.assets import Json
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 json = Json()
 
 class Devices:
@@ -37,10 +40,10 @@ class Devices:
                 device['service'] = fetch.service
                 device['room'] = fetch.room
                 devices.append(device)
-
             return json.encode(devices)
-        except:
-            raise Exception('Get Error')
+        except Exception as e:
+            logger.error('Getting devices error : ' + str(e))
+            raise DevicesException(str(e))
             return json.encode({"status":"error"})
 
     def add(self):
@@ -49,9 +52,11 @@ class Devices:
 
             db.session.add(query)
             db.session.commit()
+            logger.info('New Device : ' + query.name)
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Add Error')
+        except Exception as e:
+            logger.error('Error device add : ' + str(e))
+            raise DevicesException(str(e))
             return json.encode({"status":"error"})
 
     def delete(self):
@@ -60,7 +65,9 @@ class Devices:
 
             db.session.delete(query)
             db.session.commit()
+            logger.info('Device ' + query.name + ' deleted successfully')
             return json.encode({"status":"success"})
-        except:
-            raise Exception('Delete Error')
+        except Exception as e:
+            logger.error('Device delete error : ' + str(e))
+            raise DevicesException(str(e))
             return json.encode({"status":"error"})
