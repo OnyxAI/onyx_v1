@@ -11,9 +11,15 @@ You may not use this software for commercial purposes.
 from .. import core
 from flask import request,render_template, url_for,redirect, current_app as app
 from flask.ext.login import login_required
+from onyx.api.assets import Json
+from onyx.api.widgets import *
 
+json = Json()
+box = Widgets()
 
 @core.route('/')
 @login_required
 def index():
-    return render_template('index/index.html')
+    json.json = box.get()
+    boxs = json.decode()
+    return render_template('index/index.html', boxs=boxs)

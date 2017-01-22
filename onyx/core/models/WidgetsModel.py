@@ -9,13 +9,15 @@ You may not use this software for commercial purposes.
 """
 from onyx.extensions import db
 
-class Device(db.Model):
+class Widget(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    color = db.Column(db.String(256))
+    url = db.Column(db.String(256))
+    user = db.Column(db.Integer())
     name = db.Column(db.String(256))
-    identifier = db.Column(db.String(256))
-    protocol = db.Column(db.String(256))
-    service = db.Column(db.String(256))
-    room = db.Column(db.String(256))
+    see_more = db.Column(db.String(256))
+    param = db.Column(db.String())
+
 
     @property
     def is_active(self):

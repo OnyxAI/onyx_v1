@@ -26,9 +26,9 @@ def load_user(id):
 
 @install.route('/' , methods=['GET','POST'])
 def index():
-	if request.method == 'GET':
-		return render_template('install/index.html')
-	elif request.method == 'POST':
+    if request.method == 'GET':
+        return render_template('install/index.html')
+    elif request.method == 'POST':
         try:
             installation.get_data()
             installation.username = request.form['username']

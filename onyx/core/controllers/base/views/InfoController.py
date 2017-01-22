@@ -15,4 +15,4 @@ from flask.ext.login import login_required
 @core.route('info')
 @login_required
 def info():
-    return "Test"
+    return render_template('info/index.html')

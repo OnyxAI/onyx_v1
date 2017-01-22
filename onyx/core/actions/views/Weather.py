@@ -8,11 +8,16 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from onyx.core.models import *
-from onyx.extensions import db
 
-def delete_scenario_db(id):
-	query = ScenarioModel.Scenario.query.filter_by(id=id).first()
+from onyx.api.exceptions import *
+from onyxbabel import gettext
+from onyx.api.assets import Json
+from .. import action
+from onyx.api.weather import *
 
-	db.session.delete(query)
-	db.session.commit()
+temp = Weather()
+json = Json()
+
+@action.route('weather')
+def weather():
+    return temp.get_str()

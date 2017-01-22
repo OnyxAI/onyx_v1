@@ -12,6 +12,7 @@ from .. import core
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required
 from onyx.decorators import admin_required
+from onyxbabel import gettext
 from onyx.api.navbar import Navbar
 from onyx.api.exceptions import *
 

@@ -16,7 +16,7 @@
 
   <!-- Avatar -->
   <div class="fixed-action-btn vertical" style="bottom: 100px; right: 3%;">
-    <a href="#" class="button-collapse" data-activates="slide-out"><img class="circle" style="max-width: 60px;" src="{{ g.avatar }}"></a>
+    <a href="#" class="button-collapse" data-activates="slide-out"><img class="circle" style="max-width: 60px;" src="{{ g.avatar }}">{% if g.notifs|length != 0 %}<span class="badge new {{buttonColor}}">{{g.notifs|length}}</span>{% endif %}  </a>
   </div>
 </ul>
 
@@ -52,6 +52,7 @@
     <span class="white-text name">{{ g.user }}</span>
     <span class="white-text email">{{ g.email }}</span>
   </div></li>
+  <li><span class="badge new {{buttonColor}}">{{g.notifs|length}}</span><a href="{{ url_for('core.notifications') }}">{{_("Notifications")}}</a></li>
   <li><a href="{{ url_for('auth.change_account') }}">{{_("My Account")}}</a></li>
   <li><div class="divider"></div></li>
   <li><a href="{{ url_for('auth.logout') }}">{{_("Log Out")}}</a></li>

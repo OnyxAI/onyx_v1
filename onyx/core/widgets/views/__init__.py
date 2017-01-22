@@ -8,9 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from onyx.core.models import *
-from onyx.extensions import db
+import os
+import glob
 
-def get_scenario():
-    query = ScenarioModel.Scenario.query.all()
-    return query
+__all__ = [os.path.basename(f)[:-3] for f in glob.glob(os.path.dirname(__file__) + "/*.py")]

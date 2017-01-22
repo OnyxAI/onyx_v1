@@ -8,6 +8,7 @@ You may not use this software for commercial purposes.
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
 reload(sys)
 sys.dont_write_bytecode = True
 sys.setdefaultencoding('utf-8')
@@ -31,7 +32,7 @@ def run():
 	except:
 		pass
 	if '-d' in argv:
-        	debug = "True"
+		debug = "True"
 	try:
 		argv.remove('-d')
 	except:
@@ -84,7 +85,7 @@ def run():
 	print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()
 	try:
-		app.run(ip , port=int(port) , debug=debug)
+		app.run(ip , port=int(port) , debug=debug,threaded=True)
 	except:
 		print('Error with Args')
 		sys.exit(2)

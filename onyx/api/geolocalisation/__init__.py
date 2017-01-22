@@ -7,7 +7,7 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from onyx.api.assets import json
+from onyx.api.assets import Json
 from onyx.api.exceptions import *
 import logging
 
@@ -23,7 +23,7 @@ class Geolocalisation:
     def get(self):
       try:
         json.url = "http://ip-api.com/json"
-        data = json.decode_url()
+        result = json.decode_url()
         return json.encode({"latitude":result['lat'],"longitude":result['lon']})
       except Exception as e:
         logger.error('Get geolocalisation error : ' + str(e))

@@ -46,7 +46,7 @@ class Navbar:
                 navbar.append(e)
 
             return json.encode(navbar)
-        except Exception as e: 
+        except Exception as e:
             raise NavbarException(str(e))
 
     def get_list(self):
@@ -61,7 +61,7 @@ class Navbar:
                 e['tooltip'] = fetch.tooltip
                 list.append(e)
             return json.encode(list)
-        except Exception as e:  
+        except Exception as e:
             raise NavbarException(str(e))
 
     def set_navbar(self):
@@ -107,7 +107,7 @@ class Navbar:
             user = UsersModel.User.query.all()
             for key in user:
                 for nav in data:
-                    query = NavbarModel.Navbar(idAccount=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                    query = NavbarModel.Navbar(idAccount=str(key.id),fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
                     db.session.add(query)
                     db.session.commit()
             logger.info('Navbar plugin set with success')

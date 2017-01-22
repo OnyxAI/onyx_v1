@@ -43,7 +43,7 @@ def install_plugin(name):
 		return redirect(url_for('core.reboot_plugin'))
 	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.plugins'))
+		return redirect(url_for('core.reboot_plugin'))
 
 
 @core.route('plugins/install_url', methods=['POST'])
@@ -57,7 +57,7 @@ def install_url():
 		return redirect(url_for('core.reboot_plugin'))
 	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.plugins'))
+		return redirect(url_for('core.reboot_plugin'))
 
 
 @core.route('plugins/uninstall/<string:name>')
@@ -82,7 +82,7 @@ def update_plugin(name):
 		return redirect(url_for('core.reboot_plugin'))
 	except PluginException:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.plugins'))
+		return redirect(url_for('core.reboot_plugin'))
 
 @core.route('plugins/reboot')
 @login_required

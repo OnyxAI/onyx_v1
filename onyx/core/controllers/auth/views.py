@@ -15,12 +15,14 @@ from onyx.extensions import login_manager, db
 from onyx.decorators import admin_required
 from onyx.api.assets import Json
 from os.path import exists
+from onyx.api.events import *
 from onyx.api.exceptions import *
 import os
 import onyx
 from onyx.api.user import *
 import hashlib
 
+event = Event()
 json = Json()
 auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=str(onyx.__path__[0])+'/templates')
 user = User()
@@ -72,6 +74,8 @@ def login():
                 flash(gettext('Incorrect email or password !'), 'error')
                 return redirect(url_for('auth.login'))
             else:
+                event.code = "user_connected"
+                event.new()
                 flash(gettext('You are now connected'), 'success')
                 return redirect(request.args.get('next') or url_for('core.index'))
         except UserException:

@@ -3235,7 +3235,7 @@ span.badge.new {
 }
 
 span.badge.new:after {
-  content: " new";
+  content: "";
 }
 
 nav ul a span.badge {

@@ -19,13 +19,11 @@ from onyxbabel import gettext
 house = House()
 
 @api.route('house')
-@admin_required
 @login_required
 def get_house():
     return house.get()
 
 @api.route('house/add', methods=['POST'])
-@admin_required
 @login_required
 def add_house():
     try:
@@ -42,7 +40,6 @@ def add_house():
 
 
 @api.route('house/delete/<int:id>')
-@admin_required
 @login_required
 def delete_house(id):
     try:

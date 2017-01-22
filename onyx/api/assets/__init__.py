@@ -14,6 +14,7 @@ class Json:
 
     def __init__(self):
         self.json = None
+        self.name = None
         self.url = None
         self.path = None
         self.lang = None
@@ -37,6 +38,14 @@ class Json:
         try:
             data = requests.get(self.url).json()
             return data
+        except Exception as e:
+            raise JsonException(str(e))
+
+    def decode_package(self):
+        try:
+            with open(onyx.__path__[0] + "/plugins/" + self.name + "/package.json") as data_file:
+                data = json.load(data_file)
+                return data
         except Exception as e:
             raise JsonException(str(e))
 

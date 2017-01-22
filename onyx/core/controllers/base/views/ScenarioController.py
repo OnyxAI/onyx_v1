@@ -9,20 +9,44 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-from flask import render_template, request, jsonify
-from flask.ext.login import login_required
+from flask import render_template, request, redirect, url_for, flash
+from onyxbabel import gettext
+from flask.ext.login import login_required, current_user
+from onyx.api.scenario import *
 from onyx.api.events import *
+from onyx.api.action import *
+from onyx.api.assets import Json
+
+json = Json()
+launcher = Scenario()
+events = Event()
+actions = Action()
 
 @core.route('scenario')
 @login_required
 def scenario():
-	events = get_events()
-	return render_template('scenario/index.html',events=events)
+	return render_template('scenario/index.html',events=events.get(), actions=actions.get())
 
 @core.route('scenario',methods=['POST'])
 @login_required
 def add_scenario():
-	str = ""
-	for param in request.form.getlist('param'):
-		str+=param
-	return str
+	list = request.form.getlist(request.form['event_code'] + '_param')
+	template = " && ".join(list)
+	launcher.template = template
+	launcher.name = request.form['scenario']
+	launcher.user = current_user.id
+	launcher.event = request.form['event_code']
+	launcher.action = request.form[request.form['action']]
+	launcher.action_param = json.encode(request.form.getlist(request.form['action'] + '_param'))
+	launcher.add()
+
+	flash(gettext('Scenario added successfully !'), 'success')
+	return redirect(url_for('core.scenario'))
+
+@core.route('scenario/delete/<int:id>')
+@login_required
+def delete_scenario(id):
+	launcher.id = id
+	launcher.delete()
+	flash(gettext('Scenario deleted successfully !'),'success')
+	return redirect(url_for('core.scenario'))

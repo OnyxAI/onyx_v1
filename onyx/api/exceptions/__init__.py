@@ -56,9 +56,12 @@ class OptionsException(Exception):
 
 class ServerException(Exception):
     pass
-  
+
 class PluginException(Exception):
     pass
-  
+
 class TransportException(Exception):
+    pass
+
+class NotifException(Exception):
     pass

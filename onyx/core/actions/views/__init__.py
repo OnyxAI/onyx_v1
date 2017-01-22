@@ -7,13 +7,8 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from onyx.api.assets import Json
-from flask import g
 
-json = Json()
+import os
+import glob
 
-def get_events():
-    json.lang = g.lang
-    json.data_name = "events"
-    data = json.decode_data()
-    return data
+__all__ = [os.path.basename(f)[:-3] for f in glob.glob(os.path.dirname(__file__) + "/*.py")]

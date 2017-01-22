@@ -16,7 +16,12 @@ from onyx.api.navbar import *
 import importlib
 import onyx, pip, os, git, shutil
 import logging
+from onyx.api.widgets import *
+from onyx.api.scenario import *
 
+scenario = Scenario()
+widgets = Widgets()
+navbar = Navbar()
 logger = logging.getLogger()
 json = Json()
 
@@ -42,8 +47,7 @@ class Plugin:
                     e['index'] = data['index']
                 except KeyError:
                     print('No view for ' + data['name'])
-
-                    plug.append(e)
+                plug.append(e)
             return json.encode(plug)
         except Exception as e:
             raise PluginException(str(e))
@@ -71,7 +75,8 @@ class Plugin:
             self.install_dep()
             self.install_pip()
             if data['navbar'] == 'True':
-                set_plugin_navbar(self.name)
+                navbar.folder = self.name
+                navbar.set_plugin_navbar()
             logger.info('Installation done with success')
             return json.encode({"status":"success"})
         except Exception as e:
@@ -115,8 +120,15 @@ class Plugin:
         try:
             json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
             data = json.decode_path()
+            if data['data'] == 'True':
+                 widgets.plugin_name = self.name
+                 widgets.delete_plugin()
+
+                 scenario.plugin_name = self.name
+                 scenario.delete_plugin()
             if data['navbar'] == 'True':
-                delete_plugin_navbar(self.name)
+                navbar.folder = self.name
+                navbar.delete_plugin_navbar()
             plugin = importlib.import_module('onyx.plugins.'+self.name)
             plugin.uninstall()
             shutil.rmtree(onyx.__path__[0] + "/plugins/" + self.name)

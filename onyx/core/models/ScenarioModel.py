@@ -12,10 +12,12 @@ from onyx.extensions import db
 class Scenario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
-    house = db.Column(db.String(256))
+    template = db.Column(db.String(256))
+    active = db.Column(db.Integer())
     event = db.Column(db.String(256))
     action = db.Column(db.String(256))
     action_param = db.Column(db.String(256))
+    user = db.Column(db.Integer())
 
 
     @property

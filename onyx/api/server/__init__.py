@@ -20,8 +20,8 @@ from onyx.api.navbar import *
 from onyx.api.house import *
 from onyx.api.room import *
 from onyx.api.machine import *
-from onyx.api.devices import *
 from onyx.api.scenario import *
+from onyx.api.notification import *
 from onyx.api.exceptions import *
 import logging
 
@@ -56,14 +56,14 @@ class Server:
         return ram.percent
       except Exception as e:
         logger.error('Server error : ' + str(e))
-        
+
     def get_disk(self):
       try:
         disk = psutil.disk_usage('/')
         return disk.percent
       except Exception as e:
         logger.error('Server error : ' + str(e))
-        
+
     def get_up_stats(self):
       try:
         from uptime import uptime
@@ -87,6 +87,7 @@ class Server:
         g.disk = "width: "+str(self.get_disk())+"%"
         g.gapi = self.app.config.get('GAPI')
         g.gcx = self.app.config.get('GCX')
+        g.next = request.endpoint
 
         json.data_name = 'sentences'
         json.lang = g.lang
@@ -95,9 +96,12 @@ class Server:
             json_raw = []
             for key in data:
                 json_raw.append(key['text'])
-                g.action = json_raw
+            g.action = json.encode(json_raw)
         except:
-            g.action = None
+            json_raw = []
+            for key in data:
+                json_raw.append(key['text'])
+            g.action = json.encode(json_raw)
 
         try:
           json.json = navbar.get_list()
@@ -106,7 +110,7 @@ class Server:
           json.json = navbar.get()
           g.navbar = json.decode()
         except NavbarException:
-          logger.error('No connected to get Navbar')
+          pass
 
 
         houses = House()
@@ -121,12 +125,19 @@ class Server:
         json.json = machines.get()
         g.machines = json.decode()
 
-        devices = Devices()
-        json.json = devices.get()
-        g.devices = json.decode()
+        notifs = Notification()
+        json.json = notifs.get()
+        g.notifs = json.decode()
 
-        scenarios = get_scenario()
-        g.scenarios = scenarios
+        all_notifs = Notification()
+        json.json = all_notifs.get_all()
+        g.all_notifs = json.decode()
+
+        scenarios = Scenario()
+        json.json = scenarios.get_all()
+        g.scenarios = json.decode()
+
+
       except Exception as e:
         logger.error('Server Error : ' + str(e))
 

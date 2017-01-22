@@ -32,6 +32,7 @@ class Calendar:
 
     def add(self):
         try:
+
             query = CalendarModel.Calendar(idAccount=current_user.id,\
                                            title=self.title,\
                                            notes=self.notes,\
@@ -51,6 +52,28 @@ class Calendar:
     def get(self):
         try:
             query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(current_user.id))
+            events = []
+
+            for fetch in query:
+        		e = {}
+        		e['id'] = fetch.id
+        		e['title'] = fetch.title
+        		e['notes'] = fetch.notes
+        		e['lieu'] = fetch.lieu
+        		e['start'] = fetch.start
+        		e['end'] = fetch.end
+        		e['color'] = fetch.color
+        		events.append(e)
+
+            return json.encode(events)
+        except Exception as e:
+            logger.error('Getting event error : ' + str(e))
+            raise CalendarException(str(e))
+            return json.encode({"status":"error"})
+
+    def get_meet(self):
+        try:
+            query = CalendarModel.Calendar.query.filter_by(start=strftime("%Y-%m-%d 00:00:00")).all()
             events = []
 
             for fetch in query:

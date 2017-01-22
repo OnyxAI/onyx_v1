@@ -17,7 +17,6 @@ except:
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
-
 from flask import Flask, request, render_template , g , abort , redirect , url_for
 from onyx.extensions import (db, mail, login_manager, babel, cache, celery)
 from os import path
@@ -55,10 +54,12 @@ def create_app(config=None, app_name='onyx', blueprints=None):
     installConfig = get_config(app.config['INSTALL_FOLDER'])
     if installConfig.getboolean('Install', 'install'):
         from onyx.core.controllers.base import core
+        from onyx.core.actions import action
         from onyx.core.controllers.auth import auth
         from onyx.core.controllers.api import api
+        from onyx.core.widgets import widgets
         from onyx.plugins import plugin
-        BLUEPRINTS = [core,auth,api]
+        BLUEPRINTS = [core,auth,api,action,widgets]
         for module in plugin:
             try:
                 BLUEPRINTS.append(module.get_blueprint())
@@ -96,6 +97,11 @@ def create_app(config=None, app_name='onyx', blueprints=None):
             pass
         logger.info("Initialized Database")
 
+        for module in plugin:
+            try:
+                module.init(app)
+            except:
+                module.init()
 
     logger.info('Onyx is ready !')
     return app
@@ -113,7 +119,7 @@ def log():
 
 
     steam_handler = logging.StreamHandler()
-    steam_handler.setLevel(logging.DEBUG)
+    steam_handler.setLevel(logging.INFO)
     logger.addHandler(steam_handler)
     steam_handler.setFormatter(formatter)
 

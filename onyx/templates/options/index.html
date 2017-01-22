@@ -17,14 +17,12 @@
             <li class="tab col s3"><a href="#house">{{_('House')}}</a></li>
             <li class="tab col s3"><a href="#room">{{_('Room')}}</a></li>
             <li class="tab col s3"><a href="#machine">{{_('Machine')}}</a></li>
-            <li class="tab col s3"><a href="#devices">{{_('Devices')}}</a></li>
             <li class="tab col s3"><a href="#admin">{{_('Admin')}}</a></li>
           {% endif %}
     </ul>
 </div>
 
 <div id="system" >
-
 <div class="card-panel white">
       <table class="white responsive-table">
         <thead>
@@ -151,6 +149,36 @@
 </div>
 </div>
 
+<div id='navbar'>
+  <div class="card-panel white">
+    <h4>{{ _("Navbar") }}</h4><br><br>
+    {% for nav in g.navbar %}
+    <div class="row">
+    <form class="form" method=post action="{{url_for('core.update_navbar')}}">
+        <div class="col s4">
+          <a href="#" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
+            <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col s4">
+          <input type="hidden" name="last" value="{{nav.id}}">
+          <select name="new" class="browser-default">
+            {% for list in g.list %}
+              {% if list.url != None %}
+               <option value="{{list.id}}">{{ list.tooltip }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col s4">
+          <button class='btn {{buttonColor}}'>{{_('Submit')}}</button>
+        </div>
+    </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+  {% if g.admin == 1 %}
 <div id="house" >
 <div class="card-panel white">
   <table class="white responsive-table">
@@ -285,81 +313,8 @@
 </div>
 </div>
 
-<div id="devices" >
-<div class="card-panel white">
-  <table class="white responsive-table">
-    <thead>
-      <tr>
-          <th data-field="name">{{_('Name')}}</th>
-          <th data-field="identifier">{{_('Identifier')}}</th>
-          <th data-field="protocol">{{_('Protocol')}}</th>
-          <th data-field="service">{{_('Service')}}</th>
-          <th data-field="room">{{_('Room')}}</th>
-          <th>{{_('Change')}}</th>
-      </tr>
-    </thead>
 
-    <tbody>
-      {% for device in g.devices %}
-        <tr>
-            <td>{{device.name}}</td>
-            <td>{{device.identifier}}</td>
-            <td>{{device.protocol}}</td>
-            <td>{{device.service}}</td>
-            <td>{{device.room}}</td>
-            <td><a href="{{url_for('core.delete_device', id=device.id)}}" class="btn {{buttonColor}}">{{_('Delete')}}</a></td>
-        </tr>
-      {% endfor %}
-      <tr>
-        <form action="{{url_for('core.add_device')}}" method="post">
-          <td><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
-          <td><input placeholder="{{_('Identifier')}}" type="text" id="identifier" name="identifier" required></td>
-          <td><input placeholder="{{_('Protocol')}}" type="text" id="protocol" name="protocol" required></td>
-          <td><input placeholder="{{_('Service')}}" type="text" id="service" name="service" required></td>
-          <td>
-              <select name="room" class="browser-default">
-                {% for room in g.rooms %}
-                    <option value="{{room.name}}">{{room.name}}</option>
-                {% endfor %}
-              </select>
-          </td>
-          <td><button class="btn {{ buttonColor }}" type="submit" name="button">{{_('Send')}}</button></td>
-        </form>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
 
-<div id='navbar'>
-  <div class="card-panel white">
-    <h4>{{ _("Navbar") }}</h4><br><br>
-    {% for nav in g.navbar %}
-    <div class="row">
-    <form class="form" method=post action="{{url_for('core.update_navbar')}}">
-        <div class="col s4">
-          <a href="#" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
-            <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div class="col s4">
-          <input type="hidden" name="last" value="{{nav.id}}">
-          <select name="new" class="browser-default">
-            {% for list in g.list %}
-              {% if list.url != None %}
-               <option value="{{list.id}}">{{ list.tooltip }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col s4">
-          <button class='btn {{buttonColor}}'>{{_('Submit')}}</button>
-        </div>
-    </form>
-    </div>
-    {% endfor %}
-  </div>
-</div>
 
 <div id="admin" >
  {% if g.admin == 1 %}
@@ -378,6 +333,8 @@
 </div>
 
 </div>
+
+{% endif %}
 
 
 

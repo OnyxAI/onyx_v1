@@ -20,6 +20,7 @@ import hashlib
 import onyx
 import logging
 
+navbars = Navbar()
 logger = logging.getLogger()
 json = Json()
 
@@ -108,7 +109,9 @@ class User:
                 db.session.commit()
             for module in plugin:
                 folder = module.get_raw()
-                set_plugin_navbar_user(folder,self.username)
+                navbars.folder = folder
+                navbars.username = self.username
+                navbars.set_plugin_navbar_user()
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error("User Navbar Init Error : " + str(e))
