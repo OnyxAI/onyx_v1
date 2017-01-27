@@ -24,7 +24,6 @@ from onyx import create_app
 from onyx.extensions import db
 from onyx.api.server import *
 from flask._compat import text_type
-from multiprocessing import Process
 import onyx
 import shutil
 manager = Manager(create_app)
@@ -98,20 +97,6 @@ def run():
         print('Data Already Add')
     manager.run()
 
-def init():
-    from onyx.plugins import plugin
-    for module in plugin:
-        try:
-            module.first()
-        except:
-            name = module.get_name()
-            print('No Init for '+name)
 
 if __name__=='__main__':
-    if '-r' in sys.argv[1:]:
-        run()
-    else:
-        run_flask = Process(target = run)
-        run_flask.start()
-        init_plugin = Process(target = init)
-        init_plugin.start()
+    run()

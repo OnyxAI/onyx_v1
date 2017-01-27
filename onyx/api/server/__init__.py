@@ -89,19 +89,6 @@ class Server:
         g.gcx = self.app.config.get('GCX')
         g.next = request.endpoint
 
-        json.data_name = 'sentences'
-        json.lang = g.lang
-        data = json.decode_data()
-        try:
-            json_raw = []
-            for key in data:
-                json_raw.append(key['text'])
-            g.action = json.encode(json_raw)
-        except:
-            json_raw = []
-            for key in data:
-                json_raw.append(key['text'])
-            g.action = json.encode(json_raw)
 
         try:
           json.json = navbar.get_list()

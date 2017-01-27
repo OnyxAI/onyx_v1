@@ -121,11 +121,11 @@ class Plugin:
             json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
             data = json.decode_path()
             if data['data'] == 'True':
-                 widgets.plugin_name = self.name
-                 widgets.delete_plugin()
+                widgets.plugin_name = self.name
+                widgets.delete_plugin()
 
-                 scenario.plugin_name = self.name
-                 scenario.delete_plugin()
+                scenario.plugin_name = self.name
+                scenario.delete_plugin()
             if data['navbar'] == 'True':
                 navbar.folder = self.name
                 navbar.delete_plugin_navbar()

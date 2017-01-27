@@ -53,7 +53,7 @@ class Machine:
             db.session.add(query)
             db.session.commit()
             logger.info('Machine ' + query.name + ' added successfuly')
-            return json.dumps({"status":"success"})
+            return json.encode({"status":"success"})
         except Exception as e:
             logger.info('Machine add error : ' + str(e))
             raise MachineException(str(e))

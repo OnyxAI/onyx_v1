@@ -13,7 +13,10 @@ from onyx.extensions import db
 from onyx.api.action import *
 from flask import g
 import os, onyx
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 action = Action()
 json = Json()
 
@@ -25,29 +28,36 @@ class Event:
 
     def get(self):
         try:
-            json.lang = g.lang
-            json.data_name = "events"
-            data = json.decode_data()
-        except:
-            json.lang = "fr"
-            json.data_name = "events"
-            data = json.decode_data()
-
-        plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
-        for plugin in plugins:
             try:
-                json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/events.json"
-                data += json.decode_path()
+                json.lang = g.lang
+                json.data_name = "events"
+                data = json.decode_data()
             except:
-                print('Error')
+                json.lang = "fr"
+                json.data_name = "events"
+                data = json.decode_data()
 
-        return data
+            plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
+            for plugin in plugins:
+                try:
+                    json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/events.json"
+                    data += json.decode_path()
+                except Exception as e:
+                    logger.error('Error getting plugins : ' + str(e))
+
+            return data
+        except Exception as e:
+            logger.error('Error getting events : ' + str(e))
 
     def new(self):
-        code = self.code
-        query = ScenarioModel.Scenario.query.filter_by(event=code).all()
+        try:
+            code = self.code
+            query = ScenarioModel.Scenario.query.filter_by(event=code).all()
 
-        for key in query:
-            action.url = key.action
-            action.param = key.action_param
-            action.start()
+            for key in query:
+                action.url = key.action
+                action.param = key.action_param
+                action.start()
+        except Exception as e:
+            logger.error('New event error : ' + str(e))
+            raise EventException(str(e))

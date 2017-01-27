@@ -26,22 +26,30 @@ def widgets():
         json.json = box.get()
         boxs = json.decode()
         return render_template('widgets/index.html', list=list, boxs=boxs)
-    elements = request.form['box'].split('|')
-    box.color = "blue-grey darken-1"
-    box.url = elements[1]
-    box.name = elements[0]
-    box.see_more = elements[2]
-    box.add()
-    flash(gettext('Added Successfuly !'), 'success')
-    return redirect(url_for('core.widgets'))
+    try:
+        elements = request.form['box'].split('|')
+        box.color = "blue-grey darken-1"
+        box.url = elements[1]
+        box.name = elements[0]
+        box.see_more = elements[2]
+        box.add()
+        flash(gettext('Added Successfuly !'), 'success')
+        return redirect(url_for('core.widgets'))
+    except WidgetException:
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('core.widgets'))
 
 @core.route('widgets/delete/<int:id>')
 @login_required
 def widget_delete(id):
-    box.id = id
-    box.delete()
-    flash(gettext('Deleted with success !'), 'success')
-    return redirect(url_for('core.widgets'))
+    try:
+        box.id = id
+        box.delete()
+        flash(gettext('Deleted with success !'), 'success')
+        return redirect(url_for('core.widgets'))
+    except WidgetException:
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('core.widgets'))
 
 @core.context_processor
 def utility_processor():

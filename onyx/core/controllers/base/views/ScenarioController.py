@@ -30,23 +30,31 @@ def scenario():
 @core.route('scenario',methods=['POST'])
 @login_required
 def add_scenario():
-	list = request.form.getlist(request.form['event_code'] + '_param')
-	template = " && ".join(list)
-	launcher.template = template
-	launcher.name = request.form['scenario']
-	launcher.user = current_user.id
-	launcher.event = request.form['event_code']
-	launcher.action = request.form[request.form['action']]
-	launcher.action_param = json.encode(request.form.getlist(request.form['action'] + '_param'))
-	launcher.add()
+	try:
+		list = request.form.getlist(request.form['event_code'] + '_param')
+		template = " && ".join(list)
+		launcher.template = template
+		launcher.name = request.form['scenario']
+		launcher.user = current_user.id
+		launcher.event = request.form['event_code']
+		launcher.action = request.form[request.form['action']]
+		launcher.action_param = json.encode(request.form.getlist(request.form['action'] + '_param'))
+		launcher.add()
 
-	flash(gettext('Scenario added successfully !'), 'success')
-	return redirect(url_for('core.scenario'))
+		flash(gettext('Scenario added successfully !'), 'success')
+		return redirect(url_for('core.scenario'))
+	except ScenarioException:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.scenario'))
 
 @core.route('scenario/delete/<int:id>')
 @login_required
 def delete_scenario(id):
-	launcher.id = id
-	launcher.delete()
-	flash(gettext('Scenario deleted successfully !'),'success')
-	return redirect(url_for('core.scenario'))
+	try:
+		launcher.id = id
+		launcher.delete()
+		flash(gettext('Scenario deleted successfully !'),'success')
+		return redirect(url_for('core.scenario'))
+	except ScenarioException:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.scenario'))

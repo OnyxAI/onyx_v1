@@ -12,8 +12,18 @@ from flask import g, current_app as app
 from onyx.api.assets import Json
 from onyxbabel import gettext
 import importlib
+import aiml
+import os
+import onyx
+import time, sys
+from onyx.api.exceptions import *
+import logging
 
+logger = logging.getLogger()
 json = Json()
+kernel = aiml.Kernel()
+kernel.setPredicate('base_dir',onyx.__path__[0])
+kernel.bootstrap(learnFiles = onyx.__path__[0] + "/data/sentences/fr/std-startup.xml", commands = "load aiml b")
 
 class Sentences:
 
@@ -23,32 +33,42 @@ class Sentences:
         self.text = None
         self.next = 'core.index'
         self.label = None
+        self.param = None
         self.url = None
         self.type_event = None
 
+
     def get(self):
         try:
-            json.lang = g.lang
-            json.data_name = "sentences"
-            data = json.decode_data()
-            e = 0
-            while e < len(data):
-                if data[e]['text'] == self.text:
-                    self.label = data[e]['label']
-                    self.url = data[e]['url']
-                    self.type_event = data[e]['type']
-                    return self.get_event()
-                e+=1
-            return json.encode({"status":"unknown command","next":self.next})
+            response = kernel.respond(self.text)
+            function = kernel.getPredicate('function')
+            type_event = kernel.getPredicate('type_event')
+            param = kernel.getPredicate('param').split('|')
+            if function != "":
+                self.url = function
+                self.param = param
+                self.type_event = type_event
+                kernel.setPredicate('function','')
+                return self.get_event()
+            else:
+                return json.encode({"status":"success","type":"notification","text":response,"next":self.next})
         except Exception as e:
-            raise
+            logger.error('Getting sentence error : ' + str(e))
+            raise GetException(str(e))
 
     def get_event(self):
-        if self.type_event == 'notification':
-            function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
-            execute = function()
-            return json.encode({"status":"success","type":"notification","text":execute,"next":self.next})
-        elif self.type_event == 'exec':
-            function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
-            execute = function()
-            return json.encode({"status":"success","type":"exec","next":self.next})
+        try:
+            if self.type_event == 'notification':
+                function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
+                execute = function()
+                return json.encode({"status":"success","type":"notification","text":execute,"next":self.next})
+            elif self.type_event == 'exec':
+                function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
+                try:
+                    execute = function(self.param)
+                except:
+                    execute = function()
+                return json.encode({"status":"success","type":"exec","next":self.next,"text":execute})
+        except Exception as e:
+            logger.error('Getting Response error : ' + str(e))
+            raise SentenceException(str(e))

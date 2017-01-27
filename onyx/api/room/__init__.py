@@ -48,7 +48,7 @@ class Room:
 
             db.session.add(query)
             db.session.commit()
-            logger.indo('Room ' + query.name + ' added successfuly')
+            logger.info('Room ' + query.name + ' added successfuly')
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Room add error : ' + str(e))

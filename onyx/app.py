@@ -25,6 +25,7 @@ from os.path import dirname, abspath, join
 from onyx.config import get_config
 from onyx.api.server import *
 from celery import Celery
+from onyx.plugins import plugin
 
 
 #Log
@@ -58,7 +59,6 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         from onyx.core.controllers.auth import auth
         from onyx.core.controllers.api import api
         from onyx.core.widgets import widgets
-        from onyx.plugins import plugin
         BLUEPRINTS = [core,auth,api,action,widgets]
         for module in plugin:
             try:

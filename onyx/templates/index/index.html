@@ -8,7 +8,7 @@
 
 <div class="card-panel white">
 {% if boxs == [] %}
-  <h3>{{_("You have note some widget : ")}}<a href="{{url_for('core.widgets')}}">{{_("Add")}}</a></h3>
+  <h3>{{_("You have not widgets : ")}}<a href="{{url_for('core.widgets')}}">{{_("Add")}}</a></h3>
 {% else %}
   <div class="row">
       {% for box in boxs %}

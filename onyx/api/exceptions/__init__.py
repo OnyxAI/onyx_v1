@@ -65,3 +65,15 @@ class TransportException(Exception):
 
 class NotifException(Exception):
     pass
+
+class EventException(Exception):
+    pass
+
+class ScenarioException(Exception):
+    pass
+
+class WidgetException(Exception):
+    pass
+
+class SentenceException(Exception):
+    pass
