@@ -59,6 +59,7 @@ class Install:
             logger.error('Navbar initialisation error : ' + str(e))
             raise NavbarException(str(e))
             return json.encode({"status":"error"})
+            
 
     def get_data(self):
         try:

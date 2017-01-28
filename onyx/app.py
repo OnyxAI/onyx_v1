@@ -71,6 +71,9 @@ def create_app(config=None, app_name='onyx', blueprints=None):
         from onyx.core.controllers.install import install
         BLUEPRINTS = install
         blueprint_name = 'install'
+        with app.app_context():
+            db.create_all()
+            print('DB Create')
 
     if blueprints is None:
         blueprints = BLUEPRINTS
@@ -86,6 +89,7 @@ def create_app(config=None, app_name='onyx', blueprints=None):
     with app.app_context():
         from migrate.versioning import api
         db.create_all()
+
         try:
             if not os.path.exists(app.config['SQLALCHEMY_MIGRATE_REPO']):
                 api.create(app.config['SQLALCHEMY_MIGRATE_REPO'], 'database repository')

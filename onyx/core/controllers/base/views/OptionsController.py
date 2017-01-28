@@ -17,7 +17,9 @@ from onyx.api.options import *
 from onyx.api.server import *
 from onyx.api.exceptions import *
 from onyx.api.install import Install
+from werkzeug._reloader import *
 
+reloader = ReloaderLoop()
 install = Install()
 option = Options()
 server = Server()
@@ -52,6 +54,15 @@ def shutdown():
 		flash(gettext('An error has occured !'),'error')
 		return redirect(url_for('core.index'))
 
+@core.route('reboot')
+@login_required
+def reboot():
+	try:
+		reloader.restart_with_reloader()
+		return redirect(url_for('core.index'))
+	except:
+		flash(gettext('An error has occured !'),'error')
+		return redirect(url_for('core.index'))
 
 @core.route('maj')
 @admin_required

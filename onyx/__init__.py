@@ -9,38 +9,3 @@ You may not use this software for commercial purposes.
 """
 
 from .app import create_app, create_celery
-
-def runserver():
-
-
-	import Onyx
-	import os
-	import pip
-
-	from .extensions import db
-
-
-	#Check Updates
-	print("Onyx is starting")
-	print(' _____   __   _  __    __ __    __ ')
-	print('/  _  \ |  \ | | \ \  / / \ \  / / ')
-	print('| | | | |   \| |  \ \/ /   \ \/ /')
-	print('| | | | | |\   |   \  /     }  {')
-	print('| |_| | | | \  |   / /     / /\ \ ')
-	print('\_____/ |_|  \_|  /_/     /_/  \_\ ')
-	try:
-		os.rename(str(Onyx.__path__[0]) + "/onyx/config_example.py" , str(Onyx.__path__[0]) + "/onyx/flask_config.py")
-		print('Config File Create')
-	except:
-		print('Config File Already Create')
-	try:
-		os.remove(str(Onyx.__path__[0]) + "/onyx/config.py")
-	except:
-		print('Already Delete')
-	print("Check Update")
-	pip.main(['install', '--upgrade' , "onyxproject"])
-	app = create_app()
-	try:
-		app.run('0.0.0.0' , port=80 , debug=False)
-	except:
-		app.run('0.0.0.0' , port=8080 , debug=False)

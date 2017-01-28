@@ -9,7 +9,6 @@ dist
 
 /onyx/config/install_my.cfg
 /onyx/data/*
-!/onyx/data/.gitkeep
 /onyx/flask_config.py
 /onyx/db/*
 !/onyx/db/.gitkeep

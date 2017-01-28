@@ -1,25 +1,32 @@
 {% extends "layout/install.html" %}
 {% block body %}
 
+<style media="screen">
+  body {
+      background-image: url(/static/img/login/login.jpg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+</style>
+
+
 <header>
-  <center><h1>Installation d'Onyx</h1></center> 
-</header>   
+  <center><h1>Installation d'Onyx</h1></center>
+</header>
 
 
-
-<nav>
-	<center>
-    <div class="nav-wrapper blue darken-1">
-      <div class="col s12">
-        <a href="#step1" id="gostep1" class="breadcrumb"><span class="breadcrumb">Bienvenue</span></a>
-        <a href="#step2" id="gostep2" class="breadcrumb"><span class="breadcrumb">Création du compte</span></a>
-        <a href="#step3" id="gostep3" class="breadcrumb"><span class="breadcrumb">Finalisation</span></a>
-      </div>
-    </div>
-  </center>
-</nav>
-
-
+<div class="col s12">
+  <ul class="tabs teal darken-3">
+    <li class="step1 tab col s4"><a href="#step1" class="active">Welcome</a>
+    </li>
+    <li class="step2 tab col s4 disabled"><a href="#step2">Téléchargement des données</a>
+    </li>
+    <li class="step3 tab col s4 disabled"><a href="#step3">Créer son compte</a>
+    </li>
+    <li class="step4 tab col s4 disabled"><a href="#step4">Finalisation</a>
+    </li>
+  </ul>
+</div>
 
 
 <div class="row" id="step1">
@@ -27,12 +34,11 @@
     <div class="well well-sm">
       <div class="card-panel blue-grey grey lighten-3">
         <p>Bienvenue sur la page de configuration d'Onyx !</p>
-        <p>Vous allez pouvoir reglez votre configuration comme vous le souhaitez</p>
+        <p>Vous allez pouvoir regler votre configuration comme vous le souhaitez</p>
         <p>Onyx sera votre assistant personnel et vous pourrez l'utiliser sur vos différents appareils</p>
-        
-        <button id="etape1" class="btn blue darken-1 btn-lg">Suivant</button><br>
 
-        <p>Si vous avez déjà effectuer l'installation veuillez cliquer sur ce bouton : <a href="{{ url_for('install.finish') }}" class="btn blue darken-1 btn-lg">Terminer</a></p>   
+
+        <button id="etape1" class="btn teal darken-3 btn-lg">Suivant</button>
 
       </div>
 
@@ -41,21 +47,41 @@
 </div>
 
 
-
 <div class="row" id="step2">
   <div class="col-md-8 col-md-offset-2">
     <div class="well well-sm">
-     
+
+      <div class="card-panel blue-grey grey lighten-3">
+        <legend class="text-center">Téléchargement des données</legend><br><br>
+
+        <center><p class="dl_text">Téléchargé !</p></center>
+        <div class="progress"><div class="indeterminate"></div></div>
+
+        <button id="data" class="btn teal darken-3 btn-lg">Télécharger</button><br><br>
+
+
+        <button id="etape2" class="btn teal darken-3 btn-lg">Suivant</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+<div class="row" id="step3">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well well-sm">
+
 
 
       <div class="card-panel blue-grey grey lighten-3">
         <legend class="text-center">Créer votre compte administrateur</legend>
-        <form class="register-form" method=post action=""> 
-         
-          <input type="text" id="username" name="username" 
-          placeholder="Nom d'utilisateur" value="{{ request.form.username }}" required> 
+        <form class="register-form" method=post action="">
 
-          <input type="password" id="password" name="password" 
+          <input type="text" id="username" name="username"
+          placeholder="Nom d'utilisateur" value="{{ request.form.username }}" required>
+
+          <input type="password" id="password" name="password"
           placeholder="Mot de passe" value="{{ request.form.password }}" required>
 
           <input type="email" id="email" name="email" class="input-xlarge"
@@ -64,10 +90,9 @@
 
           <div class="form-group">
             <div class="col-md-12 text-right">
-              <span id="etape2" class="btn blue darken-1 btn-lg">Suivant</span>
+              <span id="etape3" class="btn teal darken-3 btn-lg">Suivant</span>
             </div>
-          </div><br>
-          <p>Si vous avez déjà effectuer l'installation veuillez cliquer sur ce bouton : <a href="{{ url_for('install.finish') }}" class="btn blue darken-1 btn-lg">Terminer</a></p> 
+          </div>
 
 
         </div>
@@ -77,32 +102,30 @@
   </div>
 
 
-  <div class="row" id="step3">
+  <div class="row" id="step4">
     <div class="col-md-8 col-md-offset-2">
       <div class="well well-sm">
         <div class="card-panel blue-grey grey lighten-3">
           <legend class="text-center">Finalisation</legend>
-          
+
           <p>Votre assistant est maintenant correctement réglé ! Vous pourrez néanmoins modifier tous ces paramètres depuis votre panneau d'administration !</p>
-          <p>Je vous invite maintenant à vous connectez au panneau de contrôle, et à l'ajouter à vos favoris.</p>
+          <p>Je vous invite maintenant à vous connecter au panneau de contrôle, et à l'ajouter à vos favoris.</p>
           <div>Faites connaître le projet ! <br><center>  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onyxlabs.fr" data-text="Je viens d'installer Onyx , mon assistant !"  data-related="Onyx" data-lang="fr" data-size="large" data-count="none">Tweet</a></div>
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></center> <br>
 
              <div class="form-group">
             <div class="col-md-12 text-right">
-              <button class="btn blue darken-1 btn-lg">Accéder à Onyx</button>
+              <button class="btn teal darken-3 btn-lg">Accéder à Onyx</button>
             </form>
           </div>
         </div>
 
-          <br>
-          <p>Si vous avez déjà effectuer l'installation veuillez cliquer sur ce bouton : <a href="{{ url_for('install.finish') }}" class="btn blue darken-1 btn-lg">Terminer</a></p> 
 
 
           </div>
 
-          
-       
+
+
 
       </div>
 
@@ -118,7 +141,48 @@
 
 
 <footer>
-  <p>© Onyx 2016 - Si vous rencontrez quelconques problème rendez-vous sur notre forum : <a href="http://onyxlabs.fr/forum/">http://onyxlabs.fr/forum/</a></p>
+  <p>© Onyx 2016 - Si vous rencontrez quelconques problèmes rendez-vous sur notre forum : <a href="http://onyxlabs.fr/forum/">http://onyxlabs.fr/forum/</a></p>
 </footer>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $('.progress').hide();
+          $('.dl_text').hide();
+          $('ul.tabs').tabs();
+          $("#etape1").click(function() {
+            $('.step2').removeClass('disabled');
+            $('ul.tabs').tabs('select_tab', 'step2');
+          });
+          $("#etape2").click(function() {
+            $('.step3').removeClass('disabled');
+            $('ul.tabs').tabs('select_tab', 'step3');
+          });
+          $("#etape3").click(function() {
+            $('.step4').removeClass('disabled');
+            $('ul.tabs').tabs('select_tab', 'step4');
+          });
+
+          $("#data").click(function() {
+            $('#data').hide();
+            $('.progress').show();
+            $.ajax({
+               url: '{{ url_for("install.data") }}',
+               type: "GET",
+               success: function(rep) {
+                  $('.progress').hide();
+                  $('.dl_text').show();
+               }
+            });
+
+          });
+    });
+
+  </script>
 
 {% endblock %}

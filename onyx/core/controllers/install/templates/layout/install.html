@@ -7,14 +7,14 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Onyx | Installation</title>
 </head>
-<body >   
-    <div class="container"> 
-        <div class="main">  
+<body >
+    <div class="container">
+        <div class="main">
             <div class="content">{% block body %}{% endblock %}</div> <!-- Include body -->
-        </div>     
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename='js/install.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
     {% block script %}{% endblock %}
-</body>  
+</body>
 </html>

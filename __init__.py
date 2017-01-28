@@ -21,10 +21,13 @@ from .onyx import create_app
 from .onyx.extensions import db
 from onyx.api.server import *
 import onyx
+import shutil
+
+server = Server()
 
 def run():
-	port = "5000"
-	ip = "127.0.0.1"
+	port = "80"
+	ip = "0.0.0.0"
 	debug = False
 	argv = sys.argv[1:]
 	try:
@@ -61,7 +64,7 @@ def run():
 	from datetime import datetime
 	print(datetime.utcnow())
 	print('')
-	version = get_version()
+	version = server.get_version()
 	print('Onyx Version : '+version)
 	print('')
 	print('-------------------------------------------------------')
@@ -73,34 +76,16 @@ def run():
 			print('Config File Create')
 	except:
 		print('Config Already File Create')
-	try:
-		if os.path.exists(str(onyx.__path__[0]) + "/data/.gitkeep"):
-			shutil.rmtree(str(onyx.__path__[0]) + "/data/.gitkeep")
-			print('Data Added')
-		else:
-			print('Data Already Add')
-	except:
-		print('Data Already Add')
 	print('You can access to Onyx with : http://'+ip+':'+port)
 	print('You can close Onyx at any time with Ctrl-C')
 	app = create_app()
 	try:
-		app.run(ip , port=int(port) , debug=debug,threaded=True)
+		app.run(ip ,port=int(port) ,debug=debug, threaded=True)
 	except:
 		print('Error with Args')
 		sys.exit(2)
 
-def init():
-    from onyx.plugins import plugin
-    for module in plugin:
-        try:
-            module.first()
-        except:
-            name = module.get_name()
-            print('No Init for '+name)
+
 
 def runserver():
-	run_flask = Process(target = run)
-	run_flask.start()
-	init_plugin = Process(target = init)
-	init_plugin.start()
+	run()

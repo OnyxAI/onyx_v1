@@ -15,7 +15,9 @@ from onyx.core.models import *
 from onyx.api.exceptions import *
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
+from werkzeug._reloader import *
 
+reloader = ReloaderLoop()
 installation = Install()
 install = Blueprint('install', __name__, url_prefix='/', template_folder='templates')
 
@@ -30,7 +32,6 @@ def index():
         return render_template('install/index.html')
     elif request.method == 'POST':
         try:
-            installation.get_data()
             installation.username = request.form['username']
             installation.password = request.form['password']
             installation.email = request.form['email']
@@ -40,6 +41,21 @@ def index():
         except (InstallException, DataException):
             redirect(url_for("install.index"))
 
+@install.route('get_data')
+def data():
+    try:
+        installation.get_data()
+        return "Done"
+    except DataException:
+        return "Error"
+
+@install.route('reboot')
+def reboot():
+    try:
+        reloader.restart_with_reloader()
+        return redirect(url_for('core.index'))
+    except:
+        redirect(url_for("install.finish"))
 
 @install.route('finish')
 @login_required
