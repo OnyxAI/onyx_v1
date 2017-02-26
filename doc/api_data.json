@@ -1,5 +1,33 @@
 [
   {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./doc/main.js",
+    "group": "C__Users_Aituglo_Dropbox_Onyx_Onyx_doc_main_js",
+    "groupTitle": "C__Users_Aituglo_Dropbox_Onyx_Onyx_doc_main_js",
+    "name": ""
+  },
+  {
     "type": "post",
     "url": "/calendar",
     "title": "Add Event",
@@ -83,54 +111,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/CalendarController.py",
-    "groupTitle": "Calendar"
-  },
-  {
-    "type": "delete",
-    "url": "/task",
-    "title": "Delete Task",
-    "name": "deleteTask",
-    "group": "Calendar",
-    "permission": [
-      {
-        "name": "authenticated"
-      }
-    ],
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>Id</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "Number",
-            "optional": false,
-            "field": "idCalendar",
-            "description": "<p>Id of Calendar Event</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "optional": false,
-            "field": "redirect",
-            "description": "<p>Redirect to Task</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TaskController.py",
+    "filename": "./onyx/core/controllers/api/views/Calendar.py",
     "groupTitle": "Calendar"
   },
   {
@@ -219,7 +200,68 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/CalendarController.py",
+    "filename": "./onyx/core/controllers/api/views/Calendar.py",
+    "groupTitle": "Calendar"
+  },
+  {
+    "type": "patch",
+    "url": "/calendar",
+    "title": "Update Date",
+    "name": "updateEvent",
+    "group": "Calendar",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "datetime",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Start date of Event</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "datetime",
+            "optional": false,
+            "field": "stop",
+            "description": "<p>Stop date of Event</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "json",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of Update</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "json",
+            "optional": false,
+            "field": "status",
+            "description": "<p>An error has occurred</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Calendar.py",
     "groupTitle": "Calendar"
   },
   {
@@ -299,226 +341,15 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/CalendarController.py",
-    "groupTitle": "Calendar"
-  },
-  {
-    "type": "patch",
-    "url": "/calendar",
-    "title": "Update Date",
-    "name": "updateEvent",
-    "group": "Calendar",
-    "permission": [
-      {
-        "name": "authenticated"
-      }
-    ],
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "datetime",
-            "optional": false,
-            "field": "start",
-            "description": "<p>Start date of Event</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "datetime",
-            "optional": false,
-            "field": "stop",
-            "description": "<p>Stop date of Event</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "json",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of Update</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "json",
-            "optional": false,
-            "field": "status",
-            "description": "<p>An error has occurred</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/CalendarController.py",
+    "filename": "./onyx/core/controllers/api/views/Calendar.py",
     "groupTitle": "Calendar"
   },
   {
     "type": "post",
-    "url": "/install",
-    "title": "Install Form",
-    "name": "setInstall",
-    "group": "Install",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "username",
-            "description": "<p>User Name</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "password",
-            "description": "<p>User Password</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "email",
-            "description": "<p>User Email</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "optional": false,
-            "field": "redirect",
-            "description": "<p>Redirect to Restart</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "AlreadyExist",
-            "description": "<p>This User already Exist</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/install/views.py",
-    "groupTitle": "Install"
-  },
-  {
-    "type": "get",
-    "url": "/options",
-    "title": "Request Options",
-    "name": "getOptions",
-    "group": "Options",
-    "permission": [
-      {
-        "name": "authenticated"
-      }
-    ],
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "hostname",
-            "description": "<p>Get Hostname of Server</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "platform",
-            "description": "<p>Get Platform of Server</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "ram",
-            "description": "<p>Get Ram of Server</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "ip",
-            "description": "<p>Get IP of Server</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "disk",
-            "description": "<p>Get Disk Used of Server</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "uptime",
-            "description": "<p>Get Uptime of Server</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "color",
-            "description": "<p>Color of User</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "lang",
-            "description": "<p>Lang of User</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "OptionsNotFound",
-            "description": "<p>No Options Found</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/OptionsController.py",
-    "groupTitle": "Options"
-  },
-  {
-    "type": "post",
-    "url": "/options",
-    "title": "Change Options",
-    "name": "setAccount",
-    "group": "Options",
+    "url": "/house/add",
+    "title": "Add House",
+    "name": "addHouse",
+    "group": "House",
     "permission": [
       {
         "name": "authenticated"
@@ -531,15 +362,43 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "color",
-            "description": "<p>Color of User</p>"
+            "field": "name",
+            "description": "<p>Name of House</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "lang",
-            "description": "<p>Lang of User</p>"
+            "field": "address",
+            "description": "<p>Address of House</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "city",
+            "description": "<p>City of House</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Country of House</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "latitude",
+            "description": "<p>Latitude of House</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>Longitude of House</p>"
           }
         ]
       }
@@ -562,126 +421,48 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "ParamNotFound",
-            "description": "<p>No Param Found</p>"
+            "field": "AlreadyExist",
+            "description": "<p>This House already Exist</p>"
           }
         ]
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/OptionsController.py",
-    "groupTitle": "Options"
+    "filename": "./onyx/core/controllers/api/views/House.py",
+    "groupTitle": "House"
   },
   {
-    "type": "get",
-    "url": "/shutdown",
-    "title": "Shutdown Server",
-    "name": "shutdown__",
-    "group": "Shutdown",
-    "permission": [
-      {
-        "name": "authenticated"
-      },
-      {
-        "name": "admin"
-      }
-    ],
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "optional": false,
-            "field": "shutdown",
-            "description": "<p>Close Server</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "NoPermission",
-            "description": "<p>No Admin</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/OptionsController.py",
-    "groupTitle": "Shutdown"
-  },
-  {
-    "type": "post",
-    "url": "/task",
-    "title": "Add Task",
-    "name": "addTask",
-    "group": "Task",
+    "type": "delete",
+    "url": "/house/delete",
+    "title": "Delete House",
+    "name": "deleteHouse",
+    "group": "House",
     "permission": [
       {
         "name": "authenticated"
       }
     ],
-    "success": {
+    "parameter": {
       "fields": {
-        "200": [
+        "Parameter": [
           {
-            "group": "200",
+            "group": "Parameter",
             "type": "Number",
             "optional": false,
-            "field": "tasks.idCalendar",
-            "description": "<p>Calendar Id of Task</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "tasks.text",
-            "description": "<p>Text of Task</p>"
-          },
-          {
-            "group": "200",
-            "type": "datetime",
-            "optional": false,
-            "field": "tasks.date",
-            "description": "<p>Date of Task</p>"
-          },
-          {
-            "group": "200",
-            "type": "json",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status</p>"
-          },
-          {
-            "group": "200",
-            "type": "json",
-            "optional": false,
-            "field": "calendar",
-            "description": "<p>Calendar Boolean</p>"
-          },
-          {
-            "group": "200",
-            "type": "json",
-            "optional": false,
-            "field": "idCalendar",
-            "description": "<p>Id of Calendar</p>"
-          },
-          {
-            "group": "200",
-            "type": "json",
-            "optional": false,
             "field": "id",
-            "description": "<p>Id</p>"
-          },
+            "description": "<p>Id of House</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
           {
             "group": "200",
             "optional": false,
-            "field": "redirect",
-            "description": "<p>Redirect to Task</p>"
+            "field": "delete",
+            "description": "<p>House Deleted</p>"
           }
         ]
       }
@@ -692,22 +473,22 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "AlreadyExist",
-            "description": "<p>This Task already Exist</p>"
+            "field": "HouseNotFound",
+            "description": "<p>No House Found</p>"
           }
         ]
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TaskController.py",
-    "groupTitle": "Task"
+    "filename": "./onyx/core/controllers/api/views/House.py",
+    "groupTitle": "House"
   },
   {
     "type": "get",
-    "url": "/task",
-    "title": "Get Task Information",
-    "name": "getTask",
-    "group": "Task",
+    "url": "/house",
+    "title": "Request Houses Information",
+    "name": "getHouse",
+    "group": "House",
     "permission": [
       {
         "name": "authenticated"
@@ -720,36 +501,57 @@
             "group": "200",
             "type": "Object[]",
             "optional": false,
-            "field": "tasks",
-            "description": "<p>List of Task</p>"
+            "field": "houses",
+            "description": "<p>List of House</p>"
           },
           {
             "group": "200",
             "type": "Number",
             "optional": false,
-            "field": "tasks.id",
-            "description": "<p>Id of Task</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": false,
-            "field": "tasks.idCalendar",
-            "description": "<p>Calendar Id of Task</p>"
+            "field": "houses.id",
+            "description": "<p>Id of House</p>"
           },
           {
             "group": "200",
             "type": "String",
             "optional": false,
-            "field": "tasks.text",
-            "description": "<p>Text of Task</p>"
+            "field": "houses.name",
+            "description": "<p>Name of House</p>"
           },
           {
             "group": "200",
-            "type": "datetime",
+            "type": "String",
             "optional": false,
-            "field": "tasks.date",
-            "description": "<p>Date of Task</p>"
+            "field": "houses.address",
+            "description": "<p>Address of House</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "houses.city",
+            "description": "<p>City of House</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "houses.country",
+            "description": "<p>Country of House</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "houses.latitude",
+            "description": "<p>Latitude of House</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "houses.longitude",
+            "description": "<p>Longitude of House</p>"
           }
         ]
       }
@@ -760,15 +562,387 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "TaskNotFound",
-            "description": "<p>No Task Found</p>"
+            "field": "HouseNotFound",
+            "description": "<p>No House Found</p>"
           }
         ]
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TaskController.py",
-    "groupTitle": "Task"
+    "filename": "./onyx/core/controllers/api/views/House.py",
+    "groupTitle": "House"
+  },
+  {
+    "type": "post",
+    "url": "/machine/add",
+    "title": "Add Machine",
+    "name": "addMachine",
+    "group": "Machine",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "house",
+            "description": "<p>House of Machine</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of Machine</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "room",
+            "description": "<p>Room of Machine</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "host",
+            "description": "<p>Host of Machine</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "optional": false,
+            "field": "redirect",
+            "description": "<p>Redirect to Option</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AlreadyExist",
+            "description": "<p>This Machine already Exist</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Machine.py",
+    "groupTitle": "Machine"
+  },
+  {
+    "type": "delete",
+    "url": "/machine/delete",
+    "title": "Delete Machine",
+    "name": "deleteMachine",
+    "group": "Machine",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of Machine</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "optional": false,
+            "field": "delete",
+            "description": "<p>Machine Deleted</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MachineNotFound",
+            "description": "<p>No Machine Found</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Machine.py",
+    "groupTitle": "Machine"
+  },
+  {
+    "type": "get",
+    "url": "/machine",
+    "title": "Request Machines Information",
+    "name": "getMachine",
+    "group": "Machine",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "machines",
+            "description": "<p>List of Machines</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "machines.id",
+            "description": "<p>Id of Machines</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "machines.house",
+            "description": "<p>House of Machines</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "machines.name",
+            "description": "<p>Name of Machines</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "machines.room",
+            "description": "<p>Room of Machines</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "machines.host",
+            "description": "<p>Host of Machines</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MachineNotFound",
+            "description": "<p>No Machine Found</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Machine.py",
+    "groupTitle": "Machine"
+  },
+  {
+    "type": "post",
+    "url": "/room/add",
+    "title": "Add Room",
+    "name": "addRoom",
+    "group": "Room",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "house",
+            "description": "<p>House of Room</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of Room</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "optional": false,
+            "field": "redirect",
+            "description": "<p>Redirect to Option</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AlreadyExist",
+            "description": "<p>This Room already Exist</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Room.py",
+    "groupTitle": "Room"
+  },
+  {
+    "type": "delete",
+    "url": "/room/delete",
+    "title": "Delete Room",
+    "name": "deleteRoom",
+    "group": "Room",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of Room</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "optional": false,
+            "field": "delete",
+            "description": "<p>Room Deleted</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "RoomNotFound",
+            "description": "<p>No Room Found</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Room.py",
+    "groupTitle": "Room"
+  },
+  {
+    "type": "get",
+    "url": "/room",
+    "title": "Request Rooms Information",
+    "name": "getRoom",
+    "group": "Room",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "rooms",
+            "description": "<p>List of Rooms</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "rooms.id",
+            "description": "<p>Id of Rooms</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "rooms.house",
+            "description": "<p>House of Rooms</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "rooms.name",
+            "description": "<p>Name of Rooms</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "RoomNotFound",
+            "description": "<p>No Room Found</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/Room.py",
+    "groupTitle": "Room"
   },
   {
     "type": "get",
@@ -821,7 +995,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TransportController.py",
+    "filename": "./onyx/core/controllers/base/views/TransportController.py",
     "groupTitle": "Transport___Metro"
   },
   {
@@ -902,7 +1076,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TransportController.py",
+    "filename": "./onyx/core/controllers/base/views/TransportController.py",
     "groupTitle": "Transport___Metro"
   },
   {
@@ -956,7 +1130,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TransportController.py",
+    "filename": "./onyx/core/controllers/base/views/TransportController.py",
     "groupTitle": "Transport___RER"
   },
   {
@@ -1037,60 +1211,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/TransportController.py",
+    "filename": "./onyx/core/controllers/base/views/TransportController.py",
     "groupTitle": "Transport___RER"
   },
   {
-    "type": "get",
-    "url": "/maj",
-    "title": "Update Onyx",
-    "name": "maj__",
-    "group": "Update",
-    "permission": [
-      {
-        "name": "authenticated"
-      },
-      {
-        "name": "admin"
-      }
-    ],
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "optional": false,
-            "field": "update",
-            "description": "<p>Update Onyx</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "NoPermission",
-            "description": "<p>No Admin</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "NoPip",
-            "description": "<p>No Pip Install</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/OptionsController.py",
-    "groupTitle": "Update"
-  },
-  {
     "type": "post",
-    "url": "/account/change",
+    "url": "/user/change",
     "title": "Update Account",
     "name": "changeAccount",
     "group": "User",
@@ -1139,12 +1265,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
+    "filename": "./onyx/core/controllers/api/views/User.py",
     "groupTitle": "User"
   },
   {
     "type": "get",
-    "url": "/account/delete/:id",
+    "url": "/user/delete/:id",
     "title": "Delete User",
     "name": "deleteAccount",
     "group": "User",
@@ -1169,66 +1295,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
-    "groupTitle": "User"
-  },
-  {
-    "type": "get",
-    "url": "/account/manage",
-    "title": "Manage User",
-    "name": "manageAccount",
-    "group": "User",
-    "permission": [
-      {
-        "name": "authenticated"
-      },
-      {
-        "name": "admin"
-      }
-    ],
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "user",
-            "description": "<p>Get All User Information</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
-    "groupTitle": "User"
-  },
-  {
-    "type": "get",
-    "url": "/account/change",
-    "title": "Manage Account",
-    "name": "manageAccountGet",
-    "group": "User",
-    "permission": [
-      {
-        "name": "admin"
-      }
-    ],
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "user",
-            "description": "<p>Get User Information</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
+    "filename": "./onyx/core/controllers/api/views/User.py",
     "groupTitle": "User"
   },
   {
@@ -1285,13 +1352,13 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
+    "filename": "./onyx/core/controllers/api/views/User.py",
     "groupTitle": "User"
   },
   {
     "type": "get",
-    "url": "/account/manage/:id",
-    "title": "Manage User",
+    "url": "/user/manage/:id",
+    "title": "Get User",
     "name": "manageUserGet",
     "group": "User",
     "permission": [
@@ -1316,12 +1383,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
+    "filename": "./onyx/core/controllers/api/views/User.py",
     "groupTitle": "User"
   },
   {
     "type": "post",
-    "url": "/login",
+    "url": "/user/login",
     "title": "Login User",
     "name": "registerUser",
     "group": "User",
@@ -1384,12 +1451,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
+    "filename": "./onyx/core/controllers/api/views/User.py",
     "groupTitle": "User"
   },
   {
     "type": "post",
-    "url": "/register",
+    "url": "/user",
     "title": "Register a User",
     "name": "registerUser",
     "group": "User",
@@ -1452,7 +1519,38 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/auth/views.py",
+    "filename": "./onyx/core/controllers/api/views/User.py",
+    "groupTitle": "User"
+  },
+  {
+    "type": "get",
+    "url": "/users",
+    "title": "Get User",
+    "name": "users",
+    "group": "User",
+    "permission": [
+      {
+        "name": "authenticated"
+      },
+      {
+        "name": "admin"
+      }
+    ],
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "user",
+            "description": "<p>Get All User Information</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/api/views/User.py",
     "groupTitle": "User"
   },
   {
@@ -1526,7 +1624,81 @@
       }
     },
     "version": "0.0.0",
-    "filename": "onyx/core/controllers/base/views/WikiController.py",
+    "filename": "./onyx/core/controllers/api/views/Wiki.py",
+    "groupTitle": "Wiki"
+  },
+  {
+    "type": "post",
+    "url": "/wiki",
+    "title": "Request Wiki Article",
+    "name": "getArticle",
+    "group": "Wiki",
+    "permission": [
+      {
+        "name": "authenticated"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "search",
+            "description": "<p>Search Input</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "article",
+            "description": "<p>List</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "article.head",
+            "description": "<p>Header of Article</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "article.url",
+            "description": "<p>Url of Article</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "article.summary",
+            "description": "<p>Article Content</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoExist",
+            "description": "<p>No Article Exist</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./onyx/core/controllers/base/views/WikiController.py",
     "groupTitle": "Wiki"
   }
 ]

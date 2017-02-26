@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-27 10:44+0100\n"
+"POT-Creation-Date: 2017-02-01 20:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,8 +53,9 @@ msgstr ""
 #: onyx/core/controllers/base/views/HouseController.py:51
 #: onyx/core/controllers/base/views/MachineController.py:34
 #: onyx/core/controllers/base/views/MachineController.py:48
-#: onyx/core/controllers/base/views/OptionsController.py:52
+#: onyx/core/controllers/base/views/OptionsController.py:54
 #: onyx/core/controllers/base/views/OptionsController.py:65
+#: onyx/core/controllers/base/views/OptionsController.py:77
 #: onyx/core/controllers/base/views/PluginsController.py:45
 #: onyx/core/controllers/base/views/PluginsController.py:59
 #: onyx/core/controllers/base/views/PluginsController.py:72
@@ -106,7 +107,7 @@ msgid "Account changed !"
 msgstr ""
 
 #: onyx/core/controllers/auth/views.py:184
-#: onyx/core/controllers/base/views/OptionsController.py:38
+#: onyx/core/controllers/base/views/OptionsController.py:40
 msgid "Account changed successfully"
 msgstr ""
 
@@ -142,19 +143,19 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:41
+#: onyx/core/controllers/base/views/OptionsController.py:43
 msgid "You don't enter param"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:62
+#: onyx/core/controllers/base/views/OptionsController.py:74
 msgid "Onyx is now upgrade !"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:74
+#: onyx/core/controllers/base/views/OptionsController.py:86
 msgid "Data Modified"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:77
+#: onyx/core/controllers/base/views/OptionsController.py:89
 msgid "An errorhas occured"
 msgstr ""
 
@@ -224,7 +225,7 @@ msgid "Mi Light"
 msgstr ""
 
 #: onyx/plugins/mi_light/templates/index.html:107
-#: onyx/plugins/mi_light/templates/index.html:129
+#: onyx/plugins/mi_light/templates/index.html:132
 #: onyx/templates/account/manage_account.html:11
 #: onyx/templates/account/register.html:11
 #: onyx/templates/options/index.html:233 onyx/templates/options/index.html:249
@@ -236,17 +237,17 @@ msgid "Name"
 msgstr ""
 
 #: onyx/plugins/mi_light/templates/index.html:108
-#: onyx/plugins/mi_light/templates/index.html:130
+#: onyx/plugins/mi_light/templates/index.html:133
 msgid "Identifier"
 msgstr ""
 
 #: onyx/plugins/mi_light/templates/index.html:109
-#: onyx/plugins/mi_light/templates/index.html:131
+#: onyx/plugins/mi_light/templates/index.html:134
 msgid "Protocol"
 msgstr ""
 
 #: onyx/plugins/mi_light/templates/index.html:110
-#: onyx/plugins/mi_light/templates/index.html:132
+#: onyx/plugins/mi_light/templates/index.html:135
 #: onyx/templates/calendar/index.html:44 onyx/templates/calendar/index.html:110
 #: onyx/templates/options/index.html:75 onyx/templates/widgets/calendar.html:68
 #: onyx/templates/widgets/calendar.html:134
@@ -272,7 +273,15 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: onyx/plugins/mi_light/templates/index.html:140
+#: onyx/plugins/mi_light/templates/index.html:129
+msgid "Please Create a room before add a lamp"
+msgstr ""
+
+#: onyx/plugins/mi_light/templates/index.html:129
+msgid "Add a room"
+msgstr ""
+
+#: onyx/plugins/mi_light/templates/index.html:143
 #: onyx/templates/options/index.html:220 onyx/templates/options/index.html:257
 #: onyx/templates/options/index.html:308 onyx/templates/plugins/index.html:99
 #: onyx/templates/wiki/index.html:12
@@ -395,33 +404,24 @@ msgstr ""
 msgid "My Apps"
 msgstr ""
 
-#: onyx/templates/app/index.html:11 onyx/templates/wiki/index.html:11
-msgid "Search"
-msgstr ""
-
-#: onyx/templates/app/index.html:19 onyx/templates/wiki/index.html:3
-#: onyx/templates/wiki/index.html:8 onyx/templates/wiki/result.html:3
+#: onyx/templates/app/index.html:14 onyx/templates/app/index.html:15
+#: onyx/templates/wiki/index.html:3 onyx/templates/wiki/index.html:8
+#: onyx/templates/wiki/result.html:3
 msgid "Wiki"
 msgstr ""
 
-#: onyx/templates/app/index.html:25 onyx/templates/translate/index.html:3
-#: onyx/templates/translate/index.html:6 onyx/templates/translate/index.html:12
+#: onyx/templates/app/index.html:25 onyx/templates/app/index.html:26
+#: onyx/templates/translate/index.html:3 onyx/templates/translate/index.html:6
+#: onyx/templates/translate/index.html:12
 msgid "Translate"
 msgstr ""
 
-#: onyx/templates/app/index.html:37
-msgid "Transports"
-msgstr ""
-
-#: onyx/templates/app/index.html:43 onyx/templates/transport/index.html:3
+#: onyx/templates/app/index.html:36 onyx/templates/app/index.html:37
+#: onyx/templates/transport/index.html:3
 msgid "Transport"
 msgstr ""
 
-#: onyx/templates/app/index.html:53
-msgid "Other Apps"
-msgstr ""
-
-#: onyx/templates/app/index.html:59
+#: onyx/templates/app/index.html:47 onyx/templates/app/index.html:48
 msgid "Tv Program"
 msgstr ""
 
@@ -906,6 +906,10 @@ msgstr ""
 #: onyx/templates/widgets/index.html:3 onyx/templates/widgets/index.html:7
 #: onyx/templates/widgets/index.html:11
 msgid "Widgets"
+msgstr ""
+
+#: onyx/templates/wiki/index.html:11
+msgid "Search"
 msgstr ""
 
 #: onyx/templates/wiki/result.html:29

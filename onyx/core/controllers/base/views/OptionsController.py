@@ -31,11 +31,11 @@ def options():
 		return render_template('options/index.html')
 	elif request.method == 'POST':
 		try:
-			option.lang = request.form['lang']
-			if request.form['color'] == None:
+			option.lang = request.form.get('lang')
+			if request.form.get('color') == None:
 				option.color = current_user.buttonColor
 			else:
-				option.color = request.form['color']
+				option.color = request.form.get('color')
 			option.set_account()
 			flash(gettext('Account changed successfully' ), 'success')
 			return redirect(url_for('core.options'))
@@ -58,6 +58,7 @@ def shutdown():
 @login_required
 def reboot():
 	try:
+		run_with_reloader()
 		reloader.restart_with_reloader()
 		return redirect(url_for('core.index'))
 	except:

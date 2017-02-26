@@ -17,17 +17,16 @@ import os
 import onyx
 import time, sys
 from onyx.api.exceptions import *
+from onyx.app import set_bot
 import logging
 
 logger = logging.getLogger()
 json = Json()
-kernel = aiml.Kernel()
-kernel.setPredicate('base_dir',onyx.__path__[0])
-kernel.bootstrap(learnFiles = onyx.__path__[0] + "/data/sentences/fr/std-startup.xml", commands = "load aiml b")
 
 class Sentences:
 
     def __init__(self):
+        self.kernel = set_bot()
         self.app = app
         self.id = None
         self.text = None
@@ -37,18 +36,17 @@ class Sentences:
         self.url = None
         self.type_event = None
 
-
     def get(self):
         try:
-            response = kernel.respond(self.text)
-            function = kernel.getPredicate('function')
-            type_event = kernel.getPredicate('type_event')
-            param = kernel.getPredicate('param').split('|')
+            response = self.kernel.respond(self.text)
+            function = self.kernel.getPredicate('function')
+            type_event = self.kernel.getPredicate('type_event')
+            param = self.kernel.getPredicate('param').split('|')
             if function != "":
                 self.url = function
                 self.param = param
                 self.type_event = type_event
-                kernel.setPredicate('function','')
+                self.kernel.setPredicate('function','')
                 return self.get_event()
             else:
                 return json.encode({"status":"success","type":"notification","text":response,"next":self.next})

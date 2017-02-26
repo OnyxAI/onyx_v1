@@ -1,51 +1,55 @@
+ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+
 all: setup
 
-venv/bin/activate:
-	if which virtualenv-3.5 >/dev/null; then virtualenv-3.5 venv; else virtualenv -p python3 venv; fi
+start:
+	python manage.py run -h 0.0.0.0 -p 80 -d -r
 
-start : python3 manage.py runserver -h 0.0.0.0 -p 80 -d -r
+test:
+	py.test --color=yes
 
-startdebug : venv/bin/activate requirements.txt
-	. venv/bin/activate; python3 manage.py runserver -h 0.0.0.0 -p 80 -d -r
+debug:
+	python manage.py run -d -r -p 5000
 
-startprod : venv/bin/activate requirements.txt
-	. venv/bin/activate; python3 manage.py runserver -h 0.0.0.0 -p 80
+prod:
+	python manage.py run -p 80
 
-run: venv/bin/activate requirements.txt
-	. venv/bin/activate; python3 manage.py runserver -h 0.0.0.0 -p 80 -d -r
+run:
+	python manage.py run
 
-setup: venv/bin/activate requirements.txt
-	. venv/bin/activate; pip3 install -Ur requirements.txt
+setup:
+	pip install -Ur requirements.txt
 
-init: venv/bin/activate requirements.txt
+init:
+	export PYTHONPATH=$PYTHONPATH:ROOT_DIR
 
-initdb: venv/bin/activate
-	. venv/bin/activate; python3 manage.py initdb
+initdb:
+	python manage.py init
 
-migratedb: venv/bin/activate
-	. venv/bin/activate; python3 manage.py migratedb
+migratedb:
+	python manage.py migrate
 
-babel: venv/bin/activate
-	. venv/bin/activate; pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx
+babel:
+	pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx
 
 # lazy babel scan
-lazybabel: venv/bin/activate
-	. venv/bin/activate; pybabel extract -F babel.cfg -k lazy_gettext -o onyx/translations/messages.pot onyx
+lazybabel:
+	pybabel extract -F babel.cfg -k lazy_gettext -o onyx/translations/messages.pot onyx
 
-# run: 
+# run:
 # $ LANG=en make addlang
-addlang: venv/bin/activate
-	. venv/bin/activate; pybabel init -i onyx/translations/messages.pot -d onyx/translations -l $(LANG)
+addlang:
+	pybabel init -i onyx/translations/messages.pot -d onyx/translations -l $(LANG)
 
-compilelang: venv/bin/activate
-	. venv/bin/activate; pybabel compile -d onyx/translations
+compilelang:
+	pybabel compile -d onyx/translations
 
-updlang: venv/bin/activate
-	. venv/bin/activate; pybabel update -i onyx/translations/messages.pot -d onyx/translations
+updlang:
+	pybabel update -i onyx/translations/messages.pot -d onyx/translations
 
 celery:
-	. venv/bin/activate; python3 celery_run.py worker
+	python celery_run.py worker
 
 # celery in debug state
 dcelery:
-	. venv/bin/activate; python3 celery_run.py worker -l info --autoreload
+	 python celery_run.py worker -l info --autoreload

@@ -15,18 +15,22 @@ try:
     sys.path.append(str(Onyx.__path__[0]))
 except:
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
-
-from flask import Flask, request, render_template , g , abort , redirect , url_for
+import aiml
+from flask import Flask, render_template
 from onyx.extensions import (db, mail, login_manager, babel, cache, celery)
-from os import path
 from flask_login import current_user
-from os.path import dirname, abspath, join
 from onyx.config import get_config
 from onyx.api.server import *
 from celery import Celery
 from onyx.plugins import plugin
 
+server = Server()
+
+try:
+    from onyx.flask_config import ProdConfig
+except:
+    server.create_config_file()
+    from onyx.flask_config import ProdConfig
 
 #Log
 import logging
@@ -35,22 +39,51 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
+__all__ = ('create_app', 'create_celery','blueprints_fabrics', 'get_blueprints', 'get_blueprint_name', 'error_pages')
 
-__all__ = ('create_app', 'create_celery')
-
-def create_app(config=None, app_name='onyx', blueprints=None):
+def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
 
     app = Flask(app_name,
         static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'),
         template_folder = 'templates'
     )
-    app.config.from_object('onyx.flask_config')
+
     app.config.from_pyfile('../local.cfg', silent=True)
     if config:
-        app.config.from_pyfile(config)
+        app.config.from_object(config)
 
     extensions_fabrics(app)
-    log()
+    set_log()
+    gvars(app)
+
+    with app.app_context():
+        db.create_all()
+
+    return app
+
+def set_bot():
+    kernel = aiml.Kernel()
+    kernel.setPredicate('base_dir',onyx.__path__[0])
+    kernel.bootstrap(learnFiles = onyx.__path__[0] + "/data/sentences/fr/std-startup.xml", commands = "load aiml b")
+    return kernel
+
+def init_plugin(app):
+    with app.app_context():
+        for module in plugin:
+            try:
+                module.init(app)
+            except:
+                module.init()
+
+def get_blueprint_name(app):
+    installConfig = get_config(app.config['INSTALL_FOLDER'])
+    if installConfig.getboolean('Install', 'install'):
+        return 'core'
+    else:
+        return 'install'
+
+
+def get_blueprints(app):
 
     installConfig = get_config(app.config['INSTALL_FOLDER'])
     if installConfig.getboolean('Install', 'install'):
@@ -65,67 +98,16 @@ def create_app(config=None, app_name='onyx', blueprints=None):
                 BLUEPRINTS.append(module.get_blueprint())
             except:
                 print('No Blueprint for module : ' + module.get_name())
-
-        blueprint_name = 'core'
+        return BLUEPRINTS
     else:
         from onyx.core.controllers.install import install
-        BLUEPRINTS = install
-        blueprint_name = 'install'
-        with app.app_context():
-            db.create_all()
-            print('DB Create')
-
-    if blueprints is None:
-        blueprints = BLUEPRINTS
-
-    blueprints_fabrics(app, blueprints)
+        return install
 
 
-
-    error_pages(app , blueprint_name)
-    gvars(app)
-
-
-    with app.app_context():
-        from migrate.versioning import api
-        db.create_all()
-
-        try:
-            if not os.path.exists(app.config['SQLALCHEMY_MIGRATE_REPO']):
-                api.create(app.config['SQLALCHEMY_MIGRATE_REPO'], 'database repository')
-                api.version_control(app.config['SQLALCHEMY_DATABASE_URI'],app.config['SQLALCHEMY_MIGRATE_REPO'])
-            else:
-                api.version_control(app.config['SQLALCHEMY_DATABASE_URI'], app.config['SQLALCHEMY_MIGRATE_REPO'],
-                                    api.version(app.config['SQLALCHEMY_MIGRATE_REPO']))
-        except:
-            pass
-        logger.info("Initialized Database")
-
-        for module in plugin:
-            try:
-                module.init(app)
-            except:
-                module.init()
-
-    logger.info('Onyx is ready !')
-    return app
-
-def log():
-    LOGFORMAT = "  %(log_color)s%(levelname)-8s%(reset)s | %(log_color)s%(message)s%(reset)s"
-    from colorlog import ColoredFormatter
-    formatter = ColoredFormatter(LOGFORMAT)
-    """
-    file_handler = RotatingFileHandler(os.path.join(os.path.dirname(__file__), '..', 'log/activity.log'), 'a', 1000000, 1)
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
-    """
-
-
+def set_log():
     steam_handler = logging.StreamHandler()
     steam_handler.setLevel(logging.INFO)
     logger.addHandler(steam_handler)
-    steam_handler.setFormatter(formatter)
 
 
 def create_celery(app):
@@ -139,7 +121,6 @@ def create_celery(app):
                 return TaskBase.__call__(self, *args, **kwargs)
     celery.Task = ContextTask
     return celery
-
 
 
 def blueprints_fabrics(app, blueprints):
@@ -158,9 +139,7 @@ def extensions_fabrics(app):
     cache.init_app(app)
     celery.config_from_object(app.config)
 
-
 def gvars(app):
-    server = Server()
     server.app = app
     @app.before_request
     def get_vars():

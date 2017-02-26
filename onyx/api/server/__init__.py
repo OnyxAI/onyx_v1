@@ -24,6 +24,7 @@ from onyx.api.scenario import *
 from onyx.api.notification import *
 from onyx.api.exceptions import *
 import logging
+import onyx
 
 logger = logging.getLogger()
 json = Json()
@@ -48,7 +49,31 @@ class Server:
             import Onyx
             return Onyx.__version__
         except:
-            return "0.3.12"
+            return None
+
+    def create_config_file(self):
+        try:
+            if os.path.exists(str(onyx.__path__[0]) + "/flask_config.py"):
+                print('Config Already File Create')
+            else:
+                os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
+                print('Config File Create')
+        except:
+            raise
+
+    def get_last_version(self):
+        try:
+            json.url = "https://pypi.python.org/pypi/onyxproject/json"
+            data = json.decode_url()
+            return data['info']['version']
+        except:
+            raise
+
+    def update(self):
+        try:
+            pip.main(['install', '--upgrade', 'onyxproject'])
+        except:
+            print('An error has occured with Update')
 
     def get_ram(self):
       try:
@@ -75,6 +100,7 @@ class Server:
 
     def get_vars(self):
       try:
+
         g.user = self.user
         g.lang = self.lang
         g.email = self.email
@@ -124,7 +150,8 @@ class Server:
         json.json = scenarios.get_all()
         g.scenarios = json.decode()
 
-
+      except AttributeError:
+        pass
       except Exception as e:
         logger.error('Server Error : ' + str(e))
 
@@ -175,11 +202,14 @@ class Server:
     			db.session.remove()
     		db.session.remove()
 
-    	@babel.localeselector
-    	def get_locale():
-    		if g.lang:
-    			return g.lang
-    		return 'fr'
+        try:
+        	@babel.localeselector
+        	def get_locale():
+        		if g.lang:
+        			return g.lang
+        		return 'fr'
+        except AssertionError:
+            pass
 
 
     #Shutdown

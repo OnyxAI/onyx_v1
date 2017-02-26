@@ -21,11 +21,47 @@ house = House()
 @api.route('house')
 @login_required
 def get_house():
+    """
+    @api {get} /house Request Houses Information
+    @apiName getHouse
+    @apiGroup House
+    @apiPermission authenticated
+
+    @apiSuccess (200) {Object[]} houses List of House
+    @apiSuccess (200) {Number} houses.id Id of House
+    @apiSuccess (200) {String} houses.name Name of House
+    @apiSuccess (200) {String} houses.address Address of House
+    @apiSuccess (200) {String} houses.city City of House
+    @apiSuccess (200) {String} houses.country Country of House
+    @apiSuccess (200) {String} houses.latitude Latitude of House
+    @apiSuccess (200) {String} houses.longitude Longitude of House
+
+    @apiError HouseNotFound No House Found
+
+    """
     return house.get()
 
 @api.route('house/add', methods=['POST'])
 @login_required
 def add_house():
+    """
+    @api {post} /house/add Add House
+    @apiName addHouse
+    @apiGroup House
+    @apiPermission authenticated
+
+    @apiParam {String} name Name of House
+    @apiParam {String} address Address of House
+    @apiParam {String} city City of House
+    @apiParam {String} country Country of House
+    @apiParam {String} latitude Latitude of House
+    @apiParam {String} longitude Longitude of House
+
+    @apiSuccess (200) redirect Redirect to Option
+
+    @apiError AlreadyExist This House already Exist
+
+    """
     try:
         house.name = request.form['name']
         house.address = request.form['address']
@@ -42,6 +78,19 @@ def add_house():
 @api.route('house/delete/<int:id>')
 @login_required
 def delete_house(id):
+    """
+    @api {delete} /house/delete Delete House
+    @apiName deleteHouse
+    @apiGroup House
+    @apiPermission authenticated
+
+    @apiParam {Number} id Id of House
+
+    @apiSuccess (200) delete House Deleted
+
+    @apiError HouseNotFound No House Found
+
+    """
     try:
         house.id = id
         return house.delete()

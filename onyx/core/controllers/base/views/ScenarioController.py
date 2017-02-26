@@ -31,14 +31,14 @@ def scenario():
 @login_required
 def add_scenario():
 	try:
-		list = request.form.getlist(request.form['event_code'] + '_param')
+		list = request.form.getlist(request.form.get('event_code') + '_param')
 		template = " && ".join(list)
 		launcher.template = template
-		launcher.name = request.form['scenario']
+		launcher.name = request.form.get('scenario')
 		launcher.user = current_user.id
-		launcher.event = request.form['event_code']
-		launcher.action = request.form[request.form['action']]
-		launcher.action_param = json.encode(request.form.getlist(request.form['action'] + '_param'))
+		launcher.event = request.form.get('event_code')
+		launcher.action = request.form.get(request.form.get('action'))
+		launcher.action_param = json.encode(request.form.getlist(request.form.get('action') + '_param'))
 		launcher.add()
 
 		flash(gettext('Scenario added successfully !'), 'success')

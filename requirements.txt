@@ -3,6 +3,7 @@ pytz
 vine
 jsonschema
 aiml
+pytest
 kombu
 billiard
 wtforms
@@ -26,6 +27,7 @@ speaklater
 flask_restplus
 pycrypto
 jsonify
+factory-boy==2.8.1
 
 # Cache and Celery
 Flask-Cache

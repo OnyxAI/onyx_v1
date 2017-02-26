@@ -24,8 +24,8 @@ machine = Machine()
 def add_machine():
     try:
         machine.name = request.form['name']
-        machine.house = request.form['house']
-        machine.room = request.form['room']
+        machine.house = request.form.get('house')
+        machine.room = request.form.get('room')
         machine.host = request.form['host']
         machine.add()
         flash(gettext('Machine Add'), 'success')

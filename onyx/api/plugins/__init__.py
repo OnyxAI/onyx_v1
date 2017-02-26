@@ -114,18 +114,23 @@ class Plugin:
       data = json.decode_path()
       deps = data["packages"]
       for dep in deps:
-        pip.main(['install', dep])
+        os.system("sudo pip install " + dep)
 
     def uninstall(self):
         try:
             json.path = onyx.__path__[0] + "/plugins/"+self.name+"/package.json"
             data = json.decode_path()
             if data['data'] == 'True':
-                widgets.plugin_name = self.name
-                widgets.delete_plugin()
-
-                scenario.plugin_name = self.name
-                scenario.delete_plugin()
+                try:
+                    widgets.plugin_name = self.name
+                    widgets.delete_plugin()
+                except:
+                    pass
+                try:
+                    scenario.plugin_name = self.name
+                    scenario.delete_plugin()
+                except:
+                    pass
             if data['navbar'] == 'True':
                 navbar.folder = self.name
                 navbar.delete_plugin_navbar()

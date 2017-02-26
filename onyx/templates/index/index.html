@@ -14,7 +14,7 @@
       {% for box in boxs %}
       <div class="col s4">
         <div class="card {{ box.color }}">
-          <div class="card-content white-text">
+          <div class="card-content">
             <span class="card-title">{{_(box.name)}}</span>
             <p>{{ get_widget(box.url)|safe }}</p>
           </div>

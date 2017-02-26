@@ -60,9 +60,12 @@ def reboot():
 @install.route('finish')
 @login_required
 def finish():
-	configPath = get_path('install')
-	installConfig = get_config('install')
-	installConfig['Install']['install'] = 'True'
-	with open(configPath, 'w') as configfile:
-		installConfig.write(configfile)
-	return render_template('install/finish.html')
+    try:
+        configPath = get_path('install')
+        installConfig = get_config('install')
+        installConfig.set('Install', 'install', 'True')
+        with open(configPath, 'w') as configfile:
+            installConfig.write(configfile)
+        return render_template('install/finish.html')
+    except:
+        return 'An error has occured Contact administrateur on http://onyxproject.fr'

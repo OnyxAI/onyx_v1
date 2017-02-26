@@ -8,4 +8,4 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from .app import create_app, create_celery
+from .app import *

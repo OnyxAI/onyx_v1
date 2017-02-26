@@ -22,7 +22,7 @@
 			{% for box in boxs %}
 			<div class="col s4">
 			  <div class="card {{ box.color }}">
-					<div class="card-content white-text">
+					<div class="card-content">
 			      <span class="card-title">{{_(box.name)}}</span>
 						<a href="{{ url_for('core.widget_delete' , id=box.id) }}" class="secondary-content"><i class="fa fa-times" aria-hidden="true"></i></a>
 						<p>{{ get_widget(box.url)|safe }}</p>

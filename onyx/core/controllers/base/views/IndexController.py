@@ -17,6 +17,7 @@ from onyx.api.widgets import *
 json = Json()
 box = Widgets()
 
+
 @core.route('/')
 @login_required
 def index():

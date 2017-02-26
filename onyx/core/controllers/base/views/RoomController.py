@@ -24,13 +24,13 @@ room = Room()
 def add_room():
     try:
         room.name = request.form['name']
-        room.house = request.form['house']
+        room.house = request.form.get('house')
         room.add()
         flash(gettext('Room Add'), 'success')
         return redirect(url_for('core.options'))
     except RoomException:
-			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.options'))
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('core.options'))
 
 
 @core.route('room/delete/<int:id>')
