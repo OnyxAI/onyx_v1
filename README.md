@@ -9,9 +9,7 @@
 
 ## Getting Started
 
-The faster way to install Onyx is to use the Pypi Package 
-
-WARNING : Onyx is just for Python<=3.4
+The faster way to install Onyx is to use the Pypi Package
 
 
 ```bash
@@ -21,7 +19,7 @@ pip install onyxproject
 And to run Onyx the simple way is :
 
 ```bash
-sudo onyxstart
+onyxstart
 ```
 
 ## Links
