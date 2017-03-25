@@ -43,7 +43,7 @@ __all__ = ('create_app','blueprints_fabrics', 'get_blueprints', 'get_blueprint_n
 def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
 
     app = Flask(app_name,
-        static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'),
+        static_folder = 'static',
         template_folder = 'templates'
     )
 

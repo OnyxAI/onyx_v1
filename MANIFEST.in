@@ -1,17 +1,34 @@
-exclude *.pyc
-exclude *.dropbox.attr
+# Compiled python modules.
+*.pyc
 
+# Setuptools distribution folder.
+/dist/
 
-recursive-include onyx/api *
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+/*.egg
+
+recursive-exclude onyx/plugins *
+include onyx/plugins/__init__.py
+
+exclude onyx/config/install_my.cfg
+
 recursive-include onyx/config *
+recursive-exclude onyx/db *
+include onyx/db/.gitkeep
+recursive-exclude onyx/data *
+
+exclude onyx/flask_config.py
+exclude onyx/config/install_my.cfg
+recursive-include onyx/api *
+recursive-include onyx/skills *
+recursive-include onyx/util *
+recursive-include onyx/client *
+
 recursive-include onyx/core *
-include onyx/data/.gitkeep
 recursive-include onyx/translations *
 recursive-include onyx/templates *
-recursive-include static/js *
-recursive-include static/css *
-recursive-include static/fonts *
-recursive-include static/img *
-
-
-
+recursive-include onyx/static/js *
+recursive-include onyx/static/css *
+recursive-include onyx/static/fonts *
+recursive-include onyx/static/img *
