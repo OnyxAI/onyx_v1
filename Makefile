@@ -32,10 +32,6 @@ migratedb:
 babel:
 	pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx
 
-# lazy babel scan
-lazybabel:
-	pybabel extract -F babel.cfg -k lazy_gettext -o onyx/translations/messages.pot onyx
-
 # run:
 # $ LANG=en make addlang
 addlang:
@@ -46,10 +42,3 @@ compilelang:
 
 updlang:
 	pybabel update -i onyx/translations/messages.pot -d onyx/translations
-
-celery:
-	python celery_run.py worker
-
-# celery in debug state
-dcelery:
-	 python celery_run.py worker -l info --autoreload

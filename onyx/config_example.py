@@ -29,11 +29,11 @@ class Config(object):
     # default babel values
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
-    ACCEPT_LANGUAGES = ['en', 'fr', ]
+    ACCEPT_LANGUAGES = ['en_US', 'fr_FR', ]
     # available languages
     LANGUAGES = {
-        'en': u'English',
-        'fr': u'Français'
+        'en_US': u'English',
+        'fr_FR': u'Français'
     }
 
 

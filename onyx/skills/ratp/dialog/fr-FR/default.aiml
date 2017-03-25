@@ -1,0 +1,14 @@
+<aiml version="1.0.1" encoding="UTF-8">
+
+    <category>
+        <pattern>DONNES LES HORAIRES DU METRO</pattern>
+        <template>
+          <set name="skill">ratp</set><set name="function">get_schedule</set>
+        </template>
+    </category>
+    <category><pattern>* METRO *</pattern><template><srai>DONNES LES HORAIRES DU METRO</srai></template></category>
+    <category><pattern>* METRO</pattern><template><srai>DONNES LES HORAIRES DU METRO</srai></template></category>
+    <category><pattern>METRO *</pattern><template><srai>DONNES LES HORAIRES DU METRO</srai></template></category>
+    <category><pattern>JE T AIME</pattern><template><srai>DONNES LES HORAIRES DU METRO</srai></template></category>
+
+</aiml>

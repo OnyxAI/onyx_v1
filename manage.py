@@ -39,7 +39,7 @@ class Run(Command):
         Option('--reload', '-r', dest='reload', default=False, action="store_true")
     )
 
-    def run(self, host, port, debug, reload):
+    def run(self, host='0.0.0.0', port=8080, debug=False, reload=False):
         self.runserver(host, port, debug, reload)
 
     def sync_blueprints(self, app):
@@ -81,5 +81,8 @@ class Run(Command):
 
 manager.add_command('run', Run())
 
-if __name__=='__main__':
+def run():
     manager.run()
+
+if __name__=='__main__':
+    Run().run()

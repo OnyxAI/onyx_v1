@@ -1,0 +1,10 @@
+<aiml version="1.0.1" encoding="UTF-8">
+
+    <category>
+        <pattern>*</pattern>
+        <template>
+          Je n'ai pas compris votre demande
+        </template>
+    </category>
+
+</aiml>

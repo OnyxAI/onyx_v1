@@ -1,0 +1,15 @@
+<aiml version="1.0.1" encoding="UTF-8">
+
+    <category>
+        <pattern>DONNE MON ADRESSE IP</pattern>
+        <template>
+          <think>
+            <set name="skill">ip</set><set name="function">give_ip</set>
+          </think>
+        </template>
+    </category>
+    <category><pattern>* ADRESSE IP *</pattern><template><srai>DONNE MON ADRESSE IP</srai></template></category>
+    <category><pattern>* ADRESSE IP</pattern><template><srai>DONNE MON ADRESSE IP</srai></template></category>
+
+
+</aiml>

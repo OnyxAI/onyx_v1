@@ -1,0 +1,13 @@
+{
+  "name": "Mi Light",
+  "raw": "milight",
+  "version": "1.0.0",
+  "description": "Control your Mi Light lamp",
+  "packages":[
+    "ledcontroller",
+    "git+https://github.com/McSwindler/python-milight"
+  ],
+  "dependencies": [],
+  "author": "Cassim Khouani",
+  "license": "Creative Commons 3.0 France"
+}

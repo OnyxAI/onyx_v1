@@ -1,4 +1,4 @@
-# base
+# Base
 pytz
 vine
 jsonschema
@@ -28,6 +28,16 @@ flask_restplus
 pycrypto
 jsonify
 factory-boy==2.8.1
+wikipedia
+migrate
+bs4
+python-memcached
+psutil
+uptime
+configparser
+flask-apidoc
+gitpython
+onyxjokes
 
 # Cache and Celery
 Flask-Cache
@@ -43,14 +53,8 @@ SQLAlchemy-migrate
 # auth
 Flask-Login
 
-
-wikipedia
-migrate
-
-bs4
-python-memcached
-psutil
-uptime
-configparser
-flask-apidoc
-gitpython
+#Voice
+PyAudio==0.2.9
+SpeechRecognition
+gtts
+pygame

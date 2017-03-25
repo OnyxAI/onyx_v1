@@ -29,6 +29,3 @@ migrate = Migrate()
 
 from flask_cache import Cache
 cache = Cache()
-
-from celery import Celery
-celery = Celery()
