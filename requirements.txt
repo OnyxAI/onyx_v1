@@ -57,4 +57,4 @@ Flask-Login
 PyAudio==0.2.9
 SpeechRecognition
 gtts
-pygame
+#pygame
