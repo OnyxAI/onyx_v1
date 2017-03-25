@@ -7,6 +7,6 @@ python:
 before_install:
   - sudo sh install_travis.sh
 
-install: pip install -r requirements.txt
+install: pip install -r requirements_travis.txt
 # command to run tests
 script: sh run_travis.sh
