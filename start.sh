@@ -13,5 +13,5 @@ echo "Starting $@"
 
 shift
 
-#source ${VIRTUALENV_ROOT}/bin/activate
+source ${VIRTUALENV_ROOT}/bin/activate
 PYTHONPATH=${TOP} python ${SCRIPT} $@
