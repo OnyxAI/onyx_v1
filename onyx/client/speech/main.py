@@ -10,7 +10,7 @@ You may not use this software for commercial purposes.
 
 from onyx.api.assets import Json
 from onyx.client.speech.assets import snowboydecoder
-import onyx, importlib, wave, pyaudio, sys, os, pygame
+import onyx, importlib, wave, pyaudio, sys, os
 from onyx.config import get_config
 from onyxbabel import gettext
 from onyx.util import play_wav
@@ -34,8 +34,7 @@ class Detector:
 
 	def detected_callback(self):
 		play_wav(onyx.__path__[0] + "/client/speech/resources/ding.wav")
-		while pygame.mixer.get_busy():
-			pass
+
 
 		r = sr.Recognizer()
 		with sr.Microphone() as source:
