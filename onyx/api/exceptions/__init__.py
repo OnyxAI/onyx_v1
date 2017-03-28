@@ -60,6 +60,9 @@ class ServerException(Exception):
 class PluginException(Exception):
     pass
 
+class SkillException(Exception):
+    pass
+
 class TransportException(Exception):
     pass
 

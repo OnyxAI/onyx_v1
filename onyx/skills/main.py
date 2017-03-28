@@ -21,8 +21,6 @@ from onyx.skills.core import load_skills, THIRD_PARTY_SKILLS_DIR, \
     load_skill, create_skill_descriptor, MainModule
 
 
-
-
 def main():
     load_skills()
 

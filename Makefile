@@ -1,33 +1,34 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+VIRTUALENV_ROOT=$(HOME)/.virtualenvs/onyx
 
 all: setup
 
 start:
-	python manage.py run -h 0.0.0.0 -p 80 -d -r
+	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -h 0.0.0.0 -p 80 -d -r
 
 test:
-	py.test --color=yes
+	. $(VIRTUALENV_ROOT)/bin/activate; py.test --color=yes
 
 debug:
-	python manage.py run -d -r -p 5000
+	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -d -r -p 5000
 
 prod:
-	python manage.py run -p 80
+	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -p 80
 
 run:
-	python manage.py run
+	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -r
 
 setup:
-	pip install -Ur requirements.txt
+	. $(VIRTUALENV_ROOT)/bin/activate; pip install -Ur requirements.txt
 
 init:
 	export PYTHONPATH=$PYTHONPATH:ROOT_DIR
 
 initdb:
-	python manage.py init
+	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py init
 
 migratedb:
-	python manage.py migrate
+	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py migrate
 
 babel:
 	pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx
@@ -35,10 +36,10 @@ babel:
 # run:
 # $ LANG=en make addlang
 addlang:
-	pybabel init -i onyx/translations/messages.pot -d onyx/translations -l $(LANG)
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel init -i onyx/translations/messages.pot -d onyx/translations -l $(LANG)
 
 compilelang:
-	pybabel compile -d onyx/translations
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel compile -d onyx/translations
 
 updlang:
-	pybabel update -i onyx/translations/messages.pot -d onyx/translations
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel update -i onyx/translations/messages.pot -d onyx/translations

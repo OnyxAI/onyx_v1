@@ -29,6 +29,7 @@ kernel.setPredicate('base_dir', onyx.__path__[0])
 kernel.setPredicate('lang', lang)
 kernel.bootstrap(learnFiles=onyx.__path__[0] + "/skills/str-startup.xml", commands="load aiml b")
 
+BASE_SKILLS = ['default']
 PRIMARY_SKILLS = []
 BLACKLISTED_SKILLS = []
 SKILLS_BASEDIR = dirname(__file__)

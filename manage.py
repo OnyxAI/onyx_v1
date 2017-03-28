@@ -79,10 +79,8 @@ class Run(Command):
         self.sync_blueprints(app)
         app.run(host, int(port), debug=debug, use_reloader=reload)
 
+
 manager.add_command('run', Run())
 
-def run():
-    manager.run()
-
 if __name__=='__main__':
-    Run().run()
+    manager.run()

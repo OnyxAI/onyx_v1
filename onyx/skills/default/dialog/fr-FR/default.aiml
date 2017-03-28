@@ -7,4 +7,15 @@
         </template>
     </category>
 
+    <category>
+        <pattern>BONJOUR</pattern>
+        <template>
+          <random>
+            <li>Bonjour</li>
+            <li>Salut</li>
+            <li>Bonjour l'ami</li>
+          </random>
+        </template>
+    </category>
+
 </aiml>
