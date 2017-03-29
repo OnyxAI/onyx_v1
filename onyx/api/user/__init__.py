@@ -45,7 +45,6 @@ class User:
                 user['id'] = fetch.id
                 user['admin'] = fetch.admin
                 user['username'] = fetch.username
-                user['lang'] = fetch.lang
                 user['buttonColor'] = fetch.buttonColor
                 user['password'] = fetch.password
                 user['email'] = fetch.email
@@ -65,7 +64,6 @@ class User:
             user['id'] = query.id
             user['admin'] = query.admin
             user['username'] = query.username
-            user['lang'] = query.lang
             user['buttonColor'] = query.buttonColor
             user['password'] = query.password
             user['email'] = query.email

@@ -26,6 +26,11 @@ from onyx.api.exceptions import *
 import logging
 import onyx
 
+from onyx.config import get_config
+config = get_config('onyx')
+
+from onyx.flask_config import Config
+
 logger = logging.getLogger()
 json = Json()
 user = User()
@@ -35,14 +40,8 @@ navbar = Navbar()
 class Server:
 
     def __init__(self):
-        self.app = None
-        self.user = None
-        self.lang = None
-        self.email = None
         self.id = None
-        self.admin = None
         self.avatar = None
-        self.buttonColor = 'None'
 
     def get_version(self):
         try:
@@ -102,29 +101,22 @@ class Server:
       try:
 
         g.user = self.user
-        g.lang = self.lang
-        g.email = self.email
-        g.id = self.id
-        g.admin = self.admin
         g.avatar = user.get_avatar()
+
         g.version = self.get_version()
         g.ram = "width: "+str(self.get_ram())+"%"
         g.uptime = self.get_up_stats()
         g.disk = "width: "+str(self.get_disk())+"%"
-        g.gapi = self.app.config.get('GAPI')
-        g.gcx = self.app.config.get('GCX')
         g.next = request.endpoint
 
-
         try:
-          json.json = navbar.get_list()
-          g.list = json.decode()
+            json.json = navbar.get_list()
+            g.list = json.decode()
 
-          json.json = navbar.get()
-          g.navbar = json.decode()
+            json.json = navbar.get()
+            g.navbar = json.decode()
         except NavbarException:
-          pass
-
+            pass
 
         houses = House()
         json.json = houses.get()
@@ -154,62 +146,6 @@ class Server:
         pass
       except Exception as e:
         logger.error('Server Error : ' + str(e))
-
-    def get_context(self,babel):
-
-        @self.app.context_processor
-        def utility_processor():
-            def get_params(url):
-                function = getattr(importlib.import_module(self.app.view_functions[url].__module__), self.app.view_functions[url].__name__)
-                execute = function()
-                json.json = execute
-                return json.decode()
-            return dict(get_params=get_params)
-
-        @self.app.context_processor
-        def utility_processor():
-            def get_variable(p,variable):
-                v = str(variable.encode('ascii'))
-                return p[v]
-            return dict(get_variable=get_variable)
-
-    	@self.app.context_processor
-    	def ButtonColor():
-    		try:
-    			buttonColor = current_user.buttonColor
-    		except:
-    			buttonColor = ""
-    		return dict(buttonColor=str(buttonColor))
-
-    	@self.app.context_processor
-    	def gravatar():
-            def urlPicAvatar(id):
-                user.id = id
-                return user.get_avatar_id()
-            return dict(urlPicAvatar=urlPicAvatar)
-
-    	@self.app.context_processor
-    	def inject_user():
-    		try:
-    			return {'user': g.user}
-    		except AttributeError:
-    			return {'user': None}
-
-    	@self.app.teardown_request
-    	def teardown_request(exception):
-    		if exception:
-    			db.session.rollback()
-    			db.session.remove()
-    		db.session.remove()
-
-        try:
-        	@babel.localeselector
-        	def get_locale():
-        		if g.lang:
-        			return g.lang
-        		return 'fr'
-        except AssertionError:
-            pass
 
 
     #Shutdown

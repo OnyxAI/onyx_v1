@@ -31,7 +31,6 @@ def options():
 		return render_template('options/index.html')
 	elif request.method == 'POST':
 		try:
-			option.lang = request.form.get('lang')
 			if request.form.get('color') == None:
 				option.color = current_user.buttonColor
 			else:
@@ -40,8 +39,21 @@ def options():
 			flash(gettext('Account changed successfully' ), 'success')
 			return redirect(url_for('core.options'))
 		except OptionsException:
-			flash(gettext("You don't enter param"), 'success')
+			flash(gettext("An error has occured"), 'error')
 			return redirect(url_for('core.options'))
+
+@core.route('change_lang', methods=['POST'])
+@admin_required
+@login_required
+def change_lang():
+	try:
+		option.lang = request.form.get('lang')
+		option.change_lang()
+		flash(gettext('Please reboot Onyx to change language' ), 'success')
+		return redirect(url_for('core.options'))
+	except OptionsException:
+		flash(gettext("An error has occured"), 'error')
+		return redirect(url_for('core.options'))
 
 @core.route('shutdown')
 @admin_required

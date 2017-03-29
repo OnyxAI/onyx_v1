@@ -22,7 +22,10 @@ json = Json()
 class Calendar:
 
     def __init__(self):
-        self.id = 0
+        try:
+            self.id = current_user.id
+        except AttributeError:
+            self.id = None
         self.title = 'Undefined'
         self.notes = 'Undefined'
         self.lieu = 'Home'
@@ -33,7 +36,7 @@ class Calendar:
     def add(self):
         try:
 
-            query = CalendarModel.Calendar(idAccount=current_user.id,\
+            query = CalendarModel.Calendar(idAccount=self.id,\
                                            title=self.title,\
                                            notes=self.notes,\
                                            lieu=self.lieu,\
@@ -44,6 +47,7 @@ class Calendar:
             db.session.commit()
             logger.info('Event ' + self.title + ' added successfully')
             return json.encode({"status":"success"})
+
         except Exception as e:
             logger.error('Event added error : ' + str(e))
             raise CalendarException(str(e))
@@ -51,7 +55,7 @@ class Calendar:
 
     def get(self):
         try:
-            query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(current_user.id))
+            query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(self.id))
             events = []
 
             for fetch in query:
@@ -64,7 +68,7 @@ class Calendar:
         		e['end'] = fetch.end
         		e['color'] = fetch.color
         		events.append(e)
-
+            events.append({"status":"success"})
             return json.encode(events)
         except Exception as e:
             logger.error('Getting event error : ' + str(e))

@@ -22,7 +22,9 @@ from flask_login import current_user
 from onyx.config import get_config
 from onyx.api.server import *
 from onyx.plugins import plugin
+from onyx.api.assets import Json
 
+json = Json()
 server = Server()
 
 try:
@@ -126,24 +128,75 @@ def extensions_fabrics(app):
     cache.init_app(app)
 
 def gvars(app):
-    server.app = app
     @app.before_request
     def get_vars():
         try:
-            server.user = current_user.username
-            server.lang = current_user.lang
-            server.email = current_user.email
-            server.id = current_user.id
-            server.admin = current_user.admin
+            server.user = current_user
             server.get_vars()
+        except Exception as e:
+            logger.error('Get vars error : ' + str(e))
+            raise ServerException(str(e))
+            return json.encode({"status":"error"})
+
+    @app.context_processor
+    def utility_processor():
+        def get_params(url):
+            function = getattr(importlib.import_module(app.view_functions[url].__module__), app.view_functions[url].__name__)
+            execute = function()
+            json.json = execute
+            return json.decode()
+        return dict(get_params=get_params)
+
+    @app.context_processor
+    def utility_processor():
+        def get_variable(p,variable):
+            v = str(variable.encode('ascii'))
+            return p[v]
+        return dict(get_variable=get_variable)
+
+    @app.context_processor
+    def ButtonColor():
+        try:
+            buttonColor = current_user.buttonColor
         except:
-            server.user = None
-            server.lang = None
-            server.email = None
-            server.id = None
-            server.admin = None
-            server.get_vars()
-    server.get_context(babel)
+            buttonColor = ""
+        return dict(buttonColor=str(buttonColor))
+
+    @app.context_processor
+    def gravatar():
+        def urlPicAvatar(id):
+            user.id = id
+            return user.get_avatar_id()
+        return dict(urlPicAvatar=urlPicAvatar)
+
+    @app.context_processor
+    def inject_user():
+        try:
+            return {'user': g.user}
+        except AttributeError:
+            return {'user': None}
+
+    @app.teardown_request
+    def teardown_request(exception):
+        if exception:
+            db.session.rollback()
+            db.session.remove()
+        db.session.remove()
+
+    try:
+        @babel.localeselector
+        def get_locale():
+            raw_lang = config.get('Base', 'lang')
+            if raw_lang:
+                lang = raw_lang.split('-')
+                if lang[0] in Config.ACCEPT_LANGUAGES:
+                    return lang[0]
+                else:
+                    return Config.BABEL_DEFAULT_LOCALE
+            else:
+                return 'fr'
+    except AssertionError:
+        pass
 
 def error_pages(app , name):
 

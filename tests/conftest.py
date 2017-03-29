@@ -43,7 +43,7 @@ def connected(app):
     """A Webtest app with connected user."""
     test = TestApp(app)
 
-    user = User(username='foo', email='foo@bar.com')
+    user = User(username='Tony', email='tony@starkindustries.com')
     _db.session.add(user)
     _db.session.commit()
 
@@ -67,3 +67,29 @@ def db(app):
     # Explicitly close DB connection
     _db.session.close()
     _db.drop_all()
+
+@pytest.yield_fixture(scope='function')
+def user_test_a(db):
+    """A database for the tests."""
+    user = User(username='Tony', email='tony@starkindustries.com', password='tony1234', admin=1)
+    db.session.add(user)
+    db.session.commit()
+
+    yield user
+
+    # Explicitly close DB connection
+    db.session.close()
+    db.drop_all()
+
+@pytest.yield_fixture(scope='function')
+def user_test(db):
+    """A database for the tests."""
+    user = User(username='Pepper', email='pepper@starkindustries.com', password='pepper1234')
+    db.session.add(user)
+    db.session.commit()
+
+    yield user
+
+    # Explicitly close DB connection
+    db.session.close()
+    db.drop_all()

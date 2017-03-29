@@ -49,8 +49,8 @@
   <li> <div class="userView">
     <img src="{{ url_for('static', filename='img/nav.png') }}" alt="" class="background">
     <a href="{{ url_for('auth.change_account') }}"><img class="circle" src="{{ g.avatar }}"></a>
-    <span class="white-text name">{{ g.user }}</span>
-    <span class="white-text email">{{ g.email }}</span>
+    <span class="white-text name">{{ g.user.username }}</span>
+    <span class="white-text email">{{ g.user.email }}</span>
   </div></li>
   <li><span class="badge new {{buttonColor}}">{{g.notifs|length}}</span><a href="{{ url_for('core.notifications') }}">{{_("Notifications")}}</a></li>
   <li><a href="{{ url_for('auth.change_account') }}">{{_("My Account")}}</a></li>

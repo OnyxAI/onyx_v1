@@ -13,7 +13,7 @@
           <li class="tab col s3"><a class="active" href="#system">{{_('System')}}</a></li>
           <li class="tab col s3"><a href="#param">{{_('Parameter')}}</a></li>
           <li class="tab col s3"><a href="#navbar">{{_('Navbar')}}</a></li>
-          {% if g.admin == 1 %}
+          {% if g.user.admin == 1 %}
             <li class="tab col s3"><a href="#house">{{_('House')}}</a></li>
             <li class="tab col s3"><a href="#room">{{_('Room')}}</a></li>
             <li class="tab col s3"><a href="#machine">{{_('Machine')}}</a></li>
@@ -133,16 +133,6 @@
 
 
 
-                  <br>
-                  <br>
-
-
-                  <label for="lang" >{{_("Langue")}}</label>
-                  <select name="lang" class="browser-default">
-                        <option value="fr">{{_("French")}}</option>
-                        <option value="en">{{_("English")}}</option>
-                  </select>
-
             <br><br>
             <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
       </form>
@@ -178,7 +168,7 @@
     {% endfor %}
   </div>
 </div>
-  {% if g.admin == 1 %}
+  {% if g.user.admin == 1 %}
 <div id="house" >
 <div class="card-panel white">
   <table class="white responsive-table">
@@ -317,7 +307,7 @@
 
 
 <div id="admin" >
- {% if g.admin == 1 %}
+ {% if g.user.admin == 1 %}
  <div class="card-panel white">
 
   <br><br>
@@ -325,6 +315,17 @@
   <a href="{{ url_for('core.maj') }}" class="btn {{ buttonColor }}">{{_("Update Onyx")}}</a>
   <a href="{{ url_for('core.shutdown') }}" class="btn {{ buttonColor }}">{{_("Close Onyx")}}</a>
   <a href="{{ url_for('auth.account_manage') }}" class="btn {{ buttonColor }}">{{_("Manage Account")}}</a>
+<br><br>
+
+  <form action="{{url_for('core.change_lang')}}" method="post">
+    <label for="lang" >{{_("Langue")}}</label>
+    <select name="lang" class="browser-default">
+          <option value="fr-FR">{{_("French")}}</option>
+          <option value="en-US">{{_("English")}}</option>
+    </select>
+
+    <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
+  </form>
 
 
 
