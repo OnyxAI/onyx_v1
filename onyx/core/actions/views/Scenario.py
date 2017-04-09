@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 
 from onyx.api.exceptions import *
 from onyxbabel import gettext
+from flask_login import current_user
 from onyx.api.notification import *
 from onyx.api.assets import Json
 from onyx.api.events import *
@@ -25,6 +26,7 @@ def notification(param):
     json.json = param
     params = json.decode()
 
+    notif.user = current_user.id
     notif.title = params[0]
     notif.text = params[1]
     notif.priority = params[2]
@@ -40,4 +42,4 @@ def event(param):
     params = json.decode()
     events.code = params[0]
     events.new()
-    return 'Done'
+    return json.encode({"status":"success"})

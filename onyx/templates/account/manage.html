@@ -3,14 +3,14 @@
 {% set title = _("Manage") %}
 
 {% block body %}
-		
+
   <div class="card-panel white">
 
-  {% if g.admin == 1 %}
-		<h2>{{_("Accounts")}}</h2>		 
-		
-		<ul class="collection">		
-			{% for tab in id %}					
+  {% if g.user.admin == 1 %}
+		<h2>{{_("Accounts")}}</h2>
+
+		<ul class="collection">
+			{% for tab in id %}
 				<li class="collection-item avatar">
 					<img src="{{ urlPicAvatar(tab.id) }}" alt="" class="circle">
 					<span class="title">{{ tab.username }}</span>
@@ -21,15 +21,15 @@
 				</li>
    		{% endfor %}
   </ul>
-		
+
 
   {% else %}
 
   	<h3>{{_("You're not an administrator so we can't delete accounts")}}</h3>
   {% endif %}
-		        
-		        
+
+
 		 </div>
 
-		 
+
 {% endblock %}

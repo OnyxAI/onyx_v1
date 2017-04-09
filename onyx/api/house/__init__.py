@@ -14,9 +14,13 @@ from onyx.api.exceptions import *
 import logging
 
 logger = logging.getLogger()
-
 json = Json()
 
+"""
+    This class allows to manage the house of the user
+
+    Cette classe permet de gérer le domicile de l'utilisateur
+"""
 class House:
 
     def __init__(self):
@@ -29,6 +33,11 @@ class House:
         self.latitude = None
         self.longitude = None
 
+    """
+        Get all house
+
+        Récupère toutes les maisons
+    """
     def get(self):
         try:
             query = HouseModel.House.query.all()
@@ -51,6 +60,11 @@ class House:
             raise HouseException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        Add a new house
+
+        Ajoute une nouvelle maison
+    """
     def add(self):
         try:
             query = HouseModel.House(name=self.name,address=self.address,city=self.city,postal=self.postal,country=self.country,latitude=self.latitude,longitude=self.longitude)
@@ -64,6 +78,11 @@ class House:
             raise HouseException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        Delete a house
+
+        Supprime une maison
+    """
     def delete(self):
         try:
             query = HouseModel.House.query.filter_by(id=self.id).first()

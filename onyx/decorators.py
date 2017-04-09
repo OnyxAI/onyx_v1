@@ -17,7 +17,7 @@ from onyx.core.models import ConfigModel
 def admin_required(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
-		if g.admin == 0:
+		if g.user.admin == 0:
 			flash(gettext("You're not admin"), 'error')
 			return redirect(url_for('core.index'))
 		return f(*args, **kwargs)

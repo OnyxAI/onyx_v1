@@ -7,8 +7,7 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-import os
-import json
+import os, logging
 from flask import request, render_template, redirect, url_for, flash
 from onyxbabel import gettext
 from onyx.api.assets import Json
@@ -18,11 +17,15 @@ try:
 	import urllib.request
 except ImportError:
 	import urllib
-import logging
 
 logger = logging.getLogger()
 json = Json()
 
+"""
+	Get information of RATP service
+
+	Informations sur les différents services de la RATP
+"""
 class Ratp:
 
     def __init__(self):
@@ -30,6 +33,7 @@ class Ratp:
         self.line = None
         self.station = None
         self.direction = None
+
 
     def get_metro_schedule(self):
 			try:
@@ -44,7 +48,8 @@ class Ratp:
 				logger.error('Metro error : ' + str(e))
 				raise TransportException(str(e))
 
-    def get_rer_schedule(self) :
+
+    def get_rer_schedule(self):
 			try:
 				try:
 					html = urllib.request.urlopen('http://www.ratp.fr/horaires/fr/ratp/rer/prochains_passages/' + self.line + '/' + self.station + '/' + self.direction).read()

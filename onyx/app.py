@@ -20,25 +20,24 @@ from flask import Flask, render_template
 from onyx.extensions import (db, mail, login_manager, babel, cache)
 from flask_login import current_user
 from onyx.config import get_config
-from onyx.api.server import *
 from onyx.plugins import plugin
 from onyx.api.assets import Json
-
-json = Json()
+from onyx.api.server import *
 server = Server()
 
+json = Json()
+
 try:
-    from onyx.flask_config import ProdConfig
+    from onyx.flask_config import ProdConfig, Config
 except:
     server.create_config_file()
-    from onyx.flask_config import ProdConfig
+    from onyx.flask_config import ProdConfig, Config
 
 #Log
 import logging
 from logging.handlers import RotatingFileHandler
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
-
 
 __all__ = ('create_app','blueprints_fabrics', 'get_blueprints', 'get_blueprint_name', 'error_pages')
 
@@ -197,7 +196,7 @@ def gvars(app):
                 return 'fr'
     except AssertionError:
         pass
-
+        
 def error_pages(app , name):
 
     @app.errorhandler(403)

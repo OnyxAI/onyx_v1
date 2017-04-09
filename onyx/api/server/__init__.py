@@ -29,8 +29,6 @@ import onyx
 from onyx.config import get_config
 config = get_config('onyx')
 
-from onyx.flask_config import Config
-
 logger = logging.getLogger()
 json = Json()
 user = User()
@@ -110,6 +108,7 @@ class Server:
         g.next = request.endpoint
 
         try:
+            navbar.user = current_user.id
             json.json = navbar.get_list()
             g.list = json.decode()
 
@@ -131,10 +130,12 @@ class Server:
         g.machines = json.decode()
 
         notifs = Notification()
+        notifs.user = current_user.id
         json.json = notifs.get()
         g.notifs = json.decode()
 
         all_notifs = Notification()
+        all_notifs.user = current_user.id
         json.json = all_notifs.get_all()
         g.all_notifs = json.decode()
 

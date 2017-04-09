@@ -10,6 +10,11 @@ You may not use this software for commercial purposes.
 from onyx.api.exceptions import *
 import os, requests, json, onyx
 
+"""
+    This class allows to manage all the json
+
+    Cette classe permet de gérer tout le json
+"""
 class Json:
 
     def __init__(self):
@@ -20,6 +25,11 @@ class Json:
         self.lang = None
         self.data_name = None
 
+    """
+        This function decodes the json
+
+        Cette fonction décode le json
+    """
     def decode(self):
         try:
             data = json.loads(self.json)
@@ -27,6 +37,11 @@ class Json:
         except Exception as e:
             raise JsonException(str(e))
 
+    """
+        This function encodes the json
+
+        Cette fonction encode le json
+    """
     def encode(self, query):
         try:
             encode = json.dumps(query)
@@ -34,6 +49,11 @@ class Json:
         except Exception as e:
             raise JsonException(str(e))
 
+    """
+        This function decodes the json of a url website
+
+        Cette fonction décode le json d'un adresse web
+    """
     def decode_url(self):
         try:
             data = requests.get(self.url).json()
@@ -41,6 +61,11 @@ class Json:
         except Exception as e:
             raise JsonException(str(e))
 
+    """
+        This function decodes the package file of a plugin
+
+        Cette fonction décode le fichier package d'un plugin
+    """
     def decode_package(self):
         try:
             with open(onyx.__path__[0] + "/plugins/" + self.name + "/package.json") as data_file:
@@ -49,6 +74,11 @@ class Json:
         except Exception as e:
             raise JsonException(str(e))
 
+    """
+        This function decodes the json of a path
+
+        Cette fonction décode le json d'un fichier
+    """
     def decode_path(self):
         try:
             with open(self.path) as data_file:
@@ -57,10 +87,15 @@ class Json:
         except Exception as e:
             raise JsonException(str(e))
 
+    """
+        This function decodes the data json of Onyx
+
+        Cette fonction décode le json des données d'Onyx
+    """
     def decode_data(self):
         try:
             if self.lang == None:
-                with open(onyx.__path__[0] + "/data/" + self.data_name + "/fr.json") as data_file:
+                with open(onyx.__path__[0] + "/data/" + self.data_name + "/en-US.json") as data_file:
                     data = json.load(data_file)
                 return data
             else:

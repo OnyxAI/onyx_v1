@@ -10,6 +10,11 @@ You may not use this software for commercial purposes.
 from onyxbabel import gettext
 import time
 
+"""
+    Get the time
+
+    Récupèrer l'heure et la date
+"""
 class Time:
 
     def __init__(self):
@@ -17,5 +22,10 @@ class Time:
         self.minutes = None
         self.seconds = None
 
+    """
+        Return a string time
+
+        Retourne une chaine de caractère avec l'heure
+    """
     def get_str(self):
         return gettext('He is actually ') + time.strftime("%H : %M")

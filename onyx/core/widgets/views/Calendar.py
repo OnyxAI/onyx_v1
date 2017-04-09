@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 from onyx.api.exceptions import *
 from onyxbabel import gettext
 from onyx.api.assets import Json
+from flask.ext.login import current_user
 from .. import widgets
 from flask import render_template
 from onyx.api.calendar import *
@@ -20,6 +21,7 @@ json = Json()
 
 @widgets.route('calendar')
 def calendar():
+    events.user = current_user.id
     json.json = events.get()
     events_list = json.decode()
     return render_template('widgets/calendar.html', events=events_list)

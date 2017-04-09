@@ -8,6 +8,11 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
+"""
+    It is the classes that handle the different exceptions of Onyx
+
+    Ce sont les classes qui gèrent les différents exceptions d'Onyx
+"""
 
 class UserException(Exception):
     pass

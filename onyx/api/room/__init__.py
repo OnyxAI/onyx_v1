@@ -14,9 +14,13 @@ from onyx.api.exceptions import *
 import logging
 
 logger = logging.getLogger()
-
 json = Json()
 
+"""
+    This class allows to manage the rooms of the house
+
+    Cette classe permet de gérér les pièces de la maison
+"""
 class Room:
 
     def __init__(self):
@@ -24,6 +28,11 @@ class Room:
         self.name = None
         self.house = None
 
+    """
+        Get all rooms
+
+        Récupérer toutes les pièces
+    """
     def get(self):
         try:
             query = RoomModel.Room.query.all()
@@ -41,7 +50,11 @@ class Room:
             raise RoomException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        Add a new room
 
+        Ajouter une nouvelle pièce
+    """
     def add(self):
         try:
             query = RoomModel.Room(name=self.name,house=self.house)
@@ -49,12 +62,18 @@ class Room:
             db.session.add(query)
             db.session.commit()
             logger.info('Room ' + query.name + ' added successfuly')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Room add error : ' + str(e))
             raise RoomException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        Delete a room
+
+        Supprimer une pièce
+    """
     def delete(self):
         try:
             query = RoomModel.Room.query.filter_by(id=self.id).first()

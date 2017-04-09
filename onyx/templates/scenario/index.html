@@ -70,6 +70,9 @@
                </tr>
              </thead>
              <tbody>
+               {% if events == [] %}
+               <p>{{_('No event in your language')}}</p>
+               {% else %}
                {% for event in events %}
                <tr>
                  <th>{{event.name}}</th>
@@ -77,13 +80,17 @@
                  <th><p><input name="event_code" type="radio" id="{{event.name}}" value="{{event.code}}" /><label for="{{event.name}}"></label></p></th>
                </tr>
                {% endfor %}
-          
+               {% endif %}
+
 
 
 
              </tbody>
            </table>
-          {% for event in events %}
+           {% if events == [] %}
+              <p>{{_('No event in your language')}}</p>
+           {% else %}
+           {% for event in events %}
                <div id="{{event.code}}" class="desc" style="display: none;">
                    {% for param in event.params %}
                    <script type="text/javascript">
@@ -116,6 +123,7 @@
                  </div>
 
                {% endfor %}
+               {% endif %}
 
        </div>
     </div>
@@ -132,6 +140,9 @@
               </tr>
             </thead>
             <tbody>
+              {% if actions == [] %}
+                <p>{{_('No action in your language')}}</p>
+              {% else %}
               {% for action in actions %}
               <tr>
                 <input type="hidden" name="{{action.code}}" value="{{action.url}}">
@@ -140,12 +151,16 @@
                 <th><p><input name="action" type="radio" id="{{action.name}}" value="{{action.code}}" /><label for="{{action.name}}"></label></p></th>
               </tr>
               {% endfor %}
+              {% endif %}
 
 
 
             </tbody>
           </table>
-         {% for action in actions %}
+          {% if actions == [] %}
+              <p>{{_('No action in your language')}}</p>
+          {% else %}
+          {% for action in actions %}
               <div id="{{action.code}}" class="desc" style="display: none;">
                   {% for param in action.params %}
                   <script type="text/javascript">
@@ -178,6 +193,7 @@
                 </div>
 
               {% endfor %}
+              {% endif %}
 
 
               <br>

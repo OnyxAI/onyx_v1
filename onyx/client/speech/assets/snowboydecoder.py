@@ -9,8 +9,6 @@ import os
 import logging
 import onyx
 
-
-
 TOP_DIR = onyx.__path__[0] + "/client/speech/"
 
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")

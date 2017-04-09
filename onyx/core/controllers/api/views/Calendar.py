@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from flask import request
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 from onyx.decorators import admin_required
 from .. import api
 import json
@@ -42,6 +42,7 @@ def calendars():
 
 		"""
 		try:
+			events.user = current_user.id
 			return events.get()
 		except CalendarException as e:
 			return "Error : " + e
@@ -66,6 +67,7 @@ def calendars():
 
 		"""
 		try:
+			events.user = current_user.id
 			events.title = request.form['title']
 			events.notes = request.form['notes']
 			events.lieu = request.form['lieu']
@@ -92,6 +94,7 @@ def calendars():
 
 		"""
 		try:
+			events.user = current_user.id
 			events.id = request.form['id']
 			events.startdate = request.form['start']
 			events.enddate = request.form['end']
@@ -124,8 +127,10 @@ def calendar(id):
 		try:
 			checked = 'delete' in request.form
 			if checked == True:
+				events.user = current_user.id
 				events.id = request.form['id']
 				events.delete()
+			events.user = current_user.id
 			events.id = request.form['id']
 			events.title = request.form['title']
 			events.notes = request.form['notes']

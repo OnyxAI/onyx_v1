@@ -10,7 +10,7 @@ You may not use this software for commercial purposes.
 
 from .. import core
 from flask import request, render_template, flash, redirect, url_for
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 from onyx.decorators import admin_required
 from onyx.api.navbar import *
 from onyx.api.options import *
@@ -31,6 +31,7 @@ def options():
 		return render_template('options/index.html')
 	elif request.method == 'POST':
 		try:
+			option.user = current_user.id
 			if request.form.get('color') == None:
 				option.color = current_user.buttonColor
 			else:

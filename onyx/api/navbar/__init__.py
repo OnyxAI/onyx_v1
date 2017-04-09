@@ -19,9 +19,15 @@ import logging
 logger = logging.getLogger()
 json = Json()
 
+"""
+    This class handles the user's navbar
+
+    Cette classe gère la barre de navigation de l'utilisateur
+"""
 class Navbar:
 
     def __init__(self):
+        self.user = None
         self.id = None
         self.fa = None
         self.url = None
@@ -32,10 +38,15 @@ class Navbar:
         self.folder = None
         self.username = None
 
+    """
+        Get the navbar of a user
+
+        Récupère la barre de navigation d'un utilisateur
+    """
     def get(self):
         try:
             navbar = []
-            query = NavbarModel.Navbar.query.filter_by(idAccount=current_user.id).limit(11)
+            query = NavbarModel.Navbar.query.filter_by(idAccount=self.user).limit(11)
             for key in query:
                 e = {}
                 e['id'] = key.id
@@ -49,10 +60,15 @@ class Navbar:
         except Exception as e:
             raise NavbarException(str(e))
 
+    """
+        Get the list of available app
+
+        Récupère la liste des applications disponible
+    """
     def get_list(self):
         try:
             list = []
-            query = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.idAccount.endswith(str(current_user.id)))
+            query = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.idAccount.endswith(self.user))
             for fetch in query:
                 e = {}
                 e['id'] = fetch.id
@@ -64,6 +80,11 @@ class Navbar:
         except Exception as e:
             raise NavbarException(str(e))
 
+    """
+        Change an element of the navbar
+
+        Modifie un élément de la navbar
+    """
     def set_navbar(self):
         try:
             last_nav = NavbarModel.Navbar.query.filter_by(id=self.last).first()
@@ -94,12 +115,16 @@ class Navbar:
             db.session.commit()
 
             logger.info('Navbar updated successfully')
-            return True
+            return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Navbar update error : ' + str(e))
             raise NavbarException(str(e))
 
+    """
+        Allows the installation of a plugin to initialize the navbar
 
+        Permet des l'installation d'un plugin d'initialisé sa navbar
+    """
     def set_plugin_navbar(self):
         try:
             json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
@@ -107,7 +132,7 @@ class Navbar:
             user = UsersModel.User.query.all()
             for key in user:
                 for nav in data:
-                    query = NavbarModel.Navbar(idAccount=str(key.id),fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                    query = NavbarModel.Navbar(idAccount=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
                     db.session.add(query)
                     db.session.commit()
             logger.info('Navbar plugin set with success')
@@ -115,6 +140,11 @@ class Navbar:
             logger.error('Navbar plugin set error : ' + str(e))
             raise NavbarException(str(e))
 
+    """
+        Allows the installation of a plugin to initialize the navbar for a user
+
+        Permet des l'installation d'un plugin d'initialisé sa navbar pour un utilisateur
+    """
     def set_plugin_navbar_user(self):
         try:
             json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
@@ -129,6 +159,11 @@ class Navbar:
             logger.error('Navbar use set error : ' + str(e))
             raise NavbarException(str(e))
 
+    """
+        Removes applications from the navbar when a plugin is uninstalled
+
+        Supprime les applications de la navbar quand un plugin est désinstallé
+    """
     def delete_plugin_navbar(self):
         try:
             json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"

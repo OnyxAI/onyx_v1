@@ -9,6 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from onyx.api.exceptions import *
+from flask_login import current_user
 from onyxbabel import gettext
 from onyx.api.assets import Json
 from .. import action
@@ -19,6 +20,7 @@ json = Json()
 
 @action.route('calendar/meet')
 def calendar_meet():
+    events.user = current_user.id
     json.json = events.get_meet()
     data = json.decode()
     meeting = str(len(data))

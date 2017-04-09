@@ -11,7 +11,7 @@ from .. import core
 from flask import request, render_template, redirect, url_for, flash
 from onyxbabel import gettext
 from onyx.api.exceptions import *
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 from onyx.api.assets import Json
 from onyx.api.calendar import *
 
@@ -22,12 +22,14 @@ events = Calendar()
 @login_required
 def calendars():
 	if request.method == 'GET':
+		events.user = current_user.id
 		json.json = events.get()
 		events_list = json.decode()
 		return render_template('calendar/index.html', events=events_list)
 
 	elif request.method == 'POST':
 		try:
+			events.user = current_user.id
 			events.title = request.form['title']
 			events.notes = request.form['notes']
 			events.lieu = request.form['lieu']
@@ -42,6 +44,7 @@ def calendars():
 
 	elif request.method == 'PUT':
 		try:
+			events.user = current_user.id
 			events.id = request.form['id']
 			events.startdate = request.form['start']
 			events.enddate = request.form['end']
@@ -59,9 +62,10 @@ def calendar(id):
 		try:
 			checked = 'delete' in request.form
 			if checked == True:
+				events.user = current_user.id
 				events.id = request.form['id']
 				events.delete()
-
+			events.user = current_user.id
 			events.id = request.form['id']
 			events.title = request.form['title']
 			events.notes = request.form['notes']

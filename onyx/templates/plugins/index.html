@@ -62,7 +62,6 @@
 
 {% for list in lists %}
 
-
 	<div class="col s4">
 		<div class="card">
 			<div class="card-image waves-effect waves-block waves-light">
@@ -70,12 +69,15 @@
 			</div>
 			<div class="card-content">
 				<span class="card-title activator grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">more_vert</i></span>
-				
 			</div>
 			<div class="card-reveal">
 				<span class="card-title grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">close</i></span>
 				<p>{{ list['description'] }}</p>
-				<p><a href="{{ url_for('core.install_plugin', name=list['raw'] , url=list['url']) }}">Install</a></p>
+        {% if list['raw'] in plugins|safe %}
+          <p><a href="{{ url_for('core.uninstall_plugin', name=list['raw']) }}">{{ _("Uninstall") }}</a></p>
+        {% else %}
+          <p><a href="{{ url_for('core.install_plugin', name=list['raw'] , url=list['url']) }}">{{ _("Install") }}</a></p>
+        {% endif %}
 			</div>
 		</div>
 	</div>

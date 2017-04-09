@@ -20,15 +20,26 @@ import logging
 logger = logging.getLogger()
 json = Json()
 
+"""
+    Cette class can change option of Onyx
+
+    Cette classe permet de gérer les options d'Onyx
+"""
 class Options:
 
     def __init__(self):
+        self.user = None
         self.color = None
         self.lang = 'en-US'
 
+    """
+        Change the user color button
+
+        Modifier la couleur d'un utilisateur
+    """
     def set_account(self):
         try:
-            query = UsersModel.User.query.filter_by(id=current_user.id).first()
+            query = UsersModel.User.query.filter_by(id=self.user).first()
 
             query.buttonColor = self.color
 

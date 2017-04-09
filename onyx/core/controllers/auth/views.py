@@ -24,7 +24,7 @@ import hashlib
 
 event = Event()
 json = Json()
-auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=str(onyx.__path__[0])+'/templates')
+auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=onyx.__path__[0] + '/templates')
 user = User()
 
 @login_manager.user_loader

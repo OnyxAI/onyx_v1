@@ -11,15 +11,10 @@ You may not use this software for commercial purposes.
 from flask import Blueprint, render_template, redirect, request, current_app, g, flash, url_for
 from flask_login import login_required, logout_user
 from onyxbabel import gettext as _
-import os
+import os, onyx
 
 
-try:
-	import Onyx
-	core = Blueprint('core', __name__, url_prefix='/' , template_folder=str(Onyx.__path__[0])+'/onyx/templates')
-except:
-	core = Blueprint('core', __name__, url_prefix='/' , template_folder=os.path.dirname(os.path.dirname(__file__))+'/onyx/templates')
-
+core = Blueprint('core', __name__, url_prefix='/' , template_folder=onyx.__path__[0] + '/templates')
 
 
 from .views import *

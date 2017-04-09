@@ -21,6 +21,11 @@ from git import Repo
 logger = logging.getLogger()
 json = Json()
 
+"""
+    Make the Onyx installation done
+
+    Classe qui fait l'installation d'Onyx
+"""
 class Install:
 
     def __init__(self):
@@ -28,7 +33,11 @@ class Install:
         self.username = None
         self.email = None
 
+    """
+        Create the admin account
 
+        Permet de créer le compte administrateur
+    """
     def set(self):
         try:
             hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
@@ -36,31 +45,47 @@ class Install:
             db.session.add(user)
             db.session.commit()
             login_user(user)
+
             self.init_db()
+
             logger.info('Successfully Installation')
             return json.encode({"status":"success"})
+
         except Exception as e:
+
             logger.error('Installation error : ' + str(e))
             raise InstallException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        initialize the navbar for this user
+
+        Initialise la barre de navigateur pour cet utilisateur
+    """
     def init_db(self):
         try:
             user = UsersModel.User.query.filter_by(username=self.username).first()
             json.path = onyx.__path__[0] + "/data/user/navbar.json"
             navbar = json.decode_path()
+
             for key in navbar:
                 query = NavbarModel.Navbar(idAccount=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
             logger.info('Navbar initialized for user : ' + user.username)
+
             return json.encode({"status":"success"})
         except Exception as e:
+
             logger.error('Navbar initialisation error : ' + str(e))
             raise NavbarException(str(e))
             return json.encode({"status":"error"})
-            
 
+    """
+        Download all Onyx data from github repo
+
+        Téléchargement des données d'Onyx via github
+    """
     def get_data(self):
         try:
             Repo.clone_from('https://github.com/OnyxProject/Onyx-Data', onyx.__path__[0] + "/data/")
@@ -69,7 +94,11 @@ class Install:
             logger.error('Get Data error : ' + str(e))
             raise DataException(str(e))
 
+    """
+        Update of Onyx Data
 
+        Mise à jour des données d'Onyxs
+    """
     def update_data(self):
         try:
             repo = git.cmd.Git(onyx.__path__[0] + "/data/")

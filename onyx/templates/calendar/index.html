@@ -197,26 +197,26 @@
       events: [
 
       {% for event in events %}
-      {% set start = split(event["start"]) %}
-      {% set end = split(event["end"]) %}
+          {% set start = split(event["start"]) %}
+          {% set end = split(event["end"]) %}
       {% if start[1] == '00:00:00' %}
-      {% set start = start[0] %}
+          {% set start = start[0] %}
       {% else %}
-      {% set start = event["start"] %}
+          {% set start = event["start"] %}
       {% endif %}
       {% if end[1] == '00:00:00' %}
-      {% set end = end[0] %}
+          {% set end = end[0] %}
       {% else %}
-      {% set end = event["end"] %}
+          {% set end = event["end"] %}
       {% endif %}
       {
-        id: '{{ event["id"] }}',
-        title: '{{ event["title"] }}',
-        notes: '{{ event["notes"] }}',
-        lieu: '{{ event["lieu"] }}',
-        start: '{{start}}',
-        end: '{{end}}',
-        color: '{{event["color"]}}',
+          id: '{{ event["id"] }}',
+          title: '{{ event["title"] }}',
+          notes: '{{ event["notes"] }}',
+          lieu: '{{ event["lieu"] }}',
+          start: '{{start}}',
+          end: '{{end}}',
+          color: '{{event["color"]}}',
       },
       {% endfor %}
 

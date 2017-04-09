@@ -16,6 +16,11 @@ import logging
 logger = logging.getLogger()
 json = Json()
 
+"""
+    Allows to manage the different instances of Onyx
+
+    Permet de gérer les différentes instances d'Onyx
+"""
 class Machine:
 
     def __init__(self):
@@ -25,7 +30,11 @@ class Machine:
         self.room = None
         self.host = None
 
+    """
+        Getting all machine
 
+        Récupération de toutes les machines
+    """
     def get(self):
         try:
             query = MachineModel.Machine.query.all()
@@ -46,6 +55,11 @@ class Machine:
             raise GetException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        Add a new machine
+
+        Ajout d'une nouvelle machine
+    """
     def add(self):
         try:
             query = MachineModel.Machine(name=self.name,house=self.house,room=self.room,host=self.host)
@@ -53,12 +67,18 @@ class Machine:
             db.session.add(query)
             db.session.commit()
             logger.info('Machine ' + query.name + ' added successfuly')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.info('Machine add error : ' + str(e))
             raise MachineException(str(e))
             return json.encode({"status":"error"})
 
+    """
+        Delete a machine
+
+        Supprime une machine
+    """
     def delete(self):
         try:
             query = MachineModel.Machine.query.filter_by(id=self.id).first()

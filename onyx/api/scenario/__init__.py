@@ -19,6 +19,9 @@ import logging
 json = Json()
 logger = logging.getLogger()
 
+from onyx.config import get_config
+config = get_config('onyx')
+
 class Scenario:
 
     def __init__(self):
@@ -87,7 +90,7 @@ class Scenario:
 
     def delete_plugin_action(self):
         try:
-            json.path = onyx.__path__[0] + "/plugins/" + self.plugin_name + "/data/actions.json"
+            json.path = onyx.__path__[0] + "/plugins/" + self.plugin_name + "/data/actions/" + config.get('Base', 'lang') + ".json"
             data = json.decode_path()
             user = UsersModel.User.query.all()
             for key in user:
