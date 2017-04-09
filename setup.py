@@ -7,7 +7,7 @@ from setuptools import setup , find_packages
 
 setup(name="onyxproject",
       description="Intelligent Dashboard",
-      version='0.8.7',
+      version='0.8.8',
       include_package_data=True,
       packages=['onyx'],
       url="https://github.com/OnyxProject/Onyx",
@@ -25,7 +25,10 @@ setup(name="onyxproject",
           "Topic :: System :: Software Distribution"],
       zip_safe=True,
       entry_points={
-          'console_scripts': ['onyxstart=onyx.main:run']
+          'console_scripts': [
+                'onyxclient=onyx.main:run',
+                'onyxvoice=onyx.client.speech.main:run'
+                ]
       },
       install_requires=[
         'pip',
@@ -68,7 +71,10 @@ setup(name="onyxproject",
         'flask-Mail',
         'blinker',
         'wikipedia',
-        'markupsafe'
+        'markupsafe',
+        'pyaudio',
+        'SpeechRecognition',
+        'gtts'
         ],
       options={
           'bdist_wheel': {'universal': True},

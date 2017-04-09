@@ -56,6 +56,9 @@ class Detector:
 		print('Starting...')
 		detector.start(self.detected_callback)
 
+def run():
+	detector = Detector()
+	detector.start()
 
 
 if __name__ == "__main__":
