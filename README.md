@@ -5,7 +5,7 @@
 | ![Alt](http://nsa38.casimages.com/img/2016/12/22/161222041304330268.png) |
 
 
-**Website :** [http://onyxproject.fr](http://onyxproject.fr)
+**Website :** [https://onyxlabs.fr](https://onyxlabs.fr)
 
 ## Getting Started
 
@@ -19,7 +19,8 @@ pip install onyxproject
 And to run Onyx the simple way is :
 
 ```bash
-onyxstart
+onyxclient
+onyxvoice
 ```
 
 ## Links

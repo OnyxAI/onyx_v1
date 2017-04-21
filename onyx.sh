@@ -17,7 +17,7 @@ function usage {
   echo "      -h             this help message"
   echo "      start          starts onyx-client and onyx-voice"
   echo "      stop           stops onyx-client and onyx-voice"
-  echo "      restart        restarts onyx-client and onyx-voice"
+  echo "      restart        restart onyx-client and onyx-voice"
   echo
   echo "screen tips:"
   echo "            run 'screen -list' to see all running screens"

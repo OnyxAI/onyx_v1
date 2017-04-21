@@ -65,14 +65,15 @@ def calendar(id):
 				events.user = current_user.id
 				events.id = request.form['id']
 				events.delete()
-			events.user = current_user.id
-			events.id = request.form['id']
-			events.title = request.form['title']
-			events.notes = request.form['notes']
-			events.lieu = request.form['lieu']
-			events.color = request.form['color']
+			else:
+				events.user = current_user.id
+				events.id = request.form['id']
+				events.title = request.form['title']
+				events.notes = request.form['notes']
+				events.lieu = request.form['lieu']
+				events.color = request.form['color']
 
-			events.update_event()
+				events.update_event()
 			return redirect(url_for('core.calendars'))
 		except CalendarException:
 			flash(gettext('An error has occured'),'error')

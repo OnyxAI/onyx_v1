@@ -76,7 +76,7 @@ msgstr ""
 #: onyx/core/controllers/auth/views.py:53
 #: onyx/core/controllers/auth/views.py:182
 msgid "Passwords are not same !"
-msgstr ""
+msgstr "Passwords are not the same !"
 
 #: onyx/core/controllers/auth/views.py:56
 msgid "Account Added !"
@@ -84,7 +84,7 @@ msgstr ""
 
 #: onyx/core/controllers/auth/views.py:59
 msgid "A Account with this informations already exist !"
-msgstr ""
+msgstr "An Account with this informations already exist !"
 
 #: onyx/core/controllers/auth/views.py:74
 msgid "Incorrect email or password !"
@@ -157,7 +157,7 @@ msgstr ""
 
 #: onyx/core/controllers/base/views/OptionsController.py:77
 msgid "An errorhas occured"
-msgstr ""
+msgstr "An error has occured"
 
 #: onyx/core/controllers/base/views/PluginsController.py:42
 #: onyx/core/controllers/base/views/PluginsController.py:56
@@ -373,7 +373,7 @@ msgstr ""
 
 #: onyx/templates/account/manage.html:28
 msgid "You're not an administrator so we can't delete accounts"
-msgstr ""
+msgstr "You're not an administrator so you can't delete accounts"
 
 #: onyx/templates/account/manage_account.html:8
 #: onyx/templates/layout/navbar.html:56
@@ -540,7 +540,7 @@ msgstr ""
 
 #: onyx/templates/index/index.html:11
 msgid "You have not widgets : "
-msgstr ""
+msgstr "You don't have any widgets : "
 
 #: onyx/templates/index/index.html:11 onyx/templates/scenario/index.html:54
 #: onyx/templates/scenario/index.html:184 onyx/templates/widgets/index.html:8
@@ -576,7 +576,7 @@ msgstr ""
 
 #: onyx/templates/notifications/index.html:11
 msgid "You do not have notifications"
-msgstr ""
+msgstr "You don't have any notifications"
 
 #: onyx/templates/options/close.html:17
 msgid "Onyx is now close !"
@@ -723,7 +723,7 @@ msgstr ""
 
 #: onyx/templates/plugins/index.html:27
 msgid "You have not install some plugin"
-msgstr ""
+msgstr "You don't have any installed plugin"
 
 #: onyx/templates/plugins/index.html:39
 msgid "View"
@@ -1491,4 +1491,3 @@ msgstr ""
 
 #~ msgid "Service"
 #~ msgstr ""
-
