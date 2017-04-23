@@ -31,15 +31,15 @@ migratedb:
 	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py migrate
 
 babel:
-	pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx
 
 # run:
 # $ LANG=en make addlang
 addlang:
-	pybabel init -i onyx/translations/messages.pot -d onyx/translations -l $(LANG)
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel init -i onyx/translations/messages.pot -d onyx/translations -l $(LANG)
 
 compilelang:
-	pybabel compile -d onyx/translations
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel compile -d onyx/translations
 
 updlang:
-	pybabel update -i onyx/translations/messages.pot -d onyx/translations
+	. $(VIRTUALENV_ROOT)/bin/activate; pybabel update -i onyx/translations/messages.pot -d onyx/translations

@@ -9,6 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
+import os, sys
 from flask import request, render_template, flash, redirect, url_for
 from flask.ext.login import login_required, current_user
 from onyx.decorators import admin_required
@@ -71,8 +72,9 @@ def shutdown():
 @login_required
 def reboot():
 	try:
-		run_with_reloader()
-		reloader.restart_with_reloader()
+		os.system('sudo pm2 restart 0')
+		#run_with_reloader()
+		#reloader.restart_with_reloader()
 		return redirect(url_for('core.index'))
 	except:
 		flash(gettext('An error has occured !'),'error')
