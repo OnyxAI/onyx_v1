@@ -77,7 +77,7 @@ class Run(Command):
         print('')
         print('-------------------------------------------------------')
         self.sync_blueprints(app)
-        app.run(host, int(port), debug=debug, use_reloader=reload)
+        app.run(host, int(port), debug=debug, use_reloader=reload, threaded=True)
 
 
 manager.add_command('run', Run())

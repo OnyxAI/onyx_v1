@@ -74,7 +74,9 @@ setup(name="onyxproject",
         'markupsafe',
         'pyaudio',
         'SpeechRecognition',
-        'gtts'
+        'gtts',
+        'Flask-Turbolinks',
+        'chatterbot'
         ],
       options={
           'bdist_wheel': {'universal': True},

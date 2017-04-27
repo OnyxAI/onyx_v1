@@ -30,19 +30,8 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function () {
-      $('.chat').hide();
-
-  });
-
-</script>
 
 <script type="text/javascript">
-
-
-
-
 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -174,12 +163,7 @@ function animateText() {
 }
 
 function scrollBottom() {
-  $($inner).animate({
-    scrollTop: $($content).offset().top + $($content).outerHeight(true)
-  }, {
-    queue: false,
-    duration: 'ease'
-  });
+  $($inner).scrollTop($($inner)[0].scrollHeight);
 }
 
 function buildSent(message) {
@@ -228,7 +212,7 @@ function microphone(){
             var recognition = new webkitSpeechRecognition();
             var text = '';
 
-            recognition.lang = "fr-FR";
+            recognition.lang = "{{g.lang}}";
             recognition.continuous = false;
             recognition.interimResults = true;
             recognition.start();
@@ -255,7 +239,7 @@ function microphone(){
                 }
             };
         }else{
-            alert('Your browser is not compatible !');
+            alert('{{_("Your browser is not compatible !")}}');
         }
 
 

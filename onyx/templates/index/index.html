@@ -6,7 +6,6 @@
 
 <a href="{{url_for('core.reboot')}}" class="btn {{buttonColor}}">Reboot</a>
 
-
 <div class="card-panel white">
 {% if boxs == [] %}
   <h3>{{_("You have not widgets : ")}}<a href="{{url_for('core.widgets')}}">{{_("Add")}}</a></h3>
@@ -28,6 +27,13 @@
   </div>
 {% endif %}
 </div>
+
+<script type="text/javascript">
+  function test(){
+    $(".loader").show();
+
+  }
+</script>
 
 
 

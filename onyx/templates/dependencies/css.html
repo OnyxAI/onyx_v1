@@ -1,9 +1,11 @@
-<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
 {% macro get_css(nom_fichiers , extension='css') -%}
-{% for fichier in nom_fichiers %}
-<link href="{{ url_for('static', filename='css/' + fichier + '.' + extension) }}" rel="stylesheet" type="text/css" />
-{% endfor %}
+  {% for fichier in nom_fichiers %}
+      <link href="{{ url_for('static', filename='css/' + fichier + '.' + extension) }}" rel="stylesheet" type="text/css" />
+  {% endfor %}
 {%- endmacro %}
+
+<!-- Favicon -->
+<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
 
 {{ get_css(['background', 'materialize', 'loader', 'actions', 'utilities', 'fullcalendar.min', 'animate.min',  'icon','color-picker.min']) }}
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />

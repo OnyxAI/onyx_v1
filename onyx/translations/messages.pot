@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-04-21 21:13+0200\n"
+"POT-Creation-Date: 2017-04-27 22:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,15 +47,15 @@ msgstr ""
 #: onyx/core/controllers/auth/views.py:118
 #: onyx/core/controllers/auth/views.py:154
 #: onyx/core/controllers/auth/views.py:187
-#: onyx/core/controllers/base/views/BotController.py:35
-#: onyx/core/controllers/base/views/BotController.py:37
+#: onyx/core/controllers/base/views/BotController.py:34
+#: onyx/core/controllers/base/views/BotController.py:36
 #: onyx/core/controllers/base/views/HouseController.py:37
 #: onyx/core/controllers/base/views/HouseController.py:51
 #: onyx/core/controllers/base/views/MachineController.py:34
 #: onyx/core/controllers/base/views/MachineController.py:48
-#: onyx/core/controllers/base/views/OptionsController.py:67
-#: onyx/core/controllers/base/views/OptionsController.py:78
-#: onyx/core/controllers/base/views/OptionsController.py:90
+#: onyx/core/controllers/base/views/OptionsController.py:68
+#: onyx/core/controllers/base/views/OptionsController.py:80
+#: onyx/core/controllers/base/views/OptionsController.py:92
 #: onyx/core/controllers/base/views/PluginsController.py:45
 #: onyx/core/controllers/base/views/PluginsController.py:59
 #: onyx/core/controllers/base/views/PluginsController.py:72
@@ -109,11 +109,11 @@ msgid "Account changed !"
 msgstr ""
 
 #: onyx/core/controllers/auth/views.py:184
-#: onyx/core/controllers/base/views/OptionsController.py:40
+#: onyx/core/controllers/base/views/OptionsController.py:41
 msgid "Account changed successfully"
 msgstr ""
 
-#: onyx/core/controllers/base/views/BotController.py:33
+#: onyx/core/controllers/base/views/BotController.py:32
 msgid "Unknown Command !"
 msgstr ""
 
@@ -122,8 +122,8 @@ msgstr ""
 #: onyx/core/controllers/base/views/CalendarController.py:79
 #: onyx/core/controllers/base/views/NavbarController.py:31
 #: onyx/core/controllers/base/views/NotificationController.py:34
-#: onyx/core/controllers/base/views/OptionsController.py:43
-#: onyx/core/controllers/base/views/OptionsController.py:56
+#: onyx/core/controllers/base/views/OptionsController.py:44
+#: onyx/core/controllers/base/views/OptionsController.py:57
 msgid "An error has occured"
 msgstr ""
 
@@ -147,19 +147,19 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:53
+#: onyx/core/controllers/base/views/OptionsController.py:54
 msgid "Please reboot Onyx to change language"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:87
+#: onyx/core/controllers/base/views/OptionsController.py:89
 msgid "Onyx is now upgrade !"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:99
+#: onyx/core/controllers/base/views/OptionsController.py:101
 msgid "Data Modified"
 msgstr ""
 
-#: onyx/core/controllers/base/views/OptionsController.py:102
+#: onyx/core/controllers/base/views/OptionsController.py:104
 msgid "An errorhas occured"
 msgstr ""
 
@@ -369,10 +369,6 @@ msgstr ""
 msgid "Tv Program"
 msgstr ""
 
-#: onyx/templates/bot/index.html:3
-msgid "Bot"
-msgstr ""
-
 #: onyx/templates/calendar/index.html:3
 msgid "Calendar"
 msgstr ""
@@ -513,6 +509,10 @@ msgstr ""
 
 #: onyx/templates/info/index.html:8
 msgid "See website"
+msgstr ""
+
+#: onyx/templates/layout/bot.html:242
+msgid "Your browser is not compatible !"
 msgstr ""
 
 #: onyx/templates/layout/navbar.html:30 onyx/templates/layout/navbar.html:58

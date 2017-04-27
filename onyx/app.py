@@ -15,7 +15,6 @@ try:
     sys.path.append(str(Onyx.__path__[0]))
 except:
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import aiml
 from flask import Flask, render_template
 from onyx.extensions import (db, mail, login_manager, babel, cache)
 from flask_login import current_user
@@ -23,9 +22,13 @@ from onyx.config import get_config
 from onyx.plugins import plugin
 from onyx.api.assets import Json
 from onyx.api.server import *
+from flask_turbolinks import turbolinks
 server = Server()
 
 json = Json()
+
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
 
 try:
     from onyx.flask_config import ProdConfig, Config
@@ -59,12 +62,30 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
     with app.app_context():
         db.create_all()
 
+    turbolinks(app)
+
     return app
 
 def set_bot():
-    kernel = aiml.Kernel()
-    kernel.setPredicate('base_dir',onyx.__path__[0])
-    kernel.bootstrap(learnFiles = onyx.__path__[0] + "/data/sentences/fr/std-startup.xml", commands = "load aiml b")
+    kernel = ChatBot("Onyx",
+        storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
+        logic_adapters=[
+            "chatterbot.logic.MathematicalEvaluation",
+            "chatterbot.logic.TimeLogicAdapter",
+            "chatterbot.logic.BestMatch"
+        ],
+        input_adapter="chatterbot.input.VariableInputTypeAdapter",
+        output_adapter="chatterbot.output.OutputAdapter",
+        output_format="text",
+        database= onyx.__path__[0] + "/data/sentences/database.db"
+    )
+
+    kernel.set_trainer(ChatterBotCorpusTrainer)
+
+    kernel.train(
+        onyx.__path__[0] + "/data/sentences/fr.corpus.json"
+    )
+
     return kernel
 
 def init_plugin(app):
@@ -196,7 +217,7 @@ def gvars(app):
                 return 'fr'
     except AssertionError:
         pass
-        
+
 def error_pages(app , name):
 
     @app.errorhandler(403)

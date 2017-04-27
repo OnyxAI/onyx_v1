@@ -100,6 +100,7 @@ class Server:
 
         g.user = self.user
         g.avatar = user.get_avatar()
+        g.lang = config.get('Base', 'lang')
 
         g.version = self.get_version()
         g.ram = "width: "+str(self.get_ram())+"%"

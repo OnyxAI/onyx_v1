@@ -38,6 +38,8 @@ configparser
 flask-apidoc
 gitpython
 onyxjokes
+chatterbot
+Flask-Turbolinks
 
 # Cache and Celery
 Flask-Cache

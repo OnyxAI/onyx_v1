@@ -1,61 +1,58 @@
-
-
-
 {% with errors = get_flashed_messages(category_filter=["error"]) %}
-{% if errors %}
+  {% if errors %}
 
-{%- for NotifText in errors %}
-<script type="text/javascript">
-  window.onload = function() { 
-    Materialize.toast('{{ NotifText }}', 4000, 'red darken-1');
-  };
-</script>
-{% endfor -%}
+    {%- for NotifText in errors %}
+        <script type="text/javascript">
+          window.onload = function() {
+            Materialize.toast('{{ NotifText }}', 4000, 'red darken-1');
+          };
+        </script>
+    {% endfor -%}
 
-{% endif %}
+  {% endif %}
 {% endwith %}
 
 
 {% with info = get_flashed_messages(category_filter=["info"]) %}
-{% if info %}
+  {% if info %}
 
-{%- for NotifText in info %}
-<script type="text/javascript">
-  window.onload = function() { 
-    Materialize.toast('{{ NotifText }}', 4000, 'blue darken-1');
-  };
-</script>
-{% endfor -%}
+    {%- for NotifText in info %}
+        <script type="text/javascript">
+          window.onload = function() {
+            Materialize.toast('{{ NotifText }}', 4000, 'blue darken-1');
+          };
+        </script>
+    {% endfor -%}
 
-{% endif %}
+  {% endif %}
 {% endwith %}
 
 
 {% with success = get_flashed_messages(category_filter=["success"]) %}
-{% if success %}
+  {% if success %}
 
-{%- for NotifText in success %}
-<script type="text/javascript">
-  window.onload = function() {
-    Materialize.toast('{{ NotifText }}', 4000, 'green');
-  };
-</script>
-{% endfor -%}
+    {%- for NotifText in success %}
+        <script type="text/javascript">
+          window.onload = function() {
+            Materialize.toast('{{ NotifText }}', 4000, 'green');
+          };
+        </script>
+    {% endfor -%}
 
-{% endif %}
+  {% endif %}
 {% endwith %}
 
 
 {% with notice = get_flashed_messages(category_filter=["notice"]) %}
-{% if notice %}
+  {% if notice %}
 
-{%- for NotifText in notice %}
-<script type="text/javascript">
-  window.onload = function() { 
-    Materialize.toast('{{ NotifText }}', 4000);
-  };
-</script>
-{% endfor -%}
+    {%- for NotifText in notice %}
+        <script type="text/javascript">
+          window.onload = function() {
+            Materialize.toast('{{ NotifText }}', 4000);
+          };
+        </script>
+    {% endfor -%}
 
-{% endif %}
+  {% endif %}
 {% endwith %}
