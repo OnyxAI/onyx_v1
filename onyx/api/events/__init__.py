@@ -66,7 +66,7 @@ class Event:
                 except Exception as e:
                     logger.error('Error getting plugins : ' + str(e))
 
-            return data
+            return json.encode(data)
         except Exception as e:
             logger.error('Error getting events : ' + str(e))
 

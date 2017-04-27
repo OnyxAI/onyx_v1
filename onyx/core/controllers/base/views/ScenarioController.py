@@ -25,7 +25,12 @@ actions = Action()
 @core.route('scenario')
 @login_required
 def scenario():
-	return render_template('scenario/index.html',events=events.get(), actions=actions.get())
+	json.json = events.get()
+	events_decoded = json.decode()
+
+	json.json = actions.get()
+	actions_decoded = json.decode()
+	return render_template('scenario/index.html', events = events_decoded, actions = actions_decoded)
 
 @core.route('scenario',methods=['POST'])
 @login_required

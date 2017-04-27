@@ -60,4 +60,4 @@ gtts
 
 #Test
 webtest
-py.test
+pytest

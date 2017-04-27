@@ -11,7 +11,7 @@ You may not use this software for commercial purposes.
 from .. import core
 from flask import request, render_template, flash, redirect, url_for
 from onyxbabel import gettext
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 from onyx.api.exceptions import *
 from onyx.api.notification import *
 
@@ -20,6 +20,7 @@ notif = Notification()
 @core.route('notifications')
 @login_required
 def notifications():
+    notif.user = current_user.id
     notif.mark_read()
     return render_template('notifications/index.html')
 
@@ -28,6 +29,7 @@ def notifications():
 def delete_notifications(id):
     try:
         notif.id = id
+        notif.user = current_user.id
         notif.delete()
         return redirect(url_for('core.notifications'))
     except NotifException:
