@@ -83,7 +83,7 @@ def set_bot():
     kernel.set_trainer(ChatterBotCorpusTrainer)
 
     kernel.train(
-        onyx.__path__[0] + "/data/sentences/fr.corpus.json"
+        onyx.__path__[0] + "/data/sentences/" + config.get('Base', 'lang') + "/"
     )
 
     return kernel

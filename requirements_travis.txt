@@ -60,3 +60,4 @@ gtts
 
 #Test
 webtest
+py.test

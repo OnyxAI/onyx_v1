@@ -57,7 +57,7 @@ class Widgets:
             try:
                 json.path = onyx.__path__[0] + "/data/widgets/" + g.lang + ".json"
             except:
-                json.path = onyx.__path__[0] + "/data/widgets/fr.json"
+                json.path = onyx.__path__[0] + "/data/widgets/fr-FR.json"
             data = json.decode_path()
 
             plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
