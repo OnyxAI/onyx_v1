@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cd /home/onyx
+cd /home
 mkdir yolo
