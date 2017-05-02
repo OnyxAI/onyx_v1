@@ -1,4 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-cd /home
-mkdir yolo
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+echo "Onyx Install"
+echo "***"
+pip install pip onyxproject gunicorn
+
+sed -i '/exit 0/d' "/etc/rc.local"
+echo "sudo gunicorn -b 0.0.0.0:80 onyx.wsgi:app" >> "/etc/rc.local"
+echo "exit 0" >> "/etc/rc.local"
