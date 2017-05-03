@@ -7,6 +7,7 @@ fi
 
 echo "Onyx Install"
 echo "***"
+pip install -U cffi
 pip install pip onyxproject gunicorn
 
 sed -i '/exit 0/d' "/etc/rc.local"
