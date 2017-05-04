@@ -7,7 +7,7 @@ from setuptools import setup , find_packages
 
 setup(name="onyxproject",
       description="Intelligent Dashboard",
-      version='0.8.8',
+      version='0.8.9',
       include_package_data=True,
       packages=['onyx'],
       url="https://github.com/OnyxProject/Onyx",
