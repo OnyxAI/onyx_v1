@@ -1,2 +1,2 @@
-pm2 start start.sh --name onyx_client -x -- client
-pm2 start start.sh --name onyx_voice -x -- voice
+sudo pm2 start gunicorn.sh --name onyx_client
+sudo pm2 start start.sh --name onyx_voice -x -- voice
