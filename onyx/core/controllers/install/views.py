@@ -62,7 +62,6 @@ def reboot(url, error_url):
 
 @install.route('redirect_to_onyx')
 def redirect_to_onyx():
-    os.system('sudo pm2 restart onyx-client')
     configPath = get_path('onyx')
     installConfig = get_config('onyx')
     installConfig.set('Install', 'done', 'True')
