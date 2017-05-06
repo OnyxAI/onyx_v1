@@ -35,7 +35,7 @@ def load_user(id):
 #Hello Home route
 @auth.route('hello')
 def hello():
-    return render_template('account/hello.html',next=request.args.get('next'))
+    return render_template('account/hello.html', next=request.args.get('next'))
 
 #Register
 @auth.route('register' , methods=['GET','POST'])
@@ -56,7 +56,7 @@ def register():
                 flash(gettext('Account Added !') , 'success')
                 return redirect(url_for('auth.hello'))
         except UserException:
-            flash(gettext('A Account with this informations already exist !') , 'error')
+            flash(gettext('A Account with this informations already exist !'), 'error')
             return redirect(url_for('auth.hello'))
 
 
@@ -128,7 +128,7 @@ def account_manage_id(id):
         manage_user = user.get_user()
         json.json = manage_user
         user_decoded = json.decode()
-        return render_template('account/change.html', username=user_decoded['username'],email=user_decoded['email'])
+        return render_template('account/change.html', username=user_decoded['username'], email=user_decoded['email'])
     elif request.method == 'POST':
         try:
             user.id = id

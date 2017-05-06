@@ -58,6 +58,7 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
     extensions_fabrics(app)
     set_log()
     gvars(app)
+    server.create_config_file()
 
     with app.app_context():
         db.create_all()
@@ -97,17 +98,14 @@ def init_plugin(app):
                 module.init()
 
 def get_blueprint_name(app):
-    installConfig = get_config(app.config['INSTALL_FOLDER'])
-    if installConfig.getboolean('Install', 'install'):
+    if app.config['INSTALL'] == "True":
         return 'core'
     else:
         return 'install'
 
 
 def get_blueprints(app):
-
-    installConfig = get_config(app.config['INSTALL_FOLDER'])
-    if installConfig.getboolean('Install', 'install'):
+    if app.config['INSTALL'] == "True":
         from onyx.core.controllers.base import core
         from onyx.core.actions import action
         from onyx.core.controllers.auth import auth

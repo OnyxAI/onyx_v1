@@ -20,8 +20,7 @@ json = Json()
 
 @widgets.route('weather_1')
 def weather_1():
-    str = temp.get_str()
-    return render_template('widgets/weather_1.html', str=str)
+    return render_template('widgets/weather_1.html')
 
 @widgets.route('weather_2')
 def weather_2():

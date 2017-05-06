@@ -19,7 +19,7 @@ include onyx/db/.gitkeep
 recursive-exclude onyx/data *
 
 exclude onyx/flask_config.py
-exclude onyx/config/install_my.cfg
+exclude onyx/config/onyx.cfg
 recursive-include onyx/api *
 recursive-include onyx/skills *
 recursive-include onyx/util *

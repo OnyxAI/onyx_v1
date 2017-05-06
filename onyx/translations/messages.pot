@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-04-27 22:00+0200\n"
+"POT-Creation-Date: 2017-05-04 20:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,8 +62,8 @@ msgstr ""
 #: onyx/core/controllers/base/views/PluginsController.py:84
 #: onyx/core/controllers/base/views/RoomController.py:32
 #: onyx/core/controllers/base/views/RoomController.py:46
-#: onyx/core/controllers/base/views/ScenarioController.py:47
-#: onyx/core/controllers/base/views/ScenarioController.py:59
+#: onyx/core/controllers/base/views/ScenarioController.py:52
+#: onyx/core/controllers/base/views/ScenarioController.py:64
 #: onyx/core/controllers/base/views/SkillsController.py:46
 #: onyx/core/controllers/base/views/SkillsController.py:60
 #: onyx/core/controllers/base/views/SkillsController.py:73
@@ -121,7 +121,7 @@ msgstr ""
 #: onyx/core/controllers/base/views/CalendarController.py:54
 #: onyx/core/controllers/base/views/CalendarController.py:79
 #: onyx/core/controllers/base/views/NavbarController.py:31
-#: onyx/core/controllers/base/views/NotificationController.py:34
+#: onyx/core/controllers/base/views/NotificationController.py:36
 #: onyx/core/controllers/base/views/OptionsController.py:44
 #: onyx/core/controllers/base/views/OptionsController.py:57
 msgid "An error has occured"
@@ -184,11 +184,11 @@ msgstr ""
 msgid "Room Deleted"
 msgstr ""
 
-#: onyx/core/controllers/base/views/ScenarioController.py:44
+#: onyx/core/controllers/base/views/ScenarioController.py:49
 msgid "Scenario added successfully !"
 msgstr ""
 
-#: onyx/core/controllers/base/views/ScenarioController.py:56
+#: onyx/core/controllers/base/views/ScenarioController.py:61
 msgid "Scenario deleted successfully !"
 msgstr ""
 
@@ -221,6 +221,87 @@ msgstr ""
 msgid "This is not an article"
 msgstr ""
 
+#: onyx/core/controllers/install/templates/install/finish.html:8
+#: onyx/core/controllers/install/templates/install/finish.html:18
+msgid "onyx.install.finish"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/finish.html:19
+msgid "onyx.install.access_onyx"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:7
+msgid "onyx.install.welcome"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:9
+#: onyx/core/controllers/install/templates/install/index.html:47
+msgid "onyx.install.data_download"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:11
+#: onyx/core/controllers/install/templates/install/index.html:70
+msgid "onyx.install.create_admin_account"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:13
+msgid "onyx.install.final"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:23
+msgid "onyx.install.welcome_to_onyx"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:28
+msgid "onyx.install.choice_lang"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:30
+msgid "onyx.install.french"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:31
+msgid "onyx.install.english"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:35
+#: onyx/core/controllers/install/templates/install/index.html:55
+#: onyx/core/controllers/install/templates/install/index.html:85
+msgid "onyx.install.next"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:49
+msgid "Downloaded"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:52
+msgid "Download"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:74
+msgid "Username"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:77
+#: onyx/templates/account/login.html:13 onyx/templates/account/register.html:13
+msgid "Password"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:80
+#: onyx/templates/account/change.html:10 onyx/templates/account/login.html:12
+#: onyx/templates/account/manage_account.html:12
+#: onyx/templates/account/register.html:12
+msgid "Email"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:157
+msgid "onyx.install.field_required"
+msgstr ""
+
+#: onyx/core/controllers/install/templates/install/index.html:165
+msgid "onyx.install.invalid_email"
+msgstr ""
+
 #: onyx/static/js/jquery-ui.min.js:8
 msgid "'"
 msgstr ""
@@ -232,12 +313,6 @@ msgstr ""
 #: onyx/templates/account/change.html:3
 #: onyx/templates/account/manage_account.html:3
 msgid "Account"
-msgstr ""
-
-#: onyx/templates/account/change.html:10 onyx/templates/account/login.html:12
-#: onyx/templates/account/manage_account.html:12
-#: onyx/templates/account/register.html:12
-msgid "Email"
 msgstr ""
 
 #: onyx/templates/account/change.html:11
@@ -290,10 +365,6 @@ msgstr ""
 msgid "Login | Onyx"
 msgstr ""
 
-#: onyx/templates/account/login.html:13 onyx/templates/account/register.html:13
-msgid "Password"
-msgstr ""
-
 #: onyx/templates/account/manage.html:3
 msgid "Manage"
 msgstr ""
@@ -319,8 +390,8 @@ msgstr ""
 #: onyx/templates/account/register.html:11
 #: onyx/templates/options/index.html:223 onyx/templates/options/index.html:239
 #: onyx/templates/options/index.html:261 onyx/templates/options/index.html:282
-#: onyx/templates/scenario/index.html:17 onyx/templates/scenario/index.html:42
-#: onyx/templates/scenario/index.html:67 onyx/templates/scenario/index.html:137
+#: onyx/templates/scenario/index.html:13 onyx/templates/scenario/index.html:38
+#: onyx/templates/scenario/index.html:63 onyx/templates/scenario/index.html:133
 msgid "Name"
 msgstr ""
 
@@ -489,17 +560,17 @@ msgstr ""
 msgid "Or in the forum "
 msgstr ""
 
-#: onyx/templates/index/index.html:11
+#: onyx/templates/index/index.html:9
 msgid "You have not widgets : "
 msgstr ""
 
-#: onyx/templates/index/index.html:11 onyx/templates/scenario/index.html:54
-#: onyx/templates/scenario/index.html:200 onyx/templates/widgets/index.html:8
+#: onyx/templates/index/index.html:9 onyx/templates/scenario/index.html:50
+#: onyx/templates/scenario/index.html:196 onyx/templates/widgets/index.html:8
 #: onyx/templates/widgets/index.html:17
 msgid "Add"
 msgstr ""
 
-#: onyx/templates/index/index.html:22 onyx/templates/widgets/index.html:31
+#: onyx/templates/index/index.html:20 onyx/templates/widgets/index.html:31
 msgid "See More"
 msgstr ""
 
@@ -513,6 +584,14 @@ msgstr ""
 
 #: onyx/templates/layout/bot.html:242
 msgid "Your browser is not compatible !"
+msgstr ""
+
+#: onyx/templates/layout/install.html:10 onyx/templates/layout/install.html:25
+msgid "onyx.installation"
+msgstr ""
+
+#: onyx/templates/layout/install.html:31
+msgid "onyx.install.if_problem"
 msgstr ""
 
 #: onyx/templates/layout/navbar.html:30 onyx/templates/layout/navbar.html:58
@@ -632,8 +711,8 @@ msgid "Longitude"
 msgstr ""
 
 #: onyx/templates/options/index.html:198 onyx/templates/options/index.html:234
-#: onyx/templates/options/index.html:276 onyx/templates/scenario/index.html:20
-#: onyx/templates/scenario/index.html:30
+#: onyx/templates/options/index.html:276 onyx/templates/scenario/index.html:16
+#: onyx/templates/scenario/index.html:26
 msgid "Delete"
 msgstr ""
 
@@ -743,36 +822,36 @@ msgstr ""
 msgid "Scenario"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:18
+#: onyx/templates/scenario/index.html:14
 msgid "Template"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:19 onyx/templates/scenario/index.html:58
+#: onyx/templates/scenario/index.html:15 onyx/templates/scenario/index.html:54
 msgid "Event"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:43
+#: onyx/templates/scenario/index.html:39
 msgid "Create"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:59
+#: onyx/templates/scenario/index.html:55
 msgid "Actions"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:68 onyx/templates/scenario/index.html:138
+#: onyx/templates/scenario/index.html:64 onyx/templates/scenario/index.html:134
 msgid "Description"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:69 onyx/templates/scenario/index.html:139
+#: onyx/templates/scenario/index.html:65 onyx/templates/scenario/index.html:135
 msgid "Use"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:74 onyx/templates/scenario/index.html:91
+#: onyx/templates/scenario/index.html:70 onyx/templates/scenario/index.html:87
 msgid "No event in your language"
 msgstr ""
 
-#: onyx/templates/scenario/index.html:144
-#: onyx/templates/scenario/index.html:161
+#: onyx/templates/scenario/index.html:140
+#: onyx/templates/scenario/index.html:157
 msgid "No action in your language"
 msgstr ""
 

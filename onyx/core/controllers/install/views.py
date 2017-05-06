@@ -8,16 +8,18 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from flask import Blueprint, render_template, redirect, request, current_app, g, flash, url_for
+from flask import Blueprint, render_template, redirect, request, current_app as app, g, flash, url_for
 from flask.ext.login import login_required
+from onyxbabel import gettext
 from onyx.extensions import db, login_manager
 from onyx.core.models import *
 from onyx.api.exceptions import *
+from onyx.api.options import *
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
-from werkzeug._reloader import *
+import onyx, os
 
-reloader = ReloaderLoop()
+options = Options()
 installation = Install()
 install = Blueprint('install', __name__, url_prefix='/', template_folder='templates')
 
@@ -36,36 +38,50 @@ def index():
             installation.password = request.form['password']
             installation.email = request.form['email']
             installation.set()
-            flash('Onyx is installed !' , 'success')
             return redirect(url_for("install.finish"))
-        except (InstallException, DataException):
-            redirect(url_for("install.index"))
+        except Exception as e:
+            flash(gettext('An error has occured !') , 'error')
+            return redirect(url_for("install.index"))
 
 @install.route('get_data')
 def data():
     try:
         installation.get_data()
-        return "Done"
-    except DataException:
-        return "Error"
+        return "Get Data successfully"
+    except Exception as e:
+        return "An error has occured"
 
-@install.route('reboot')
-def reboot():
+@install.route('reboot/<url>/<error_url>')
+def reboot(url, error_url):
     try:
-        reloader.restart_with_reloader()
-        return redirect(url_for('core.index'))
+        os.system('sudo pm2 restart onyx-client')
+        return redirect(url_for(url))
     except:
-        redirect(url_for("install.finish"))
+        flash(gettext('An error has occured !') , 'error')
+        return redirect(url_for(error_url))
+
+@install.route('redirect_to_onyx')
+def redirect_to_onyx():
+    os.system('sudo pm2 restart onyx-client')
+    configPath = get_path('onyx')
+    installConfig = get_config('onyx')
+    installConfig.set('Install', 'done', 'True')
+    with open(configPath, 'w') as configfile:
+        installConfig.write(configfile)
+    flash(gettext('Onyx is installed !'), 'success')
+    return redirect(url_for('install.reboot', url='core.index', error_url='install.finish'))
+
+@install.route('change_lang', methods=['POST'])
+def change_lang():
+    try:
+        options.lang = request.form.get('lang')
+        options.change_lang()
+        flash(gettext('The lang was changed ! If not please reboot Onyx') , 'success')
+        return redirect(url_for('install.reboot', url='install.index', error_url='install.index'))
+    except:
+        flash(gettext('An error has occured !') , 'error')
+        return redirect(url_for("install.index"))
 
 @install.route('finish')
-@login_required
 def finish():
-    try:
-        configPath = get_path('install')
-        installConfig = get_config('install')
-        installConfig.set('Install', 'install', 'True')
-        with open(configPath, 'w') as configfile:
-            installConfig.write(configfile)
-        return render_template('install/finish.html')
-    except:
-        return 'An error has occured Contact administrateur on http://onyxproject.fr'
+    return render_template('install/finish.html')

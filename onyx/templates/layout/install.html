@@ -4,17 +4,36 @@
     <meta charset="utf-8"/>
     <link href="{{ url_for('static', filename='css/install.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url_for('static', filename='css/materialize.css') }}" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Onyx | Installation</title>
-</head>
-<body >   
-    <div class="container"> 
-        <div class="main">  
-            <div class="content">{% block body %}{% endblock %}</div> <!-- Include body -->
-        </div>     
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename='js/install.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% include 'dependencies/flash.html' %}  <!-- Include flash -->
+    <title>Onyx | {{_("onyx.installation")}}</title>
+</head>
+<body >
+    <div class="container">
+        <div class="main">
+            <div class="content">
+            <style media="screen">
+              body {
+                  background-image: url(/static/img/login/login.jpg);
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
+              }
+            </style>
+
+            <header>
+              <center><h1>{{_("onyx.installation")}}</h1></center>
+            </header>
+
+              {% block body %}{% endblock %}
+
+            <footer>
+                <p>© Onyx 2017 - {{_("onyx.install.if_problem")}} : <a href="https://onyxlabs.fr/forum/">https://onyxlabs.fr/forum/</a></p>
+            </footer>
+            </div> <!-- Include body -->
+        </div>
+    </div>
     {% block script %}{% endblock %}
-</body>  
+</body>
 </html>

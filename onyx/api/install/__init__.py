@@ -52,10 +52,8 @@ class Install:
             return json.encode({"status":"success"})
 
         except Exception as e:
-
             logger.error('Installation error : ' + str(e))
-            raise InstallException(str(e))
-            return json.encode({"status":"error"})
+            raise
 
     """
         initialize the navbar for this user
@@ -97,7 +95,7 @@ class Install:
     """
         Update of Onyx Data
 
-        Mise à jour des données d'Onyxs
+        Mise à jour des données d'Onyx
     """
     def update_data(self):
         try:

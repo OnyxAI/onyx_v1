@@ -16,7 +16,7 @@ import onyx
 class Config(object):
     """Base configuration."""
 
-    INSTALL_FOLDER = 'install'
+    INSTALL = False
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
     APP_DIR = os.path.abspath(os.path.dirname(__file__))

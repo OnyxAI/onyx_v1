@@ -51,9 +51,14 @@ class Server:
     def create_config_file(self):
         try:
             if os.path.exists(str(onyx.__path__[0]) + "/flask_config.py"):
-                print('Config Already File Create')
+                print('Falsk Config File Already Create')
             else:
                 os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
+                print('Flask Config File Create')
+            if os.path.exists(str(onyx.__path__[0]) + "/config/onyx.cfg"):
+                print('Config File Already Create')
+            else:
+                os.rename(str(onyx.__path__[0]) + "/config/onyx_example.cfg" , str(onyx.__path__[0]) + "/config/onyx.cfg")
                 print('Config File Create')
         except:
             raise
