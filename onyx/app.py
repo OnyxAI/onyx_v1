@@ -98,14 +98,14 @@ def init_plugin(app):
                 module.init()
 
 def get_blueprint_name(app):
-    if app.config['INSTALL'] == "True":
+    if app.config['INSTALL']:
         return 'core'
     else:
         return 'install'
 
 
 def get_blueprints(app):
-    if app.config['INSTALL'] == "True":
+    if app.config['INSTALL']:
         from onyx.core.controllers.base import core
         from onyx.core.actions import action
         from onyx.core.controllers.auth import auth
