@@ -16,10 +16,7 @@ db = SQLAlchemy()
 
 from flask_login import LoginManager
 login_manager = LoginManager()
-try:
-	login_manager.login_view = 'auth.hello'
-except:
-	login_manager.login_view = 'install.installer'
+login_manager.login_view = 'auth.hello'
 
 from onyxbabel import Babel , Domain
 babel = Babel()

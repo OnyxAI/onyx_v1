@@ -21,12 +21,17 @@ import onyx, os
 
 options = Options()
 installation = Install()
-install = Blueprint('install', __name__, url_prefix='/', template_folder='templates')
+install = Blueprint('install', __name__, url_prefix='/install/', template_folder='templates')
 
 @login_manager.user_loader
 def load_user(id):
     db.session.rollback()
     return UsersModel.User.query.get(int(id))
+
+@install.before_request
+def check_install():
+    if app.config['INSTALL']:
+        return redirect(url_for('core.index'))
 
 @install.route('/' , methods=['GET','POST'])
 def index():

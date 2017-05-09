@@ -9,10 +9,10 @@ You may not use this software for commercial purposes.
 """
 
 from flask.ext.login import LoginManager, login_required
-from flask import request, render_template, Blueprint, current_app, g, flash, redirect
+from flask import request, render_template, Blueprint, current_app as app, g, flash, redirect
 from onyxbabel import gettext
 from onyx.extensions import login_manager, db
-from onyx.decorators import admin_required
+from onyx.decorators import *
 from onyx.api.assets import Json
 from os.path import exists
 from onyx.api.events import *

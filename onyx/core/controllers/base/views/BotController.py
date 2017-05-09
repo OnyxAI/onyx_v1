@@ -34,3 +34,7 @@ def bot():
                 return gettext('An error has occured !')
         except:
             return gettext('An error has occured !')
+
+@core.route('test')
+def boot():
+    return render_template('layout/bot.html')

@@ -11,12 +11,16 @@ You may not use this software for commercial purposes.
 """Application configuration."""
 import os
 import onyx
+from onyx.config import get_config
+
+config = get_config('onyx')
 
 
 class Config(object):
     """Base configuration."""
 
-    INSTALL = False
+    INSTALL = config.getboolean('Install', 'done')
+    LANG = config.get('Base', 'lang')
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
     APP_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -27,7 +31,7 @@ class Config(object):
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # default babel values
-    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_LOCALE = 'fr'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
     ACCEPT_LANGUAGES = ['en', 'fr' ]
     # available languages

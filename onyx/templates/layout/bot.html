@@ -207,43 +207,41 @@ function sendMessage() {
 }
 
 function microphone(){
-(function($){
-        if ('webkitSpeechRecognition' in window) {
-            var recognition = new webkitSpeechRecognition();
-            var text = '';
+  if ('webkitSpeechRecognition' in window) {
+      var recognition = new webkitSpeechRecognition();
+      var text = '';
 
-            recognition.lang = "{{g.lang}}";
-            recognition.continuous = false;
-            recognition.interimResults = true;
-            recognition.start();
-            recognition.onresult = function (event) {
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                    if (event.results[i].isFinal) {
-                        recognition.stop();
-                        var transcript = event.results[i][0].transcript;
+      recognition.lang = "{{g.lang}}";
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.start();
+      recognition.onresult = function (event) {
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                  recognition.stop();
+                  var transcript = event.results[i][0].transcript;
 
-                        messenger.send(transcript);
-                        setTimeout(function () {
-                          $.ajax({
-                             url: '{{ url_for("core.bot") }}',
-                             type: "POST",
-                             data: {text:transcript},
-                             success: function(rep) {
-                               messenger.recieve(rep);
-                             }
-                          });
+                  messenger.send(transcript);
+                  setTimeout(function () {
+                    $.ajax({
+                       url: '{{ url_for("core.bot") }}',
+                       type: "POST",
+                       data: {text:transcript},
+                       success: function(rep) {
+                         messenger.recieve(rep);
+                       }
+                    });
 
-                        }, 500);
+                  }, 500);
 
-                    }
-                }
-            };
-        }else{
-            alert('{{_("Your browser is not compatible !")}}');
-        }
+              }
+          }
+      };
+  }else{
+      alert('Your browser is not compatible !');
+  }
 
 
-    })(jQuery);
 }
 
 

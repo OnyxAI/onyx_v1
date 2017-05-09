@@ -15,7 +15,7 @@ try:
     sys.path.append(str(Onyx.__path__[0]))
 except:
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from onyx.extensions import (db, mail, login_manager, babel, cache)
 from flask_login import current_user
 from onyx.config import get_config
@@ -30,11 +30,9 @@ json = Json()
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 
-try:
-    from onyx.flask_config import ProdConfig, Config
-except:
-    server.create_config_file()
-    from onyx.flask_config import ProdConfig, Config
+server.create_config_file()
+from onyx.flask_config import ProdConfig, Config
+
 
 #Log
 import logging
@@ -58,12 +56,9 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
     extensions_fabrics(app)
     set_log()
     gvars(app)
-    server.create_config_file()
 
     with app.app_context():
         db.create_all()
-
-    turbolinks(app)
 
     return app
 
@@ -98,29 +93,31 @@ def init_plugin(app):
                 module.init()
 
 def get_blueprint_name(app):
-    if app.config['INSTALL']:
-        return 'core'
-    else:
-        return 'install'
+    return 'core'
 
 
 def get_blueprints(app):
-    if app.config['INSTALL']:
-        from onyx.core.controllers.base import core
-        from onyx.core.actions import action
-        from onyx.core.controllers.auth import auth
-        from onyx.core.controllers.api import api
-        from onyx.core.widgets import widgets
-        BLUEPRINTS = [core,auth,api,action,widgets]
-        for module in plugin:
-            try:
-                BLUEPRINTS.append(module.get_blueprint())
-            except:
-                print('No Blueprint for module : ' + module.get_name())
-        return BLUEPRINTS
-    else:
-        from onyx.core.controllers.install import install
-        return install
+    from onyx.core.controllers.base import core
+    from onyx.core.actions import action
+    from onyx.core.controllers.auth import auth
+    from onyx.core.controllers.api import api
+    from onyx.core.widgets import widgets
+    from onyx.core.controllers.install import install
+    BLUEPRINTS = [core, auth, api, action, widgets,]
+    for module in plugin:
+        try:
+            BLUEPRINTS.append(module.get_blueprint())
+        except:
+            print('No Blueprint for module : ' + module.get_name())
+
+    for blueprint in BLUEPRINTS:
+        @blueprint.before_request
+        def check_install():
+            if app.config['INSTALL'] == False:
+                return redirect(url_for('install.index'))
+
+    BLUEPRINTS.append(install)
+    return BLUEPRINTS
 
 
 def set_log():
