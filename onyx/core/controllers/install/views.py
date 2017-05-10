@@ -17,7 +17,7 @@ from onyx.api.exceptions import *
 from onyx.api.options import *
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
-import onyx, os
+import onyx, os, time
 
 options = Options()
 installation = Install()
@@ -59,7 +59,7 @@ def data():
 @install.route('reboot/<url>/<error_url>')
 def reboot(url, error_url):
     try:
-        os.system('sudo pm2 restart onyx-client')
+        os.system('sudo pm2 reload onyx-client')
         return redirect(url_for(url))
     except:
         flash(gettext('An error has occured !') , 'error')
