@@ -8,7 +8,7 @@ fi
 echo "Onyx Install"
 echo "***"
 pip install -U cffi
-pip install pip onyxproject gunicorn
+pip install pip gunicorn
 
 sed -i '/exit 0/d' "/etc/rc.local"
 echo "sudo pip install --upgrade onyxproject &" >> "/etc/rc.local"
