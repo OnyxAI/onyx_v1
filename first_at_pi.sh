@@ -11,5 +11,6 @@ pip install -U cffi
 pip install pip onyxproject gunicorn
 
 sed -i '/exit 0/d' "/etc/rc.local"
-echo "sudo gunicorn -b 0.0.0.0:80 onyx.wsgi:app" >> "/etc/rc.local"
+echo "sudo pip install --upgrade onyxproject &" >> "/etc/rc.local"
+echo "sudo gunicorn -b 0.0.0.0:80 onyx.wsgi:app &" >> "/etc/rc.local"
 echo "exit 0" >> "/etc/rc.local"
