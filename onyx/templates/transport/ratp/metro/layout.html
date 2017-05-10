@@ -2,10 +2,10 @@
 
 {% block body %}
 <br>
-<div class="card-panel white">
+<div class="card-panel blue-grey darken-1">
 <br>
 <form method="post" action="">
-	<label for="metrostation">Nom de la station : </label> 
+	<label for="metrostation">Nom de la station : </label>
 	<select name="metrostation" class="browser-default" id="metrostation">
 		<option value="--Choisissez votre station--">--Choisissez votre station--</option>
 		{% block station %}{% endblock %}

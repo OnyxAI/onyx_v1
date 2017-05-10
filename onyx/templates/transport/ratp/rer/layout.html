@@ -3,7 +3,7 @@
 {% block body %}
 
 <br>
-<div class="card-panel white">
+<div class="card-panel blue-grey darken-1">
 	<br>
 	<form method="post" action="">
 
@@ -13,7 +13,7 @@
 			{% block station %}{% endblock %}
 
 		</select>
-		<label for="rerdirection">Direction : </label> 
+		<label for="rerdirection">Direction : </label>
 		<select name="rerdirection" class="browser-default" id="rerdirection">
 			<option value="--Choisissez votre direction--" selected="selected">--Choisissez votre direction--</option>
 			{% block direction %}{% endblock %}

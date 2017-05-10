@@ -3,9 +3,9 @@
 {% set title = _("Account") %}
 
 {% block body %}
-		
-    <div class="card-panel white">
-		        <h2>{{username}}</h2>		 
+
+    <div class="card-panel blue-grey darken-1">
+		        <h2>{{username}}</h2>
 
     <h5>{{_("Email")}}</h5>{{ email }}
 		<h3>{{_("Change information")}} :</h3> <br>
@@ -23,8 +23,8 @@
 
       <label for="email" >{{_("New email")}}</label>
       <input type="email" id="email" name="email" value="{{ request.form.email }}">
-      
-      
+
+
       </div>
 
       <br>
@@ -33,7 +33,7 @@
       <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
     </form>
 
-  
 
-		 
+
+
 {% endblock %}
