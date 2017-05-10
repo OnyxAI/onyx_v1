@@ -43,7 +43,7 @@ def index():
             installation.password = request.form['password']
             installation.email = request.form['email']
             installation.set()
-            return redirect(url_for("install.finish"))
+            return redirect(url_for("install.redirect_to_onyx"))
         except Exception as e:
             flash(gettext('An error has occured !') , 'error')
             return redirect(url_for("install.index"))
@@ -73,7 +73,7 @@ def redirect_to_onyx():
     with open(configPath, 'w') as configfile:
         installConfig.write(configfile)
     flash(gettext('Onyx is installed !'), 'success')
-    return redirect(url_for('install.reboot', url='core.index', error_url='install.finish'))
+    return redirect(url_for('install.reboot', url='install.finish', error_url='install.finish'))
 
 @install.route('change_lang', methods=['POST'])
 def change_lang():

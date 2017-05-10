@@ -73,14 +73,16 @@ def set_bot():
         input_adapter="chatterbot.input.VariableInputTypeAdapter",
         output_adapter="chatterbot.output.OutputAdapter",
         output_format="text",
-        database= onyx.__path__[0] + "/data/sentences/database.db"
+        database= onyx.__path__[0] + "/db/bot_data.db"
     )
 
     kernel.set_trainer(ChatterBotCorpusTrainer)
-
-    kernel.train(
-        onyx.__path__[0] + "/data/sentences/" + config.get('Base', 'lang') + "/"
-    )
+    try:
+        kernel.train(
+            onyx.__path__[0] + "/data/sentences/" + config.get('Base', 'lang') + "/"
+        )
+    except:
+        pass
 
     return kernel
 
