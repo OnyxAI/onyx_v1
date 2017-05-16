@@ -16,10 +16,12 @@ from onyx.decorators import admin_required
 from onyx.api.navbar import *
 from onyx.api.options import *
 from onyx.api.server import *
+from onyx.api.events import *
 from onyx.api.exceptions import *
 from onyx.api.install import Install
 from werkzeug._reloader import *
 
+event = Event()
 reloader = ReloaderLoop()
 install = Install()
 option = Options()
@@ -52,7 +54,7 @@ def change_lang():
 		option.lang = request.form.get('lang')
 		option.change_lang()
 		flash(gettext('Please reboot Onyx to change language' ), 'success')
-		return redirect(url_for('core.options'))
+		return redirect(url_for('core.reboot'))
 	except OptionsException:
 		flash(gettext("An error has occured"), 'error')
 		return redirect(url_for('core.options'))
@@ -72,9 +74,10 @@ def shutdown():
 @login_required
 def reboot():
 	try:
-		os.system('sudo pm2 restart 0')
+		os.system('sudo pm2 reload onyx-client')
 		#run_with_reloader()
 		#reloader.restart_with_reloader()
+		flash(gettext('Onyx is now rebooted !'),'success')
 		return redirect(url_for('core.index'))
 	except:
 		flash(gettext('An error has occured !'),'error')
@@ -86,6 +89,9 @@ def reboot():
 def maj():
 	try:
 		server.update()
+		event.code = "onyx_updated"
+		event.template = ""
+		event.new()
 		flash(gettext("Onyx is now upgrade !"),'success')
 		return redirect(url_for('core.options'))
 	except ServerException:

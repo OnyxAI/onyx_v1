@@ -1,0 +1,307 @@
+<!-- Main Menu Tutorial -->
+<div class="tap-target blue menu_app" data-activates="menu_fa-window-maximize">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Application")}}</h5>
+      <p>{{_("All you Onyx App are here.")}}</p>
+      <button class="btn" onclick="next('menu_app', 'menu_utilities');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_utilities" data-activates="menu_fa-wrench">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Utilities")}}</h5>
+      <p>{{_("You want some tools for your job or for your life ?")}}</p>
+      <p>{{_("All you want is here")}}</p>
+      <button class="btn" onclick="next('menu_utilities', 'menu_plugins');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_plugins" data-activates="menu_fa-plus">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Plugins")}}</h5>
+      <p>{{_("Come and download plugins to inscrease Onyx Power !")}}</p>
+      <button class="btn" onclick="next('menu_plugins', 'menu_calendar');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_calendar" data-activates="menu_fa-calendar-o">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Calendar")}}</h5>
+      <p>{{_("Organize your meeting and always be on time.")}}</p>
+      <button class="btn" onclick="next('menu_calendar', 'menu_weather');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_weather" data-activates="menu_fa-tint">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Weather")}}</h5>
+      <p>{{_("Choose your clothes according to the weather.")}}</p>
+      <button class="btn" onclick="next('menu_weather', 'menu_scenario');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_scenario" data-activates="menu_fa-tasks">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Scenario")}}</h5>
+      <p>{{_("Imagine your own script that Onyx will do for you.")}}</p>
+      <button class="btn" onclick="next('menu_scenario', 'menu_widgets');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_widgets" data-activates="menu_fa-id-card-o">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Widgets")}}</h5>
+      <p>{{_("Organize your Dashboard page.")}}</p>
+      <button class="btn" onclick="next('menu_widgets', 'menu_skills');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_skills" data-activates="menu_fa-plug">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Skill")}}</h5>
+      <p>{{_("Increase the voice power of Onyx and install new skills.")}}</p>
+      <button class="btn" onclick="next('menu_skills', 'menu_help');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_help" data-activates="menu_fa-question-circle">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Help")}}</h5>
+      <p>{{_("You need help ? Come on, I'm here for you.")}}</p>
+      <button class="btn" onclick="next('menu_help', 'menu_options');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_options" data-activates="menu_fa-cogs">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Options")}}</h5>
+      <p>{{_("Change Onyx settings and set it to your needs.")}}</p>
+      <button class="btn" onclick="next('menu_options', 'menu_account');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue menu_account" data-activates="menu_fa-user">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Account")}}</h5>
+      <p>{{_("Manage your Account, Change your life.")}}</p>
+      <a href="{{url_for('core.app')}}" data-no-turbolink="true" class="btn" >{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Index Page Tutorial Tutorial -->
+<div class="tap-target blue tutorial_index" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Hi I'm Onyx !")}}</h5>
+      <h6>{{_("Your personnal assistant")}}</h6>
+      <p>{{_("To talk with me, press CTRL+SPACE or click on me.")}}</p>
+      <p>{{_("Let's go for the tutorial !")}}</p>
+      <button class="btn" onclick="next('tutorial_index', 'menu_app');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<div class="tap-target blue tutorial_avatar" data-activates="avatar">
+  <div class="tap-target-content">
+    <h5>{{_("It's you !")}}</h5>
+    <p>{{_("To change it let's use Gravatar.")}}</p>
+    <p><b>{{_("Oh ! A notification !")}}</b></p>
+    <a href="{{url_for('core.notifications')}}" data-no-turbolink="true" class="btn" >{{_("Let's see")}}</a>
+  </div>
+</div>
+
+<!-- App Page Tutorial Tutorial -->
+<div class="tap-target red tutorial_app" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("App page !")}}</h5>
+      <p>{{_("You have here all the Onyx applications that are installed on the system.")}}</p>
+      <a href="{{url_for('core.utilities')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Utilities Page Tutorial Tutorial -->
+<div class="tap-target purple tutorial_utilities" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Utilities page !")}}</h5>
+      <p>{{_("Here are some utilities that you can use everyday.")}}</p>
+      <a href="{{url_for('core.plugins')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Plugins Page Tutorial Tutorial -->
+<div class="tap-target orange tutorial_plugins" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Plugins page !")}}</h5>
+      <p>{{_("You can install new applications to improve your daily life.")}}</p>
+      <a href="{{url_for('core.calendars')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Calendar Page Tutorial Tutorial -->
+<div class="tap-target green darken-1 tutorial_calendars" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Calendar page !")}}</h5>
+      <p>{{_("Manage your meeting.")}}</p>
+      <p>{{_("One click or select some case to add an event and double click on an event to manage it !")}}</p>
+      <a href="{{url_for('core.weather')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Weather Page Tutorial Tutorial -->
+<div class="tap-target yellow darken-1 tutorial_weather" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Weather page !")}}</h5>
+      <p>{{_("How do I dress? What time is it tomorrow? The answer is on this page.")}}</p>
+      <a href="{{url_for('core.scenario')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Scenario Page Tutorial Tutorial -->
+<div class="tap-target light-blue accent-4 tutorial_scenario" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Scenario page !")}}</h5>
+      <p>{{_("At 9 AM, you leave the house.")}}</p><p>{{_("Onyx detects that you are not at home anymore, and shuts down everything inside.")}}</p>
+      <p>{{_("You can manage it here.")}}</p>
+      <a href="{{url_for('core.widgets')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Widgets Page Tutorial Tutorial -->
+<div class="tap-target cyan darken-2 tutorial_widgets" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Widgets page !")}}</h5>
+      <p>{{_("Change your Dashboard style and the page layout.")}}</p>
+      <p>{{_("Add or Remove Dashboard Widgets.")}}</p>
+      <a href="{{url_for('core.skills')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Skills Page Tutorial Tutorial -->
+<div class="tap-target orange tutorial_skills" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Skill page !")}}</h5>
+      <p>{{_("Increase my voice power and install new skill for me.")}}</p>
+      <a href="{{url_for('core.help')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Help Page Tutorial Tutorial -->
+<div class="tap-target grey darken-1 tutorial_help" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Help page !")}}</h5>
+      <p>{{_("Come in my developers website and forum and ask for help.")}}</p>
+      <a href="{{url_for('core.options')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+    </center>
+  </div>
+</div>
+
+<!-- Options Page Tutorial Tutorial -->
+<div class="tap-target indigo darken-1 tutorial_options" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Options page !")}}</h5>
+      <p>{{_("Manage your settings as you want for a better experience.")}}</p>
+      <button class="btn" onclick="tutorial_add_notif();">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<!-- Account Page Tutorial Tutorial -->
+<div class="tap-target pink darken-1 tutorial_change_account" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Account page !")}}</h5>
+      <p>{{_("Manage your account and change your name, password and email address.")}}</p>
+      <button class="btn" onclick="next('tutorial_change_account', 'tutorial_avatar');">{{_("Next")}}</button>
+    </center>
+  </div>
+</div>
+
+<!-- Notif Page Tutorial Tutorial -->
+<div class="tap-target pink darken-1 tutorial_notifications" data-activates="onyx_help">
+  <div class="tap-target-content">
+    <center>
+      <h5>{{_("Notification page !")}}</h5>
+      <p>{{_("Here you can see Onyx Notification.")}}</p>
+      <p>{{_("That's the end of the tutorial, enjoy!")}}</p>
+      <button class="btn" onclick="finish_tutorial();">{{_("Finish")}}</button>
+    </center>
+  </div>
+</div>
+
+<script type="text/javascript">
+var tutorial = "{{g.user.tutorial}}";
+window.onload = function(){
+  if(tutorial == "0"){
+    current_url = "{{request.endpoint}}".split(".");
+    $('.tutorial_'+current_url[1]).tapTarget('open');
+  }
+};
+function tutorial_add_notif(){
+  var title = "{{_('Welcome')}}";
+  var text = "{{_('I am Onyx and I am glad to meet you')}}";
+  $.ajax({
+      data: 'title='+title+'&text='+text+'&priority=0&icon=fa-bell&icon_color=blue darken-1',
+      url : '{{url_for("core.add_notif")}}',
+      type : 'POST',
+      success : function(code_html, statut){
+          window.location.replace("{{url_for('auth.change_account')}}");
+      }
+   });
+}
+function finish_tutorial(){
+  var title = "{{_('Finish')}}";
+  var text = "{{_('You have finished the Onyx tutorial! Congratulations')}}";
+  $.ajax({
+      data: 'title='+title+'&text='+text+'&priority=0&icon=fa-bell&icon_color=red',
+      url : '{{url_for("core.add_notif")}}',
+      type : 'POST'
+   });
+   $.ajax({
+       url : '{{url_for("auth.finish_tutorial")}}',
+       type : 'GET',
+       success : function(code_html, statut){
+           window.location.replace("{{url_for('core.index')}}");
+       }
+    });
+}
+</script>

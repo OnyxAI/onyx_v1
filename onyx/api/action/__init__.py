@@ -93,6 +93,7 @@ class Action:
     """
     def start(self):
         function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
+        
         try:
             execute = function()
         except TypeError:

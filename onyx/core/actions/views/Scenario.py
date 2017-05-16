@@ -7,8 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-
 from onyx.api.exceptions import *
 from onyxbabel import gettext
 from flask_login import current_user
@@ -34,12 +32,16 @@ def notification(param):
     notif.icon_color = params[4]
     notif.user = params[5]
     notif.notify()
-    return 'Done'
+
+    return json.encode({"status":"success"})
 
 @action.route('event')
 def event(param):
     json.json = param
     params = json.decode()
+
     events.code = params[0]
+    events.template = params[1]
     events.new()
+
     return json.encode({"status":"success"})

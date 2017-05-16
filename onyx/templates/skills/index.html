@@ -73,12 +73,56 @@
 
 			</div>
 			<div class="card-reveal">
-				<span class="card-title grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">close</i></span>
+        <span class="card-title grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">close</i></span>
 				<p>{{ list['description'] }}</p>
-				<p><a href="{{ url_for('core.install_skill', name=list['raw'] , url=list['url']) }}">Install</a></p>
+        <div class="progress"><div class="indeterminate"></div></div>
+        {% if list['raw'] in skills|safe %}
+          <center><p class="dl_text{{list['raw']}}">{{ _("Uninstalled") }}</p></center>
+          <button id="uninstallbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Uninstall") }}</button>
+        {% else %}
+          <center><p class="dl_text{{list['raw']}}">{{ _("Installed") }}</p></center>
+          <button id="installbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Install") }}</button>
+        {% endif %}
 			</div>
 		</div>
 	</div>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $('.progress').hide();
+          $('.dl_text{{list["raw"]}}').hide();
+
+          $("#installbutton{{list['raw']}}").click(function() {
+            $('#installbutton{{list["raw"]}}').hide();
+            $('.progress').show();
+            $.ajax({
+               url: '{{ url_for("core.install_skill", name=list["raw"] , url=list["url"]) }}',
+               type: "GET",
+               success: function(rep) {
+                  $('.progress').hide();
+                  $('.dl_text{{list["raw"]}}').show();
+                  window.location = "{{url_for('core.reboot_skill')}}";
+               }
+            });
+
+          });
+          $("#uninstallbutton{{list['raw']}}").click(function() {
+            $('#uninstallbutton{{list["raw"]}}').hide();
+            $('.progress').show();
+            $.ajax({
+               url: '{{ url_for("core.uninstall_skill", name=list["raw"] , url=list["url"]) }}',
+               type: "GET",
+               success: function(rep) {
+                  $('.progress').hide();
+                  $('.dl_text{{list["raw"]}}').show();
+                  window.location = "{{url_for('core.reboot_skill')}}";
+               }
+            });
+
+          });
+
+    });
+  </script>
 
 {% endfor %}
 

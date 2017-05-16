@@ -30,7 +30,7 @@ def scenario():
 
 	json.json = actions.get()
 	actions_decoded = json.decode()
-	return render_template('scenario/index.html', events = events_decoded, actions = actions_decoded)
+	return render_template('scenario/index.html', events=events_decoded, actions=actions_decoded)
 
 @core.route('scenario',methods=['POST'])
 @login_required
@@ -48,7 +48,7 @@ def add_scenario():
 
 		flash(gettext('Scenario added successfully !'), 'success')
 		return redirect(url_for('core.scenario'))
-	except ScenarioException:
+	except:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.scenario'))
 
@@ -60,6 +60,6 @@ def delete_scenario(id):
 		launcher.delete()
 		flash(gettext('Scenario deleted successfully !'),'success')
 		return redirect(url_for('core.scenario'))
-	except ScenarioException:
+	except:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.scenario'))

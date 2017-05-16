@@ -41,7 +41,7 @@ class Install:
     def set(self):
         try:
             hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
-            user = UsersModel.User(admin=1, username=self.username, password=hashpass, email=self.email)
+            user = UsersModel.User(admin=1, username=self.username, password=hashpass, email=self.email, tutorial=0)
             db.session.add(user)
             db.session.commit()
             login_user(user)

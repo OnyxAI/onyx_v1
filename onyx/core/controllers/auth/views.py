@@ -37,6 +37,16 @@ def load_user(id):
 def hello():
     return render_template('account/hello.html', next=request.args.get('next'))
 
+#Hello Home route
+@auth.route('finish_tutorial')
+def finish_tutorial():
+    try:
+        user.id = current_user.id
+        return user.finish_tutorial()
+    except:
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('core.index'))
+
 #Register
 @auth.route('register' , methods=['GET','POST'])
 def register():
@@ -74,8 +84,6 @@ def login():
                 flash(gettext('Incorrect email or password !'), 'error')
                 return redirect(url_for('auth.login'))
             else:
-                event.code = "user_connected"
-                event.new()
                 flash(gettext('You are now connected'), 'success')
                 return redirect(request.args.get('next') or url_for('core.index'))
         except UserException:

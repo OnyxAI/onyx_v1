@@ -74,11 +74,11 @@
 				<span class="card-title grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">close</i></span>
 				<p>{{ list['description'] }}</p>
         {% if list['raw'] in plugins|safe %}
-          <center><p class="dl_text">{{ _("Uninstalled") }}</p></center>
+          <center><p class="dl_text{{list['raw']}}">{{ _("Uninstalled") }}</p></center>
           <div class="progress"><div class="indeterminate"></div></div>
           <button id="uninstallbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Uninstall") }}</button>
         {% else %}
-          <center><p class="dl_text">{{ _("Installed") }}</p></center>
+          <center><p class="dl_text{{list['raw']}}">{{ _("Installed") }}</p></center>
           <div class="progress"><div class="indeterminate"></div></div>
           <button id="installbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Install") }}</button>
         {% endif %}
@@ -89,7 +89,7 @@
   <script type="text/javascript">
       $(document).ready(function() {
           $('.progress').hide();
-          $('.dl_text').hide();
+          $('.dl_text{{list["raw"]}}').hide();
 
           $("#installbutton{{list['raw']}}").click(function() {
             $('#installbutton{{list["raw"]}}').hide();
@@ -99,7 +99,8 @@
                type: "GET",
                success: function(rep) {
                   $('.progress').hide();
-                  $('.dl_text').show();
+                  $('.dl_text{{list["raw"]}}').show();
+                  window.location = "{{url_for('core.reboot_plugin')}}";
                }
             });
 
@@ -112,7 +113,8 @@
                type: "GET",
                success: function(rep) {
                   $('.progress').hide();
-                  $('.dl_text').show();
+                  $('.dl_text{{list["raw"]}}').show();
+                  window.location = "{{url_for('core.reboot_plugin')}}";
                }
             });
 

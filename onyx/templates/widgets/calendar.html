@@ -32,7 +32,7 @@
 
 
       <div id='calendar'></div>
-    
+
 
 
 
@@ -170,9 +170,8 @@
 </div>
 
 {% block script %}
+
 <script>
-
-
 
 $(document).ready(function() {
 
@@ -251,12 +250,11 @@ $(document).ready(function() {
     }
 
     id =  event.id;
-    idAccount = '{{currentID}}'
 
     $.ajax({
      url: '{{ url_for("core.calendars") }}',
      type: "PUT",
-     data: {id:id,idAccount:idAccount,start:start,end:end},
+     data: {id:id,start:start,end:end},
      success: function(rep) {
 
      }

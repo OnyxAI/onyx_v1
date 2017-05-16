@@ -1,184 +1,8 @@
-.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-}
-
-#toast-container {
-  display: block;
-  position: fixed;
-  z-index: 10000;
-}
-
-@media only screen and (max-width: 600px) {
-  #toast-container {
-    min-width: 100%;
-    bottom: 0%;
-  }
-}
-
-@media only screen and (min-width: 601px) and (max-width: 992px) {
-  #toast-container {
-    left: 5%;
-    bottom: 7%;
-    max-width: 90%;
-  }
-}
-
-@media only screen and (min-width: 993px) {
-  #toast-container {
-    top: 10%;
-    right: 7%;
-    max-width: 86%;
-  }
-}
-
-.toast {
-  border-radius: 2px;
-  top: 0;
-  width: auto;
-  clear: both;
-  margin-top: 10px;
-  position: relative;
-  max-width: 100%;
-  height: auto;
-  min-height: 48px;
-  line-height: 1.5em;
-  word-break: break-all;
-  background-color: #323232;
-  padding: 10px 25px;
-  font-size: 1.1rem;
-  font-weight: 300;
-  color: #fff;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.toast .btn, .toast .btn-large, .toast .btn-flat {
-  margin: 0;
-  margin-left: 3rem;
-}
-
-.toast.rounded {
-  border-radius: 24px;
-}
-
-@media only screen and (max-width: 600px) {
-  .toast {
-    width: 100%;
-    border-radius: 0;
-  }
-}
-
-@media only screen and (min-width: 601px) and (max-width: 992px) {
-  .toast {
-    float: left;
-  }
-}
-
-@media only screen and (min-width: 993px) {
-  .toast {
-    float: right;
-  }
-}
-
-.red.darken-1 {
-  background-color: #E53935 !important;
-}
-
-.green {
-  background-color: #4CAF50 !important;
-}
-
-.blue.darken-1 {
-  background-color: #1E88E5 !important;
-}
-
-h1 {
-  height: 100px;
-  width: 100%;
-  font-size: 18px;
-  background: #18aa8d;
-  color: white;
-  line-height: 150%;
-  border-radius: 3px 3px 0 0;
-  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.2);
-}
-
-form {
-  box-sizing: border-box;
-  width: 260px;
-  margin: 100px auto 0;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
-  padding-bottom: 40px;
-  border-radius: 3px;
-}
-
-form h1 {
-  box-sizing: border-box;
-  padding: 20px;
-}
-
-input {
-  color: white;
-  margin: 40px 25px;
-  width: 200px;
-  display: block;
-  border: none;
-  padding: 10px 0;
-  border-bottom: solid 1px #1abc9c;
-  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-          transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
-  background-position: -200px 0;
-  background-size: 200px 100%;
-  background-repeat: no-repeat;
-}
-input:focus, input:valid {
-  box-shadow: none;
-  outline: none;
-  background-position: 0 0;
-}
-input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
-  color: #1abc9c;
-  font-size: 11px;
-  -webkit-transform: translateY(-20px);
-          transform: translateY(-20px);
-  visibility: visible !important;
-}
-
-button {
-  border: none;
-  background: #1abc9c;
-  cursor: pointer;
-  border-radius: 3px;
-  padding: 6px;
-  width: 200px;
-  color: white;
-  margin-left: 25px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
-}
-button:hover {
-  -webkit-transform: translateY(-3px);
-      -ms-transform: translateY(-3px);
-          transform: translateY(-3px);
-  box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.2);
-}
- 
-The magic happens in a few lines of code for the input:focus and input:valid. The CSS transform property plays a crucial role to achieve this little instant feedback effect.
-
-input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
-  color: #1abc9c;
-  font-size: 11px;
-  -webkit-transform: translateY(-20px);
-          transform: translateY(-20px);
-  visibility: visible !important;
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+body {
+  background-image: url(/static/img/login/login.jpg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -198,6 +22,7 @@ input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
+  font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
@@ -208,6 +33,7 @@ input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
   font-size: 14px;
 }
 .form button {
+  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
   background: #4CAF50;
@@ -234,10 +60,4 @@ input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
 }
 .form .register-form {
   display: none;
-}
-
-body {
-  background-image: url(/static/img/login/login.jpg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
 }

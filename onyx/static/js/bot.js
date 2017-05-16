@@ -10,3 +10,9 @@ function keydown(evt){
       document.getElementById('searchInput').blur();
   }
 }
+
+function open_onyx(){
+  var search = document.getElementById('search');
+  search.className = 'open';
+  document.getElementById('input').focus();
+}

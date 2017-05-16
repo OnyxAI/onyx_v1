@@ -16,10 +16,12 @@ from onyx.api.assets import Json
 from onyx.api.navbar import *
 from onyx.api.exceptions import *
 from onyx.plugins import plugin
+from onyx.api.events import *
 import hashlib
 import onyx
 import logging
 
+event = Event()
 navbars = Navbar()
 logger = logging.getLogger()
 json = Json()
@@ -35,6 +37,7 @@ class User:
         self.lastpassword = None
         self.email = None
         self.admin = None
+        self.tutorial = 0
 
     def get(self):
         try:
@@ -48,6 +51,7 @@ class User:
                 user['buttonColor'] = fetch.buttonColor
                 user['password'] = fetch.password
                 user['email'] = fetch.email
+                user['tutorial'] = fetch.tutorial
                 users.append(user)
             logger.info('Getting users data successfully')
             return json.encode(users)
@@ -67,6 +71,7 @@ class User:
             user['buttonColor'] = query.buttonColor
             user['password'] = query.password
             user['email'] = query.email
+            user['tutorial'] = query.tutorial
             logger.info('Getting user data successfully')
             return json.encode(user)
         except Exception as e:
@@ -80,7 +85,7 @@ class User:
             db.session.rollback()
             if self.password == self.verifpassword:
                 hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
-                user = UsersModel.User(admin=0, username=self.username, password=hashpass, email=self.email)
+                user = UsersModel.User(admin=0, username=self.username, password=hashpass, email=self.email, tutorial=self.tutorial)
 
                 db.session.add(user)
                 db.session.commit()
@@ -125,6 +130,9 @@ class User:
                 return 0
             login_user(registered_user)
             registered_user.authenticated = True
+            event.code = "user_connected"
+            event.template = "user == " + str(registered_user.id)
+            event.new()
             logger.info("User Connected : " + registered_user.username)
             return json.encode({"status":"success"})
         except Exception as e:
@@ -149,7 +157,7 @@ class User:
             query = UsersModel.User.query.filter_by(id=id_delete).first()
             db.session.delete(query)
             db.session.commit()
-            deleteCalendar = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(id_delete))
+            deleteCalendar = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.user.endswith(id_delete))
             for fetch in deleteCalendar:
                 deleteEvent = CalendarModel.Calendar.query.filter_by(id=fetch.id).first()
                 db.session.delete(deleteEvent)
@@ -203,6 +211,21 @@ class User:
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('User data changed error : ' + str(e))
+            raise UserException(str(e))
+            return json.encode({"status":"error"})
+
+    def finish_tutorial(self):
+        try:
+            query = UsersModel.User.query.filter_by(id=self.id).first()
+
+            query.tutorial = 1
+
+            db.session.add(query)
+            db.session.commit()
+            logger.info('User tutorial changed successfully')
+            return json.encode({"status":"success"})
+        except Exception as e:
+            logger.error("User Tutorial Error : " + str(e))
             raise UserException(str(e))
             return json.encode({"status":"error"})
 

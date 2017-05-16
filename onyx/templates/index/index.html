@@ -3,26 +3,36 @@
 {% set title = _("Home") %}
 
 {% block body %}
+{% if g.user.tutorial == 0 %}
+    <a class="btn {{buttonColor}}" onclick="launch_tutorial();" name="button">Tutorial</a>
+{% endif %}
 
-
-{% if boxs == [] %}
-  <h3>{{_("You have not widgets : ")}}<a href="{{url_for('core.widgets')}}">{{_("Add")}}</a></h3>
-{% else %}
-  <div class="row">
-      {% for box in boxs %}
-      <div class="col s4">
-        <div class="card {{ box.color }}">
-          <div class="card-content">
-            <span class="card-title">{{_(box.name)}}</span>
-            <p>{{ get_widget(box.url)|safe }}</p>
-          </div>
-          <div class="card-action">
-            <a href="{{url_for(box.see_more)}}">{{_("See More")}}</a>
+<ul class="hide-on-med-and-down">
+  {% if boxs == [] %}
+    <h3>{{_("You have not widgets : ")}}<a href="{{url_for('core.widgets')}}">{{_("Add")}}</a></h3>
+  {% else %}
+    <div class="row">
+        {% for box in boxs %}
+        <div class="col s4">
+          <div class="card {{ box.color }}">
+            <div class="card-content">
+              <span class="card-title">{{_(box.name)}}</span>
+              <p>{{ get_widget(box.url)|safe }}</p>
+            </div>
+            <div class="card-action">
+              <a href="{{url_for(box.see_more)}}">{{_("See More")}}</a>
+            </div>
           </div>
         </div>
-      </div>
-      {% endfor %}
-  </div>
-{% endif %}
+        {% endfor %}
+    </div>
+  {% endif %}
+</ul>
+
+<script type="text/javascript">
+  function launch_tutorial(){
+    $('.tutorial_index').tapTarget('open');
+  }
+</script>
 
 {% endblock %}

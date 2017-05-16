@@ -4,7 +4,7 @@
 
 {% block body %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <div class="card-panel blue-grey darken-1">
+  <div class="card-panel white">
 <h1>{{_("Scenario")}}</h1>
 
 <table class="white responsive-table">
@@ -34,9 +34,10 @@
 
 
   <br>
+  <h4>{{_('Add')}}</h4>
   <form enctype='application/json' action="" method="post">
   <td><input placeholder="{{_('Name')}}" type="text" id="name" name="scenario" required></td>
-  <td><a class="waves-effect waves-light btn modal-trigger {{buttonColor}}" href="#modal">{{_('Create')}}</a></td>
+  <td><a class="waves-effect waves-light btn modal-trigger {{buttonColor}}" href="#modal" onclick="check_name()">{{_('Create')}}</a></td>
 
 </div>
   </div>
@@ -75,18 +76,6 @@
                  <th>{{event.description}}</th>
                  <th><p><input name="event_code" type="radio" id="{{event.name}}" value="{{event.code}}" /><label for="{{event.name}}"></label></p></th>
                </tr>
-               {% endfor %}
-               {% endif %}
-
-
-
-
-             </tbody>
-           </table>
-           {% if events == [] %}
-              <p>{{_('No event in your language')}}</p>
-           {% else %}
-           {% for event in events %}
                <div id="{{event.code}}" class="desc" style="display: none;">
                    {% for param in event.params %}
                    <script type="text/javascript">
@@ -117,10 +106,14 @@
                    {% endif %}
                    {% endfor %}
                  </div>
-
                {% endfor %}
                {% endif %}
 
+
+
+
+             </tbody>
+           </table>
        </div>
     </div>
 
@@ -146,17 +139,6 @@
                 <th>{{action.description}}</th>
                 <th><p><input name="action" type="radio" id="{{action.name}}" value="{{action.code}}" /><label for="{{action.name}}"></label></p></th>
               </tr>
-              {% endfor %}
-              {% endif %}
-
-
-
-            </tbody>
-          </table>
-          {% if actions == [] %}
-              <p>{{_('No action in your language')}}</p>
-          {% else %}
-          {% for action in actions %}
               <div id="{{action.code}}" class="desc" style="display: none;">
                   {% for param in action.params %}
                   <script type="text/javascript">
@@ -192,7 +174,10 @@
               {% endif %}
 
 
-              <br>
+
+            </tbody>
+          </table>
+          <br>
           <button type="submit" name="button" class="btn {{buttonColor}}">{{_('Add')}}</button>
       </div>
     </div>
@@ -213,5 +198,15 @@
   $(document).ready(function(){
     $('.modal-trigger').leanModal();
   });
+
+  function check_name(){
+    var nameValue = document.getElementById("name").value;
+    if(nameValue == ""){
+      alert("{{_('Please enter a name')}}");
+      location.reload();
+    }
+  }
+
 </script>
+
 {% endblock %}

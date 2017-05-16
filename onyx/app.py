@@ -23,6 +23,7 @@ from onyx.plugins import plugin
 from onyx.api.assets import Json
 from onyx.api.server import *
 from flask_turbolinks import turbolinks
+
 server = Server()
 
 json = Json()

@@ -17,6 +17,22 @@ from onyx.api.notification import *
 
 notif = Notification()
 
+@core.route('add_notif', methods=['POST'])
+@login_required
+def add_notif():
+    if request.method == 'POST':
+        try:
+            notif.user = current_user.id
+            notif.title = request.form.get('title')
+            notif.text = request.form.get('text')
+            notif.priority = request.form.get('priority')
+            notif.icon = request.form.get('icon')
+            notif.icon_color = request.form.get('icon_color')
+            return notif.notify()
+        except:
+            flash(gettext('An error has occured'), 'error')
+            return redirect(url_for('core.index'))
+
 @core.route('notifications')
 @login_required
 def notifications():
@@ -33,5 +49,5 @@ def delete_notifications(id):
         notif.delete()
         return redirect(url_for('core.notifications'))
     except NotifException:
-        flash(gettext('An error has occured'),'error')
+        flash(gettext('An error has occured'), 'error')
         return redirect(url_for('core.notifications'))

@@ -31,6 +31,7 @@ class Event:
     def init(self):
         self.id = None
         self.code = None
+        self.template = ""
 
     """
         Allows to retrieve all possible events in Onyx and plugins
@@ -81,9 +82,10 @@ class Event:
             query = ScenarioModel.Scenario.query.filter_by(event=code).all()
 
             for key in query:
-                action.url = key.action
-                action.param = key.action_param
-                action.start()
+                if self.template == key.template:
+                    action.url = key.action
+                    action.param = key.action_param
+                    action.start()
         except Exception as e:
             logger.error('New event error : ' + str(e))
             raise EventException(str(e))

@@ -2,12 +2,12 @@
   <!-- Navbar -->
   {% for nav in g.navbar %}
   {% if nav.url == None %}
-  <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: {{ nav.pourcentage }};">
+  <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
     <a href="{{ url_for('core.index') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}"></a>
   </div>
   {% else %}
-   <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right: {{ nav.pourcentage }};">
-    <a href="{{ url_for(nav.url) }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
+   <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
+    <a id="menu_{{ nav.fa }}" href="{{ url_for(nav.url) }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
       <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
     </a>
   </div>
@@ -16,7 +16,11 @@
 
   <!-- Avatar -->
   <div class="fixed-action-btn vertical" style="bottom: 100px; right: 3%;">
-    <a href="#" class="button-collapse" data-activates="slide-out"><img class="circle" style="max-width: 60px;" src="{{ g.avatar }}">{% if g.notifs|length != 0 %}<span class="badge new {{buttonColor}}">{{g.notifs|length}}</span>{% endif %}  </a>
+    <a href="#" id="avatar" class="button-collapse" data-activates="slide-out"><img class="circle" style="max-width: 60px;" src="{{ g.avatar }}">{% if g.notifs|length != 0 %}<span class="badge new {{buttonColor}}">{{g.notifs|length}}</span>{% endif %}  </a>
+  </div>
+
+  <div class="fixed-action-btn" style="bottom: 200px; right: 3.1%;">
+      <a id="onyx_help" onclick="open_onyx();" class="btn btn-floating btn-large {{buttonColor}}"><i class="large fa fa-android" aria-hidden="true"></i></a>
   </div>
 </ul>
 
@@ -40,7 +44,7 @@
 <!-- Logo -->
 <div class="main">
   <a href="{{ url_for('core.index') }}">
-    <img   style="max-width: 100%; height:250px; " class="responsive-img" src="{{ url_for('static', filename='img/logo/'+buttonColor+'.png') }}" alt="LOGO"/>
+    <img style="max-width: 100%; height:250px; " class="responsive-img" src="{{ url_for('static', filename='img/logo/'+buttonColor+'.png') }}" alt="Logo"/>
   </a>
 </div>
 

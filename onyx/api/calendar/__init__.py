@@ -43,7 +43,7 @@ class Calendar:
     """
     def add(self):
         try:
-            query = CalendarModel.Calendar(idAccount=self.user,\
+            query = CalendarModel.Calendar(user=self.user,\
                                            title=self.title,\
                                            notes=self.notes,\
                                            lieu=self.lieu,\
@@ -67,7 +67,7 @@ class Calendar:
     """
     def get(self):
         try:
-            query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.idAccount.endswith(self.user)).all()
+            query = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.user.endswith(self.user)).all()
             events = []
 
             for fetch in query:
@@ -123,7 +123,7 @@ class Calendar:
     """
     def update_date(self):
         try:
-            query = CalendarModel.Calendar.query.filter_by(id=self.id, idAccount=self.user).first()
+            query = CalendarModel.Calendar.query.filter_by(id=self.id, user=self.user).first()
             query.start = self.startdate
             query.end = self.enddate
 
@@ -142,7 +142,7 @@ class Calendar:
     """
     def delete(self):
         try:
-            delete = CalendarModel.Calendar.query.filter_by(id=self.id,idAccount=self.user).first()
+            delete = CalendarModel.Calendar.query.filter_by(id=self.id,user=self.user).first()
 
             db.session.delete(delete)
             db.session.commit()
@@ -157,7 +157,7 @@ class Calendar:
     """
     def update_event(self):
         try:
-            update = CalendarModel.Calendar.query.filter_by(id=self.id,idAccount=self.user).first()
+            update = CalendarModel.Calendar.query.filter_by(id=self.id,user=self.user).first()
             update.title = self.title
             update.notes = self.notes
             update.lieu = self.lieu

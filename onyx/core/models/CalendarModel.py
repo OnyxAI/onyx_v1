@@ -13,7 +13,7 @@ from onyx.extensions import db
 
 class Calendar(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    idAccount = db.Column(db.String(64))
+    user = db.Column(db.String(64))
     title = db.Column(db.String(64))
     lieu = db.Column(db.String(255))
     notes = db.Column(db.String(255))

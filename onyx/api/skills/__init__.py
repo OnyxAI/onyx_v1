@@ -107,7 +107,7 @@ class Skill:
         data = json.decode_path()
         deps = data["packages"]
         for dep in deps:
-            pip.main(['install', dep])
+            os.system('pip install '+dep)
 
     def uninstall(self):
         try:

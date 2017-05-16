@@ -13,15 +13,22 @@ from flask import render_template, request, g
 from flask.ext.login import login_required
 from onyx.api.wiki import Wikipedia
 from onyxbabel import gettext
+from onyx.config import *
 from onyx.api.exceptions import *
 
 wikipedia = Wikipedia()
+
+config = get_config('onyx')
+
+raw_lang = config.get('Base', 'lang')
+if raw_lang:
+    lang = raw_lang.split('-')
 
 @core.route('wiki', methods=['GET', 'POST'])
 @login_required
 def wiki():
     if request.method == 'GET':
-    	return render_template('wiki/index.html')
+    	return render_template('wiki/index.html', lang=lang[0])
     elif request.method == 'POST':
     	"""
 		@api {post} /wiki Request Wiki Article
@@ -40,10 +47,10 @@ def wiki():
 
 		"""
         try:
-            wikipedia.lang = g.lang
+            wikipedia.lang = lang[0]
             wikipedia.search = request.form['search']
             article = wikipedia.get_article()
             summary = wikipedia.get_summary()
-            return render_template('wiki/result.html', head=article.title, url=article.url, summary=summary)
+            return render_template('wiki/result.html', head=article.title, url=article.url, summary=summary, lang=lang[0])
         except WikiException:
-            return render_template('wiki/result.html', head=gettext("Error"), summary=gettext("This is not an article"))
+            return render_template('wiki/result.html', head=gettext("Error"), summary=gettext("This is not an article"), lang=lang[0])
