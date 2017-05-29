@@ -5,7 +5,7 @@
 {% block body %}
 
 <br>
-<div class="card-panel white">
+<div class="card-panel {{g.panel_color}}">
 	<br>
 	<div class="collection">
 		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire1 }}</span>{{ result.name1 }}</a>
@@ -13,7 +13,7 @@
 		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire3 }}</span>{{ result.name3 }}</a>
 		<a href="#!" class="collection-item"><span class="badge">{{ result.horaire4 }}</span>{{ result.name4 }}</a>
 	</div>
-
-	<a href="{{ url_for('core.transport') }}" class='btn {{ buttonColor }}'>{{_('Return to Home')}}</a>
+	<br>
+	<a href="{{ url_for('core.transport') }}" class='btn {{ g.color }}'>{{_('Return to Home')}}</a>
 </div>
 {% endblock %}

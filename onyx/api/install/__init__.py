@@ -41,10 +41,9 @@ class Install:
     def set(self):
         try:
             hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
-            user = UsersModel.User(admin=1, username=self.username, password=hashpass, email=self.email, tutorial=0)
+            user = UsersModel.User(admin=1, username=self.username, password=hashpass, email=self.email, tutorial=0, background_color='#efefef', color='indigo darken-1')
             db.session.add(user)
             db.session.commit()
-            login_user(user)
 
             self.init_db()
 
@@ -67,7 +66,7 @@ class Install:
             navbar = json.decode_path()
 
             for key in navbar:
-                query = NavbarModel.Navbar(idAccount=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
+                query = NavbarModel.Navbar(user=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
             logger.info('Navbar initialized for user : ' + user.username)

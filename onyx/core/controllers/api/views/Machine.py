@@ -67,7 +67,7 @@ def add_machine():
         machine.host = request.form['host']
         return machine.add()
     except MachineException:
-			return machine.add()
+        return machine.add()
 
 
 @api.route('machine/delete/<int:id>')

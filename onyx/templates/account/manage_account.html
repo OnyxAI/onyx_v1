@@ -4,29 +4,29 @@
 
 {% block body %}
 
-    <div class="card-panel white">
-		        <h2>{{_("My Account")}}</h2>
+    <div class="card-panel {{g.panel_color}}">
+		        <h2 class='{{g.text_color}}'>{{_("My Account")}}</h2>
 
-    <span class="btn-floating btn-large {{ buttonColor }}"></span><br><br>
-    <h5>{{_("Name")}}</h5> {{ g.user.username }}
-    <h5>{{_("Email")}}</h5>{{ g.user.email }}
-		        <h3>{{_("Change my account information")}} :</h3> <br>
+    <span class="btn-floating btn-large {{g.color}}"></span><br><br>
+    <h5 class='{{g.text_color}}'>{{_("Name")}}</h5> {{ g.user.username }}
+    <h5 class='{{g.text_color}}'>{{_("Email")}}</h5>{{ g.user.email }}
+		        <h3 class='{{g.text_color}}'>{{_("Change my account information")}} :</h3> <br>
 
 		          <form class="form" method=post action="">
 	  <div class="container">
 
 
 
-	  <label for="username" >{{_("New name")}}</label>
+	  <label for="username" class='{{g.text_color}}'>{{_("New name")}}</label>
 	  <input type="text" id="username" name="username" value="{{ request.form.username }}">
 
-	  <label for="password" >{{_("New password")}}</label>
+	  <label for="password" class='{{g.text_color}}'>{{_("New password")}}</label>
       <input type="password" id="password"  name="password" value="{{ request.form.password }}">
 
-      <label for="email" >{{_("New email")}}</label>
+      <label for="email" class='{{g.text_color}}'>{{_("New email")}}</label>
       <input type="email" id="email" name="email" value="{{ request.form.email }}">
 
-       <label for="lastpassword" >{{_("Last password")}}</label>
+       <label for="lastpassword" class='{{g.text_color}}'>{{_("Last password")}}</label>
       <input type="password" id="lastpassword"  name="lastpassword" value="{{ request.form.lastpassword }}" required>
 
 
@@ -35,7 +35,7 @@
       <br>
       <br>
 
-      <button class="btn {{ buttonColor }}">{{_("Save")}}</button>
+      <button class="btn {{g.color}} {{g.text_color}}">{{_("Save")}}</button>
     </form>
 
 

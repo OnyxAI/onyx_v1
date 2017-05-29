@@ -65,7 +65,7 @@ class Widgets:
                 try:
                     json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/widgets.json"
                     data += json.decode_path()
-                except:
+                except Exception as e:
                     logger.error('Getting plugins error : ' + str(e))
 
             return json.encode(data)

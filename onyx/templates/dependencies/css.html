@@ -1,6 +1,6 @@
-{% macro get_css(nom_fichiers , extension='css') -%}
-  {% for fichier in nom_fichiers %}
-      <link href="{{ url_for('static', filename='css/' + fichier + '.' + extension) }}" rel="stylesheet" type="text/css" />
+{% macro get_css(file_name , extension='css') -%}
+  {% for file in file_name %}
+      <link href="{{ url_for('static', filename='css/' + file + '.' + extension) }}" rel="stylesheet" type="text/css" />
   {% endfor %}
 {%- endmacro %}
 

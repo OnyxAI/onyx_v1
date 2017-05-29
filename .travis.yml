@@ -1,11 +1,11 @@
 sudo: true
 language: python
 python:
-  - "2.7"
+  - "3.4"
 # command to install dependencies
 
 before_install:
-  - sudo sh install_travis.sh
+  - sudo bash install_travis.sh
 
 install: pip install -r requirements_travis.txt
 # command to run tests

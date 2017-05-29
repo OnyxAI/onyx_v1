@@ -1,0 +1,280 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bot.css') }}">
+<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+<link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
+
+<div class="row">
+  <div class="container">
+    <div id="search">
+
+      <div class="wrapper">
+        <nav id="nav" class="nav">
+          <div class="default-nav">
+            <div class="main-nav">
+              <div class="toggle"></div>
+              <div class="main-nav-item"><a href="#" class="main-nav-item-link">Onyx</a></div>
+              <div class="micro"><i class="circle fa fa fa-microphone fa-lg" id="microphone"></i></div>
+            </div>
+          </div>
+        </nav>
+        <div id="inner" class="inner">
+          <div id="content" class="content"></div>
+        </div>
+        <div id="bottom" class="bottom">
+          <textarea id="input" class="input"></textarea>
+          <div id="send" class="send"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Messenger = function () {
+function Messenger() {
+  _classCallCheck(this, Messenger);
+
+  this.messageList = [];
+  this.deletedList = [];
+
+  this.me = 1; // completely arbitrary id
+  this.them = 5; // and another one
+
+  this.onRecieve = function (message) {
+    return console.log('Recieved: ' + message.text);
+  };
+  this.onSend = function (message) {
+    return console.log('Sent: ' + message.text);
+  };
+  this.onDelete = function (message) {
+    return console.log('Deleted: ' + message.text);
+  };
+}
+
+Messenger.prototype.send = function send() {
+  var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+
+  text = this.filter(text);
+
+  if (this.validate(text)) {
+    var message = {
+      user: this.me,
+      text: text,
+      time: new Date().getTime()
+    };
+
+    this.messageList.push(message);
+
+    this.onSend(message);
+  }
+};
+
+Messenger.prototype.recieve = function recieve() {
+  var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+
+  text = this.filter(text);
+
+  if (this.validate(text)) {
+    var message = {
+      user: this.them,
+      text: text,
+      time: new Date().getTime()
+    };
+
+    this.messageList.push(message);
+
+    this.onRecieve(message);
+  }
+};
+
+Messenger.prototype.delete = function _delete(index) {
+  index = index || this.messageLength - 1;
+
+  var deleted = this.messageLength.pop();
+
+  this.deletedList.push(deleted);
+  this.onDelete(deleted);
+};
+
+Messenger.prototype.filter = function filter(input) {
+  var output = input.replace('bad input', 'good output'); // such amazing filter there right?
+  return output;
+};
+
+Messenger.prototype.validate = function validate(input) {
+  return !!input.length; // an amazing example of validation I swear.
+};
+
+return Messenger;
+}();
+
+var BuildHTML = function () {
+function BuildHTML() {
+  _classCallCheck(this, BuildHTML);
+
+  this.messageWrapper = 'message-wrapper';
+  this.circleWrapper = 'circle-wrapper';
+  this.textWrapper = 'text-wrapper';
+
+  this.meClass = 'me';
+  this.themClass = 'them';
+}
+
+BuildHTML.prototype._build = function _build(text, who) {
+  return '<div class="' + this.messageWrapper + ' ' + this[who + 'Class'] + '">\n             \n              <div class="' + this.textWrapper + '">...</div>\n            </div>';
+};
+
+BuildHTML.prototype.me = function me(text) {
+  return this._build(text, 'me');
+};
+
+BuildHTML.prototype.them = function them(text) {
+  return this._build(text, 'them');
+};
+
+return BuildHTML;
+}();
+
+$(document).ready(function () {
+
+var messenger = new Messenger();
+var buildHTML = new BuildHTML();
+
+var $input = $('#input');
+var $send = $('#send');
+var $microphone = $('#microphone');
+var $content = $('#content');
+var $inner = $('#inner');
+
+function safeText(text) {
+  $content.find('.message-wrapper').last().find('.text-wrapper').text(text);
+}
+
+function animateText() {
+  setTimeout(function () {
+    $content.find('.message-wrapper').last().find('.text-wrapper').addClass('animated fadeIn');
+  }, 350);
+}
+
+function scrollBottom() {
+  $($inner).scrollTop($($inner)[0].scrollHeight);
+}
+
+function buildSent(message) {
+  console.log('sending: ', message.text);
+
+  $content.append(buildHTML.me(message.text));
+  safeText(message.text);
+  animateText();
+
+  scrollBottom();
+}
+
+function buildRecieved(message) {
+  console.log('recieving: ', message.text);
+
+  $content.append(buildHTML.them(message.text));
+  safeText(message.text);
+  animateText();
+
+  scrollBottom();
+}
+
+function sendMessage() {
+  var text = $input.val();
+  messenger.send(text);
+  $input.val('');
+  $input.focus();
+
+  setTimeout(function () {
+    $.ajax({
+       url: '{{ url_for("core.kernel") }}',
+       type: "POST",
+       data: {text:text},
+       success: function(rep) {
+         messenger.recieve(rep);
+       }
+    });
+
+  }, 500);
+
+}
+
+function microphone(){
+  if ('webkitSpeechRecognition' in window) {
+      var recognition = new webkitSpeechRecognition();
+      var text = '';
+
+      recognition.lang = "{{g.lang}}";
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.start();
+      recognition.onresult = function (event) {
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                  recognition.stop();
+                  var transcript = event.results[i][0].transcript;
+
+                  messenger.send(transcript);
+                  setTimeout(function () {
+                    $.ajax({
+                       url: '{{ url_for("core.kernel") }}',
+                       type: "POST",
+                       data: {text:transcript},
+                       success: function(rep) {
+                         messenger.recieve(rep);
+                       }
+                    });
+
+                  }, 500);
+
+              }
+          }
+      };
+  }else{
+      alert('Your browser is not compatible !');
+  }
+
+
+}
+
+
+messenger.onSend = buildSent;
+messenger.onRecieve = buildRecieved;
+
+
+$input.focus();
+
+$microphone.on('click', function (e) {
+  microphone();
+});
+
+$send.on('click', function (e) {
+  sendMessage();
+});
+
+$input.on('keydown', function (e) {
+  var key = e.which || e.keyCode;
+
+  if (key === 13) {
+    // enter key
+    e.preventDefault();
+
+    sendMessage();
+  }
+});
+});
+
+
+
+
+
+
+
+</script>

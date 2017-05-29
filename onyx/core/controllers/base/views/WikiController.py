@@ -23,29 +23,28 @@ config = get_config('onyx')
 raw_lang = config.get('Base', 'lang')
 if raw_lang:
     lang = raw_lang.split('-')
+"""
+	@api {post} /wiki Request Wiki Article
+	@apiName getArticle
+    @apiGroup Wiki
+    @apiPermission authenticated
 
+    @apiParam {String} search Search Input
+
+    @apiSuccess (200) {Object[]} article List
+	@apiSuccess (200) {String} article.head Header of Article
+    @apiSuccess (200) {String} article.url Url of Article
+    @apiSuccess (200) {String} article.summary Article Content
+
+    @apiError NoExist No Article Exist
+
+"""
 @core.route('wiki', methods=['GET', 'POST'])
 @login_required
 def wiki():
     if request.method == 'GET':
     	return render_template('wiki/index.html', lang=lang[0])
     elif request.method == 'POST':
-    	"""
-		@api {post} /wiki Request Wiki Article
-		@apiName getArticle
-		@apiGroup Wiki
-		@apiPermission authenticated
-
-		@apiParam {String} search Search Input
-
-		@apiSuccess (200) {Object[]} article List
-		@apiSuccess (200) {String} article.head Header of Article
-		@apiSuccess (200) {String} article.url Url of Article
-		@apiSuccess (200) {String} article.summary Article Content
-
-		@apiError NoExist No Article Exist
-
-		"""
         try:
             wikipedia.lang = lang[0]
             wikipedia.search = request.form['search']

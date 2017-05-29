@@ -19,8 +19,9 @@ logger = logging.getLogger()
 class Weather:
 
     def __init__(self):
-        self.latitude = None
-        self.longitude = None
+        geoloc = Geolocalisation()
+        self.latitude = geoloc.get_latitude()
+        self.longitude = geoloc.get_longitude()
 
     def get_str(self):
         try:
@@ -36,12 +37,9 @@ class Weather:
 
     def get_temp_str(self):
         try:
-            geoloc = Geolocalisation()
-            self.latitude = geoloc.get_latitude()
-            self.longitude = geoloc.get_longitude()
             json.url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(self.latitude) + "&lon=" + str(self.longitude) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69"
             result = json.decode_url()
-            return str(round(result["list"][0]["temp"]["day"])) 
+            return str(round(result["list"][0]["temp"]["day"]))
         except Exception as e:
             logger.error('Getting weather error : ' + str(e))
             raise WeatherException(str(e))

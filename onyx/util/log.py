@@ -10,10 +10,16 @@ You may not use this software for commercial purposes.
 
 import logging
 
-FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+FORMAT = '%(levelname)s - %(message)s - %(name)s - %(asctime)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logger = logging.getLogger("ONYX")
 logger.setLevel(logging.DEBUG)
+
+logging.getLogger('werkzeug').setLevel(logging.ERROR)
+logging.getLogger('jinja2').setLevel(logging.ERROR)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+
 
 def getLogger(name="ONYX"):
     return logging.getLogger(name)

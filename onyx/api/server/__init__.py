@@ -48,21 +48,6 @@ class Server:
         except:
             return None
 
-    def create_config_file(self):
-        try:
-            if os.path.exists(str(onyx.__path__[0]) + "/flask_config.py"):
-                print('Falsk Config File Already Create')
-            else:
-                os.rename(str(onyx.__path__[0]) + "/config_example.py" , str(onyx.__path__[0]) + "/flask_config.py")
-                print('Flask Config File Create')
-            if os.path.exists(str(onyx.__path__[0]) + "/config/onyx.cfg"):
-                print('Config File Already Create')
-            else:
-                os.rename(str(onyx.__path__[0]) + "/config/onyx_example.cfg" , str(onyx.__path__[0]) + "/config/onyx.cfg")
-                print('Config File Create')
-        except:
-            raise
-
     def get_last_version(self):
         try:
             json.url = "https://pypi.python.org/pypi/onyxproject/json"
@@ -104,14 +89,23 @@ class Server:
       try:
 
         g.user = self.user
+        try:
+            g.color = str(self.user.color)
+        except:
+            g.color = ""
         g.avatar = user.get_avatar()
         g.lang = config.get('Base', 'lang')
-
         g.version = self.get_version()
         g.ram = "width: "+str(self.get_ram())+"%"
         g.uptime = self.get_up_stats()
         g.disk = "width: "+str(self.get_disk())+"%"
         g.next = request.endpoint
+        if current_user.background_color == '#0e1b30':
+            g.text_color = 'white-text'
+            g.panel_color = 'blue-grey darken-1'
+        elif current_user.background_color == 'efefef':
+            g.text_color = ''
+            g.panel_color = 'white'
 
         try:
             navbar.user = current_user.id

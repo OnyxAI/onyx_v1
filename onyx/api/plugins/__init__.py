@@ -37,6 +37,10 @@ class Plugin:
     def get(self):
         try:
             plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
+            try:
+                plugins.remove('__pycache__')
+            except:
+                pass
             plug = []
             for plugin in plugins:
                 json.path = onyx.__path__[0] + "/plugins/"+plugin+"/package.json"

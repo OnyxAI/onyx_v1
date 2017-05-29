@@ -17,26 +17,26 @@ from onyx.api.exceptions import *
 
 wikipedia = Wikipedia()
 
+"""
+    @api {post} /wiki Request Wiki Article
+    @apiName getArticle
+    @apiGroup Wiki
+    @apiPermission authenticated
+
+    @apiParam {String} search Search Input
+
+    @apiSuccess (200) {Object[]} article List
+    @apiSuccess (200) {String} article.head Header of Article
+    @apiSuccess (200) {String} article.url Url of Article
+    @apiSuccess (200) {String} article.summary Article Content
+
+    @apiError NoExist No Article Exist
+
+"""
 @api.route('wiki', methods=['GET', 'POST'])
 @login_required
 def wiki():
     if request.method == 'POST':
-    	"""
-		@api {post} /wiki Request Wiki Article
-		@apiName getArticle
-		@apiGroup Wiki
-		@apiPermission authenticated
-
-		@apiParam {String} search Search Input
-
-		@apiSuccess (200) {Object[]} article List
-		@apiSuccess (200) {String} article.head Header of Article
-		@apiSuccess (200) {String} article.url Url of Article
-		@apiSuccess (200) {String} article.summary Article Content
-
-		@apiError NoExist No Article Exist
-
-		"""
         try:
             wikipedia.lang = g.lang
             wikipedia.search = request.form['search']

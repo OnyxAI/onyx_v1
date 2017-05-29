@@ -15,9 +15,9 @@ function usage {
   echo
   echo "usage: $0 [-h] (start [-v|-c]|stop|restart)"
   echo "      -h             this help message"
-  echo "      start          starts onyx-client and onyx-voice"
-  echo "      stop           stops onyx-client and onyx-voice"
-  echo "      restart        restart onyx-client and onyx-voice"
+  echo "      start          starts onyx-service, onyx-client and onyx-voice"
+  echo "      stop           stops onyx-service, onyx-client and onyx-voice"
+  echo "      restart        restart onyx-service, onyx-client and onyx-voice"
   echo
   echo "screen tips:"
   echo "            run 'screen -list' to see all running screens"
@@ -90,11 +90,14 @@ then
   exit 1
 elif [[ "$1" == "start" && -z "$2" ]]
 then
-  start-onyx client
+  start-onyx service
   start-onyx voice
+  start-onyx client
+
   exit 0
 elif [[ "$1" == "stop" && -z "$2" ]]
 then
+  start-onyx service
   stop-onyx client
   stop-onyx voice
   exit 0

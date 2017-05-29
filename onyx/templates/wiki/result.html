@@ -4,12 +4,12 @@
 
 {% block body %}
 
-<div class="card-panel white">
-	<h1>Wiki</h1>
+<div class="card-panel {{g.panel_color}}">
+	<h1 class='{{g.text_color}}'>{{_("Wiki")}}</h1>
 
 	<form method="post">
-		<input type="text" class="searchbox" value="Recherche ..." onblur="if(this.value == '') { this.value = 'Recherche ...'; }" onfocus="if(this.value == 'Recherche ...') { this.value = ''; }" name="search">
-		<button type="submit" class="btn {{ buttonColor }}">{{_("Submit")}}</button>
+		<input class='{{g.text_color}}' type="text" class="searchbox" value="Recherche ..." onblur="if(this.value == '') { this.value = 'Recherche ...'; }" onfocus="if(this.value == 'Recherche ...') { this.value = ''; }" name="search">
+		<button type="submit" class="btn {{ g.color }}">{{_("Submit")}}</button>
 	</form><br>
 
 
@@ -17,13 +17,13 @@
 		<br>
 
 		<h4>
-			<span class="title"> {{head}}</span>
+			<span class="title {{g.text_color}}"> {{head}}</span>
 		</h4>
 
-		<p class="summary">{{summary|safe}}</p>
+		<p class="summary {{g.text_color}}">{{summary|safe}}</p>
 		<br>
 		{% if url is defined %}
-		<p class="url">{{_("See all article in ")}} : <a href="{{url}}">{{url}}</a></p>
+		<p class="url {{g.text_color}}">{{_("See all article in ")}} : <a class="{{g.text_color}}" href="{{url}}">{{url}}</a></p>
 		{% endif %}
 
 

@@ -105,7 +105,7 @@
     <center>
       <h5>{{_("Account")}}</h5>
       <p>{{_("Manage your Account, Change your life.")}}</p>
-      <a href="{{url_for('core.app')}}" data-no-turbolink="true" class="btn" >{{_("Next")}}</a>
+      <a href="{{url_for('core.app')}}"  class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -128,7 +128,7 @@
     <h5>{{_("It's you !")}}</h5>
     <p>{{_("To change it let's use Gravatar.")}}</p>
     <p><b>{{_("Oh ! A notification !")}}</b></p>
-    <a href="{{url_for('core.notifications')}}" data-no-turbolink="true" class="btn" >{{_("Let's see")}}</a>
+    <a href="{{url_for('core.notifications')}}"  class="btn" >{{_("Let's see")}}</a>
   </div>
 </div>
 
@@ -138,7 +138,7 @@
     <center>
       <h5>{{_("App page !")}}</h5>
       <p>{{_("You have here all the Onyx applications that are installed on the system.")}}</p>
-      <a href="{{url_for('core.utilities')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.utilities')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -149,7 +149,7 @@
     <center>
       <h5>{{_("Utilities page !")}}</h5>
       <p>{{_("Here are some utilities that you can use everyday.")}}</p>
-      <a href="{{url_for('core.plugins')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.plugins')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -160,7 +160,7 @@
     <center>
       <h5>{{_("Plugins page !")}}</h5>
       <p>{{_("You can install new applications to improve your daily life.")}}</p>
-      <a href="{{url_for('core.calendars')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.calendars')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -172,7 +172,7 @@
       <h5>{{_("Calendar page !")}}</h5>
       <p>{{_("Manage your meeting.")}}</p>
       <p>{{_("One click or select some case to add an event and double click on an event to manage it !")}}</p>
-      <a href="{{url_for('core.weather')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.weather')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -183,7 +183,7 @@
     <center>
       <h5>{{_("Weather page !")}}</h5>
       <p>{{_("How do I dress? What time is it tomorrow? The answer is on this page.")}}</p>
-      <a href="{{url_for('core.scenario')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.scenario')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -195,7 +195,7 @@
       <h5>{{_("Scenario page !")}}</h5>
       <p>{{_("At 9 AM, you leave the house.")}}</p><p>{{_("Onyx detects that you are not at home anymore, and shuts down everything inside.")}}</p>
       <p>{{_("You can manage it here.")}}</p>
-      <a href="{{url_for('core.widgets')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.widgets')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -207,7 +207,7 @@
       <h5>{{_("Widgets page !")}}</h5>
       <p>{{_("Change your Dashboard style and the page layout.")}}</p>
       <p>{{_("Add or Remove Dashboard Widgets.")}}</p>
-      <a href="{{url_for('core.skills')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.skills')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -218,7 +218,7 @@
     <center>
       <h5>{{_("Skill page !")}}</h5>
       <p>{{_("Increase my voice power and install new skill for me.")}}</p>
-      <a href="{{url_for('core.help')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.help')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -229,7 +229,7 @@
     <center>
       <h5>{{_("Help page !")}}</h5>
       <p>{{_("Come in my developers website and forum and ask for help.")}}</p>
-      <a href="{{url_for('core.options')}}" class="btn" data-no-turbolink="true">{{_("Next")}}</a>
+      <a href="{{url_for('core.options')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
@@ -270,12 +270,14 @@
 
 <script type="text/javascript">
 var tutorial = "{{g.user.tutorial}}";
-window.onload = function(){
+$( document ).ready(function() {
   if(tutorial == "0"){
     current_url = "{{request.endpoint}}".split(".");
     $('.tutorial_'+current_url[1]).tapTarget('open');
   }
-};
+});
+
+
 function tutorial_add_notif(){
   var title = "{{_('Welcome')}}";
   var text = "{{_('I am Onyx and I am glad to meet you')}}";

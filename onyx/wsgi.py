@@ -15,7 +15,7 @@ app = create_app()
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 blueprints_fabrics(app, get_blueprints(app))
-error_pages(app, get_blueprint_name(app))
+error_pages(app)
 
 if __name__ == "__main__":
     app.run()

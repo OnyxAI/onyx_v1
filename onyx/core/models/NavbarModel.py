@@ -13,7 +13,7 @@ from onyx.extensions import db
 
 class Navbar(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    idAccount = db.Column(db.String(64))
+    user = db.Column(db.String(64))
     url = db.Column(db.String(64))
     tooltip = db.Column(db.String(64))
     pourcentage = db.Column(db.String(64))

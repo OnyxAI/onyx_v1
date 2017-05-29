@@ -1,34 +1,35 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 VIRTUALENV_ROOT=$(HOME)/.virtualenvs/onyx
+PYTHON=python3
 
 all: setup
 
 start:
-	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -h 0.0.0.0 -p 80 -d -r
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -h 0.0.0.0 -p 80 -d -r
 
 test:
 	. $(VIRTUALENV_ROOT)/bin/activate; py.test --color=yes
 
 debug:
-	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -d -r -p 5000
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -d -r -p 5000
 
 prod:
-	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -p 80
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -p 80
 
 run:
-	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py run -r
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -r
 
 setup:
-	. $(VIRTUALENV_ROOT)/bin/activate; pip install -Ur requirements.txt
+	bash dev_setup.sh
 
 init:
 	export PYTHONPATH=$PYTHONPATH:ROOT_DIR
 
 initdb:
-	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py init
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py init
 
 migratedb:
-	. $(VIRTUALENV_ROOT)/bin/activate; python manage.py migrate
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py migrate
 
 babel:
 	pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx

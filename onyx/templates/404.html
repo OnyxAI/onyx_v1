@@ -15,11 +15,7 @@
                 <div class="col-md-12">
                     <h3 class="center capital f1">Oups !</h3>
                     <h1 id="error" class="center" >404</h1>
-                    {% if blueprint == 'install' %}
-                        <p class="center">{{_("Page not found ! Return to ")}} <a href="{{ url_for('install.index') }}">Install</a></p>
-                        {% else %}
-                        <p class="center">{{_("Page not found ! Return to ")}} <a href="{{ url_for('core.index') }}">Onyx</a></p>
-                    {% endif %}
+                    <p class="center">{{_("Page not found ! Return to ")}} <a href="{{ url_for('core.index') }}">Onyx</a></p>
                 </div>
             </div>
         </div>

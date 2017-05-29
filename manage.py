@@ -10,25 +10,23 @@ You may not use this software for commercial purposes.
 """
 
 import sys
-reload(sys)
-sys.dont_write_bytecode = True
-sys.setdefaultencoding('utf-8')
+import os
 
 from flask import json
 from flask_script import Manager, Command, Option
 
-import os
-
-from onyx import *
 from onyx.extensions import db
 from onyx.api.server import *
 from onyx.flask_config import *
-import onyx
+from onyx.util.log import getLogger
+from onyx import *
 
 app = create_app()
 
 manager = Manager(app, with_default_commands=False)
 server = Server()
+
+LOG = getLogger(__name__)
 
 class Run(Command):
 
@@ -44,7 +42,7 @@ class Run(Command):
 
     def sync_blueprints(self, app):
         blueprints_fabrics(app, get_blueprints(app))
-        error_pages(app, get_blueprint_name(app))
+        error_pages(app)
 
     def runserver(self, host, port, debug, reload):
         print(' _____   __   _  __    __ __    __ ')
@@ -56,24 +54,16 @@ class Run(Command):
         print('')
         print('-------------------------------------------------------')
         print('')
-        logger.info('Environment: ' + "Debug" if debug else "Production" )
-        logger.info('Port: '+ str(port))
+        LOG.info('Environment: ' + "Debug" if debug else "Production" )
+        LOG.info('Port: '+ str(port))
         print('')
         print('-------------------------------------------------------')
         from datetime import datetime
-        logger.info(datetime.utcnow())
-        print('')
-        version = server.get_version()
-        last_version = server.get_last_version()
-        if version != None:
-            logger.info('Onyx Version : '+version)
-            logger.info('Onyx Last Version : '+last_version)
-            if version != last_version:
-                server.update()
+        LOG.info(datetime.utcnow())
         print('')
         print('-------------------------------------------------------')
-        logger.info('You can access to Onyx with : http://'+host+':'+str(port))
-        logger.info('You can close Onyx at any time with Ctrl-C')
+        LOG.info('You can access to Onyx with : http://'+host+':'+str(port))
+        LOG.info('You can close Onyx at any time with Ctrl-C')
         print('')
         print('-------------------------------------------------------')
         self.sync_blueprints(app)

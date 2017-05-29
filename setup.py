@@ -76,7 +76,8 @@ setup(name="onyxproject",
         'SpeechRecognition',
         'gtts',
         'Flask-Turbolinks',
-        'chatterbot'
+        'chatterbot',
+        'geopy'
         ],
       options={
           'bdist_wheel': {'universal': True},

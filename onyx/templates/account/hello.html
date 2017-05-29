@@ -1,34 +1,154 @@
-{% extends 'layout/login.html' %}
-
-{% set title = _("Home") %}
-
-{% block body %}
-
-<link href="{{ url_for('static', filename='css/materialize.css') }}" rel="stylesheet" type="text/css" />
-
-<style type="text/css">
-    body {
-        background-image: url(/static/img/login/login.jpg);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    .content{
-        text-align: center;
-        margin-top: 25%;
-    }
-</style>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Onyx</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="{{ url_for('static', filename='css/materialize.css') }}" rel="stylesheet" type="text/css" />
+    {% include 'dependencies/flash.html' %}  <!-- Include flash -->
+    <link href="{{ url_for('static', filename='css/hello.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body>
 
 
+<center>
+  <img src="{{ url_for('static', filename='img/logo/blue darken-1.png') }}" height="200px"><br>
+  <h1 id="onyxtext" class="white_text"><b>{{_("Hi, I'm Onyx.")}}</b></h1>
+</center>
+
+<div class="row">
+     <div class="col s4">
+       <div id="search_container" class="hover_container">
+               <form target="_blank" id="search_form" action="https://google.com/search" method="get" class="hover_item">
+                   <input id="search_input" class="typeahead white_text" type="search" name="q" autocomplete="off" placeholder="{{_('Google Search')}}"></input>
+               </form>
+       </div>
+     </div>
+     <div class="col s4 offset-s4">
+       <div id="onyx_container" class="hover_container">
+         <center>
+           <div id="weather"></div>
+            <a href="{{ url_for('auth.login',next=next) }}" class="btn blue" >{{_("Login")}}</a>
+            <a href="{{ url_for('auth.register') }}" class="btn blue" >{{_("Register")}}</a>
+          </center>
+       </div>
+     </div>
+</div>
 
 
-	<h1 style="color: white;">{{_("Onyx")}}</h1>
-    </br>
-	<a href="{{ url_for('auth.login',next=next) }}" class="btn blue" >{{_("Login")}}</a>
-	<a href="{{ url_for('auth.register') }}" class="btn blue" >{{_("Register")}}</a>
+
+<div id="bottom_right_container" class="hover_container">
+
+       <!-- Time -->
+       <div id="time_container" class="hover_item">
+           <span id="time" class="white_text white_text_shadow"></span>
+       </div>
+
+       <!-- Weather -->
+       <a id="weather_results">
+           <div id="weather_container" class="hover_item">
+
+               <!-- Conditions and Temperature -->
+               <div id="weather_temperature_container">
+                   <span id="weather_temperature" class="white_text white_text_shadow"></span>
+                   <span id="weather_temperature_units" class="white_text white_text_shadow">°</span>
+               </div>
+
+               <!-- Loading spinner -->
+               <div id="weather_spinner" class="spinner">
+                   <div id="weather_double_bounce1" class="double_bounce1"></div>
+                   <div id="weather_double_bounce2" class="double_bounce2"></div>
+               </div>
+
+               <!-- Location -->
+               <span id="weather_location" class="white_text white_text_shadow"></span>
+           </div>
+       </a>
+
+</div>
+
+<script src="https://s3-us-west-2.amazonaws.com/reallysimpleweather/reallysimpleweather-1.1.0.min.js"></script>
+<script>
+
+$( document ).ready(function() {
+
+    $('#search_container').css('display', 'block');
+    $('#search_container .hover_item').css('opacity', 1);
+
+    $('#time_container').css('display', 'block');
+    $('#time_container').css('opacity', 1);
+
+    $('#weather_container').css('display', 'block');
+    $('#weather_container').css('opacity', 1);
+
+
+});
+
+$.get("http://ip-api.com/json", function(response) {
+    $('#weather_location').text(response.city);
+    reallySimpleWeather.weather({
+        wunderkey: '', // leave blank for Yahoo
+        location: response.city, //your location
+        woeid: '', // "Where on Earth ID"
+        unit: 'c', // 'c' also works
+        success: function(weather) {
+          $('#weather_temperature').text(weather.temp);
+        }
+    });
+}, "jsonp");
 
 
 
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  $('#time').text(h+":"+m);
+  t = setTimeout(function() {
+    startTime()
+  }, 500);
+}
+startTime();
+
+</script>
 
 
+</body>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/theater.min.js') }}"></script>
+<script type="text/javascript">
+    var theater = theaterJS({ locale: 'en' });
+    theater.addActor('onyxtext', {
+        accuracy: 0.9, speed: 1,
+        minSpeed: {
+            erase: 90,
+            type: 80
+        }
+    });
 
-{% endblock %}
+    theater
+    .addScene('onyxtext:{{_("Hi !")}}')
+    .addScene(800)
+    .addScene(-'{{_("Hi !")}}'.length)
+    .addScene('{{_("My name is Onyx.")}}')
+    .addScene(900)
+    .addScene(-'{{_("My name is Onyx.")}}'.length)
+    .addScene('{{_("Your personnal assistant !")}}')
+    .addScene(1000)
+    .addScene(-'{{_("Your personnal assistant !")}}'.length)
+    .addScene('Onyx')
+    .addScene(900)
+</script>
+</html>

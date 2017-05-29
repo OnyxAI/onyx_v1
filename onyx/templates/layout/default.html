@@ -7,11 +7,11 @@
     {% include 'dependencies/flash.html' %}  <!-- Include flash -->
     <title>{{ title + ' | Onyx'|default('Onyx') }}</title>
 </head>
-<body>
+<body style="background-color: {{g.user.background_color}};">
     <div class="loader"></div>
     {% include 'layout/tutorial.html' %} <!-- Include tutorial -->
     <div class="navbar">{% include 'layout/navbar.html' %}</div> <!-- Include navbar -->
-    {% include 'layout/bot.html' %} <!-- Include actions -->
+    {% include 'layout/kernel.html' %} <!-- Include kernel -->
     <div class="main">
         <div class="content">
           <div class="container">
@@ -19,7 +19,7 @@
           </div>
         </div> <!-- Include body -->
     </div>
-{% include 'dependencies/js.html' %}  <!-- Include js files -->
+{% include 'dependencies/js.html' %} <!-- Include js files -->
 {% block script %}{% endblock %}
 </body>
 </html>

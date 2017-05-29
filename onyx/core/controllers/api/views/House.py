@@ -17,11 +17,7 @@ from onyx.api.house import *
 from onyxbabel import gettext
 
 house = House()
-
-@api.route('house')
-@login_required
-def get_house():
-    """
+"""
     @api {get} /house Request Houses Information
     @apiName getHouse
     @apiGroup House
@@ -38,13 +34,13 @@ def get_house():
 
     @apiError HouseNotFound No House Found
 
-    """
+"""
+@api.route('house')
+@login_required
+def get_house():
     return house.get()
 
-@api.route('house/add', methods=['POST'])
-@login_required
-def add_house():
-    """
+"""
     @api {post} /house/add Add House
     @apiName addHouse
     @apiGroup House
@@ -61,7 +57,10 @@ def add_house():
 
     @apiError AlreadyExist This House already Exist
 
-    """
+"""
+@api.route('house/add', methods=['POST'])
+@login_required
+def add_house():
     try:
         house.name = request.form['name']
         house.address = request.form['address']
@@ -72,13 +71,9 @@ def add_house():
         house.longitude = request.form['longitude']
         return house.add()
     except HouseException:
-		return house.add()
+        return house.add()
 
-
-@api.route('house/delete/<int:id>')
-@login_required
-def delete_house(id):
-    """
+"""
     @api {delete} /house/delete Delete House
     @apiName deleteHouse
     @apiGroup House
@@ -90,7 +85,10 @@ def delete_house(id):
 
     @apiError HouseNotFound No House Found
 
-    """
+"""
+@api.route('house/delete/<int:id>')
+@login_required
+def delete_house(id):
     try:
         house.id = id
         return house.delete()

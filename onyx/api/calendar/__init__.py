@@ -71,15 +71,15 @@ class Calendar:
             events = []
 
             for fetch in query:
-        		e = {}
-        		e['id'] = fetch.id
-        		e['title'] = fetch.title
-        		e['notes'] = fetch.notes
-        		e['lieu'] = fetch.lieu
-        		e['start'] = fetch.start
-        		e['end'] = fetch.end
-        		e['color'] = fetch.color
-        		events.append(e)
+                e = {}
+                e['id'] = fetch.id
+                e['title'] = fetch.title
+                e['notes'] = fetch.notes
+                e['lieu'] = fetch.lieu
+                e['start'] = fetch.start
+                e['end'] = fetch.end
+                e['color'] = fetch.color
+                events.append(e)
 
             return json.encode(events)
         except Exception as e:
@@ -98,15 +98,15 @@ class Calendar:
             events = []
 
             for fetch in query:
-        		e = {}
-        		e['id'] = fetch.id
-        		e['title'] = fetch.title
-        		e['notes'] = fetch.notes
-        		e['lieu'] = fetch.lieu
-        		e['start'] = fetch.start
-        		e['end'] = fetch.end
-        		e['color'] = fetch.color
-        		events.append(e)
+                e = {}
+                e['id'] = fetch.id
+                e['title'] = fetch.title
+                e['notes'] = fetch.notes
+                e['lieu'] = fetch.lieu
+                e['start'] = fetch.start
+                e['end'] = fetch.end
+                e['color'] = fetch.color
+                events.append(e)
 
             events.append({"status":"success"})
             return json.encode(events)

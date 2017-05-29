@@ -33,7 +33,7 @@ class Test_Calendar:
         assert result['status'] == 'success'
 
     def test_get_event(self, db, user_test_a):
-        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', idAccount=user_test_a.id)
+        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', user=user_test_a.id)
         db.session.add(get_event)
         db.session.commit()
 
@@ -43,7 +43,7 @@ class Test_Calendar:
         assert result[0]['title'] == 'Party'
 
     def test_get_meet(self, db, user_test_a):
-        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start=strftime("%Y-%m-%d 10:58:00"), end='2017-05-29 22:00:00', color='#0071c5', idAccount=user_test_a.id)
+        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start=strftime("%Y-%m-%d 10:58:00"), end='2017-05-29 22:00:00', color='#0071c5', user=user_test_a.id)
         db.session.add(get_event)
         db.session.commit()
 
@@ -53,7 +53,7 @@ class Test_Calendar:
         assert result[0]['title'] == 'Party'
 
     def test_update_date(self, db, user_test_a):
-        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', idAccount=user_test_a.id)
+        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', user=user_test_a.id)
         db.session.add(get_event)
         db.session.commit()
 
@@ -66,7 +66,7 @@ class Test_Calendar:
         assert result['status'] == 'success'
 
     def test_delete_event(self, db, user_test_a):
-        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', idAccount=user_test_a.id)
+        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', user=user_test_a.id)
         db.session.add(get_event)
         db.session.commit()
 
@@ -77,7 +77,7 @@ class Test_Calendar:
         assert result['status'] == 'success'
 
     def test_update_event(self, db, user_test_a):
-        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', idAccount=user_test_a.id)
+        get_event = CalendarModel.Calendar(title='Party', notes='With Maria', lieu='Park', start='2017-05-29 20:00:00', end='2017-05-29 22:00:00', color='#0071c5', user=user_test_a.id)
         db.session.add(get_event)
         db.session.commit()
 

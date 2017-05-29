@@ -15,7 +15,6 @@ from flask import g
 import importlib
 import onyx, pip, os, git, shutil
 import logging
-from onyx.skills.core import BASE_SKILLS
 
 logger = logging.getLogger()
 json = Json()
@@ -32,8 +31,10 @@ class Skill:
     def get(self):
         try:
             skills = [d for d in os.listdir(onyx.__path__[0] + "/skills/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/skills/", d))]
-            for base in BASE_SKILLS:
-                skills.remove(base)
+            try:
+                skills.remove('__pycache__')
+            except:
+                pass
             skill_tab = []
             for skill in skills:
                 json.path = onyx.__path__[0] + "/skills/"+skill+"/package.json"

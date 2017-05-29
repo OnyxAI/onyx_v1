@@ -4,10 +4,10 @@
 
 {% block body %}
 
-  <div class="card-panel white">
+  <div class="card-panel {{g.panel_color}}">
 
   {% if g.user.admin == 1 %}
-		<h2>{{_("Accounts")}}</h2>
+		<h2 class='{{g.text_color}}'>{{_("Accounts")}}</h2>
 
 		<ul class="collection">
 			{% for tab in id %}

@@ -46,7 +46,7 @@ class Navbar:
     def get(self):
         try:
             navbar = []
-            query = NavbarModel.Navbar.query.filter_by(idAccount=self.user).limit(11)
+            query = NavbarModel.Navbar.query.filter_by(user=self.user).limit(11)
             for key in query:
                 e = {}
                 e['id'] = key.id
@@ -68,7 +68,7 @@ class Navbar:
     def get_list(self):
         try:
             list = []
-            query = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.idAccount.endswith(self.user))
+            query = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.user.endswith(self.user))
             for fetch in query:
                 e = {}
                 e['id'] = fetch.id
@@ -132,7 +132,7 @@ class Navbar:
             user = UsersModel.User.query.all()
             for key in user:
                 for nav in data:
-                    query = NavbarModel.Navbar(idAccount=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                    query = NavbarModel.Navbar(user=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
                     db.session.add(query)
                     db.session.commit()
             logger.info('Navbar plugin set with success')
@@ -151,7 +151,7 @@ class Navbar:
             data = json.decode_path()
             user = UsersModel.User.query.filter_by(username=self.username).first()
             for nav in data:
-                query = NavbarModel.Navbar(idAccount=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                query = NavbarModel.Navbar(user=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
                 db.session.add(query)
                 db.session.commit()
             logger.info('Navbar use set with success')
@@ -171,7 +171,7 @@ class Navbar:
             user = UsersModel.User.query.all()
             for key in user:
                 for nav in data:
-                    query = NavbarModel.Navbar.query.filter_by(idAccount=key.id,tooltip=nav['tooltip']).first()
+                    query = NavbarModel.Navbar.query.filter_by(user=key.id,tooltip=nav['tooltip']).first()
                     query.url = None
                     query.tooltip = "Undefined"
                     query.fa = None

@@ -1,0 +1,12 @@
+{
+  "name": "Media",
+  "raw": "media",
+  "version": "1.0.0",
+  "description": "Control Media on Onyx",
+  "packages":[],
+  "dependencies": [],
+  "author": "Cassim Khouani",
+  "license": "Creative Commons 3.0 France",
+  "navbar": "False",
+  "data": "False"
+}

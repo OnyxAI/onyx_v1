@@ -1,16 +1,26 @@
-{% macro get_js(nom_fichiers , extension='js') -%}
-  {% for fichier in nom_fichiers %}
-      <script src="{{ url_for('static', filename='js/' + fichier + '.' + extension) }}"></script>
+{% macro get_js(file_name , extension='js') -%}
+  {% for file in file_name %}
+      <script src="{{ url_for('static', filename='js/' + file + '.' + extension) }}"></script>
   {% endfor %}
 {%- endmacro %}
 
-{{ get_js(['jquery.min', 'materialize', 'jquery-ui.min', 'lang-all', 'gcal', 'wikipedia', 'bot', 'utilities', 'turbolinks',  'tutorial']) }}
+{{ get_js(['jquery.min', 'jquery-ui.min', 'lang-all', 'gcal', 'wikipedia', 'bot', 'utilities', 'tutorial']) }}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.min.js"></script>
 
-<!-- Scripts -->
+{{ get_js(['materialize']) }}
 
-<!-- <script type="text/javascript">$(window).load(function(){ $(".loader").fadeOut("200"); });</script> -->
 <script type="text/javascript">$('.loader').hide();</script>
 <script type="text/javascript">$('.button-collapse').sideNav();</script>
+<script type="text/javascript">
+$(document).ready(function() {
+  var current_route = "{{request.url_rule.endpoint}}";
+  var tutorial = "{{g.user.tutorial}}";
+
+  if (tutorial == 0){
+    $('.tutorial_'+current_route.split(".")[1]).tapTarget('open');
+  }
+
+});
+</script>

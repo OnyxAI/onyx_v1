@@ -27,6 +27,11 @@ install = Install()
 option = Options()
 server = Server()
 
+@core.route('teste')
+def teste():
+	flash(gettext('Account changed successfully' ), 'success')
+	return redirect(url_for('core.index'))
+
 @core.route('options' , methods=['GET','POST'])
 @login_required
 def options():
@@ -36,15 +41,28 @@ def options():
 		try:
 			option.user = current_user.id
 			if request.form.get('color') == None:
-				option.color = current_user.buttonColor
+				option.color = current_user.color
 			else:
 				option.color = request.form.get('color')
-			option.set_account()
+			option.change_color()
 			flash(gettext('Account changed successfully' ), 'success')
 			return redirect(url_for('core.options'))
 		except OptionsException:
 			flash(gettext("An error has occured"), 'error')
 			return redirect(url_for('core.options'))
+
+@core.route('change_background', methods=['POST'])
+@login_required
+def change_background():
+	try:
+		option.user = current_user.id
+		option.background = request.form.get('background')
+		option.change_background_color()
+		flash(gettext('Account changed successfully' ), 'success')
+		return redirect(url_for('core.options'))
+	except OptionsException:
+		flash(gettext("An error has occured"), 'error')
+		return redirect(url_for('core.options'))
 
 @core.route('change_lang', methods=['POST'])
 @admin_required

@@ -35,7 +35,7 @@ def app():
 def testapp(app):
     """A Webtest app."""
     blueprints_fabrics(app, get_blueprints(app))
-    error_pages(app, get_blueprint_name(app))
+    error_pages(app)
     return TestApp(app)
 
 @pytest.yield_fixture(scope='function')

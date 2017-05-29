@@ -3,11 +3,11 @@
   {% for nav in g.navbar %}
   {% if nav.url == None %}
   <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
-    <a href="{{ url_for('core.index') }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}"></a>
+    <a href="{{ url_for('core.index') }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}"></a>
   </div>
   {% else %}
    <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
-    <a id="menu_{{ nav.fa }}" href="{{ url_for(nav.url) }}" class="btn-floating btn-large {{ buttonColor }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
+    <a id="menu_{{ nav.fa }}" href="{{ url_for(nav.url) }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
       <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
     </a>
   </div>
@@ -16,11 +16,11 @@
 
   <!-- Avatar -->
   <div class="fixed-action-btn vertical" style="bottom: 100px; right: 3%;">
-    <a href="#" id="avatar" class="button-collapse" data-activates="slide-out"><img class="circle" style="max-width: 60px;" src="{{ g.avatar }}">{% if g.notifs|length != 0 %}<span class="badge new {{buttonColor}}">{{g.notifs|length}}</span>{% endif %}  </a>
+    <a href="#" id="avatar" class="button-collapse" data-activates="slide-out"><img class="circle" style="max-width: 60px;" src="{{ g.avatar }}">{% if g.notifs|length != 0 %}<span class="badge new {{g.color}}">{{g.notifs|length}}</span>{% endif %}  </a>
   </div>
 
   <div class="fixed-action-btn" style="bottom: 200px; right: 3.1%;">
-      <a id="onyx_help" onclick="open_onyx();" class="btn btn-floating btn-large {{buttonColor}}"><i class="large fa fa-android" aria-hidden="true"></i></a>
+      <a id="onyx_help" onclick="open_onyx();" class="btn btn-floating btn-large {{g.color}}"><i class="large fa fa-android" aria-hidden="true"></i></a>
   </div>
 </ul>
 
@@ -31,12 +31,12 @@
       <li><a href="{{ url_for(nav.url) }}">{{nav.tooltip}}</a></li>
     {% endif %}
   {% endfor %}
-  <li><a href="{{ url_for('auth.logout') }}">{{_("Log Out")}}</a></li>
+  <li><a href="{{ url_for('auth.logout') }}"  data-no-turbolink="true" >{{_("Log Out")}}</a></li>
 </ul>
 
 <!-- Mobile Button -->
 <div class="fixed-action-btn" style="height: 50px; top: 70px; right: 3%;">
-  <a href="" data-activates="nav-mobile" class=" button-collapse btn-floating btn-large {{ buttonColor }}">
+  <a href="" data-activates="nav-mobile" class=" button-collapse btn-floating btn-large {{ g.color }}">
     <i class="large material-icons">reorder</i>
   </a>
 </div>
@@ -44,7 +44,7 @@
 <!-- Logo -->
 <div class="main">
   <a href="{{ url_for('core.index') }}">
-    <img style="max-width: 100%; height:250px; " class="responsive-img" src="{{ url_for('static', filename='img/logo/'+buttonColor+'.png') }}" alt="Logo"/>
+    <img style="max-width: 100%; height:250px; " class="responsive-img" src="{{ url_for('static', filename='img/logo/'+g.color+'.png') }}" alt="Logo"/>
   </a>
 </div>
 
@@ -56,10 +56,10 @@
     <span class="white-text name">{{ g.user.username }}</span>
     <span class="white-text email">{{ g.user.email }}</span>
   </div></li>
-  <li><span class="badge new {{buttonColor}}">{{g.notifs|length}}</span><a href="{{ url_for('core.notifications') }}">{{_("Notifications")}}</a></li>
+  <li><span class="badge new {{g.color}}">{{g.notifs|length}}</span><a href="{{ url_for('core.notifications') }}">{{_("Notifications")}}</a></li>
   <li><a href="{{ url_for('auth.change_account') }}">{{_("My Account")}}</a></li>
   <li><div class="divider"></div></li>
-  <li><a href="{{ url_for('auth.logout') }}">{{_("Log Out")}}</a></li>
+  <li><a href="{{ url_for('auth.logout') }}"  data-no-turbolink="true" >{{_("Log Out")}}</a></li>
 </ul>
 
 <script type="text/javascript">$('.button-collapse').sideNav();</script>

@@ -34,8 +34,8 @@ def add_house():
         flash(gettext('House Add'), 'success')
         return redirect(url_for('core.options'))
     except HouseException:
-		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.options'))
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('core.options'))
 
 
 @core.route('house/delete/<int:id>')

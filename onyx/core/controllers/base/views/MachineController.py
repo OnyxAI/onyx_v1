@@ -31,8 +31,8 @@ def add_machine():
         flash(gettext('Machine Add'), 'success')
         return redirect(url_for('core.options'))
     except MachineException:
-			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.options'))
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('core.options'))
 
 
 @core.route('machine/delete/<int:id>')

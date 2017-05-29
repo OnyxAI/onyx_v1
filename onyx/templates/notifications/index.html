@@ -4,8 +4,8 @@
 
 {% block body %}
 
-<div class="card-panel white">
-  <h1>{{_('Notifications')}}</h1>
+<div class="card-panel {{g.panel_color}}">
+  <h1 class='{{g.text_color}}'>{{_('Notifications')}}</h1>
 
    {% if g.all_notifs == [] %}
      <center><h3>{{_("You do not have notifications")}}</h3></center>

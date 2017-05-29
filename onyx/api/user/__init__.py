@@ -38,6 +38,8 @@ class User:
         self.email = None
         self.admin = None
         self.tutorial = 0
+        self.background_color = '#efefef'
+        self.color = 'indigo darken-1'
 
     def get(self):
         try:
@@ -48,11 +50,13 @@ class User:
                 user['id'] = fetch.id
                 user['admin'] = fetch.admin
                 user['username'] = fetch.username
-                user['buttonColor'] = fetch.buttonColor
+                user['color'] = fetch.color
+                user['background_color'] = fetch.background_color
                 user['password'] = fetch.password
                 user['email'] = fetch.email
                 user['tutorial'] = fetch.tutorial
                 users.append(user)
+
             logger.info('Getting users data successfully')
             return json.encode(users)
         except Exception as e:
@@ -68,7 +72,8 @@ class User:
             user['id'] = query.id
             user['admin'] = query.admin
             user['username'] = query.username
-            user['buttonColor'] = query.buttonColor
+            user['color'] = query.color
+            user['background_color'] = query.background_color
             user['password'] = query.password
             user['email'] = query.email
             user['tutorial'] = query.tutorial
@@ -85,7 +90,7 @@ class User:
             db.session.rollback()
             if self.password == self.verifpassword:
                 hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
-                user = UsersModel.User(admin=0, username=self.username, password=hashpass, email=self.email, tutorial=self.tutorial)
+                user = UsersModel.User(admin=0, username=self.username, password=hashpass, email=self.email, tutorial=self.tutorial, background_color=self.background_color, color=self.color)
 
                 db.session.add(user)
                 db.session.commit()
@@ -107,7 +112,7 @@ class User:
             json.path = onyx.__path__[0] + "/data/user/navbar.json"
             navbar = json.decode_path()
             for key in navbar:
-                query = NavbarModel.Navbar(idAccount=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
+                query = NavbarModel.Navbar(user=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
             for module in plugin:
@@ -126,7 +131,7 @@ class User:
             password = self.password.encode('utf-8')
             registered_user = UsersModel.User.query.filter_by(email=self.email,password=hashlib.sha1(password).hexdigest()).first()
             if registered_user is None:
-                logger.error("Wrong for : " + registered_user.username)
+                logger.error("Wrong informations")
                 return 0
             login_user(registered_user)
             registered_user.authenticated = True
@@ -162,7 +167,7 @@ class User:
                 deleteEvent = CalendarModel.Calendar.query.filter_by(id=fetch.id).first()
                 db.session.delete(deleteEvent)
                 db.session.commit()
-            deleteNavbar = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.idAccount.endswith(id_delete))
+            deleteNavbar = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.user.endswith(id_delete))
             for fetch in deleteNavbar:
                 deleteNavbarRow = NavbarModel.Navbar.query.filter_by(id=fetch.id).first()
                 db.session.delete(deleteNavbarRow)

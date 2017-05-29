@@ -10,40 +10,32 @@ You may not use this software for commercial purposes.
 
 import os
 import sys
-try:
-    import Onyx
-    sys.path.append(str(Onyx.__path__[0]))
-except:
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from flask import Flask, render_template, redirect, url_for
-from onyx.extensions import (db, mail, login_manager, babel, cache)
+from onyx.extensions import (db, login_manager, babel, cache)
 from flask_login import current_user
 from onyx.config import get_config
 from onyx.plugins import plugin
 from onyx.api.assets import Json
 from onyx.api.server import *
-from flask_turbolinks import turbolinks
+from onyx.util.log import getLogger
+import threading
+
+from onyx.api.kernel import Kernel
+
+from onyx.messagebus.client.ws import WebsocketClient
+from onyx.messagebus.message import Message
 
 server = Server()
-
+LOG = getLogger(__name__)
 json = Json()
+kernel = Kernel()
 
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
-
-server.create_config_file()
 from onyx.flask_config import ProdConfig, Config
 
-
-#Log
-import logging
-from logging.handlers import RotatingFileHandler
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-
-__all__ = ('create_app','blueprints_fabrics', 'get_blueprints', 'get_blueprint_name', 'error_pages')
+__all__ = ('create_app','blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
 
 def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
+
 
     app = Flask(app_name,
         static_folder = 'static',
@@ -55,37 +47,28 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
         app.config.from_object(config)
 
     extensions_fabrics(app)
-    set_log()
     gvars(app)
+
+
+    t = threading.Thread(target=create_ws, args=(app,))
+    t.start()
 
     with app.app_context():
         db.create_all()
 
     return app
 
-def set_bot():
-    kernel = ChatBot("Onyx",
-        storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
-        logic_adapters=[
-            "chatterbot.logic.MathematicalEvaluation",
-            "chatterbot.logic.TimeLogicAdapter",
-            "chatterbot.logic.BestMatch"
-        ],
-        input_adapter="chatterbot.input.VariableInputTypeAdapter",
-        output_adapter="chatterbot.output.OutputAdapter",
-        output_format="text",
-        database= onyx.__path__[0] + "/db/bot_data.db"
-    )
+def create_ws(app):
+    with app.app_context():
+        ws_app = ws()
+        ws_app.on('onyx.kernel.get', kernel.get)
+        ws_app.run_forever()
 
-    kernel.set_trainer(ChatterBotCorpusTrainer)
-    try:
-        kernel.train(
-            onyx.__path__[0] + "/data/sentences/" + config.get('Base', 'lang') + "/"
-        )
-    except:
-        pass
+def ws():
+    ws = WebsocketClient()
 
-    return kernel
+    return ws
+
 
 def init_plugin(app):
     with app.app_context():
@@ -95,23 +78,23 @@ def init_plugin(app):
             except:
                 module.init()
 
-def get_blueprint_name(app):
-    return 'core'
-
-
 def get_blueprints(app):
+
     from onyx.core.controllers.base import core
     from onyx.core.actions import action
+    from onyx.core.bot import bot
     from onyx.core.controllers.auth import auth
     from onyx.core.controllers.api import api
     from onyx.core.widgets import widgets
     from onyx.core.controllers.install import install
-    BLUEPRINTS = [core, auth, api, action, widgets,]
+
+    BLUEPRINTS = [core, auth, api, action, widgets, bot]
+
     for module in plugin:
         try:
             BLUEPRINTS.append(module.get_blueprint())
         except:
-            print('No Blueprint for module : ' + module.get_name())
+            LOG.info('No Blueprint for plugin : ' + module.get_name())
 
     for blueprint in BLUEPRINTS:
         @blueprint.before_request
@@ -119,15 +102,10 @@ def get_blueprints(app):
             if app.config['INSTALL'] == False:
                 return redirect(url_for('install.index'))
 
+
+
     BLUEPRINTS.append(install)
     return BLUEPRINTS
-
-
-def set_log():
-    steam_handler = logging.StreamHandler()
-    steam_handler.setLevel(logging.INFO)
-    logger.addHandler(steam_handler)
-
 
 
 def blueprints_fabrics(app, blueprints):
@@ -140,10 +118,27 @@ def blueprints_fabrics(app, blueprints):
 
 def extensions_fabrics(app):
     db.init_app(app)
-    mail.init_app(app)
     babel.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app)
+
+def error_pages(app):
+
+    @app.errorhandler(403)
+    def forbidden_page(error):
+        return render_template("404.html"), 403
+
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template("404.html"), 404
+
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        return render_template("404.html"), 404
+
+    @app.errorhandler(500)
+    def server_error_page(error):
+        return render_template("404.html"), 500
 
 def gvars(app):
     @app.before_request
@@ -173,14 +168,6 @@ def gvars(app):
         return dict(get_variable=get_variable)
 
     @app.context_processor
-    def ButtonColor():
-        try:
-            buttonColor = current_user.buttonColor
-        except:
-            buttonColor = ""
-        return dict(buttonColor=str(buttonColor))
-
-    @app.context_processor
     def gravatar():
         def urlPicAvatar(id):
             user.id = id
@@ -201,6 +188,8 @@ def gvars(app):
             db.session.remove()
         db.session.remove()
 
+
+
     try:
         @babel.localeselector
         def get_locale():
@@ -215,21 +204,3 @@ def gvars(app):
                 return 'fr'
     except AssertionError:
         pass
-
-def error_pages(app , name):
-
-    @app.errorhandler(403)
-    def forbidden_page(error):
-        return render_template("404.html", blueprint=name), 403
-
-    @app.errorhandler(404)
-    def page_not_found(error):
-        return render_template("404.html" , blueprint=name), 404
-
-    @app.errorhandler(405)
-    def method_not_allowed(error):
-        return render_template("404.html", blueprint=name), 404
-
-    @app.errorhandler(500)
-    def server_error_page(error):
-        return render_template("404html", blueprint=name), 500

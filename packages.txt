@@ -27,3 +27,4 @@ libportaudiocpp0
 portaudio19-dev
 flac
 mplayer
+python-alsaaudio

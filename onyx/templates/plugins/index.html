@@ -4,32 +4,30 @@
 
 {% block body %}
 
-<h1>{{_("Plugins")}}</h1>
+<h1 class="{{g.text_color}}">{{_("Plugins")}}</h1>
 
 <div class="row">
   <div class="col s12">
-      <ul class="tabs">
-          <li class="tab col s3"><a class="active" href="#get">{{_('Plugins')}}</a></li>
-          <li class="tab col s3"><a href="#install">{{_('Install')}}</a></li>
-          <li class="tab col s3"><a href="#install_url">{{_('Install With URL')}}</a></li>
+      <ul class="tabs {{g.panel_color}}">
+          <li class="tab col s3 {{g.text_color}}"><a class="active" href="#get">{{_('Plugins')}}</a></li>
+          <li class="tab col s3 {{g.text_color}}"><a href="#install">{{_('Install')}}</a></li>
+          <li class="tab col s3 {{g.text_color}}"><a href="#install_url">{{_('Install With URL')}}</a></li>
     </ul>
     </div>
 </div>
 
 <div id="get" >
-<div class="card-panel white">
-
-
+<div class="card-panel {{g.panel_color}}">
 
 <div class="row">
 
 {% if plugins == [] %}
-<h4>{{ _('You have not install some plugin') }}</h4>
+<h4 class='{{g.text_color}}'>{{ _('You have not install some plugin') }}</h4>
 {% else %}
 {% for plugin in plugins %}
 <div class="col s4">
 <h2 class="header">{{plugin['name']}}</h2>
-	<div class="card horizontal blue-grey darken-1">
+	<div class="card horizontal blue-grey darken-1 z-depth-5">
 		<div class="card-stacked">
 			<div class="card-content">
 				<p>{{plugin['desc']}}</p><br>
@@ -57,13 +55,13 @@
 </div>
 
 <div id="install" >
-<div class="card-panel white">
+<div class="card-panel {{g.panel_color}}">
 <div class="row">
 
 {% for list in lists %}
 
 	<div class="col s4">
-		<div class="card">
+		<div class="card z-depth-5">
 			<div class="card-image waves-effect waves-block waves-light">
 				<img class="activator" src="{{ list['img'] }}">
 			</div>
@@ -131,7 +129,7 @@
 </div>
 
 <div id="install_url" >
-<div class="card-panel white">
+<div class="card-panel {{g.panel_color}}">
 
 <form action="{{ url_for('core.install_url') }}" method="post">
  	<label for="url">{{ _('URL') }}</label>
@@ -140,7 +138,7 @@
 	<label for="name">{{ _('Plugin Name') }}</label>
 	<input type="text" placeholder="{{ _('Plugin Name') }}" name="name" id="name"><br>
 
-	<button class="btn {{buttonColor}}">{{ _('Send') }}</button>
+	<button class="btn {{g.color}}">{{ _('Send') }}</button>
 </form>
 
 </div>

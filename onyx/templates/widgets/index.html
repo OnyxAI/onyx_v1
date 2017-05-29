@@ -3,25 +3,25 @@
 {% set title = _("Widgets") %}
 
 {% block body %}
-<div class="card-panel white">
-	<h1>{{ _("Widgets") }}</h1>
-	<h3>{{_("Add")}}</h3>
+<div class="card-panel {{g.panel_color}}">
+	<h1 class="{{g.text_color}}">{{ _("Widgets") }}</h1>
+	<h3 class="{{g.text_color}}">{{_("Add")}}</h3>
 
 	<form action="" method="post">
-		<label for="box" >{{_("Widgets")}}</label>
+		<label for="box" class="{{g.text_color}}">{{_("Widgets")}}</label>
 		<select name="box" class="browser-default">
 			{% for box in list %}
 					<option value="{{box.name}}|{{box.url}}|{{box.see_more}}">{{box.name}}</option>
 			{% endfor %}
 		</select><br>
-		<button type="submit" class="btn {{buttonColor}}">{{_("Add")}}</button>
+		<button type="submit" class="btn {{g.color}}">{{_("Add")}}</button>
 	</form>
 
 
   <div class="row">
 			{% for box in boxs %}
 			<div class="col s4">
-			  <div class="card {{ box.color }}">
+			  <div class="card {{ box.color }} z-depth-5">
 					<div class="card-content">
 			      <span class="card-title">{{_(box.name)}}</span>
 						<a href="{{ url_for('core.widget_delete' , id=box.id) }}" class="secondary-content"><i class="fa fa-times" aria-hidden="true"></i></a>

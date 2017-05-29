@@ -4,12 +4,12 @@
 
 {% block body %}
 
-<div class="card-panel white">
-  <h1>{{_("Wiki")}}</h1>
+<div class="card-panel {{g.panel_color}}">
+  <h1 class='{{g.text_color}}'>{{_("Wiki")}}</h1>
 
   <form method="post" >
-    <input type="text" class="searchbox" value="{{_('Search')}} ..." onblur="if(this.value == '') { this.value = '{{_('Search')}} ...'; }" onfocus="if(this.value == '{{_('Search')}} ...') { this.value = ''; }" name="search">
-    <button type="submit" class="btn {{buttonColor}}">{{_("Send")}}</button>
+    <input class='{{g.text_color}}' type="text" class="searchbox" value="{{_('Search')}} ..." onblur="if(this.value == '') { this.value = '{{_('Search')}} ...'; }" onfocus="if(this.value == '{{_('Search')}} ...') { this.value = ''; }" name="search">
+    <button type="submit" class="btn {{g.color}}">{{_("Send")}}</button>
 </form>
 
 </div>

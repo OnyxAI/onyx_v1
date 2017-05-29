@@ -22,7 +22,7 @@ class Test_Options:
 
         option.user = user_test_a.id
         option.color = 'dark-blue'
-        result = json.loads(option.set_account())
+        result = json.loads(option.change_color())
 
         assert result['status'] == 'success'
-        assert user_test_a.buttonColor == 'dark-blue'
+        assert user_test_a.color == 'dark-blue'

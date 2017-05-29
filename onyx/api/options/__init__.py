@@ -30,6 +30,7 @@ class Options:
     def __init__(self):
         self.user = None
         self.color = None
+        self.background = '#efefef'
         self.lang = 'en-US'
 
     """
@@ -37,11 +38,27 @@ class Options:
 
         Modifier la couleur d'un utilisateur
     """
-    def set_account(self):
+    def change_color(self):
         try:
             query = UsersModel.User.query.filter_by(id=self.user).first()
 
-            query.buttonColor = self.color
+            query.color = self.color
+
+            db.session.add(query)
+            db.session.commit()
+
+            logger.info('User ' + query.username + ' updated successfully')
+            return json.encode({"status":"success"})
+        except Exception as e:
+            logger.error('User update error : ' + str(e))
+            raise OptionsException(str(e))
+            return json.encode({"status":"error"})
+
+    def change_background_color(self):
+        try:
+            query = UsersModel.User.query.filter_by(id=self.user).first()
+            
+            query.background_color = self.background
 
             db.session.add(query)
             db.session.commit()

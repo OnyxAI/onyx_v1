@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 
-from gtts import gTTS
+#from gtts import gTTS
 
 from onyx.client.tts import TTS
 from onyx.util import play_mp3
@@ -27,3 +27,4 @@ class GoogleTTS(TTS):
             p.communicate()
         except:
             p = play_mp3("http://translate.google.com/translate_tts?tl=" + self.lang + "&client=tw-ob&q=" + sentence)
+            p.communicate()

@@ -3,9 +3,9 @@
 {% set title = _("Weather") %}
 
 {% block body %}
-<div class="card-panel blue-grey white">
-	<h1>{{ _("Weather") }}</h1>
-	<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src=""> </iframe>
+<div class="card-panel {{g.panel_color}}">
+	<h1 class='{{g.text_color}}'>{{ _("Weather") }}</h1>
+	<iframe class='{{g.text_color}}' id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src=""> </iframe>
 </div>
 {% endblock %}
 

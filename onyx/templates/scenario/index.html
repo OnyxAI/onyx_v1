@@ -4,26 +4,26 @@
 
 {% block body %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <div class="card-panel white">
-<h1>{{_("Scenario")}}</h1>
+  <div class="card-panel {{g.panel_color}}">
+<h1 class='{{g.text_color}}'>{{_("Scenario")}}</h1>
 
-<table class="white responsive-table">
+<table class="{{g.panel_color}} responsive-table">
     <thead>
       <tr>
-          <th data-field="name">{{_('Name')}}</th>
-          <th data-field="template">{{_('Template')}}</th>
-          <th data-field="event">{{_('Event')}}</th>
-          <th>{{_('Delete')}}</th>
+          <th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
+          <th data-field="template" class='{{g.text_color}}'>{{_('Template')}}</th>
+          <th data-field="event" class='{{g.text_color}}'>{{_('Event')}}</th>
+          <th class='{{g.text_color}}'>{{_('Delete')}}</th>
       </tr>
     </thead>
 
     <tbody>
       {% for scenario in g.scenarios %}
         <tr>
-            <td>{{scenario.name}}</td>
-            <td>{{scenario.template}}</td>
-            <td>{{scenario.event}}</td>
-            <td><a href="{{url_for('core.delete_scenario', id=scenario.id)}}" class="btn {{buttonColor}}">{{_('Delete')}}</a></td>
+            <td class='{{g.text_color}}'>{{scenario.name}}</td>
+            <td class='{{g.text_color}}'>{{scenario.template}}</td>
+            <td class='{{g.text_color}}'>{{scenario.event}}</td>
+            <td class='{{g.text_color}}'><a href="{{url_for('core.delete_scenario', id=scenario.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
         </tr>
       {% endfor %}
       <tr>
@@ -34,10 +34,10 @@
 
 
   <br>
-  <h4>{{_('Add')}}</h4>
+  <h4 class='{{g.text_color}}'>{{_('Add')}}</h4>
   <form enctype='application/json' action="" method="post">
   <td><input placeholder="{{_('Name')}}" type="text" id="name" name="scenario" required></td>
-  <td><a class="waves-effect waves-light btn modal-trigger {{buttonColor}}" href="#modal" onclick="check_name()">{{_('Create')}}</a></td>
+  <td><a class="waves-effect waves-light btn modal-trigger {{g.color}}" href="#modal" onclick="check_name()">{{_('Create')}}</a></td>
 
 </div>
   </div>
@@ -178,7 +178,7 @@
             </tbody>
           </table>
           <br>
-          <button type="submit" name="button" class="btn {{buttonColor}}">{{_('Add')}}</button>
+          <button type="submit" name="button" class="btn {{g.color}}">{{_('Add')}}</button>
       </div>
     </div>
     </form>

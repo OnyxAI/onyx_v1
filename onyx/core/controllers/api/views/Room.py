@@ -61,7 +61,7 @@ def add_room():
         room.house = request.form['house']
         return room.add()
     except RoomException:
-			return room.add()
+        return room.add()
 
 
 @api.route('room/delete/<int:id>')

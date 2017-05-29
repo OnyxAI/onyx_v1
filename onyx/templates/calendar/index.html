@@ -4,17 +4,17 @@
 
 {% block body %}
 
-<h1>Calendrier</h1>
+<h1 class='{{g.text_color}}'>{{_('Calendar')}}</h1>
 
 <!-- Page Content -->
 
 
-<div id="calendar" class="col-centered">
+<div id="calendar" class="col-centered {{g.text_color}}">
 
 
 
   <!-- Modal -->
-  <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal fade {{g.panel_color}}" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <form class="form-horizontal" method="POST" action="{{ url_for('core.calendars') }}">
@@ -43,7 +43,7 @@
           <div class="form-group">
             <label for="color" class="col-sm-2 control-label">{{_("Color")}}</label>
             <div class="col-sm-10">
-              <select name="color" class="browser-default" id="color">
+              <select name="color" class="browser-default {{g.panel_color}}" id="color">
                 <option value="">{{_("Choose")}}</option>
                 <option style="color:#0071c5;" value="#0071c5">&#9724; {{_("Dark blue")}}</option>
                 <option style="color:#40E0D0;" value="#40E0D0">&#9724; {{_("Turquoise")}}</option>
@@ -70,7 +70,7 @@
 
 
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer {{g.panel_color}}">
           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">{{_("Close")}}</a>
           <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{{_("Save")}}</button>
         </div>
@@ -82,7 +82,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade {{g.panel_color}}" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <form class="form-horizontal" method="POST" action="{{ url_for('core.calendar', id=1) }}">
@@ -109,7 +109,7 @@
         <div class="form-group">
           <label for="color" class="col-sm-2 control-label">{{_("Color")}}</label>
           <div class="col-sm-10">
-           <select name="color" class="browser-default" id="color">
+           <select name="color" class="browser-default {{g.panel_color}}" id="color">
             <option value="">{{_("Choose")}}</option>
             <option style="color:#0071c5;" value="#0071c5">&#9724; {{_("Dark blue")}}</option>
             <option style="color:#40E0D0;" value="#40E0D0">&#9724; {{_("Turquoise")}}</option>
@@ -136,7 +136,7 @@
 
 
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer {{g.panel_color}}">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">{{_("Close")}}</a>
       <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{{_("Save")}}</button>
     </div>
