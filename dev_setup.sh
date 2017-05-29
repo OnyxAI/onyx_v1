@@ -22,6 +22,7 @@ fi
 source ${VIRTUALENV_ROOT}/bin/activate
 cd ${TOP}
 
+pip3 install --upgrade pip
 pip3 install --upgrade virtualenv
 pip3 install -r requirements.txt
 
