@@ -16,26 +16,28 @@ import inflection
 import re
 from genericpath import exists, isfile
 from os.path import join, dirname, expanduser
+from onyx.app_config import Config
 
+config = Config()
 
 #Config Path
 def get_path(name):
-	return onyx.config.__path__[0] + "/" + name + '.cfg'
+	return config.ONYX_PATH + "/config/" + name + '.cfg'
 
 #Config Plugin Path
 def get_skill_path(folder, name):
-	return onyx.skills.__path__[0] + "/" + folder + '/config/' + name + '.cfg'
+	return config.SKILL_FOLDER + folder + '/config/' + name + '.cfg'
 
 #Import all Config
 def get_config(name):
-	config = configparser.ConfigParser()
+	config_return = configparser.ConfigParser()
 	path = get_path(name)
-	config.read(path)
-	return config
+	config_return.read(path)
+	return config_return
 
 #Import Plugin Config
 def get_skill_config(folder, name):
-	config = configparser.ConfigParser()
-	path = get_plugin_path(config,name)
-	config.read(path)
-	return config
+	config_return = configparser.ConfigParser()
+	path = get_skill_path(folder, name)
+	config_return.read(path)
+	return config_return

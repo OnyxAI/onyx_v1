@@ -15,9 +15,9 @@ function usage {
   echo
   echo "usage: $0 [-h] (start [-v|-c]|stop|restart)"
   echo "      -h             this help message"
-  echo "      start          starts onyx-service, onyx-client and onyx-voice"
-  echo "      stop           stops onyx-service, onyx-client and onyx-voice"
-  echo "      restart        restart onyx-service, onyx-client and onyx-voice"
+  echo "      start          starts onyx-service, onyx-skills, onyx-client and onyx-voice"
+  echo "      stop           stops onyx-service, onyx-skills, onyx-client and onyx-voice"
+  echo "      restart        restart onyx-service, onyx-skills, onyx-client and onyx-voice"
   echo
   echo "screen tips:"
   echo "            run 'screen -list' to see all running screens"
@@ -62,24 +62,9 @@ function stop-onyx {
 }
 
 function restart-onyx {
-    if screen -list | grep -q "quiet";
-    then
-      $0 stop
-      sleep 1
-      $0 start
-    elif screen -list | grep -q "cli" && ! screen -list | grep -q "quiet";
-    then
-      $0 stop
-      sleep 1
-      $0 start -c
-    elif screen -list | grep -q "voice" && ! screen -list | grep -q "quiet";
-    then
-      $0 stop
-      sleep 1
-      $0 start -v
-    else
-      echo "An error occurred"
-    fi
+    $0 stop
+    sleep 1
+    $0 start
 }
 
 set -e
@@ -91,13 +76,15 @@ then
 elif [[ "$1" == "start" && -z "$2" ]]
 then
   start-onyx service
-  start-onyx voice
+  start-onyx skills
   start-onyx client
+  start-onyx voice
 
   exit 0
 elif [[ "$1" == "stop" && -z "$2" ]]
 then
-  start-onyx service
+  stop-onyx service
+  stop-onyx skills
   stop-onyx client
   stop-onyx voice
   exit 0

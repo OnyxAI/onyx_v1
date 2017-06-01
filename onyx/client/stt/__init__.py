@@ -37,6 +37,7 @@ class GoogleSTT(TokenSTT):
     def __init__(self):
         super(GoogleSTT, self).__init__()
 
+
     def execute(self, audio, language=None):
         language = language or self.lang
         return self.recognizer.recognize_google(audio, self.token, language)

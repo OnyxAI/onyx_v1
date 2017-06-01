@@ -15,6 +15,7 @@ import importlib
 import os.path
 import re
 from adapt.intent import Intent
+from onyx.app_config import Config
 from os.path import join, dirname, splitext, isdir
 
 from onyx.client.tts import TTSFactory
@@ -26,7 +27,7 @@ from onyx.util.log import getLogger
 
 
 BLACKLISTED_SKILLS = []
-SKILLS_DIR = dirname(__file__)
+SKILLS_DIR = Config().SKILL_FOLDER
 
 config = get_config('onyx')
 MainModule = '__init__'
@@ -98,6 +99,11 @@ def load_skill(skill_descriptor, emitter):
             skill.bind(emitter)
             skill.load_data_files(dirname(skill_descriptor['info'][1]))
             skill.initialize()
+            if (hasattr(skill, 'at_run') and callable(skill.at_run)):
+                try:
+                    skill.at_run()
+                except Exception as e:
+                    logger.error('Error at_run for ' + Module.name + ' : ' + str(e))
             logger.info("Loaded " + skill_descriptor["name"])
             return skill
         else:
@@ -137,8 +143,16 @@ def get_blueprint(skills_folder):
     skills = []
     for skill in all_skill:
         if skill['name'] != 'None':
+            print(skill['name'])
             skills.append(imp.load_module(skill["name"] + MainModule, *skill["info"]))
     return skills
+
+def get_skill_function(skills_folder, name):
+    all_skill = get_skills(skills_folder)
+    for skill in all_skill:
+        if skill['name'] == name:
+            return imp.load_module(skill["name"] + MainModule, *skill["info"])
+
 
 def get_raw_name(skills_folder):
     all_skill = get_skills(skills_folder)

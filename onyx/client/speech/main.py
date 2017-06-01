@@ -27,6 +27,8 @@ from onyx.messagebus.message import Message
 
 skills = OnyxSkill(name="speech")
 
+from onyx.util.timeout import timeout
+
 stt = STTFactory.create()
 
 json = Json()
@@ -44,9 +46,10 @@ class Detector:
 		play_wav(onyx.__path__[0] + "/client/speech/resources/ding.wav")
 
 		r = sr.Recognizer()
+
 		with sr.Microphone() as source:
 			print("Say something!")
-			audio = r.listen(source)
+			audio = r.listen(source, timeout=1, phrase_time_limit=5)
 
 		try:
 			result = stt.execute(audio, language=self.lang)

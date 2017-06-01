@@ -18,6 +18,7 @@ from onyx.api.navbar import *
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
 from onyx.util import getLogger
+from onyx.skills.core import get_skill_function
 
 scenario = Scenario()
 widgets = Widgets()
@@ -45,8 +46,11 @@ class Skill:
                 pass
             skill_tab = []
             for skill in skills:
-                json.path = self.app.config['SKILL_FOLDER'] +skill+"/package.json"
-                data = json.decode_path()
+                try:
+                    json.path = self.app.config['SKILL_FOLDER'] +skill+"/package.json"
+                    data = json.decode_path()
+                except:
+                    pass
                 e = {}
                 e['name'] = data['name']
                 e['raw'] = data['raw']
@@ -83,6 +87,14 @@ class Skill:
             data = json.decode_path()
             self.install_dep(data)
             self.install_pip(data)
+            skill = get_skill_function(self.app.config['SKILL_FOLDER'], self.name)
+            if (hasattr(skill, 'create_skill') and callable(skill.create_skill)):
+                Module = skill.create_skill()
+                if (hasattr(Module, 'install') and callable(Module.install)):
+                    try:
+                        Module.install()
+                    except Exception as e:
+                        logger.error('Install Skill error for ' + self.name + ' : ' + str(e))
             logger.info('Installation done with success')
             return json.encode({"status":"success"})
         except Exception as e:
