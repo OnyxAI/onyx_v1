@@ -24,8 +24,8 @@ class Config(object):
     SECURITY_PASSWORD_SALT= 'change me please'
     APP_DIR = os.path.abspath(os.path.dirname(__file__))
     ONYX_PATH = onyx.__path__[0]
-    SKILL_FOLDER = PROJECT_ROOT + "/skills/"
-    DATA_FOLDER = PROJECT_ROOT + "/data/"
+    SKILL_FOLDER = ONYX_PATH + "/skills/"
+    DATA_FOLDER = ONYX_PATH + "/data/"
     ASSETS_DEBUG = False
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     DEBUG_TB_INTERCEPT_REDIRECTS = False
