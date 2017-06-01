@@ -7,15 +7,15 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from flask.ext.login import logout_user, login_user, current_user
-from flask import request , render_template , redirect , url_for , flash
+from flask_login import logout_user, login_user, current_user
+from flask import request , render_template , redirect , url_for , flash, current_app as app
 from onyxbabel import gettext
 from onyx.core.models import *
+from onyx.skills.core import *
 from onyx.extensions import db, login_manager
 from onyx.api.assets import Json
 from onyx.api.navbar import *
 from onyx.api.exceptions import *
-from onyx.plugins import plugin
 from onyx.api.events import *
 import hashlib
 import onyx
@@ -115,8 +115,9 @@ class User:
                 query = NavbarModel.Navbar(user=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
-            for module in plugin:
-                folder = module.get_raw()
+            all_skills = get_raw_name(app.config['SKILL_FOLDER'])
+            for skill in all_skills:
+                folder = skill
                 navbars.folder = folder
                 navbars.username = self.username
                 navbars.set_plugin_navbar_user()

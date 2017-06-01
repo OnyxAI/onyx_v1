@@ -11,7 +11,7 @@ from onyx.api.assets import Json
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.action import *
-from flask import g
+from flask import g, current_app as app
 import os, onyx, logging
 from onyx.api.exceptions import *
 from onyx.config import get_config
@@ -29,6 +29,7 @@ config = get_config('onyx')
 class Event:
 
     def init(self):
+        self.app = app
         self.id = None
         self.code = None
         self.template = ""
@@ -45,27 +46,30 @@ class Event:
 
                 On récupère la langue de l'utilisateur via le fichier de configuration et on récupère les informations concernant les évenements disponible
             """
-            try:
-                json.lang = config.get('Base', 'lang')
-                json.data_name = "events"
-                data = json.decode_data()
+            lang = config.get('Base', 'lang')
+
+            try:langconfig.get('Base', 'lang')
             except:
                 json.lang = "en-US"
-                json.data_name = "events"
-                data = json.decode_data()
+
+            json.data_name = "events"
+            data = json.decode_data()
 
             """
                 We retrieve for each plugin its events available according to the language
 
                 On récupère pour chaque plugin ses évenements disponible en fonction de la langue
             """
-            plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
-            for plugin in plugins:
+            all_skills = get_raw_name(app.config['SKILL_FOLDER'])
+            for skill in all_skills:
                 try:
-                    json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/events.json"
-                    data += json.decode_path()
+                    try:
+                        json.path = app.config['SKILL_FOLDER'] + skill + "/data/events/" + lang + ".json"
+                        data += json.decode_path()
+                    except:
+                        logger.info('No events for : ' + skill)
                 except Exception as e:
-                    logger.error('Error getting plugins : ' + str(e))
+                    logger.error('Error get skills : ' + str(e))
 
             return json.encode(data)
         except Exception as e:

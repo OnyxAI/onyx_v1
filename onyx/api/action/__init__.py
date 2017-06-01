@@ -12,6 +12,7 @@ import importlib, os, onyx, logging
 from flask import current_app as app, g
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
+from onyx.skills.core import *
 from onyx.config import get_config
 
 logger = logging.getLogger()
@@ -27,7 +28,6 @@ class Action:
 
     def __init__(self):
         self.id = None
-        self.app = app
         self.url = None
         self.param = None
 
@@ -35,7 +35,7 @@ class Action:
         This function makes it possible to get in the data folder and in each plugin all possible actions by Onyx, it stores them in a variable that it returns,
         All depending on the language of the user
 
-        Cette fonction permet de récupérer dans le dossier data ainsi que dans chaque plugin toutes les actions possible par Onyx, elle les stocke dans une variable qu'elle renvoie,
+        Cette fonction permeactionst de récupérer dans le dossier data ainsi que dans chaque plugin toutes les actions possible par Onyx, elle les stocke dans une variable qu'elle renvoie,
         le tout en fonction de la langue de l'utilisateur
     """
     def get(self):
@@ -50,12 +50,11 @@ class Action:
 
             try:
                 json.lang = lang
-                json.data_name = "actions"
-                data = json.decode_data()
             except:
                 json.lang = "en-US"
-                json.data_name = "actions"
-                data = json.decode_data()
+
+            json.data_name = "actions"
+            data = json.decode_data()
 
 
             """
@@ -63,17 +62,16 @@ class Action:
 
                 On récupère pour chaque plugin ses actions disponible en fonction de la langue
             """
-            plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
-            for plugin in plugins:
+            all_skills = get_raw_name(app.config['SKILL_FOLDER'])
+            for skill in all_skills:
                 try:
                     try:
-                        json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/actions/" + lang + ".json"
+                        json.path = app.config['SKILL_FOLDER'] + skill + "/data/actions/" + lang + ".json"
                         data += json.decode_path()
                     except:
-                        json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/actions/en-US.json"
-                        data += json.decode_path()
+                        logger.info('No actions for : ' + skill)
                 except Exception as e:
-                    logger.error('Error get plugins : ' + str(e))
+                    logger.error('Error get skills : ' + str(e))
 
             """
                 We return the data variable which contains all the actions
@@ -93,7 +91,7 @@ class Action:
     """
     def start(self):
         function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
-        
+
         try:
             execute = function()
         except TypeError:

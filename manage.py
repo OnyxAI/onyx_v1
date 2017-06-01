@@ -14,15 +14,16 @@ import os
 
 from flask import json
 from flask_script import Manager, Command, Option
-
+from flask_migrate import Migrate, MigrateCommand
 from onyx.extensions import db
 from onyx.api.server import *
-from onyx.flask_config import *
+from onyx.app_config import *
 from onyx.util.log import getLogger
 from onyx import *
 
 app = create_app()
 
+migrate = Migrate(app, db)
 manager = Manager(app, with_default_commands=False)
 server = Server()
 
@@ -39,10 +40,6 @@ class Run(Command):
 
     def run(self, host='0.0.0.0', port=8080, debug=False, reload=False):
         self.runserver(host, port, debug, reload)
-
-    def sync_blueprints(self, app):
-        blueprints_fabrics(app, get_blueprints(app))
-        error_pages(app)
 
     def runserver(self, host, port, debug, reload):
         print(' _____   __   _  __    __ __    __ ')
@@ -66,11 +63,11 @@ class Run(Command):
         LOG.info('You can close Onyx at any time with Ctrl-C')
         print('')
         print('-------------------------------------------------------')
-        self.sync_blueprints(app)
         app.run(host, int(port), debug=debug, use_reloader=reload, threaded=True)
 
 
 manager.add_command('run', Run())
+manager.add_command('db', MigrateCommand)
 
 if __name__=='__main__':
     manager.run()

@@ -26,10 +26,10 @@ init:
 	export PYTHONPATH=$PYTHONPATH:ROOT_DIR
 
 initdb:
-	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py init
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py db init
 
 migratedb:
-	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py migrate
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py db migrate
 
 babel:
 	pybabel extract -F babel.cfg -o onyx/translations/messages.pot onyx

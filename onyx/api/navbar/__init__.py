@@ -8,6 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from flask_login import current_user
+from flask import current_app as app
 from onyx.core.models import *
 from onyxbabel import gettext
 from onyx.api.assets import Json
@@ -127,15 +128,20 @@ class Navbar:
     """
     def set_plugin_navbar(self):
         try:
-            json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
+            json.path = app.config['SKILL_FOLDER'] + self.folder + "/package.json"
             data = json.decode_path()
-            user = UsersModel.User.query.all()
-            for key in user:
-                for nav in data:
-                    query = NavbarModel.Navbar(user=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
-                    db.session.add(query)
-                    db.session.commit()
-            logger.info('Navbar plugin set with success')
+            if data['navbar'] == 'True':
+                json.path = app.config['SKILL_FOLDER'] + self.folder + "/navbar.json"
+                data = json.decode_path()
+                user = UsersModel.User.query.all()
+                for key in user:
+                    for nav in data:
+                        query = NavbarModel.Navbar(user=key.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                        db.session.add(query)
+                        db.session.commit()
+                logger.info('Navbar plugin set with success')
+            else:
+                logger.info('No navbar for : ' + data['name'])
         except Exception as e:
             logger.error('Navbar plugin set error : ' + str(e))
             raise NavbarException(str(e))
@@ -147,14 +153,19 @@ class Navbar:
     """
     def set_plugin_navbar_user(self):
         try:
-            json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
+            json.path = app.config['SKILL_FOLDER'] + self.folder + "/package.json"
             data = json.decode_path()
-            user = UsersModel.User.query.filter_by(username=self.username).first()
-            for nav in data:
-                query = NavbarModel.Navbar(user=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
-                db.session.add(query)
-                db.session.commit()
-            logger.info('Navbar use set with success')
+            if data['navbar'] == 'True':
+                json.path = app.config['SKILL_FOLDER'] + self.folder + "/navbar.json"
+                data = json.decode_path()
+                user = UsersModel.User.query.filter_by(username=self.username).first()
+                for nav in data:
+                    query = NavbarModel.Navbar(user=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
+                    db.session.add(query)
+                    db.session.commit()
+                logger.info('Navbar set with success for ' + data['name'])
+            else:
+                logger.info('No navbar for : ' + data['name'])
         except Exception as e:
             logger.error('Navbar use set error : ' + str(e))
             raise NavbarException(str(e))

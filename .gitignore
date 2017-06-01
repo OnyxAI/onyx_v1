@@ -13,7 +13,7 @@ dist
 /onyx/client/speech/assets/_snowboydetect.so
 /onyx/client/speech/assets/snowboydetect.py
 /onyx/data/*
-/onyx/flask_config.py
+/onyx/app_config.py
 /onyx/config/onyx.cfg
 /onyx/db/*
 !/onyx/db/.gitkeep

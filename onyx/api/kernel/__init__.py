@@ -26,7 +26,6 @@ from onyx.api.injector import Injector
 
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
-from onyx.config import ConfigurationManager
 
 from onyx import *
 

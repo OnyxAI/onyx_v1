@@ -7,7 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 import logging
 
 FORMAT = '%(levelname)s - %(message)s - %(name)s - %(asctime)s'
@@ -16,10 +15,7 @@ logger = logging.getLogger("ONYX")
 logger.setLevel(logging.DEBUG)
 
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
-logging.getLogger('jinja2').setLevel(logging.ERROR)
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("urllib3").setLevel(logging.WARNING)
-
+logging.getLogger('flask_login').setLevel(logging.ERROR)
 
 def getLogger(name="ONYX"):
     return logging.getLogger(name)

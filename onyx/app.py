@@ -14,10 +14,10 @@ from flask import Flask, render_template, redirect, url_for
 from onyx.extensions import (db, login_manager, babel, cache)
 from flask_login import current_user
 from onyx.config import get_config
-from onyx.plugins import plugin
 from onyx.api.assets import Json
 from onyx.api.server import *
 from onyx.util.log import getLogger
+from onyx.skills.core import *
 import threading
 
 from onyx.api.kernel import Kernel
@@ -30,9 +30,9 @@ LOG = getLogger(__name__)
 json = Json()
 kernel = Kernel()
 
-from onyx.flask_config import ProdConfig, Config
+from onyx.app_config import ProdConfig, Config
 
-__all__ = ('create_app','blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
+__all__ = ('create_app', 'blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
 
 def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
 
@@ -49,34 +49,26 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
     extensions_fabrics(app)
     gvars(app)
 
-
-    t = threading.Thread(target=create_ws, args=(app,))
-    t.start()
+    blueprints_fabrics(app, get_blueprints(app))
+    error_pages(app)
 
     with app.app_context():
         db.create_all()
+
+    t = threading.Thread(target=create_ws, args=(app,))
+    t.start()
 
     return app
 
 def create_ws(app):
     with app.app_context():
         ws_app = ws()
-        ws_app.on('onyx.kernel.get', kernel.get)
         ws_app.run_forever()
 
 def ws():
     ws = WebsocketClient()
-
     return ws
 
-
-def init_plugin(app):
-    with app.app_context():
-        for module in plugin:
-            try:
-                module.init(app)
-            except:
-                module.init()
 
 def get_blueprints(app):
 
@@ -90,19 +82,18 @@ def get_blueprints(app):
 
     BLUEPRINTS = [core, auth, api, action, widgets, bot]
 
-    for module in plugin:
-        try:
-            BLUEPRINTS.append(module.get_blueprint())
-        except:
-            LOG.info('No Blueprint for plugin : ' + module.get_name())
+    all_skills = get_blueprint(app.config['SKILL_FOLDER'])
+    for skill in all_skills:
+        if (hasattr(skill, 'create_skill') and callable(skill.create_skill)):
+            Module = skill.create_skill()
+            if (hasattr(Module, 'get_blueprint') and callable(Module.get_blueprint)):
+                BLUEPRINTS.append(Module.get_blueprint())
 
     for blueprint in BLUEPRINTS:
         @blueprint.before_request
         def check_install():
             if app.config['INSTALL'] == False:
                 return redirect(url_for('install.index'))
-
-
 
     BLUEPRINTS.append(install)
     return BLUEPRINTS
@@ -138,7 +129,7 @@ def error_pages(app):
 
     @app.errorhandler(500)
     def server_error_page(error):
-        return render_template("404.html"), 500
+        return render_template("500.html"), 500
 
 def gvars(app):
     @app.before_request

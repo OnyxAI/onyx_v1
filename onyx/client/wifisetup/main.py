@@ -31,7 +31,6 @@ from time import sleep
 from pyric import pyw
 from wifi import Cell
 
-from onyx.config import ConfigurationManager
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 from onyx.util import connected
@@ -151,16 +150,14 @@ address=/#/{server}
         self.ip = self.subnet + '.1'
         self.ip_start = self.subnet + '.50'
         self.ip_end = self.subnet + '.150'
-        self.password = None
+        self.password = "ONYXLABS"
 
     def up(self):
         try:
             card = pyw.getcard(self.iface)
         except:
             wpa(self.wiface, 'p2p_group_add', 'persistent=0')
-            self.iface = self.get_iface()
-            self.password = wpa(self.iface, 'p2p_get_passphrase')
-            card = pyw.getcard(self.iface)
+            card = pyw.getcard(self.wiface)
         pyw.inetset(card, self.ip)
         copyfile('/etc/dnsmasq.conf', '/tmp/dnsmasq-bk.conf')
         self.save()
@@ -199,7 +196,6 @@ class WiFi:
         self.ap = AccessPoint(self.iface)
         self.server = None
         self.ws = WebsocketClient()
-        ConfigurationManager.init(self.ws)
         self.init_events()
         self.conn_monitor = None
         self.conn_monitor_stop = threading.Event()

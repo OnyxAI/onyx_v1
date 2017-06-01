@@ -39,10 +39,16 @@ def install_skill(name):
 	try:
 		skill.name = name
 		skill.url = request.args['url']
-		skill.install()
-		flash(gettext('Skill Installed !'), 'success')
-		return redirect(url_for('core.reboot_skill'))
-	except SkillException:
+		result = skill.install()
+		json.json = result
+		decoded = json.decode()
+		if decoded['status'] == "success":
+			flash(gettext('Skill Installed !'), 'success')
+			return redirect(url_for('core.reboot_skill'))
+		else:
+			flash(gettext('An error has occured !'), 'error')
+			return redirect(url_for('core.reboot_skill'))
+	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.reboot_skill'))
 
@@ -50,15 +56,21 @@ def install_skill(name):
 @core.route('skills/install_url', methods=['POST'])
 @login_required
 def install_skill_url():
-    try:
-        skill.name = request.form['name']
-        skill.url = request.form['url']
-        skill.install()
-        flash(gettext('Skill Installed !'), 'success')
-        return redirect(url_for('core.reboot_skill'))
-    except SkillException:
-        flash(gettext('An error has occured !'), 'error')
-        return redirect(url_for('core.reboot_skill'))
+	try:
+		skill.name = request.form['name']
+		skill.url = request.form['url']
+		result = skill.install()
+		json.json = result
+		decoded = json.decode()
+		if decoded['status'] == "success":
+			flash(gettext('Skill Installed !'), 'success')
+			return redirect(url_for('core.reboot_skill'))
+		else:
+			flash(gettext('An error has occured !'), 'error')
+			return redirect(url_for('core.reboot_skill'))
+	except Exception as e:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.reboot_skill'))
 
 
 @core.route('skills/uninstall/<string:name>')
@@ -66,10 +78,16 @@ def install_skill_url():
 def uninstall_skill(name):
 	try:
 		skill.name = name
-		skill.uninstall()
-		flash(gettext('Skill Uninstalled !'), 'success')
-		return redirect(url_for('core.reboot_skill'))
-	except SkillException:
+		result = skill.uninstall()
+		json.json = result
+		decoded = json.decode()
+		if decoded['status'] == "success":
+			flash(gettext('Skill Uninstalled !'), 'success')
+			return redirect(url_for('core.reboot_skill'))
+		else:
+			flash(gettext('An error has occured !'), 'error')
+			return redirect(url_for('core.reboot_skill'))
+	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.reboot_skill'))
 
@@ -81,7 +99,7 @@ def update_skill(name):
 		skill.update()
 		flash(gettext('Skill Updated !'), 'success')
 		return redirect(url_for('core.reboot_skill'))
-	except SkillException:
+	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.reboot_skill'))
 

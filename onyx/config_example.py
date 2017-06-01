@@ -24,6 +24,8 @@ class Config(object):
     SECURITY_PASSWORD_SALT= 'change me please'
     APP_DIR = os.path.abspath(os.path.dirname(__file__))
     ONYX_PATH = onyx.__path__[0]
+    SKILL_FOLDER = PROJECT_ROOT + "/skills/"
+    DATA_FOLDER = PROJECT_ROOT + "/data/"
     ASSETS_DEBUG = False
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     DEBUG_TB_INTERCEPT_REDIRECTS = False
@@ -45,10 +47,10 @@ class ProdConfig(Config):
 
     ENV = 'prod'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + ONYX_PATH + "/db/data.db"
-    SQLALCHEMY_MIGRATE_REPO = ONYX_PATH + "/db/db_repository"
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + Config.ONYX_PATH + "/db/data.db"
+    SQLALCHEMY_MIGRATE_REPO = Config.ONYX_PATH + "/db/db_repository"
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
-s
+
 
 class DevConfig(Config):
     """Development configuration."""
@@ -56,8 +58,8 @@ class DevConfig(Config):
     ENV = 'dev'
     DEBUG = True
     # Put the db file in project root
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + ONYX_PATH + "/db/data.db"
-    SQLALCHEMY_MIGRATE_REPO = ONYX_PATH + "/db/db_repository"
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + Config.ONYX_PATH + "/db/data.db"
+    SQLALCHEMY_MIGRATE_REPO = Config.ONYX_PATH + "/db/db_repository"
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.

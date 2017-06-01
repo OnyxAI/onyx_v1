@@ -21,6 +21,9 @@ class TTS(object):
 		self.voice = None
 		self.filename = '/tmp/tts.wav'
 
+	def init(self, ws):
+		self.ws = ws
+
 	@abstractmethod
 	def execute(self, sentence):
 		pass

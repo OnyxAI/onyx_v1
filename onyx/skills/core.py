@@ -10,6 +10,7 @@ You may not use this software for commercial purposes.
 import abc
 import imp
 import time
+import importlib
 
 import os.path
 import re
@@ -129,6 +130,22 @@ def get_skills(skills_folder):
 
         skills.append(create_skill_descriptor(location))
     skills = sorted(skills, key=lambda p: p.get('name'))
+    return skills
+
+def get_blueprint(skills_folder):
+    all_skill = get_skills(skills_folder)
+    skills = []
+    for skill in all_skill:
+        if skill['name'] != 'None':
+            skills.append(imp.load_module(skill["name"] + MainModule, *skill["info"]))
+    return skills
+
+def get_raw_name(skills_folder):
+    all_skill = get_skills(skills_folder)
+    skills = []
+    for skill in all_skill:
+        if skill['name'] != 'None':
+            skills.append(skill["name"])
     return skills
 
 

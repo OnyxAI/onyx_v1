@@ -13,7 +13,8 @@ from flask_login import current_user
 from onyxbabel import gettext
 from onyx.extensions import db
 from onyx.core.models import *
-from flask import g
+from flask import g, current_app as app
+from onyx.skills.core import *
 import logging
 import onyx
 import os
@@ -55,18 +56,21 @@ class Widgets:
     def get_list(self):
         try:
             try:
-                json.path = onyx.__path__[0] + "/data/widgets/" + g.lang + ".json"
+                json.path = app.config['DATA_FOLDER'] + "widgets/" + g.lang + ".json"
             except:
-                json.path = onyx.__path__[0] + "/data/widgets/fr-FR.json"
+                json.path = app.config['DATA_FOLDER'] + "widgets/en-US.json"
             data = json.decode_path()
 
-            plugins = [d for d in os.listdir(onyx.__path__[0] + "/plugins/") if os.path.isdir(os.path.join(onyx.__path__[0] + "/plugins/", d))]
-            for plugin in plugins:
+            all_skills = get_raw_name(app.config['SKILL_FOLDER'])
+            for skill in all_skills:
                 try:
-                    json.path = onyx.__path__[0] + "/plugins/" + plugin + "/data/widgets.json"
-                    data += json.decode_path()
+                    try:
+                        json.path = app.config['SKILL_FOLDER'] + skill + "/data/widgets/" + g.lang + ".json"
+                        data += json.decode_path()
+                    except:
+                        logger.info('No widget for : ' + skill)
                 except Exception as e:
-                    logger.error('Getting plugins error : ' + str(e))
+                    logger.error('Error get plugins : ' + str(e))
 
             return json.encode(data)
         except Exception as e:

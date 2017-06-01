@@ -15,17 +15,17 @@
       <h5>{{_("Utilities")}}</h5>
       <p>{{_("You want some tools for your job or for your life ?")}}</p>
       <p>{{_("All you want is here")}}</p>
-      <button class="btn" onclick="next('menu_utilities', 'menu_plugins');">{{_("Next")}}</button>
+      <button class="btn" onclick="next('menu_utilities', 'menu_skills');">{{_("Next")}}</button>
     </center>
   </div>
 </div>
 
-<div class="tap-target blue menu_plugins" data-activates="menu_fa-plus">
+<div class="tap-target blue menu_skills" data-activates="menu_fa-plus">
   <div class="tap-target-content">
     <center>
-      <h5>{{_("Plugins")}}</h5>
-      <p>{{_("Come and download plugins to inscrease Onyx Power !")}}</p>
-      <button class="btn" onclick="next('menu_plugins', 'menu_calendar');">{{_("Next")}}</button>
+      <h5>{{_("Skill")}}</h5>
+      <p>{{_("Increase the power of Onyx and install new skills.")}}</p>
+      <button class="btn" onclick="next('menu_skills', 'menu_calendar');">{{_("Next")}}</button>
     </center>
   </div>
 </div>
@@ -65,17 +65,17 @@
     <center>
       <h5>{{_("Widgets")}}</h5>
       <p>{{_("Organize your Dashboard page.")}}</p>
-      <button class="btn" onclick="next('menu_widgets', 'menu_skills');">{{_("Next")}}</button>
+      <button class="btn" onclick="next('menu_widgets', 'menu_info');">{{_("Next")}}</button>
     </center>
   </div>
 </div>
 
-<div class="tap-target blue menu_skills" data-activates="menu_fa-plug">
+<div class="tap-target blue menu_info" data-activates="menu_fa-info">
   <div class="tap-target-content">
     <center>
-      <h5>{{_("Skill")}}</h5>
-      <p>{{_("Increase the voice power of Onyx and install new skills.")}}</p>
-      <button class="btn" onclick="next('menu_skills', 'menu_help');">{{_("Next")}}</button>
+      <h5>{{_("Info")}}</h5>
+      <p>{{_("Here are some info about Onyx.")}}</p>
+      <button class="btn" onclick="next('menu_info', 'menu_help');">{{_("Next")}}</button>
     </center>
   </div>
 </div>
@@ -149,17 +149,17 @@
     <center>
       <h5>{{_("Utilities page !")}}</h5>
       <p>{{_("Here are some utilities that you can use everyday.")}}</p>
-      <a href="{{url_for('core.plugins')}}" class="btn" >{{_("Next")}}</a>
+      <a href="{{url_for('core.skills')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
 
-<!-- Plugins Page Tutorial Tutorial -->
-<div class="tap-target orange tutorial_plugins" data-activates="onyx_help">
+<!-- Skills Page Tutorial Tutorial -->
+<div class="tap-target orange tutorial_skills" data-activates="onyx_help">
   <div class="tap-target-content">
     <center>
-      <h5>{{_("Plugins page !")}}</h5>
-      <p>{{_("You can install new applications to improve your daily life.")}}</p>
+      <h5>{{_("Skill page !")}}</h5>
+      <p>{{_("Increase my power and install new skill for me.")}}</p>
       <a href="{{url_for('core.calendars')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
@@ -207,17 +207,17 @@
       <h5>{{_("Widgets page !")}}</h5>
       <p>{{_("Change your Dashboard style and the page layout.")}}</p>
       <p>{{_("Add or Remove Dashboard Widgets.")}}</p>
-      <a href="{{url_for('core.skills')}}" class="btn" >{{_("Next")}}</a>
+      <a href="{{url_for('core.info')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>
 </div>
 
 <!-- Skills Page Tutorial Tutorial -->
-<div class="tap-target orange tutorial_skills" data-activates="onyx_help">
+<div class="tap-target orange tutorial_info" data-activates="onyx_help">
   <div class="tap-target-content">
     <center>
-      <h5>{{_("Skill page !")}}</h5>
-      <p>{{_("Increase my voice power and install new skill for me.")}}</p>
+      <h5>{{_("Info page !")}}</h5>
+      <p>{{_("If you need some Information about Onyx, It's here.")}}</p>
       <a href="{{url_for('core.help')}}" class="btn" >{{_("Next")}}</a>
     </center>
   </div>

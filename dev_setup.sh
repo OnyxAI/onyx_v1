@@ -17,7 +17,7 @@ fi
 
 if [ ! -d ${VIRTUALENV_ROOT} ]; then
    mkdir -p $(dirname ${VIRTUALENV_ROOT})
-  virtualenv -p python3.4 ${VIRTUALENV_ROOT}
+  virtualenv -p python3 ${VIRTUALENV_ROOT}
 fi
 source ${VIRTUALENV_ROOT}/bin/activate
 cd ${TOP}
