@@ -157,7 +157,7 @@ address=/#/{server}
             card = pyw.getcard(self.iface)
         except:
             wpa(self.wiface, 'p2p_group_add', 'persistent=0')
-            card = pyw.getcard(self.wiface)
+            card = pyw.getcard(self.iface)
         pyw.inetset(card, self.ip)
         copyfile('/etc/dnsmasq.conf', '/tmp/dnsmasq-bk.conf')
         self.save()

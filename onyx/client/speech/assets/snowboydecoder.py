@@ -127,7 +127,7 @@ class HotwordDetector(object):
             "Error: hotwords in your models (%d) do not match the number of " \
             "callbacks (%d)" % (self.num_hotwords, len(detected_callback))
 
-        print("detecting...")
+        print("Waiting for WakeWord (Onyx)")
 
         while True:
             if interrupt_check():
