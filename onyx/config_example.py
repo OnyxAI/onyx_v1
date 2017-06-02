@@ -19,7 +19,7 @@ class Config(object):
     SKILL_FOLDER = ONYX_PATH + "/skills/"
     DATA_FOLDER = ONYX_PATH + "/data/"
     CONFIG = configparser.ConfigParser()
-	CONFIG.read(ONYX_PATH + "/config/onyx.cfg")
+    CONFIG.read(ONYX_PATH + "/config/onyx.cfg")
     INSTALL = CONFIG.getboolean('Install', 'done')
     LANG = CONFIG.get('Base', 'lang')
     SECRET_KEY = 'change me please'
