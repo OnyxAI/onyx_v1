@@ -11,21 +11,20 @@ You may not use this software for commercial purposes.
 """Application configuration."""
 import os
 import onyx
-from onyx.config import get_config
-
-config = get_config('onyx')
+import configparser
 
 class Config(object):
     """Base configuration."""
-
-    INSTALL = config.getboolean('Install', 'done')
-    LANG = config.get('Base', 'lang')
-    SECRET_KEY = 'change me please'
-    SECURITY_PASSWORD_SALT= 'change me please'
-    APP_DIR = os.path.abspath(os.path.dirname(__file__))
     ONYX_PATH = onyx.__path__[0]
     SKILL_FOLDER = ONYX_PATH + "/skills/"
     DATA_FOLDER = ONYX_PATH + "/data/"
+    CONFIG = configparser.ConfigParser()
+	CONFIG.read(ONYX_PATH + "/config/onyx.cfg")
+    INSTALL = CONFIG.getboolean('Install', 'done')
+    LANG = CONFIG.get('Base', 'lang')
+    SECRET_KEY = 'change me please'
+    SECURITY_PASSWORD_SALT= 'change me please'
+    APP_DIR = os.path.abspath(os.path.dirname(__file__))
     ASSETS_DEBUG = False
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     DEBUG_TB_INTERCEPT_REDIRECTS = False
