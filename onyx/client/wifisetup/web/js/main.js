@@ -143,7 +143,13 @@ var WifiSetup = {
                     connect.passwordInput = document.createElement("input");
                     label.textContent = "Password: ";
                     connect.passwordInput.type = "password";
+                    connect.passwordToggle = document.createElement("button");
+                    connect.passwordToggle.className = "password-toggle";
+                    connect.passwordToggle.addEventListener("click", function () {
+                        connect.passwordInput.type = connect.passwordInput.type == "text" ? "password" : "text";
+                    });
                     connect.appendChild(connect.passwordInput);
+                    connect.appendChild(connect.passwordToggle);
                 } else {
                     label.className = "public";
                     label.textContent = this.selectedNetword.ssid;
@@ -170,7 +176,7 @@ var WifiSetup = {
             error.classList.add("error-item");
             imgClose.src = "img/error.png";
             var message = document.createElement("span");
-            message.textContent = "Try again or connect to a diferent wifi.";
+            message.textContent = "Try again or connect to a different wifi.";
             error.appendChild(message);
             error.appendChild(imgClose);
             li.appendChild(error);
@@ -226,7 +232,7 @@ var WifiSetup = {
             document.querySelector("#connectBtn").addEventListener("click", this.sendScan);
             document.querySelector("#registerBtn").addEventListener("click", function () {
                 setTimeout(function() {
-                    location.href="https://home.onyx.ai";
+                    location.href="https://onyxlabs.fr";
                 }, 2000);
             });
             document.querySelector("#cancelBtn").addEventListener("click", this.cancelSetup);
@@ -234,7 +240,7 @@ var WifiSetup = {
     };
 
 function startPing() {
-    ping("home.onyx.ai",
+    ping("onyxlabs.fr",
         function(status,e) {
             if (status == 'responded') {
                 // Un-hide the register button once we detect an
