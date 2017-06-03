@@ -20,7 +20,7 @@ cd ${TOP}
 
 pip install --upgrade pip
 pip install --upgrade virtualenv
-pip install -r requirements.txt
+pip install --no-cache-dir -r requirements.txt
 
 if [ ! -f ${TOP}/onyx/app_config.py ]; then
     echo "App Config not found!"
