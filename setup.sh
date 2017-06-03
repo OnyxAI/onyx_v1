@@ -35,4 +35,20 @@ if [ ! -f ${TOP}/onyx/config/onyx.cfg ]; then
 fi
 
 make compilelang
+
+arch=$(arch)
+os=$(uname -s)
+
+cd ${TOP}/onyx/client/speech/assets
+
+if [ ! -f ${TOP}/onyx/client/speech/assets/_snowboydetect.so ] || [ ! -f ${TOP}/onyx/client/speech/assets/snowboydetect.py ]; then
+    echo "Snowboy not found not found!"
+    echo "Download Snowboy"
+    wget http://download.onyxlabs.fr/snowboy/snowboy_${os}_${arch}.tar.gz
+    tar zxvf snowboy_${os}_${arch}.tar.gz
+    rm snowboy_${os}_${arch}.tar.gz
+fi
+
+cd ${TOP}
+
 echo "Setup Finished"
