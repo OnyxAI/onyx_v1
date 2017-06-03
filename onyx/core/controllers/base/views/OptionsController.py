@@ -19,10 +19,8 @@ from onyx.api.server import *
 from onyx.api.events import *
 from onyx.api.exceptions import *
 from onyx.api.install import Install
-from werkzeug._reloader import *
 
 event = Event()
-reloader = ReloaderLoop()
 install = Install()
 option = Options()
 server = Server()

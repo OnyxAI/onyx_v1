@@ -14,7 +14,7 @@ case $2 in
 	*) echo "Usage: start.sh [prod | dev] [service | kernel | client | voice | skills | wifi]"; exit ;;
 esac
 
-echo "Starting $@"
+echo "Starting $2"
 
 shift
 
