@@ -1,6 +1,6 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-VIRTUALENV_ROOT=$(HOME)/.virtualenvs/onyx
-PYTHON=python3
+VIRTUALENV_ROOT=$(ROOT_DIR)/venv-dev
+PYTHON=python
 
 all: setup
 

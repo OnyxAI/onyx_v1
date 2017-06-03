@@ -15,7 +15,7 @@ import pytest
 from webtest import TestApp
 from onyx import *
 from onyx.extensions import db as _db
-from onyx.flask_config import TestConfig
+from onyx.app_config import TestConfig
 
 from onyx.core.models.UsersModel import User
 from flask.ext.login import login_user

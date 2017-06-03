@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test configs."""
 from onyx.app import create_app
-from onyx.flask_config import DevConfig, ProdConfig
+from onyx.app_config import DevConfig, ProdConfig
 
 
 def test_production_config():
