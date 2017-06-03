@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 TOP=$(cd $(dirname $0) && pwd -L)
-VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${HOME}/.virtualenvs/onyx"}
+VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${TOP}/venv-$1"}
 
-case $1 in
+case $2 in
 	"client") SCRIPT=${TOP}/run.py ;;
 	"service") SCRIPT=${TOP}/onyx/messagebus/service/main.py ;;
 	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
@@ -11,7 +11,7 @@ case $1 in
 	"voice") SCRIPT=${TOP}/onyx/client/speech/main.py ;;
 	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
 	"wifi") SCRIPT=${TOP}/onyx/client/wifisetup/main.py ;;
-	*) echo "Usage: start.sh [service | kernel | client | voice | skills | wifi]"; exit ;;
+	*) echo "Usage: start.sh [prod | dev] [service | kernel | client | voice | skills | wifi]"; exit ;;
 esac
 
 echo "Starting $@"
@@ -19,4 +19,4 @@ echo "Starting $@"
 shift
 
 source ${VIRTUALENV_ROOT}/bin/activate
-PYTHONPATH=${TOP} python3 ${SCRIPT} $@
+PYTHONPATH=${TOP} python ${SCRIPT} $@

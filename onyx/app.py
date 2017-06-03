@@ -25,6 +25,8 @@ from onyx.api.kernel import Kernel
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 
+from onyx.core.models import ConfigModel
+
 server = Server()
 LOG = getLogger(__name__)
 json = Json()
@@ -91,8 +93,14 @@ def get_blueprints(app):
 
     for blueprint in BLUEPRINTS:
         @blueprint.before_request
-        def check_install():
-            if app.config['INSTALL'] == False:
+        def check_base_db():
+            install = ConfigModel.Config.query.filter_by(config='install').first()
+            if install == None:
+                query = ConfigModel.Config(config='install', value='False')
+                db.session.add(query)
+                db.session.commit()
+                return redirect(url_for('install.index'))
+            elif install.value == 'False':
                 return redirect(url_for('install.index'))
 
     BLUEPRINTS.append(install)

@@ -108,7 +108,7 @@ class Kernel:
 
     def get(self):
         try:
-            text = self.text
+            text = self.text.encode('ascii', 'ignore')
 
             parser.text = text
             json.json = parser.parse()
@@ -116,7 +116,7 @@ class Kernel:
             parsed_request = json.decode()
             remplaced_str = parsed_request['remplaced_str']
 
-            response = str(self.kernel.get_response(remplaced_str))
+            response = self.kernel.get_response(remplaced_str).text.encode('utf-8')
 
             if response.startswith("%URL:") and response.endswith("%"):
                 self.url = response.replace("%URL:","").replace("%","")
@@ -143,7 +143,7 @@ class Kernel:
             json.json = execute
             result = json.decode()
 
-            text = str(self.kernel.get_response(result['label']))
+            text = self.kernel.get_response(result['label']).text.encode('utf-8')
 
             injector.text = text
             try:
@@ -158,5 +158,5 @@ class Kernel:
             return json.encode({"status":"success", "text":response})
         except Exception as e:
             LOG.error('Getting Response error : ' + str(e))
-            text = str(self.kernel.get_response('error'))
+            text = self.kernel.get_response('error').text.encode('utf-8')
             return json.encode({"status":"error", "text":text})

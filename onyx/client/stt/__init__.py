@@ -20,7 +20,6 @@ class STT(object):
         self.lang = config.get("Base", "lang")
         self.recognizer = Recognizer()
 
-
     @abstractmethod
     def execute(self, audio, language=None):
         pass
@@ -40,7 +39,7 @@ class GoogleSTT(TokenSTT):
 
     def execute(self, audio, language=None):
         language = language or self.lang
-        return self.recognizer.recognize_google(audio, self.token, language)
+        return self.recognizer.recognize_google(audio, self.token, str(language))
 
 
 class STTFactory(object):

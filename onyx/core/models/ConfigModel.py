@@ -16,7 +16,6 @@ class Config(db.Model):
     config = db.Column(db.String())
     value = db.Column(db.String())
 
-
     @property
     def is_active(self):
         return True

@@ -38,7 +38,7 @@ class Run(Command):
         Option('--reload', '-r', dest='reload', default=False, action="store_true")
     )
 
-    def run(self, host='0.0.0.0', port=8080, debug=False, reload=False):
+    def run(self, host='0.0.0.0', port=8000, debug=False, reload=False):
         self.runserver(host, port, debug, reload)
 
     def runserver(self, host, port, debug, reload):

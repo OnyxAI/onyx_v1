@@ -2,14 +2,14 @@
 
 set -Ee
 
-if [ $(id -u) -eq 0 ]; then
-  echo "This script should not be run as root or with sudo."
-  exit 1
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
 fi
 
 TOP=$(cd $(dirname $0) && pwd -L)
 
-VIRTUALENV_ROOT="${TOP}/venv-dev"
+VIRTUALENV_ROOT="${TOP}/venv-prod"
 
 if [ ! -d ${VIRTUALENV_ROOT} ]; then
    mkdir -p $(dirname ${VIRTUALENV_ROOT})

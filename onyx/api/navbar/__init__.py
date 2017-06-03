@@ -177,7 +177,7 @@ class Navbar:
     """
     def delete_plugin_navbar(self):
         try:
-            json.path = onyx.__path__[0] + "/plugins/" + self.folder + "/navbar.json"
+            json.path = app.config['SKILL_FOLDER'] + self.folder + "/navbar.json"
             data = json.decode_path()
             user = UsersModel.User.query.all()
             for key in user:

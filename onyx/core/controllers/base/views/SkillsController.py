@@ -44,13 +44,13 @@ def install_skill(name):
 		decoded = json.decode()
 		if decoded['status'] == "success":
 			flash(gettext('Skill Installed !'), 'success')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.reboot_skill'))
+		return redirect(url_for('core.skills'))
 
 
 @core.route('skills/install_url', methods=['POST'])
@@ -64,13 +64,13 @@ def install_skill_url():
 		decoded = json.decode()
 		if decoded['status'] == "success":
 			flash(gettext('Skill Installed !'), 'success')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.reboot_skill'))
+		return redirect(url_for('core.skills'))
 
 
 @core.route('skills/uninstall/<string:name>')
@@ -83,13 +83,13 @@ def uninstall_skill(name):
 		decoded = json.decode()
 		if decoded['status'] == "success":
 			flash(gettext('Skill Uninstalled !'), 'success')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.reboot_skill'))
+		return redirect(url_for('core.skills'))
 
 @core.route('skills/update/<string:name>')
 @login_required
@@ -98,10 +98,10 @@ def update_skill(name):
 		skill.name = name
 		skill.update()
 		flash(gettext('Skill Updated !'), 'success')
-		return redirect(url_for('core.reboot_skill'))
+		return redirect(url_for('core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.reboot_skill'))
+		return redirect(url_for('core.skills'))
 
 @core.route('skills/reboot')
 @login_required

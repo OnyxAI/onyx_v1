@@ -99,7 +99,7 @@ class Widgets:
 
     def delete_plugin(self):
         try:
-            json.path = onyx.__path__[0] + "/plugins/" + self.plugin_name + "/data/widgets.json"
+            json.path = app.config['SKILL_FOLDER'] + self.plugin_name + "/data/widgets.json"
             data = json.decode_path()
             user = UsersModel.User.query.all()
             for key in user:

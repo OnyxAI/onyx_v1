@@ -18,6 +18,7 @@ from onyx.api.options import *
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
 import onyx, os
+from onyx.core.models import ConfigModel
 
 options = Options()
 installation = Install()
@@ -30,7 +31,13 @@ def load_user(id):
 
 @install.before_request
 def check_install():
-    if app.config['INSTALL']:
+    install = ConfigModel.Config.query.filter_by(config='install').first()
+    if install == None:
+        query = ConfigModel.Config(config='install', value='False')
+        db.session.add(query)
+        db.session.commit()
+        return redirect(url_for('install.index'))
+    elif install.value == 'True':
         return redirect(url_for('core.index'))
 
 @install.route('/' , methods=['GET','POST'])
@@ -56,24 +63,22 @@ def data():
     except Exception as e:
         return "An error has occured"
 
-@install.route('reboot/<url>/<error_url>')
-def reboot(url, error_url):
-    try:
-        os.system('sudo pm2 restart onyx-client')
-        return redirect(url_for(url))
-    except:
-        flash(gettext('An error has occured !') , 'error')
-        return redirect(url_for(error_url))
 
 @install.route('redirect_to_onyx')
 def redirect_to_onyx():
-    configPath = get_path('onyx')
-    installConfig = get_config('onyx')
-    installConfig.set('Install', 'done', 'True')
-    with open(configPath, 'w') as configfile:
-        installConfig.write(configfile)
-    flash(gettext('Onyx is installed !'), 'success')
-    return redirect(url_for('install.reboot', url='install.finish', error_url='install.finish'))
+    try:
+        install = ConfigModel.Config.query.filter_by(config='install').first()
+        install.value = 'True'
+
+        db.session.add(install)
+        db.session.commit()
+
+        flash(gettext('Onyx is installed !'), 'success')
+        return redirect(url_for('core.index'))
+    except:
+        flash(gettext('An error has occured !'), 'error')
+        return redirect(url_for('install.index'))
+
 
 @install.route('change_lang', methods=['POST'])
 def change_lang():

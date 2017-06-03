@@ -9,18 +9,20 @@ You may not use this software for commercial purposes.
 """
 
 """Application configuration."""
+import configparser
 import os
 import onyx
-import configparser
+
 
 class Config(object):
     """Base configuration."""
+
     ONYX_PATH = onyx.__path__[0]
+    CONFIG_PATH = ONYX_PATH + "/config/onyx.cfg"
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read(CONFIG_PATH)
     SKILL_FOLDER = ONYX_PATH + "/skills/"
     DATA_FOLDER = ONYX_PATH + "/data/"
-    CONFIG = configparser.ConfigParser()
-    CONFIG.read(ONYX_PATH + "/config/onyx.cfg")
-    INSTALL = CONFIG.getboolean('Install', 'done')
     LANG = CONFIG.get('Base', 'lang')
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
@@ -49,7 +51,6 @@ class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + Config.ONYX_PATH + "/db/data.db"
     SQLALCHEMY_MIGRATE_REPO = Config.ONYX_PATH + "/db/db_repository"
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
-
 
 class DevConfig(Config):
     """Development configuration."""

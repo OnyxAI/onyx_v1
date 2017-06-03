@@ -8,6 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 import abc
+import sys
 import imp
 import time
 import importlib
@@ -28,6 +29,7 @@ from onyx.util.log import getLogger
 
 BLACKLISTED_SKILLS = []
 SKILLS_DIR = Config().SKILL_FOLDER
+sys.path.append(SKILLS_DIR)
 
 config = get_config('onyx')
 MainModule = '__init__'
@@ -143,7 +145,6 @@ def get_blueprint(skills_folder):
     skills = []
     for skill in all_skill:
         if skill['name'] != 'None':
-            print(skill['name'])
             skills.append(imp.load_module(skill["name"] + MainModule, *skill["info"]))
     return skills
 

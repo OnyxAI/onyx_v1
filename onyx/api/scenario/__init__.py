@@ -11,6 +11,7 @@ You may not use this software for commercial purposes.
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.exceptions import *
+from flask import current_app as app
 from onyx.api.assets import Json
 from flask_login import current_user
 import onyx, os
@@ -90,7 +91,7 @@ class Scenario:
 
     def delete_plugin_action(self):
         try:
-            json.path = onyx.__path__[0] + "/plugins/" + self.plugin_name + "/data/actions/" + config.get('Base', 'lang') + ".json"
+            json.path = app.config['SKILL_FOLDER'] + self.plugin_name + "/data/actions/" + config.get('Base', 'lang') + ".json"
             data = json.decode_path()
             user = UsersModel.User.query.all()
             for key in user:

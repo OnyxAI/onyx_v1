@@ -20,6 +20,7 @@ from onyx.api.exceptions import *
 from onyx.util import getLogger
 from onyx.skills.core import get_skill_function
 
+
 scenario = Scenario()
 widgets = Widgets()
 navbar = Navbar()
@@ -46,25 +47,23 @@ class Skill:
                 pass
             skill_tab = []
             for skill in skills:
-                try:
-                    json.path = self.app.config['SKILL_FOLDER'] +skill+"/package.json"
+                if os.path.exists(self.app.config['SKILL_FOLDER'] + skill + "/package.json"):
+                    json.path = self.app.config['SKILL_FOLDER'] + skill + "/package.json"
                     data = json.decode_path()
-                except:
-                    pass
-                e = {}
-                e['name'] = data['name']
-                e['raw'] = data['raw']
-                e['desc'] = data['description']
-                e['version'] = data['version']
-                try:
-                    e['index'] = data['index']
-                except KeyError:
-                    print('No view for ' + data['name'])
-                try:
-                    e['config'] = data['config']
-                except KeyError:
-                    print('No config for ' + data['name'])
-                skill_tab.append(e)
+                    e = {}
+                    e['name'] = data['name']
+                    e['raw'] = data['raw']
+                    e['desc'] = data['description']
+                    e['version'] = data['version']
+                    try:
+                        e['index'] = data['index']
+                    except KeyError:
+                        print('No view for ' + data['name'])
+                    try:
+                        e['config'] = data['config']
+                    except KeyError:
+                        print('No config for ' + data['name'])
+                    skill_tab.append(e)
             return json.encode(skill_tab)
         except Exception as e:
             logger.error("An error has occured : " + str(e))
@@ -95,6 +94,12 @@ class Skill:
                         Module.install()
                     except Exception as e:
                         logger.error('Install Skill error for ' + self.name + ' : ' + str(e))
+                if (hasattr(Module, 'get_blueprint') and callable(Module.get_blueprint)):
+                    blueprint = Module.get_blueprint()
+            if data['navbar'] == 'True':
+                navbar.folder = self.name
+                navbar.set_plugin_navbar()
+            self.app.register_blueprint(blueprint)
             logger.info('Installation done with success')
             return json.encode({"status":"success"})
         except Exception as e:
@@ -141,6 +146,20 @@ class Skill:
         try:
             json.path = self.app.config['SKILL_FOLDER'] + self.name + "/package.json"
             data = json.decode_path()
+            if data['data'] == 'True':
+                try:
+                    widgets.plugin_name = self.name
+                    widgets.delete_plugin()
+                except:
+                    pass
+                try:
+                    scenario.plugin_name = self.name
+                    scenario.delete_plugin()
+                except:
+                    pass
+            if data['navbar'] == 'True':
+                navbar.folder = self.name
+                navbar.delete_plugin_navbar()
             shutil.rmtree(self.app.config['SKILL_FOLDER'] + self.name)
             logger.info('Uninstall done')
             return json.encode({"status":"success"})
