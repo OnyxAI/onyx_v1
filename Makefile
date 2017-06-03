@@ -8,7 +8,7 @@ start:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -h 0.0.0.0 -p 80 -d -r
 
 test:
-	. $(VIRTUALENV_ROOT)/bin/activate; py.test --color=yes
+	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes
 
 debug:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -d -r -p 5000
