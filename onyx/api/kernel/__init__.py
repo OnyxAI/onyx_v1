@@ -143,7 +143,8 @@ class Kernel:
             json.json = execute
             result = json.decode()
 
-            text = self.kernel.get_response(result['label']).text.encode('utf-8')
+            text = self.kernel.get_response(result['label'])
+            text = text.text.encode('utf-8')
 
             injector.text = text
             try:
@@ -151,7 +152,7 @@ class Kernel:
             except:
                 pass
 
-            json.json = injector.inject()
+            json.json = injector.inject().encode('utf-8')
             final_result = json.decode()
             response = final_result['remplaced_str']
 

@@ -19,6 +19,7 @@ from onyx.api.assets import Json
 from onyx.api.exceptions import *
 from onyx.util import getLogger
 from onyx.skills.core import get_skill_function
+import subprocess
 
 
 scenario = Scenario()
@@ -138,7 +139,9 @@ class Skill:
             logger.info('Install pip dependencies for : ' + self.name)
             deps = data["packages"]
             for dep in deps:
-                os.system('pip3 install ' + dep)
+                subprocess.call(['pip', 'install', dep])
+                #pip.main(["install", dep])
+                #os.system('pip install ' + dep)
         except Exception as e:
             logger.error("An error has occured : " + str(e))
 
