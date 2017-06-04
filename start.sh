@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
 TOP=$(cd $(dirname $0) && pwd -L)
-VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${TOP}/venv-$1"}
+VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${TOP}/venv"}
 
-case $2 in
+case $1 in
 	"client") SCRIPT=${TOP}/run.py ;;
 	"service") SCRIPT=${TOP}/onyx/messagebus/service/main.py ;;
 	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
-	"skill_container") SCRIPT=${TOP}/onyx/skills/container.py ;;
-	"kernel") SCRIPT=${TOP}/onyx/api/kernel/__init__.py ;;
 	"voice") SCRIPT=${TOP}/onyx/client/speech/main.py ;;
-	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
 	"wifi") SCRIPT=${TOP}/onyx/client/wifisetup/main.py ;;
-	*) echo "Usage: start.sh [prod | dev] [service | kernel | client | voice | skills | wifi]"; exit ;;
+	*) echo "Usage: start.sh [service | client | voice | skills | wifi]"; exit ;;
 esac
 
-echo "Starting $2"
+echo "Starting $1"
 
 shift
 

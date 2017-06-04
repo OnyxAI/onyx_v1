@@ -13,7 +13,7 @@ function usage {
   echo
   echo "Quickly start, stop or restart Onyx' essential services in detached screens"
   echo
-  echo "usage: $0 [-h] (start [-v|-c]|stop|restart)"
+  echo "usage: $0 [-h] (start |stop|restart)"
   echo "      -h             this help message"
   echo "      start          starts onyx-service, onyx-skills, onyx-client and onyx-voice"
   echo "      stop           stops onyx-service, onyx-skills, onyx-client and onyx-voice"

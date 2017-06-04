@@ -9,7 +9,7 @@ fi
 
 TOP=$(cd $(dirname $0) && pwd -L)
 
-VIRTUALENV_ROOT="${TOP}/venv-prod"
+VIRTUALENV_ROOT="${TOP}/venv"
 
 if [ ! -d ${VIRTUALENV_ROOT} ]; then
    mkdir -p $(dirname ${VIRTUALENV_ROOT})
