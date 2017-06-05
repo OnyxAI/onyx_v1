@@ -16,4 +16,4 @@ echo "Starting $1"
 shift
 
 source ${VIRTUALENV_ROOT}/bin/activate
-PYTHONPATH=${TOP} python ${SCRIPT} $@
+PYTHONPATH=${TOP} ${VIRTUALENV_ROOT}/bin/python ${SCRIPT} $@
