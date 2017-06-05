@@ -42,11 +42,8 @@ function debug-start-onyx {
 }
 
 function stop-onyx {
-    if pm2 list | grep -q "$1";
-    then
-      pm2 stop onyx-$1
-      echo "Onyx $1 stopped"
-    fi
+    pm2 stop onyx-$1
+    echo "Onyx $1 stopped"
 }
 
 function restart-onyx {
