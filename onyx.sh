@@ -27,22 +27,10 @@ function usage {
   echo
 }
 
-mkdir -p $DIR/logs
-
-function verify-start {
-    if ! screen -list | grep -q "$1";
-    then
-      echo "$1 failed to start. The log is below:"
-      echo
-      tail $DIR/logs/$1.log
-    exit 1
-    fi
-}
 
 function start-onyx {
-  screen -mdS onyx-$1$2 -c $SCRIPTS/onyx-$1.screen $DIR/start.sh $1 $2
+  pm2 start $DIR/start.sh --name onyx-$1$2 -x -- $1 $2
   sleep 1
-  verify-start onyx-$1$2
   echo "Onyx $1$2 started"
 }
 
@@ -54,17 +42,15 @@ function debug-start-onyx {
 }
 
 function stop-onyx {
-    if screen -list | grep -q "$1";
+    if pm2 list | grep -q "$1";
     then
-      screen -XS onyx-$1 quit
+      pm2 stop onyx-$1
       echo "Onyx $1 stopped"
     fi
 }
 
 function restart-onyx {
-    $0 stop
-    sleep 1
-    $0 start
+    pm2 restart all
 }
 
 set -e
