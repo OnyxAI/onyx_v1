@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/OnyxProject/Onyx.svg?branch=master)](https://travis-ci.org/OnyxProject/Onyx)
 
-![Alt](http://nsa38.casimages.com/img/2016/12/22/161222041304330268.png)
+![Alt](http://nsa38.casimages.com/img/2017/06/08/17060809355462415.png)
 
 **Website :** [https://onyxlabs.fr](https://onyxlabs.fr)
 
