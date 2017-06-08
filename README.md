@@ -49,7 +49,7 @@ sudo bash install_debian_script.sh
 ```
 
 ```bash
-bash dev_setup.py
+bash setup.py
 ```
 
 That's it !
