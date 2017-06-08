@@ -57,9 +57,6 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
     with app.app_context():
         db.create_all()
 
-    t = threading.Thread(target=create_ws, args=(app,))
-    t.start()
-
     return app
 
 def create_ws(app):
