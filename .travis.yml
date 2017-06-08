@@ -9,4 +9,4 @@ before_install:
 
 install: pip install -r requirements_travis.txt
 # command to run tests
-script: sh run_travis.sh
+script: pytest
