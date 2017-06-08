@@ -32,9 +32,9 @@ class Geolocalisation:
     """
     def get(self):
         try:
-            json.url = "http://ip-api.com/json"
+            json.url = "https://freegeoip.net/json/"
             result = json.decode_url()
-            return json.encode({"latitude":result['lat'],"longitude":result['lon'],"status":"success"})
+            return json.encode({"latitude":result['latitude'],"longitude":result['longitude'],"status":"success"})
         except Exception as e:
             logger.error('Get geolocalisation error : ' + str(e))
             raise GeolocException(str(e))
@@ -46,7 +46,7 @@ class Geolocalisation:
     """
     def get_all(self):
         try:
-            json.url = "http://ip-api.com/json"
+            json.url = "https://freegeoip.net/json/"
             data = json.decode_url()
             return data
         except Exception as e:

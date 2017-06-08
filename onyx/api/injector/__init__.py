@@ -20,10 +20,10 @@ class Injector:
         self.scope = None
 
     def inject(self):
-        self.remplaced_str = self.text
+        self.remplaced_str = self.text.decode('utf-8')
         if self.scope != None:
             for prop in self.scope:
                 for fetch in prop.keys():
-                    self.remplaced_str = self.remplaced_str.replace(fetch, prop[fetch], 1)
+                    self.remplaced_str = self.remplaced_str.replace(fetch, prop[fetch], 1).encode('utf-8')
 
         return json.encode({"status":"success", "remplaced_str":self.remplaced_str})

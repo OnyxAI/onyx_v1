@@ -28,6 +28,4 @@ if [ ! -f ${TOP}/onyx/client/speech/assets/_snowboydetect.so ] || [ ! -f ${TOP}/
     rm snowboy_${os}_${arch}.tar.gz
 fi
 
-cd tests
-
 py.test

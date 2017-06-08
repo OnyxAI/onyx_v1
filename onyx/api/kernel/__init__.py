@@ -125,8 +125,9 @@ class Kernel:
             else:
                 return json.encode({"status":"success", "text":response})
         except Exception as e:
+            raise
             LOG.error('Getting Sentence error : ' + str(e))
-            text = str(self.kernel.get_response('error'))
+            text = self.kernel.get_response('error').text.encode('utf-8')
             return json.encode({"status":"error", "text":text})
 
     def get_event(self):
@@ -143,8 +144,7 @@ class Kernel:
             json.json = execute
             result = json.decode()
 
-            text = self.kernel.get_response(result['label'])
-            text = text.text.encode('utf-8')
+            text = self.kernel.get_response(result['label']).text.encode('utf-8')
 
             injector.text = text
             try:
@@ -158,6 +158,7 @@ class Kernel:
 
             return json.encode({"status":"success", "text":response})
         except Exception as e:
+            raise
             LOG.error('Getting Response error : ' + str(e))
             text = self.kernel.get_response('error').text.encode('utf-8')
             return json.encode({"status":"error", "text":text})

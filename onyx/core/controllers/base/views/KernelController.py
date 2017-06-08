@@ -29,6 +29,7 @@ def kernel():
             data = json.decode()
             return data['text']
         except Exception as e:
+            raise
             return gettext('An error has occured !')
 
 @core.route('train_kernel')
