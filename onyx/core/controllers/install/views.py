@@ -90,7 +90,3 @@ def change_lang():
     except:
         flash(gettext('An error has occured !') , 'error')
         return redirect(url_for("install.index"))
-
-@install.route('finish')
-def finish():
-    return render_template('install/finish.html')

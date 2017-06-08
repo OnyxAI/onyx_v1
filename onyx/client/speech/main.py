@@ -85,7 +85,7 @@ class Detector:
 			print("Could not request results from Speech Recognition service; {0}".format(e))
 
 	def start(self):
-		self.detector = snowboydecoder.HotwordDetector(onyx.__path__[0] + "/client/speech/Onyx.pmdl", sensitivity=0.5, audio_gain=1)
+		self.detector = snowboydecoder.HotwordDetector(onyx.__path__[0] + "/client/speech/ressources/Onyx.pmdl", sensitivity=0.5, audio_gain=1)
 		print('Starting...')
 		self.detector.start(self.detected_callback)
 

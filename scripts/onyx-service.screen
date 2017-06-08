@@ -1,3 +1,0 @@
-deflog on
-logfile /logs/onyx-service.log
-logfile flush 1

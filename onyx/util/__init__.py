@@ -7,8 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-
 import socket
 import subprocess
 import tempfile

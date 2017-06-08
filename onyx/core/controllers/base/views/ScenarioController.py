@@ -25,12 +25,16 @@ actions = Action()
 @core.route('scenario')
 @login_required
 def scenario():
-	json.json = events.get()
-	events_decoded = json.decode()
+	try:
+		json.json = events.get()
+		events_decoded = json.decode()
 
-	json.json = actions.get()
-	actions_decoded = json.decode()
-	return render_template('scenario/index.html', events=events_decoded, actions=actions_decoded)
+		json.json = actions.get()
+		actions_decoded = json.decode()
+		return render_template('scenario/index.html', events=events_decoded, actions=actions_decoded)
+	except:
+		flash(gettext('An error has occured !'), 'error')
+		return redirect(url_for('core.index'))
 
 @core.route('scenario',methods=['POST'])
 @login_required

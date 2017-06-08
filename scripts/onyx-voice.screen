@@ -1,3 +1,0 @@
-deflog on
-logfile /logs/onyx-voice.log
-logfile flush 1

@@ -1,3 +1,0 @@
-deflog on
-logfile /logs/onyx-skills.log
-logfile flush 1

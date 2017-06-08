@@ -25,11 +25,6 @@ install = Install()
 option = Options()
 server = Server()
 
-@core.route('teste')
-def teste():
-	flash(gettext('Account changed successfully' ), 'success')
-	return redirect(url_for('core.index'))
-
 @core.route('options' , methods=['GET','POST'])
 @login_required
 def options():

@@ -11,7 +11,6 @@ __doc__ = """
 
 """
 
-
 class MustacheDialogRenderer(object):
     """
     A dialog template renderer based on the mustache templating language.

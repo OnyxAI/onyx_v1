@@ -11,6 +11,8 @@ venv-prod
 onyxproject.egg-info
 dist
 
+/doc/*
+
 
 /onyx/client/speech/assets/_snowboydetect.so
 /onyx/client/speech/assets/snowboydetect.py

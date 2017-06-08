@@ -7,7 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 from .. import core
 from flask import request,render_template, url_for,redirect, current_app as app
 from flask.ext.login import login_required
@@ -16,7 +15,6 @@ from onyx.api.widgets import *
 
 json = Json()
 box = Widgets()
-
 
 @core.route('/')
 @login_required
