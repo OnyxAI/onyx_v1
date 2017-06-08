@@ -21,7 +21,6 @@ from onyx.util import getLogger
 from onyx.skills.core import get_skill_function
 import subprocess
 
-
 scenario = Scenario()
 widgets = Widgets()
 navbar = Navbar()

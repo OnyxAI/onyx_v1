@@ -46,9 +46,8 @@ class Event:
 
                 On récupère la langue de l'utilisateur via le fichier de configuration et on récupère les informations concernant les évenements disponible
             """
-            lang = config.get('Base', 'lang')
-
-            try:langconfig.get('Base', 'lang')
+            try:
+                lang = config.get('Base', 'lang')
             except:
                 json.lang = "en-US"
 

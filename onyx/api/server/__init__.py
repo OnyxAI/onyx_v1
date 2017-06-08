@@ -43,8 +43,8 @@ class Server:
 
     def get_version(self):
         try:
-            import Onyx
-            return Onyx.__version__
+            import onyx
+            return onyx.__version__
         except:
             return None
 
@@ -179,8 +179,8 @@ class Server:
 
     def migrate(self):
         try:
-            from onyx.flask_config import SQLALCHEMY_DATABASE_URI
-            from onyx.flask_config import SQLALCHEMY_MIGRATE_REPO
+            from onyx.app_config import SQLALCHEMY_DATABASE_URI
+            from onyx.app_config import SQLALCHEMY_MIGRATE_REPO
             from migrate.versioning import api
             v = api.db_version(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
             migration = SQLALCHEMY_MIGRATE_REPO + ('/versions/%03d_migration.py' % (v+1))
