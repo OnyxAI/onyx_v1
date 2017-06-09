@@ -39,3 +39,5 @@ if [ ! -f ${TOP}/onyx/client/speech/assets/_snowboydetect.so ] || [ ! -f ${TOP}/
     tar zxvf snowboy_${os}_${arch}.tar.gz
     rm snowboy_${os}_${arch}.tar.gz
 fi
+
+mkdir $HOME/skills
