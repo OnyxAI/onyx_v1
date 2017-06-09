@@ -10,6 +10,7 @@ You may not use this software for commercial purposes.
 
 """Application configuration."""
 import configparser
+from os.path import expanduser
 import os
 import onyx
 
@@ -21,7 +22,7 @@ class Config(object):
     CONFIG_PATH = ONYX_PATH + "/config/onyx.cfg"
     CONFIG = configparser.ConfigParser()
     CONFIG.read(CONFIG_PATH)
-    SKILL_FOLDER = ONYX_PATH + "/skills/"
+    SKILL_FOLDER = expanduser("~") + "/skills/"
     DATA_FOLDER = ONYX_PATH + "/data/"
     LANG = CONFIG.get('Base', 'lang')
     SECRET_KEY = 'change me please'

@@ -103,7 +103,8 @@ class Skill:
                 navbar.set_plugin_navbar()
             self.app.register_blueprint(blueprint)
             os.system('cd ' + self.app.config['SKILL_FOLDER'] + self.name + ' && make compilelang')
-            kernel.train()
+            bot = kernel.set()
+            kernel.train(bot)
             logger.info('Installation done with success')
             return json.encode({"status":"success"})
         except Exception as e:

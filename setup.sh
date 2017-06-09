@@ -51,4 +51,6 @@ fi
 
 cd ${TOP}
 
+mkdir $HOME/skills
+
 echo "Setup Finished"
