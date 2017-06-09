@@ -18,6 +18,8 @@ from onyx.util.log import getLogger
 from onyx.api.exceptions import *
 from onyx.config import get_config
 
+from onyx.skills.core import *
+
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
@@ -73,7 +75,7 @@ class Kernel:
         try:
             kernel.set_trainer(ListTrainer)
 
-            json.path = onyx.__path__[0] + "/data/sentences/" + config.get('Base', 'lang') + "/sentences.json"
+            json.path = self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/sentences.json"
             sentences = json.decode_path()
             for sentence in sentences:
                 for query in sentence['sentences']:
@@ -82,7 +84,7 @@ class Kernel:
                         "%URL:" + sentence['url'] + "%"
                     ])
 
-            json.path = onyx.__path__[0] + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
+            json.path = self.app.config['ONYX_PATH'] + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
             answers = json.decode_path()
             for answer in answers:
                 for query in answer['answers']:
@@ -95,10 +97,46 @@ class Kernel:
             kernel.set_trainer(ChatterBotCorpusTrainer)
             try:
                 kernel.train(
-                    onyx.__path__[0] + "/data/sentences/" + config.get('Base', 'lang') + "/"
+                    self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/"
                 )
             except:
                 pass
+
+            LOG.info('Skill Training')
+
+            all_skill = get_raw_name(self.app.config['SKILL_FOLDER'])
+            for skill in all_skill:
+                try:
+                    kernel.set_trainer(ListTrainer)
+
+                    json.path = self.app.config['SKILL_FOLDER'] + skill + "/data/sentences/" + config.get('Base', 'lang') + "/sentences.json"
+                    sentences = json.decode_path()
+                    for sentence in sentences:
+                        for query in sentence['sentences']:
+                            kernel.train([
+                                query['text'],
+                                "%URL:" + sentence['url'] + "%"
+                            ])
+
+                    json.path = self.app.config['SKILL_FOLDER'] + skill + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
+                    answers = json.decode_path()
+                    for answer in answers:
+                        for query in answer['answers']:
+                            kernel.train([
+                                answer['label'],
+                                query['text']
+
+                            ])
+
+                    kernel.set_trainer(ChatterBotCorpusTrainer)
+                    try:
+                        kernel.train(
+                            self.app.config['SKILL_FOLDER'] + skill + "/data/sentences/" + config.get('Base', 'lang') + "/"
+                        )
+                    except:
+                        pass
+                except:
+                    pass
 
             LOG.info('Kernel was train successfully')
         except Exception as e:

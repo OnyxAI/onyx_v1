@@ -25,16 +25,3 @@ def get_weather():
 
     result =  json.encode({"status":"success", "label":"get_weather", "scope":scope})
     return result
-
-@bot.route('get_weather_city')
-def get_weather_city(kwargs):
-
-    weather.latitude = '50'
-    weather.longitude = '2'
-
-    temp = weather.get_temp_str()
-
-    scope = [{"%WEATHER_TEMP%":temp, "%WEATHER_CITY%":kwargs[0]}]
-
-    result =  json.encode({"status":"success", "label":"get_weather_city", "scope":scope})
-    return result
