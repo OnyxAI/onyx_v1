@@ -157,9 +157,9 @@ class Navbar:
             data = json.decode_path()
             if data['navbar'] == 'True':
                 json.path = app.config['SKILL_FOLDER'] + self.folder + "/navbar.json"
-                data = json.decode_path()
+                data_skill = json.decode_path()
                 user = UsersModel.User.query.filter_by(username=self.username).first()
-                for nav in data:
+                for nav in data_skill:
                     query = NavbarModel.Navbar(user=user.id,fa=nav['fa'],url=nav['url'],tooltip=nav['tooltip'])
                     db.session.add(query)
                     db.session.commit()
