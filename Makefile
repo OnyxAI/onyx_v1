@@ -1,5 +1,5 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-VIRTUALENV_ROOT=$(ROOT_DIR)/venv-dev
+VIRTUALENV_ROOT=$(ROOT_DIR)/venv
 PYTHON=python
 
 all: setup
