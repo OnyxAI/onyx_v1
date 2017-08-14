@@ -34,6 +34,7 @@ kernel = Kernel()
 
 from onyx.app_config import ProdConfig, Config
 
+
 __all__ = ('create_app', 'blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
 
 def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
@@ -56,7 +57,7 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
 
     with app.app_context():
         db.create_all()
-
+        
     return app
 
 def create_ws(app):
@@ -99,6 +100,7 @@ def get_blueprints(app):
                 return redirect(url_for('install.index'))
             elif install.value == 'False':
                 return redirect(url_for('install.index'))
+                
 
     BLUEPRINTS.append(install)
     return BLUEPRINTS
@@ -146,6 +148,7 @@ def gvars(app):
             logger.error('Get vars error : ' + str(e))
             raise ServerException(str(e))
             return json.encode({"status":"error"})
+        
 
     @app.context_processor
     def utility_processor():
@@ -189,7 +192,7 @@ def gvars(app):
     try:
         @babel.localeselector
         def get_locale():
-            raw_lang = config.get('Base', 'lang')
+            raw_lang = g.lang
             if raw_lang:
                 lang = raw_lang.split('-')
                 if lang[0] in Config.ACCEPT_LANGUAGES:
@@ -197,6 +200,6 @@ def gvars(app):
                 else:
                     return Config.BABEL_DEFAULT_LOCALE
             else:
-                return 'fr'
+                return 'en'
     except AssertionError:
         pass

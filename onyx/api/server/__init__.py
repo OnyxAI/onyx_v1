@@ -23,6 +23,7 @@ from onyx.api.machine import *
 from onyx.api.scenario import *
 from onyx.api.notification import *
 from onyx.api.exceptions import *
+from onyx.app_config import Config
 import logging
 import onyx
 
@@ -56,12 +57,6 @@ class Server:
         except:
             raise
 
-    def update(self):
-        try:
-            pip.main(['install', '--upgrade', 'onyxproject'])
-        except:
-            print('An error has occured with Update')
-
     def get_ram(self):
       try:
         ram = psutil.virtual_memory()
@@ -94,7 +89,8 @@ class Server:
         except:
             g.color = ""
         g.avatar = user.get_avatar()
-        g.lang = config.get('Base', 'lang')
+        query = ConfigModel.Config.query.filter_by(config='lang').first()
+        g.lang = query.value
         g.version = self.get_version()
         g.ram = "width: "+str(self.get_ram())+"%"
         g.uptime = self.get_up_stats()

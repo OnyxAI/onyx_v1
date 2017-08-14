@@ -27,13 +27,14 @@ config = get_config('onyx')
 class Action:
 
     def __init__(self):
+        self.app = app
         self.id = None
         self.url = None
         self.param = None
 
     """
         This function makes it possible to get in the data folder and in each plugin all possible actions by Onyx, it stores them in a variable that it returns,
-        All depending on the language of the user
+        All depending on the language of the user
 
         Cette fonction permeactionst de récupérer dans le dossier data ainsi que dans chaque plugin toutes les actions possible par Onyx, elle les stocke dans une variable qu'elle renvoie,
         le tout en fonction de la langue de l'utilisateur

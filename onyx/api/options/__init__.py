@@ -15,7 +15,9 @@ from onyx.extensions import db
 from onyx.api.exceptions import *
 from onyx.api.assets import Json
 from onyx.config import get_config , get_path
+from flask import current_app as app
 import logging
+from onyxbabel import refresh
 
 logger = logging.getLogger()
 json = Json()
@@ -72,11 +74,16 @@ class Options:
 
     def change_lang(self):
         try:
-            configPath = get_path('onyx')
-            langConfig = get_config('onyx')
-            langConfig.set('Base', 'lang', self.lang)
-            with open(configPath, 'w') as configfile:
-                langConfig.write(configfile)
+            query = ConfigModel.Config.query.filter_by(config='lang').first()
+
+            query.value = self.lang
+
+            db.session.add(query)
+            db.session.commit()
+            
+            refresh()
+            
+            
             logger.info('Language update successfully')
             return json.encode({"status":"success"})
         except Exception as e:

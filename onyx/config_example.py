@@ -13,6 +13,7 @@ import configparser
 from os.path import expanduser
 import os
 import onyx
+import sqlite3
 
 
 class Config(object):
@@ -24,7 +25,15 @@ class Config(object):
     CONFIG.read(CONFIG_PATH)
     SKILL_FOLDER = expanduser("~") + "/skills/"
     DATA_FOLDER = ONYX_PATH + "/data/"
-    LANG = CONFIG.get('Base', 'lang')
+
+    try:
+        connection = sqlite3.connect(ONYX_PATH + '/db/data.db')
+        cursor = connection.cursor()
+        cursor.execute("""SELECT value FROM Config WHERE config='lang'""")
+        LANG = cursor.fetchone()[0]
+    except:
+        LANG = CONFIG.get('Base', 'lang')
+    LANG_FILE = CONFIG.get('Base', 'lang')
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
     APP_DIR = os.path.abspath(os.path.dirname(__file__))

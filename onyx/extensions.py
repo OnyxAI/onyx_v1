@@ -8,9 +8,6 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from flask_mail import Mail
-mail = Mail()
-
 from onyx_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
@@ -18,7 +15,7 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 login_manager.login_view = 'auth.hello'
 
-from onyxbabel import Babel , Domain
+from onyxbabel import Babel
 babel = Babel()
 
 from flask_migrate import Migrate

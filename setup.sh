@@ -53,4 +53,6 @@ cd ${TOP}
 
 mkdir -p $HOME/skills
 
+python database.py
+
 echo "Setup Finished"

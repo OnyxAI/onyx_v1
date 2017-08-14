@@ -8,7 +8,8 @@ case $1 in
 	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
 	"voice") SCRIPT=${TOP}/onyx/client/speech/main.py ;;
 	"wifi") SCRIPT=${TOP}/onyx/client/wifisetup/main.py ;;
-	*) echo "Usage: start.sh [service | client | voice | skills | wifi]"; exit ;;
+	"cli") SCRIPT=${TOP}/onyx/client/cli/main.py ;;
+	*) echo "Usage: start.sh [service | cli | client | voice | skills | wifi]"; exit ;;
 esac
 
 echo "Starting $1"

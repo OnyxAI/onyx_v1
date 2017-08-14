@@ -26,7 +26,7 @@ init:
 	export PYTHONPATH=$PYTHONPATH:ROOT_DIR
 
 initdb:
-	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py db init
+	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) database.py
 
 migratedb:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py db migrate

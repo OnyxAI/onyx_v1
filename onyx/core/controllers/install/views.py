@@ -10,7 +10,7 @@ You may not use this software for commercial purposes.
 
 from flask import Blueprint, render_template, redirect, request, current_app as app, g, flash, url_for
 from flask.ext.login import login_required
-from onyxbabel import gettext
+from onyxbabel import gettext, refresh
 from onyx.extensions import db, login_manager
 from onyx.core.models import *
 from onyx.api.exceptions import *
@@ -85,7 +85,8 @@ def change_lang():
     try:
         options.lang = request.form.get('lang')
         options.change_lang()
-        flash(gettext('The lang was changed ! If not please reboot Onyx') , 'success')
+        refresh()
+        flash(gettext('The lang was changed !') , 'success')
         return redirect(url_for('install.reboot', url='install.index', error_url='install.index'))
     except:
         flash(gettext('An error has occured !') , 'error')
