@@ -101,8 +101,8 @@ class Skill:
             if data['navbar'] == 'True':
                 navbar.folder = self.name
                 navbar.set_plugin_navbar()
-            self.app.register_blueprint(blueprint)
             os.system('cd ' + self.app.config['SKILL_FOLDER'] + self.name + ' && make compilelang')
+            self.app.register_blueprint(blueprint)
             bot = kernel.set()
             kernel.train(bot)
             logger.info('Installation done with success')

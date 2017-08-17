@@ -17,7 +17,10 @@ from onyx.skills.core import OnyxSkill
 
 config = get_config('onyx')
 
+global ws
+
 import threading
+from threading import Thread
 
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
@@ -27,39 +30,38 @@ skills = OnyxSkill(name="cli")
 json = Json()
 LOG = getLogger('CliClient')
 
-def ws():
-    def speak_cli(self, message):
-        print("Onyx:" + str(message))
-    
-    ws = WebsocketClient()
-    ws.on('speak', speak_cli)
+def handle_speak(event):
+    utterance = event.data.get('utterance')
+    print(">> " + utterance)
+
+def handle_finish(event):
+    print("Finish")
+
+def connect():
+    # Once the websocket has connected, just watch it for speak events
     ws.run_forever()
-        
-th = threading.Thread(target=ws)
-th.start()    
 
-while True:
-    try:
-        result = raw_input('You: ')
-        print("You said: " + str(result))
-        
-        def create_ws():
-			def onConnected(event=None):
-			    print ("Sending message...")
-			    payload = {
-			        'utterances': [result]
-			       
-			    }
-			    ws.emit(Message('recognizer_loop:utterance', payload))
-			    t.close()
-			    
-			ws = WebsocketClient()
-			ws.on('connected', onConnected)
-			ws.run_forever()
-        
-        t = threading.Thread(target=create_ws)
-        t.start()
-        time.sleep(2)
+ws = WebsocketClient()
+ws.on('speak', handle_speak)
+ws.on('finish', handle_finish)
+event_thread = Thread(target=connect)
+event_thread.setDaemon(True)
+event_thread.start()
 
-    except (KeyboardInterrupt, EOFError, SystemExit):
-        break
+
+def cli():
+    while True:
+        try:
+            time.sleep(1.5)
+            result = raw_input('You: ')
+
+            print ("Sending message...")
+            payload = {
+                'utterances': [result]
+            }
+            ws.emit(Message('recognizer_loop:utterance', payload))
+
+        except (KeyboardInterrupt, EOFError, SystemExit):
+            break
+
+cli()
