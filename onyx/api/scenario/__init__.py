@@ -15,10 +15,10 @@ from flask import current_app as app
 from onyx.api.assets import Json
 from flask_login import current_user
 import onyx, os
-import logging
+from onyx.util.log import getLogger
 
 json = Json()
-logger = logging.getLogger()
+logger = getLogger('Scenario')
 
 from onyx.config import get_config
 config = get_config('onyx')

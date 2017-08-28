@@ -14,9 +14,9 @@ from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-import logging
+from onyx.util.log import getLogger
 
-logger = logging.getLogger()
+logger = getLogger('Calendar')
 json = Json()
 
 """
@@ -58,7 +58,6 @@ class Calendar:
         except Exception as e:
             logger.error('Event added error : ' + str(e))
             raise CalendarException(str(e))
-            return json.encode({"status":"error"})
 
     """
         This function retrieves all the events of a given user
@@ -85,7 +84,6 @@ class Calendar:
         except Exception as e:
             logger.error('Getting event error : ' + str(e))
             raise CalendarException(str(e))
-            return json.encode({"status":"error"})
 
     """
         This function allows you to retrieve all the events of the day of a user
@@ -113,7 +111,6 @@ class Calendar:
         except Exception as e:
             logger.error('Getting meet error : ' + str(e))
             raise CalendarException(str(e))
-            return json.encode({"status":"error"})
 
 
     """
@@ -133,7 +130,6 @@ class Calendar:
         except Exception as e:
             logger.error('Event update error : ' + str(e))
             raise CalendarException(str(e))
-            return json.encode({'status':'error'})
 
     """
         This function delete an event
@@ -171,4 +167,3 @@ class Calendar:
         except Exception as e:
             logger.error('Event update error : ' + str(e))
             raise CalendarException(str(e))
-            return json.encode({'status':'error'})

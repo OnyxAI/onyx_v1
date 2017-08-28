@@ -9,10 +9,10 @@ You may not use this software for commercial purposes.
 """
 from onyx.api.assets import Json
 import wikipedia
-import logging
+from onyx.util import getLogger
 from onyx.api.exceptions import *
 
-logger = logging.getLogger()
+logger = getLogger('Wikipedia')
 json = Json()
 
 class Wikipedia:
@@ -29,7 +29,6 @@ class Wikipedia:
         except Exception as e:
             logger.error('Getting wiki article error : ' + str(e))
             raise WikiException(str(e))
-            return json.encode({"status":"error"})
 
     def get_summary(self):
         try:
@@ -39,4 +38,3 @@ class Wikipedia:
         except:
             logger.error('Getting wiki summary error : ' + str(e))
             raise WikiException(str(e))
-            return json.encode({"status":"error"})

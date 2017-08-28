@@ -12,11 +12,12 @@ from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.action import *
 from flask import g, current_app as app
-import os, onyx, logging
+import os, onyx
 from onyx.api.exceptions import *
 from onyx.config import get_config
+from onyx.util.log import getLogger
 
-logger = logging.getLogger()
+logger = getLogger('Event')
 action = Action()
 json = Json()
 config = get_config('onyx')

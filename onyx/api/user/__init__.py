@@ -17,13 +17,13 @@ from onyx.api.assets import Json
 from onyx.api.navbar import *
 from onyx.api.exceptions import *
 from onyx.api.events import *
+from onyx.util.log import getLogger
 import hashlib
 import onyx
-import logging
 
 event = Event()
 navbars = Navbar()
-logger = logging.getLogger()
+logger = getLogger('User')
 json = Json()
 
 

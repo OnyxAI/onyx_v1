@@ -15,12 +15,12 @@ from onyx.extensions import db
 from onyx.core.models import *
 from flask import g, current_app as app
 from onyx.skills.core import *
-import logging
+from onyx.util import getLogger
 import onyx
 import os
 
 json = Json()
-logger = logging.getLogger()
+logger = getLogger('Widgets')
 
 class Widgets:
 

@@ -4,12 +4,11 @@
   {% endfor %}
 {%- endmacro %}
 
-{{ get_js(['jquery.min', 'jquery-ui.min', 'lang-all', 'gcal', 'wikipedia', 'bot', 'utilities', 'tutorial']) }}
+{{ get_js(['jquery.min', 'jquery-ui.min', 'moment.min', 'wikipedia', 'bot', 'utilities', 'tutorial']) }}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.min.js"></script>
 
-{{ get_js(['materialize']) }}
+{{ get_js(['gcal', 'materialize', 'lang-all']) }}
 
 <script type="text/javascript">$('.loader').hide();</script>
 <script type="text/javascript">$('.button-collapse').sideNav();</script>

@@ -74,13 +74,12 @@ def get_blueprints(app):
 
     from onyx.core.controllers.base import core
     from onyx.core.actions import action
-    from onyx.core.bot import bot
     from onyx.core.controllers.auth import auth
     from onyx.core.controllers.api import api
     from onyx.core.widgets import widgets
     from onyx.core.controllers.install import install
 
-    BLUEPRINTS = [core, auth, api, action, widgets, bot]
+    BLUEPRINTS = [core, auth, api, action, widgets]
 
     all_skills = get_blueprint(app.config['SKILL_FOLDER'])
     for skill in all_skills:

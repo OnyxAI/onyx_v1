@@ -11,10 +11,10 @@ from onyx.api.geolocalisation import Geolocalisation
 from onyx.api.exceptions import *
 from onyx.api.assets import Json
 from onyxbabel import gettext
-import logging
+from onyx.util import getLogger
 
 json = Json()
-logger = logging.getLogger()
+logger = getLogger('Weather')
 
 class Weather:
 

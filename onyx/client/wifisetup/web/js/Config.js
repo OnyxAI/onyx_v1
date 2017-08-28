@@ -1,3 +1,3 @@
 var Config = {
-    wsUrl: "ws://172.24.1.1:8181/core"
+    wsUrl: "ws://172.24.1.1:8081/core"
 };

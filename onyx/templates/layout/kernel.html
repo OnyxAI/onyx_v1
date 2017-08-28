@@ -1,7 +1,8 @@
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bot.css') }}">
-<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" type="text/javascript"></script>
 <link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
+
 
 <div class="row">
   <div class="container">
@@ -52,9 +53,6 @@ function Messenger() {
   this.onSend = function (message) {
     return console.log('Sent: ' + message.text);
   };
-  this.onDelete = function (message) {
-    return console.log('Deleted: ' + message.text);
-  };
 }
 
 Messenger.prototype.send = function send() {
@@ -93,14 +91,6 @@ Messenger.prototype.recieve = function recieve() {
   }
 };
 
-Messenger.prototype.delete = function _delete(index) {
-  index = index || this.messageLength - 1;
-
-  var deleted = this.messageLength.pop();
-
-  this.deletedList.push(deleted);
-  this.onDelete(deleted);
-};
 
 Messenger.prototype.filter = function filter(input) {
   var output = input.replace('bad input', 'good output'); // such amazing filter there right?
@@ -141,139 +131,233 @@ BuildHTML.prototype.them = function them(text) {
 return BuildHTML;
 }();
 
-$(document).ready(function () {
 
-var messenger = new Messenger();
-var buildHTML = new BuildHTML();
+var Config = {
+    wsUrl: "ws://onyx-aituglo.c9users.io:8081/core"
+};
 
-var $input = $('#input');
-var $send = $('#send');
-var $microphone = $('#microphone');
-var $content = $('#content');
-var $inner = $('#inner');
 
-function safeText(text) {
-  $content.find('.message-wrapper').last().find('.text-wrapper').text(text);
-}
+var WS = {
+    ws: null,
+    wsConnected: false,
+    listeners: {},
+    onOpenListeners: [],
 
-function animateText() {
-  setTimeout(function () {
-    $content.find('.message-wrapper').last().find('.text-wrapper').addClass('animated fadeIn');
-  }, 350);
-}
+    connect: function () {
+        this.ws = new WebSocket(Config.wsUrl);
+        this.setWSListeners();
+    },
 
-function scrollBottom() {
-  $($inner).scrollTop($($inner)[0].scrollHeight);
-}
+    setWSListeners: function () {
+        this.ws.onmessage = this.onMessage.bind(this);
+        this.ws.onopen = this.onOpen.bind(this);
+    },
 
-function buildSent(message) {
-  console.log('sending: ', message.text);
+    setOnOpenListener: function (cb) {
+        this.onOpenListeners.push(cb);
+    },
 
-  $content.append(buildHTML.me(message.text));
-  safeText(message.text);
-  animateText();
+    onMessage: function (evt) {
+        var msg = JSON.parse(evt.data);
+        if (this.listeners[msg.type]) {
+            this.listeners[msg.type].forEach(function (cb) {
+                cb(msg.data);
+            });
+        }
+    },
 
-  scrollBottom();
-}
+    onOpen: function () {
+        this.wsConnected = true;
+        this.onOpenListeners.forEach(function (cb) {
+            cb();
+        });
+    },
 
-function buildRecieved(message) {
-  console.log('recieving: ', message.text);
+    send: function (type, data) {
+        this.ws.send(JSON.stringify({
+            type: type,
+            data: data
+        }));
+    },
 
-  $content.append(buildHTML.them(message.text));
-  safeText(message.text);
-  animateText();
+    close: function () {
+        this.ws.close();
+        this.wsConnected = false;
+        this.ws = null;
+    },
 
-  scrollBottom();
-}
+    addMessageListener: function (type, callback) {
+        this.listeners[type] = this.listeners[type] || [];
+        this.listeners[type].push(callback);
+    }
 
-function sendMessage() {
-  var text = $input.val();
-  messenger.send(text);
-  $input.val('');
-  $input.focus();
+};
 
-  setTimeout(function () {
-    $.ajax({
-       url: '{{ url_for("core.kernel") }}',
-       type: "POST",
-       data: {text:text},
-       success: function(rep) {
-         messenger.recieve(rep);
-       }
+
+var Kernel = {
+
+        setListeners: function () {
+            WS.addMessageListener("speak", this.onSpeak.bind(this));
+            WS.addMessageListener("intent_failure", this.onFail.bind(this));
+        },
+
+        onSpeak: function (data) {
+             this.messenger.recieve(data.utterance);
+        },
+        
+        onFail: function (data) {
+              setTimeout(function () {
+                $.ajax({
+                   url: '{{ url_for("core.kernel") }}',
+                   type: "POST",
+                   data: {text:data.utterance},
+                   success: function(rep) {
+                     send(rep);
+                   }
+                });
+              }, 500);
+              
+              function send(text){
+                Kernel.messenger.recieve(text);
+              }
+        },
+
+
+        init: function () {
+            
+            var messenger = new Messenger();
+            var buildHTML = new BuildHTML();
+            
+            var $input = $('#input');
+            var $send = $('#send');
+            var $microphone = $('#microphone');
+            var $content = $('#content');
+            var $inner = $('#inner');
+            
+            function safeText(text) {
+              $content.find('.message-wrapper').last().find('.text-wrapper').text(text);
+            }
+            
+            function animateText() {
+              setTimeout(function () {
+                $content.find('.message-wrapper').last().find('.text-wrapper').addClass('animated fadeIn');
+              }, 350);
+            }
+            
+            function scrollBottom() {
+              $($inner).scrollTop($($inner)[0].scrollHeight);
+            }
+            
+            function buildSent(message) {
+              console.log('sending: ', message.text);
+            
+              $content.append(buildHTML.me(message.text));
+              safeText(message.text);
+              animateText();
+            
+              scrollBottom();
+            }
+            
+            function buildRecieved(message) {
+              console.log('recieving: ', message.text);
+            
+              $content.append(buildHTML.them(message.text));
+              safeText(message.text);
+              animateText();
+            
+              scrollBottom();
+            }
+            
+            function sendMessage() {
+              var text = $input.val();
+              messenger.send(text);
+              $input.val('');
+              $input.focus();
+            
+              setTimeout(function () {
+                var payload = {
+                  'utterances': [text]
+                }
+                WS.send('recognizer_loop:utterance', payload)
+            
+              }, 500);
+            
+            }
+            
+            function microphone(){
+              if ('webkitSpeechRecognition' in window) {
+                  var recognition = new webkitSpeechRecognition();
+                  var text = '';
+            
+                  recognition.lang = "{{g.lang}}";
+                  recognition.continuous = false;
+                  recognition.interimResults = true;
+                  recognition.start();
+                  recognition.onresult = function (event) {
+                      for (var i = event.resultIndex; i < event.results.length; ++i) {
+                          if (event.results[i].isFinal) {
+                              recognition.stop();
+                              var transcript = event.results[i][0].transcript;
+            
+                              messenger.send(transcript);
+                              setTimeout(function () {
+                                var payload = {
+                                  'utterances': [text]
+                                }
+                                WS.send('recognizer_loop:utterance', payload)
+            
+                              }, 500);
+            
+                          }
+                      }
+                  };
+              }else{
+                  alert('Your browser is not compatible !');
+              }
+            
+            
+            }
+            
+            
+            messenger.onSend = buildSent;
+            messenger.onRecieve = buildRecieved;
+            
+            
+            $input.focus();
+            
+            $microphone.on('click', function (e) {
+              microphone();
+            });
+            
+            $send.on('click', function (e) {
+              sendMessage();
+            });
+            
+            $input.on('keydown', function (e) {
+              var key = e.which || e.keyCode;
+            
+              if (key === 13) {
+                // enter key
+                e.preventDefault();
+            
+                sendMessage();
+              }
+            });
+            Kernel.messenger = messenger;
+            this.setListeners();
+        }
+        
+        
+    };
+  
+
+window.addEventListener("load", function () {
+    WS.connect();
+    WS.setOnOpenListener(function () {
+        Kernel.init();
     });
 
-  }, 500);
-
-}
-
-function microphone(){
-  if ('webkitSpeechRecognition' in window) {
-      var recognition = new webkitSpeechRecognition();
-      var text = '';
-
-      recognition.lang = "{{g.lang}}";
-      recognition.continuous = false;
-      recognition.interimResults = true;
-      recognition.start();
-      recognition.onresult = function (event) {
-          for (var i = event.resultIndex; i < event.results.length; ++i) {
-              if (event.results[i].isFinal) {
-                  recognition.stop();
-                  var transcript = event.results[i][0].transcript;
-
-                  messenger.send(transcript);
-                  setTimeout(function () {
-                    $.ajax({
-                       url: '{{ url_for("core.kernel") }}',
-                       type: "POST",
-                       data: {text:transcript},
-                       success: function(rep) {
-                         messenger.recieve(rep);
-                       }
-                    });
-
-                  }, 500);
-
-              }
-          }
-      };
-  }else{
-      alert('Your browser is not compatible !');
-  }
-
-
-}
-
-
-messenger.onSend = buildSent;
-messenger.onRecieve = buildRecieved;
-
-
-$input.focus();
-
-$microphone.on('click', function (e) {
-  microphone();
 });
-
-$send.on('click', function (e) {
-  sendMessage();
-});
-
-$input.on('keydown', function (e) {
-  var key = e.which || e.keyCode;
-
-  if (key === 13) {
-    // enter key
-    e.preventDefault();
-
-    sendMessage();
-  }
-});
-});
-
-
-
-
 
 
 

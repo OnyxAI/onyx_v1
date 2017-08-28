@@ -8,14 +8,15 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-import importlib, os, onyx, logging
+import importlib, os, onyx
 from flask import current_app as app, g
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
 from onyx.skills.core import *
 from onyx.config import get_config
+from onyx.util.log import getLogger
 
-logger = logging.getLogger()
+logger = getLogger('Action')
 json = Json()
 config = get_config('onyx')
 

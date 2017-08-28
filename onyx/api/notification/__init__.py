@@ -12,9 +12,9 @@ from flask_login import current_user
 from onyx.extensions import db
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-import logging
+from onyx.util.log import getLogger
 
-logger = logging.getLogger()
+logger = getLogger('Notification')
 json = Json()
 
 """

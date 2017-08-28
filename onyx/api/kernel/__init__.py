@@ -23,16 +23,11 @@ from onyx.skills.core import *
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
-from onyx.api.parsers import Parser
-from onyx.api.injector import Injector
 
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 
 from onyx import *
-
-parser = Parser()
-injector = Injector()
 
 LOG = getLogger('Kernel')
 config = get_config('onyx')
@@ -54,6 +49,7 @@ class Kernel:
         try:
             kernel = ChatBot("Onyx",
                 storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
+                #storage_adapter="chatterbot.storage.MongoDatabaseAdapter",
                 logic_adapters=[
                     {
                         'import_path': 'onyx.api.kernel.adapters.best_adapter.BestMatchAdapter'
@@ -62,8 +58,8 @@ class Kernel:
                 input_adapter="chatterbot.input.VariableInputTypeAdapter",
                 output_adapter="chatterbot.output.OutputAdapter",
                 output_format="text",
-                #database='database-bot-fr'
                 database=onyx.__path__[0] + "/db/bot_data_" + config.get('Base', 'lang') + ".db"
+                #database="bot_data_" + config.get('Base', 'lang')
             )
 
             return kernel
@@ -74,16 +70,6 @@ class Kernel:
     def train(self, kernel):
         try:
             kernel.set_trainer(ListTrainer)
-
-            json.path = self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/sentences.json"
-            sentences = json.decode_path()
-            for sentence in sentences:
-                for query in sentence['sentences']:
-                    kernel.train([
-                        query['text'],
-                        "%URL:" + sentence['url'] + "%"
-                    ])
-
             json.path = self.app.config['ONYX_PATH'] + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
             answers = json.decode_path()
             for answer in answers:
@@ -94,13 +80,12 @@ class Kernel:
 
                     ])
 
+
             kernel.set_trainer(ChatterBotCorpusTrainer)
-            try:
-                kernel.train(
-                    self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/"
-                )
-            except:
-                pass
+            kernel.train(
+                self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/"
+            )
+
 
             LOG.info('Skill Training')
 
@@ -109,14 +94,6 @@ class Kernel:
                 try:
                     kernel.set_trainer(ListTrainer)
 
-                    json.path = self.app.config['SKILL_FOLDER'] + skill + "/data/sentences/" + config.get('Base', 'lang') + "/sentences.json"
-                    sentences = json.decode_path()
-                    for sentence in sentences:
-                        for query in sentence['sentences']:
-                            kernel.train([
-                                query['text'],
-                                "%URL:" + sentence['url'] + "%"
-                            ])
 
                     json.path = self.app.config['SKILL_FOLDER'] + skill + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
                     answers = json.decode_path()
@@ -148,55 +125,10 @@ class Kernel:
         try:
             text = self.text.encode('ascii', 'ignore')
 
-            parser.text = text
-            json.json = parser.parse()
-
-            parsed_request = json.decode()
-            remplaced_str = parsed_request['remplaced_str']
-
-            response = self.kernel.get_response(remplaced_str).text.encode('utf-8')
-
-            if response.startswith("%URL:") and response.endswith("%"):
-                self.url = response.replace("%URL:","").replace("%","")
-                self.kwargs = parsed_request['kwargs']
-                return self.get_event()
-            else:
-                return json.encode({"status":"success", "text":response})
-        except Exception as e:
-            raise
-            LOG.error('Getting Sentence error : ' + str(e))
-            text = self.kernel.get_response('error').text.encode('utf-8')
-            return json.encode({"status":"error", "text":text})
-
-    def get_event(self):
-        try:
-            function = getattr(importlib.import_module(self.app.view_functions[self.url].__module__), self.app.view_functions[self.url].__name__)
-            try:
-                execute = function(self.kwargs)
-            except:
-                try:
-                    execute = function()
-                except:
-                    execute = json.encode({"status":"error", "label":"error"})
-
-            json.json = execute
-            result = json.decode()
-
-            text = self.kernel.get_response(result['label']).text.encode('utf-8')
-
-            injector.text = text
-            try:
-                injector.scope = result['scope']
-            except:
-                pass
-
-            json.json = injector.inject().encode('utf-8')
-            final_result = json.decode()
-            response = final_result['remplaced_str']
+            response = self.kernel.get_response(text).text.encode('utf-8')
 
             return json.encode({"status":"success", "text":response})
         except Exception as e:
-            raise
-            LOG.error('Getting Response error : ' + str(e))
+            LOG.error('Getting Sentence error : ' + str(e))
             text = self.kernel.get_response('error').text.encode('utf-8')
             return json.encode({"status":"error", "text":text})

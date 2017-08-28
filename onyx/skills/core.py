@@ -25,6 +25,7 @@ from onyx.dialog import DialogLoader
 from onyx.filesystem import FileSystemAccess
 from onyx.messagebus.message import Message
 from onyx.util.log import getLogger
+from functools import wraps
 
 
 BLACKLISTED_SKILLS = []
@@ -181,6 +182,33 @@ def unload_skills(skills):
     for s in skills:
         s.shutdown()
 
+_intent_list = []
+_intent_file_list = []
+
+
+def intent_handler(intent_parser):
+    """ Decorator for adding a method as an intent handler. """
+
+    def real_decorator(func):
+        @wraps(func)
+        def handler_method(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        _intent_list.append((intent_parser, func))
+        return handler_method
+
+    return real_decorator
+
+
+def intent_file_handler(intent_file):
+    """ Decorator for adding a method as an intent file handler. """
+    def real_decorator(func):
+        @wraps(func)
+        def handler_method(*args, **kwargs):
+            return func(*args, **kwargs)
+        _intent_file_list.append((intent_file, func))
+        return handler_method
+    return real_decorator
 
 class OnyxSkill(object):
     """
@@ -201,6 +229,29 @@ class OnyxSkill(object):
     @property
     def lang(self):
         return self.config.get('Base','lang')
+        
+    @property
+    def location(self):
+        """ Get the JSON data struction holding location information. """
+        # TODO: Allow Enclosure to override this for devices that
+        # contain a GPS.
+        return {"city": {"code": "Lawrence","name": "Lawrence","state": {"code": "KS","name": "Kansas","country": {"code": "US","name": "United States"}}},"coordinate": {"latitude": 38.971669,"longitude": -95.23525},"timezone": {"code": "America/Chicago","name": "Central Standard Time","dstOffset": 3600000,"offset": -21600000}}
+
+    @property
+    def location_pretty(self):
+        """ Get a more 'human' version of the location as a string. """
+        loc = self.location
+        if type(loc) is dict and loc["city"]:
+            return loc["city"]["name"]
+        return None
+
+    @property
+    def location_timezone(self):
+        """ Get the timezone code, such as 'America/Los_Angeles' """
+        loc = self.location
+        if type(loc) is dict and loc["timezone"]:
+            return loc["timezone"]["code"]
+        return None
 
     def bind(self, emitter):
         if emitter:
@@ -235,7 +286,7 @@ class OnyxSkill(object):
                 # TODO: Localize
                 self.speak(
                     "An error occurred while processing a request in " +
-                    self.name)
+                    self.name, self.lang)
                 logger.error(
                     "An error occurred while processing a request in " +
                     self.name, exc_info=True)
@@ -270,17 +321,17 @@ class OnyxSkill(object):
         re.compile(regex_str)  # validate regex
         self.emitter.emit(Message('register_vocab', {'regex': regex_str}))
 
-    def speak(self, utterance):
+    def speak(self, utterance, lang):
         #self.emitter.emit(Message("speak", {'utterance': utterance}))
         logger.info("Speak: " + utterance)
-        self.emitter.emit(Message("speak", {'utterance': utterance}))
+        self.emitter.emit(Message("speak", {'utterance': utterance, 'lang': lang}))
         #tts.execute(utterance)
 
     def finish(self):
         self.emitter.emit(Message("finish"))
 
     def speak_dialog(self, key, data={}):
-        self.speak(self.dialog_renderer.render(key, data))
+        self.speak(self.dialog_renderer.render(key, data), self.lang)
 
     def init_dialog(self, root_directory):
         dialog_dir = join(root_directory, 'dialog', self.lang)

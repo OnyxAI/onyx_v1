@@ -15,9 +15,9 @@ from onyx.api.assets import Json
 from onyx.api.exceptions import *
 from onyx.extensions import db
 import onyx
-import logging
+from onyx.util.log import getLogger
 
-logger = logging.getLogger()
+logger = getLogger('Navbar')
 json = Json()
 
 """

@@ -15,10 +15,11 @@ from onyx.core.models import *
 from onyx.api.install import *
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-import git, pip, onyx, os, hashlib, logging
+import git, pip, onyx, os, hashlib
+from onyx.util.log import getLogger
 from git import Repo
 
-logger = logging.getLogger()
+logger = getLogger('Install')
 json = Json()
 
 """
@@ -85,7 +86,7 @@ class Install:
     """
     def get_data(self):
         try:
-            Repo.clone_from('https://github.com/OnyxProject/Onyx-Data', onyx.__path__[0] + "/data/")
+            Repo.clone_from('https://github.com/OnyxProject/onyx-data', onyx.__path__[0] + "/data/")
             logger.info('Successfully get Data')
         except Exception as e:
             logger.error('Get Data error : ' + str(e))

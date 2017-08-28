@@ -9,9 +9,9 @@ You may not use this software for commercial purposes.
 """
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-import logging
+from onyx.util.log import getLogger
 
-logger = logging.getLogger()
+logger = getLogger('Geolocalisation')
 json = Json()
 
 """
