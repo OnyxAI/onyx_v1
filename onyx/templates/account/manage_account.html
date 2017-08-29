@@ -4,41 +4,30 @@
 
 {% block body %}
 
-    <div class="card-panel {{g.panel_color}}">
-		        <h2 class='{{g.text_color}}'>{{_("My Account")}}</h2>
 
-    <span class="btn-floating btn-large {{g.color}}"></span><br><br>
-    <h5 class='{{g.text_color}}'>{{_("Name")}}</h5> {{ g.user.username }}
-    <h5 class='{{g.text_color}}'>{{_("Email")}}</h5>{{ g.user.email }}
-		        <h3 class='{{g.text_color}}'>{{_("Change my account information")}} :</h3> <br>
+<div class="card-panel {{g.panel_color}}">
+  <h2 class='{{g.text_color}}'>{{_("My Account")}}</h2>
+  <span class="btn-floating btn-large {{g.color}}"></span><br><br>
+  <h5 class='{{g.text_color}}'>{{_("Name")}}</h5> {{ g.user.username }}
+  <h5 class='{{g.text_color}}'>{{_("Email")}}</h5>{{ g.user.email }}
+  <h3 class='{{g.text_color}}'>{{_("Change my account information")}} :</h3> <br>
+    <form class="form" method=post action="">
+        <div class="container">
+          <label for="username" class='{{g.text_color}}'>{{_("New name")}}</label>
+          <input type="text" id="username" name="username" value="{{ request.form.username }}">
 
-		          <form class="form" method=post action="">
-	  <div class="container">
+          <label for="password" class='{{g.text_color}}'>{{_("New password")}}</label>
+          <input type="password" id="password"  name="password" value="{{ request.form.password }}">
 
+          <label for="email" class='{{g.text_color}}'>{{_("New email")}}</label>
+          <input type="email" id="email" name="email" value="{{ request.form.email }}">
 
-
-	  <label for="username" class='{{g.text_color}}'>{{_("New name")}}</label>
-	  <input type="text" id="username" name="username" value="{{ request.form.username }}">
-
-	  <label for="password" class='{{g.text_color}}'>{{_("New password")}}</label>
-      <input type="password" id="password"  name="password" value="{{ request.form.password }}">
-
-      <label for="email" class='{{g.text_color}}'>{{_("New email")}}</label>
-      <input type="email" id="email" name="email" value="{{ request.form.email }}">
-
-       <label for="lastpassword" class='{{g.text_color}}'>{{_("Last password")}}</label>
-      <input type="password" id="lastpassword"  name="lastpassword" value="{{ request.form.lastpassword }}" required>
-
-
-      </div>
-
-      <br>
-      <br>
-
+          <label for="lastpassword" class='{{g.text_color}}'>{{_("Last password")}}</label>
+          <input type="password" id="lastpassword"  name="lastpassword" value="{{ request.form.lastpassword }}" required>
+        </div>
+      <br><br>
       <button class="btn {{g.color}} {{g.text_color}}">{{_("Save")}}</button>
     </form>
-
-
-
+</div>
 
 {% endblock %}

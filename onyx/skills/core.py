@@ -229,7 +229,7 @@ class OnyxSkill(object):
     @property
     def lang(self):
         return self.config.get('Base','lang')
-        
+
     @property
     def location(self):
         """ Get the JSON data struction holding location information. """
@@ -322,10 +322,9 @@ class OnyxSkill(object):
         self.emitter.emit(Message('register_vocab', {'regex': regex_str}))
 
     def speak(self, utterance, lang):
-        #self.emitter.emit(Message("speak", {'utterance': utterance}))
         logger.info("Speak: " + utterance)
         self.emitter.emit(Message("speak", {'utterance': utterance, 'lang': lang}))
-        #tts.execute(utterance)
+        tts.execute(utterance)
 
     def finish(self):
         self.emitter.emit(Message("finish"))

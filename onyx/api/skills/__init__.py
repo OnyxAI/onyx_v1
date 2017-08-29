@@ -97,12 +97,11 @@ class Skill:
                     except Exception as e:
                         logger.error('Install Skill error for ' + self.name + ' : ' + str(e))
                 if (hasattr(Module, 'get_blueprint') and callable(Module.get_blueprint)):
-                    blueprint = Module.get_blueprint()
+                    self.app.register_blueprint(Module.get_blueprint())
             if data['navbar'] == 'True':
                 navbar.folder = self.name
                 navbar.set_plugin_navbar()
             os.system('cd ' + self.app.config['SKILL_FOLDER'] + self.name + ' && make compilelang')
-            self.app.register_blueprint(blueprint)
             bot = kernel.set()
             kernel.train(bot)
             logger.info('Installation done with success')

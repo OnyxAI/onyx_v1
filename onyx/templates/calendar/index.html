@@ -5,13 +5,8 @@
 {% block body %}
 
 <h1 class='{{g.text_color}}'>{{_('Calendar')}}</h1>
-
 <!-- Page Content -->
-
-
 <div id="calendar" class="col-centered {{g.text_color}}">
-
-
   <!-- Modal -->
   <div class="modal fade {{g.panel_color}}" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -150,10 +145,8 @@
 {% endblock %}
 
 {% block script %}
+
 <script>
-
-
-
   $(document).ready(function() {
 
     $('#calendar').fullCalendar({
@@ -246,4 +239,5 @@
   });
 
 </script>
+
 {% endblock %}

@@ -4,36 +4,24 @@
 
 {% block body %}
 
-    <div class="card-panel {{g.panel_color}}">
-		        <h2 class='{{g.text_color}}'>{{username}}</h2>
+<div class="card-panel {{g.panel_color}}">
+  <h2 class='{{g.text_color}}'>{{username}}</h2>
+  <h5 class='{{g.text_color}}'>{{_("Email")}}</h5>{{ email }}
+  <h3 class='{{g.text_color}}'>{{_("Change information")}} :</h3> <br>
+    <form class="form" method=post action="">
+        <div class="container">
+          <label for="username" class='{{g.text_color}}'>{{_("New name")}}</label>
+          <input type="text" id="username" name="username" value="{{ request.form.username }}">
 
-    <h5 class='{{g.text_color}}'>{{_("Email")}}</h5>{{ email }}
-		<h3 class='{{g.text_color}}'>{{_("Change information")}} :</h3> <br>
+          <label for="password" class='{{g.text_color}}'>{{_("New password")}}</label>
+          <input type="password" id="password"  name="password" value="{{ request.form.password }}">
 
-		          <form class="form" method=post action="">
-	  <div class="container">
-
-
-
-	  <label for="username" class='{{g.text_color}}'>{{_("New name")}}</label>
-	  <input type="text" id="username" name="username" value="{{ request.form.username }}">
-
-	  <label for="password" class='{{g.text_color}}'>{{_("New password")}}</label>
-      <input type="password" id="password"  name="password" value="{{ request.form.password }}">
-
-      <label for="email" class='{{g.text_color}}'>{{_("New email")}}</label>
-      <input type="email" id="email" name="email" value="{{ request.form.email }}">
-
-
-      </div>
-
-      <br>
-      <br>
-
+          <label for="email" class='{{g.text_color}}'>{{_("New email")}}</label>
+          <input type="email" id="email" name="email" value="{{ request.form.email }}">
+        </div>
+      <br><br>
       <button class="btn {{g.color}} {{g.text_color}}">{{_("Save")}}</button>
     </form>
-
-
-
+</div>
 
 {% endblock %}

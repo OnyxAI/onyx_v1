@@ -15,26 +15,18 @@
 <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" type="text/css" />
 
 <div class="login-page">
- <form class="register-form" method=post action="">
- <div class="form">
-    <input type="text" id="username" name="username"
-           placeholder="{{_('Name')}}" value="{{ request.form.username }}"
-           required>
+  <form class="register-form" method=post action="">
+    <div class="form">
+     <input type="text" id="username" name="username" placeholder="{{_('Name')}}" value="{{ request.form.username }}" required>
 
-    <input type="email" id="email" name="email" class="input-xlarge"
-           placeholder="{{_('Email')}}" value="{{ request.form.email }}"
-           required>
+     <input type="email" id="email" name="email" class="input-xlarge" placeholder="{{_('Email')}}" value="{{ request.form.email }}" required>
 
-     <input type="password" id="password" name="password"
-           placeholder="{{_('Password')}}" value="{{ request.form.password }}"
-           required>
+     <input type="password" id="password" name="password" placeholder="{{_('Password')}}" value="{{ request.form.password }}" required>
 
-     <input type="password" id="verifpassword" name="verifpassword"
-           placeholder="{{_('Confirm password')}}" value="{{ request.form.verifpassword }}"
-           required>
-
+     <input type="password" id="verifpassword" name="verifpassword" placeholder="{{_('Confirm password')}}" value="{{ request.form.verifpassword }}" required>
      <button>{{_("Register")}}</button>
-   </form>
- </div>
+   </div>
+ </form>
 </div>
+
 {% endblock %}

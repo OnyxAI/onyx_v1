@@ -4,7 +4,7 @@
 
 {% block body %}
 
-  <div class="card-panel {{g.panel_color}}">
+<div class="card-panel {{g.panel_color}}">
 
   {% if g.user.admin == 1 %}
 		<h2 class='{{g.text_color}}'>{{_("Accounts")}}</h2>
@@ -20,16 +20,13 @@
 					<a href="{{ url_for('auth.delete_account' , id_delete=tab.id) }}" class="secondary-content"><i class="fa fa-times" aria-hidden="true"></i></a>
 				</li>
    		{% endfor %}
-  </ul>
+    </ul>
 
 
   {% else %}
-
   	<h3>{{_("You're not an administrator so we can't delete accounts")}}</h3>
   {% endif %}
 
-
-		 </div>
-
+</div>
 
 {% endblock %}

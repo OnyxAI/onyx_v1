@@ -44,18 +44,21 @@ class Server:
 
     def get_version(self):
         try:
-            import onyx
-            return onyx.__version__
-        except:
+            json.path = os.path.dirname(onyx.__path__[0]) + '/version.json'
+            data = json.decode_path()
+            return data['version']
+        except Exception as e:
+            logger.error('Server error : ' + str(e))
             return None
 
     def get_last_version(self):
         try:
-            json.url = "https://pypi.python.org/pypi/onyxproject/json"
+            json.url = "https://raw.githubusercontent.com/OnyxProject/Onyx/master/version.json"
             data = json.decode_url()
-            return data['info']['version']
-        except:
-            raise
+            return data['version']
+        except Exception as e:
+            logger.error('Server error : ' + str(e))
+            return None
 
     def get_ram(self):
       try:
@@ -144,9 +147,7 @@ class Server:
       except Exception as e:
         logger.error('Server Error : ' + str(e))
 
-
     #Shutdown
-
     def shutdown(self):
         try:
             func = request.environ.get('werkzeug.server.shutdown')
@@ -157,40 +158,5 @@ class Server:
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Shutdown error : ' + str(e))
-            raise ServerException(str(e))
-            return json.encode({"status":"error"})
-
-
-    #Update
-
-    def update(self):
-        try:
-            pip.main(['install', '--upgrade' , "onyxproject"])
-            self.migrate()
-            return json.encode({"status":"success"})
-        except Exception as e:
-            logger.error('Update error : ' + str(e))
-            raise ServerException(str(e))
-            return json.encode({"status":"error"})
-
-    def migrate(self):
-        try:
-            from onyx.app_config import SQLALCHEMY_DATABASE_URI
-            from onyx.app_config import SQLALCHEMY_MIGRATE_REPO
-            from migrate.versioning import api
-            v = api.db_version(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
-            migration = SQLALCHEMY_MIGRATE_REPO + ('/versions/%03d_migration.py' % (v+1))
-            tmp_module = imp.new_module('old_model')
-            old_model = api.create_model(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
-            exec(old_model, tmp_module.__dict__)
-            script = api.make_update_script_for_model(SQLALCHEMY_DATABASE_URI,SQLALCHEMY_MIGRATE_REPO,tmp_module.meta, db.metadata)
-            open(migration, "wt").write(script)
-            api.upgrade(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
-            v = api.db_version(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_REPO)
-            logger.info('New migration saved as ' + migration)
-            logger.info('Current database version: ' + str(v))
-            return json.encode({"status":"success"})
-        except Exception as e:
-            logger.error('Migrate error : ' + str(e))
             raise ServerException(str(e))
             return json.encode({"status":"error"})

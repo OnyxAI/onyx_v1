@@ -48,8 +48,8 @@ class Kernel:
     def set(self):
         try:
             kernel = ChatBot("Onyx",
-                storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
-                #storage_adapter="chatterbot.storage.MongoDatabaseAdapter",
+                #storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
+                storage_adapter="chatterbot.storage.MongoDatabaseAdapter",
                 logic_adapters=[
                     {
                         'import_path': 'onyx.api.kernel.adapters.best_adapter.BestMatchAdapter'
@@ -58,8 +58,8 @@ class Kernel:
                 input_adapter="chatterbot.input.VariableInputTypeAdapter",
                 output_adapter="chatterbot.output.OutputAdapter",
                 output_format="text",
-                database=onyx.__path__[0] + "/db/bot_data_" + config.get('Base', 'lang') + ".db"
-                #database="bot_data_" + config.get('Base', 'lang')
+                #database=onyx.__path__[0] + "/db/bot_data_" + config.get('Base', 'lang') + ".db"
+                database="bot_data_" + config.get('Base', 'lang')
             )
 
             return kernel
@@ -86,14 +86,12 @@ class Kernel:
                 self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/"
             )
 
-
             LOG.info('Skill Training')
 
             all_skill = get_raw_name(self.app.config['SKILL_FOLDER'])
             for skill in all_skill:
                 try:
                     kernel.set_trainer(ListTrainer)
-
 
                     json.path = self.app.config['SKILL_FOLDER'] + skill + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
                     answers = json.decode_path()

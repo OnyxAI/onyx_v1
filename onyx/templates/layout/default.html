@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     {% include 'dependencies/css.html' %}  <!-- Include css files -->
     {% include 'dependencies/flash.html' %}  <!-- Include flash -->
+
     <title>{{ title + ' | Onyx'|default('Onyx') }}</title>
 </head>
 <body style="background-color: {{g.user.background_color}};">
     <div class="loader"></div>
+    {% include 'dependencies/js.html' %} <!-- Include js files -->
     {% include 'layout/tutorial.html' %} <!-- Include tutorial -->
     <div class="navbar">{% include 'layout/navbar.html' %}</div> <!-- Include navbar -->
     {% include 'layout/kernel.html' %} <!-- Include kernel -->
@@ -19,7 +21,6 @@
           </div>
         </div> <!-- Include body -->
     </div>
-{% include 'dependencies/js.html' %} <!-- Include js files -->
 {% block script %}{% endblock %}
 </body>
 </html>

@@ -17,18 +17,20 @@ from onyx.util import play_wav, play_mp3
 from onyx.util.log import getLogger
 from onyx.skills.core import OnyxSkill
 from onyx.client.stt import STTFactory
+from onyx.client.tts import TTSFactory
 
 config = get_config('onyx')
 
 import threading
+from threading import Thread
 
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 
 skills = OnyxSkill(name="speech")
 
-
 stt = STTFactory.create()
+tts = TTSFactory.create()
 
 json = Json()
 LOG = getLogger('SpeechClient')
@@ -67,15 +69,13 @@ class Detector:
 
 				ws = WebsocketClient()
 				ws.on('connected', onConnected)
-					# This will block until the client gets closed
+				# This will block until the client gets closed
 				ws.run_forever()
 
 			t = threading.Thread(target=create_ws)
 			t.start()
 			time.sleep(2)
 			self.detector.start(self.detected_callback)
-
-
 
 
 		except sr.UnknownValueError:
@@ -90,5 +90,5 @@ class Detector:
 
 
 if __name__ == "__main__":
-	detector = Detector()
-	detector.start()
+    detector = Detector()
+    detector.start()

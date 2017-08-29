@@ -56,6 +56,12 @@ That's it !
 
 ## Running Onyx Quick Start
 
+Before start Onyx you should launch mongodb:
+
+```bash
+sudo service mongod start
+```
+
 To start the essential of Onyx run `./onyx.sh start`. This will open all service (service, skills, client and voice) and after you can see the log of each service in the log folder (e.g. ./log/onyx-service.log).
 
 To stop Onyx run `./onyx.sh stop`. This will quit all screens.

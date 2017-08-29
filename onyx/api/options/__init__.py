@@ -53,7 +53,7 @@ class Options:
         except Exception as e:
             logger.error('User update error : ' + str(e))
             raise OptionsException(str(e))
-            
+
     """
         Change the user background color
 
@@ -62,7 +62,7 @@ class Options:
     def change_background_color(self):
         try:
             query = UsersModel.User.query.filter_by(id=self.user).first()
-            
+
             query.background_color = self.background
 
             db.session.add(query)
@@ -73,7 +73,7 @@ class Options:
         except Exception as e:
             logger.error('User update error : ' + str(e))
             raise OptionsException(str(e))
-    
+
     """
         Change the lang
 
@@ -81,16 +81,22 @@ class Options:
     """
     def change_lang(self):
         try:
+            configPath = get_path('onyx')
+            langConfig = get_config('onyx')
+            langConfig.set('Base', 'lang', self.lang)
+
+            with open(configPath, 'w') as configfile:
+                langConfig.write(configfile)
+
             query = ConfigModel.Config.query.filter_by(config='lang').first()
 
             query.value = self.lang
 
             db.session.add(query)
             db.session.commit()
-            
+
             refresh()
-            
-            
+
             logger.info('Language update successfully')
             return json.encode({"status":"success"})
         except Exception as e:

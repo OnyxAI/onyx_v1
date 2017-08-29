@@ -65,7 +65,7 @@ def change_lang():
 		option.lang = request.form.get('lang')
 		option.change_lang()
 		flash(gettext('Please reboot Onyx to change language' ), 'success')
-		return redirect(url_for('core.reboot'))
+		return redirect(url_for('core.options'))
 	except OptionsException:
 		flash(gettext("An error has occured"), 'error')
 		return redirect(url_for('core.options'))

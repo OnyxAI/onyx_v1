@@ -56,7 +56,7 @@ SQLAlchemy-migrate
 Flask-Login
 
 #Voice
-PyAudio==0.2.9
+PyAudio==0.2.11
 SpeechRecognition
 gtts
 

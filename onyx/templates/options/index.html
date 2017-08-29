@@ -20,125 +20,124 @@
             <li class="tab col s3"><a href="#admin">{{_('Admin')}}</a></li>
           {% endif %}
     </ul>
-</div>
+  </div>
 </div>
 
 <div id="system" >
-<div class="card-panel {{g.panel_color}}">
-      <table class="{{g.panel_color}} responsive-table">
-        <thead>
-          <tr>
-              <th data-field="name" class='{{g.text_color}}'>{{_('Parameter')}}</th>
-              <th data-field="info" class='{{g.text_color}}'>{{_('Informations')}}</th>
-          </tr>
-        </thead>
+  <div class="card-panel {{g.panel_color}}">
+        <table class="{{g.panel_color}} responsive-table">
+          <thead>
+            <tr>
+                <th data-field="name" class='{{g.text_color}}'>{{_('Parameter')}}</th>
+                <th data-field="info" class='{{g.text_color}}'>{{_('Informations')}}</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr>
-            <td class='{{g.text_color}}'>{{ _('RAM') }}</td>
-            <td> <div class="progress">
-                  <div class="determinate" style="{{ g.ram  }}"></div>
-              </div></td>
-          </tr>
-          <tr>
-            <td class='{{g.text_color}}'>{{ _('Data') }}</td>
-            <td><a href="{{ url_for('core.update_data_git') }}" class="btn {{g.color}}">{{_('Update Data')}}</a></td>
-          </tr>
-          <tr>
-            <td class='{{g.text_color}}'>{{ _('Disk') }}</td>
-            <td><div class="progress">
-                  <div class="determinate" style="{{ g.disk }}"></div>
-              </div></td>
-          </tr>
-          <tr>
-            <td class='{{g.text_color}}'>{{ _('UpTime') }}</td>
-            <td class='{{g.text_color}}'>{{ g.uptime }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-</div>
+          <tbody>
+            <tr>
+              <td class='{{g.text_color}}'>{{ _('RAM') }}</td>
+              <td> <div class="progress">
+                    <div class="determinate" style="{{ g.ram  }}"></div>
+                </div></td>
+            </tr>
+            <tr>
+              <td class='{{g.text_color}}'>{{ _('Data') }}</td>
+              <td><a href="{{ url_for('core.update_data_git') }}" class="btn {{g.color}}">{{_('Update Data')}}</a></td>
+            </tr>
+            <tr>
+              <td class='{{g.text_color}}'>{{ _('Disk') }}</td>
+              <td><div class="progress">
+                    <div class="determinate" style="{{ g.disk }}"></div>
+                </div></td>
+            </tr>
+            <tr>
+              <td class='{{g.text_color}}'>{{ _('UpTime') }}</td>
+              <td class='{{g.text_color}}'>{{ g.uptime }}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
 </div>
 
 <div id="param" >
-<div class="card-panel {{g.panel_color}}">
-      <br>
-            <form class="form" method=post action="">
-               <label for="color"  class='{{g.text_color}}'>{{_("Color")}}</label>
-                  <br>
+  <div class="card-panel {{g.panel_color}}">
+        <br>
+              <form class="form" method=post action="">
+                 <label for="color"  class='{{g.text_color}}'>{{_("Color")}}</label>
+                    <br>
 
-                  <input name="color" type="radio" id="red darken-1" value="red darken-1"/>
-                  <label for="red darken-1" ><a class="btn red darken-1"></a></label>
+                    <input name="color" type="radio" id="red darken-1" value="red darken-1"/>
+                    <label for="red darken-1" ><a class="btn red darken-1"></a></label>
 
-                  <input name="color" type="radio" id="pink" value="pink" />
-                  <label for="pink" ><a class="btn pink"></a></label>
+                    <input name="color" type="radio" id="pink" value="pink" />
+                    <label for="pink" ><a class="btn pink"></a></label>
 
-                  <input name="color" type="radio" id="purple darken-1" value="purple darken-1"/>
-                  <label for="purple darken-1" ><a class="btn purple darken-1"></a></label>
+                    <input name="color" type="radio" id="purple darken-1" value="purple darken-1"/>
+                    <label for="purple darken-1" ><a class="btn purple darken-1"></a></label>
 
-                  <input name="color" type="radio" id="deep-purple darken-1" value="deep-purple darken-1"/>
-                  <label for="deep-purple darken-1" ><a class="btn deep-purple darken-1"></a></label>
-                  <br><br>
-                  <input name="color" type="radio" id="indigo darken-1" value="indigo darken-1"/>
-                  <label for="indigo darken-1" ><a class="btn indigo darken-1"></a></label>
+                    <input name="color" type="radio" id="deep-purple darken-1" value="deep-purple darken-1"/>
+                    <label for="deep-purple darken-1" ><a class="btn deep-purple darken-1"></a></label>
+                    <br><br>
+                    <input name="color" type="radio" id="indigo darken-1" value="indigo darken-1"/>
+                    <label for="indigo darken-1" ><a class="btn indigo darken-1"></a></label>
 
-                  <input name="color" type="radio" id="blue darken-1" value="blue darken-1"/>
-                  <label for="blue darken-1" ><a class="btn blue darken-1"></a></label>
+                    <input name="color" type="radio" id="blue darken-1" value="blue darken-1"/>
+                    <label for="blue darken-1" ><a class="btn blue darken-1"></a></label>
 
-                  <input name="color" type="radio" id="light-blue darken-1" value="light-blue darken-1"/>
-                  <label for="light-blue darken-1" ><a class="btn light-blue darken-1"></a></label>
+                    <input name="color" type="radio" id="light-blue darken-1" value="light-blue darken-1"/>
+                    <label for="light-blue darken-1" ><a class="btn light-blue darken-1"></a></label>
 
-                  <input name="color" type="radio" id="cyan darken-1" value="cyan darken-1"/>
-                  <label for="cyan darken-1" ><a class="btn cyan darken-1"></a></label>
-                  <br><br>
-                  <input name="color" type="radio" id="teal darken-1" value="teal darken-1"/>
-                  <label for="teal darken-1" ><a class="btn teal darken-1"></a></label>
+                    <input name="color" type="radio" id="cyan darken-1" value="cyan darken-1"/>
+                    <label for="cyan darken-1" ><a class="btn cyan darken-1"></a></label>
+                    <br><br>
+                    <input name="color" type="radio" id="teal darken-1" value="teal darken-1"/>
+                    <label for="teal darken-1" ><a class="btn teal darken-1"></a></label>
 
-                  <input name="color" type="radio" id="green darken-1" value="green darken-1"/>
-                  <label for="green darken-1" ><a class="btn green darken-1"></a></label>
+                    <input name="color" type="radio" id="green darken-1" value="green darken-1"/>
+                    <label for="green darken-1" ><a class="btn green darken-1"></a></label>
 
-                  <input name="color" type="radio" id="light-green darken-1" value="light-green darken-1"/>
-                  <label for="light-green darken-1" ><a class="btn light-green darken-1"></a></label>
+                    <input name="color" type="radio" id="light-green darken-1" value="light-green darken-1"/>
+                    <label for="light-green darken-1" ><a class="btn light-green darken-1"></a></label>
 
-                  <input name="color" type="radio" id="lime darken-1 darken-1" value="lime darken-1 darken-1"/>
-                  <label for="lime darken-1 darken-1" ><a class="btn lime darken-1 darken-1"></a></label>
-
-
-                  <br><br>
-                  <input name="color" type="radio" id="yellow darken-1" value="yellow darken-1"/>
-                  <label for="yellow darken-1" ><a class="btn yellow darken-1"></a></label>
-
-                  <input name="color" type="radio" id="amber darken-1" value="amber darken-1"/>
-                  <label for="amber darken-1" ><a class="btn amber darken-1"></a></label>
-
-                  <input name="color" type="radio" id="orange darken-1" value="orange darken-1"/>
-                  <label for="orange darken-1" ><a class="btn orange darken-1"></a></label>
-
-                  <input name="color" type="radio" id="deep-orange darken-1" value="deep-orange darken-1"/>
-                  <label for="deep-orange darken-1" ><a class="btn deep-orange darken-1"></a></label>
-                  <br><br>
-                  <input name="color" type="radio" id="brown darken-1 darken-1" value="brown darken-1 darken-1"/>
-                  <label for="brown darken-1 darken-1" ><a class="btn brown darken-1"></a></label>
-
-                  <input name="color" type="radio" id="default" value="None"/>
-                  <label for="default" ><a class="btn"></a></label>
+                    <input name="color" type="radio" id="lime darken-1 darken-1" value="lime darken-1 darken-1"/>
+                    <label for="lime darken-1 darken-1" ><a class="btn lime darken-1 darken-1"></a></label>
 
 
+                    <br><br>
+                    <input name="color" type="radio" id="yellow darken-1" value="yellow darken-1"/>
+                    <label for="yellow darken-1" ><a class="btn yellow darken-1"></a></label>
 
-            <br><br>
-            <button class="btn {{ g.color }}">{{_("Save")}}</button>
-      </form>
-      <br><br>
-      <form action="{{url_for('core.change_background')}}" method="post">
-        <label for="background" class='{{g.text_color}}'>{{_("Mode")}}</label>
-        <select name="background" class="browser-default">
-              <option value="#efefef">{{_("Light")}}</option>
-              <option value="#0e1b30">{{_("Dark")}}</option>
-        </select><br>
+                    <input name="color" type="radio" id="amber darken-1" value="amber darken-1"/>
+                    <label for="amber darken-1" ><a class="btn amber darken-1"></a></label>
 
-        <button class="btn {{ g.color }}">{{_("Save")}}</button>
-      </form>
-</div>
+                    <input name="color" type="radio" id="orange darken-1" value="orange darken-1"/>
+                    <label for="orange darken-1" ><a class="btn orange darken-1"></a></label>
+
+                    <input name="color" type="radio" id="deep-orange darken-1" value="deep-orange darken-1"/>
+                    <label for="deep-orange darken-1" ><a class="btn deep-orange darken-1"></a></label>
+                    <br><br>
+                    <input name="color" type="radio" id="brown darken-1 darken-1" value="brown darken-1 darken-1"/>
+                    <label for="brown darken-1 darken-1" ><a class="btn brown darken-1"></a></label>
+
+                    <input name="color" type="radio" id="default" value="None"/>
+                    <label for="default" ><a class="btn"></a></label>
+
+
+
+              <br><br>
+              <button class="btn {{ g.color }}">{{_("Save")}}</button>
+        </form>
+        <br><br>
+        <form action="{{url_for('core.change_background')}}" method="post">
+          <label for="background" class='{{g.text_color}}'>{{_("Mode")}}</label>
+          <select name="background" class="browser-default">
+                <option value="#efefef">{{_("Light")}}</option>
+                <option value="#0e1b30">{{_("Dark")}}</option>
+          </select><br>
+
+          <button class="btn {{ g.color }}">{{_("Save")}}</button>
+        </form>
+  </div>
 </div>
 
 <div id='navbar'>
@@ -170,197 +169,177 @@
     {% endfor %}
   </div>
 </div>
-  {% if g.user.admin == 1 %}
-<div id="house" >
-<div class="card-panel {{g.panel_color}}">
-  <table class="{{g.panel_color}} responsive-table">
-    <thead>
-      <tr>
-          <th data-field="name" class='{{g.text_color}}'>{{_('House')}}</th>
-          <th data-field="address" class='{{g.text_color}}'>{{_('Address')}}</th>
-          <th data-field="city" class='{{g.text_color}}'>{{_('City')}}</th>
-          <th data-field="postal" class='{{g.text_color}}'>{{_('Zip Code')}}</th>
-          <th data-field="country" class='{{g.text_color}}'>{{_('Country')}}</th>
-          <th data-field="latitude" class='{{g.text_color}}'>{{_('Latitude')}}</th>
-          <th data-field="longitude" class='{{g.text_color}}'>{{_('Longitude')}}</th>
-          <th class='{{g.text_color}}'>{{_('Change')}}</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {% for house in g.houses %}
+{% if g.user.admin == 1 %}
+  <div id="house" >
+  <div class="card-panel {{g.panel_color}}">
+    <table class="{{g.panel_color}} responsive-table">
+      <thead>
         <tr>
-            <td class='{{g.text_color}}'>{{house.name}}</td>
-            <td class='{{g.text_color}}'>{{house.address}}</td>
-            <td class='{{g.text_color}}'>{{house.city}}</td>
-            <td class='{{g.text_color}}'>{{house.postal}}</td>
-            <td class='{{g.text_color}}'>{{house.country}}</td>
-            <td class='{{g.text_color}}'>{{house.latitude}}</td>
-            <td class='{{g.text_color}}'>{{house.longitude}}</td>
-            <td class='{{g.text_color}}'><a href="{{url_for('core.delete_house', id=house.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+            <th data-field="name" class='{{g.text_color}}'>{{_('House')}}</th>
+            <th data-field="address" class='{{g.text_color}}'>{{_('Address')}}</th>
+            <th data-field="city" class='{{g.text_color}}'>{{_('City')}}</th>
+            <th data-field="postal" class='{{g.text_color}}'>{{_('Zip Code')}}</th>
+            <th data-field="country" class='{{g.text_color}}'>{{_('Country')}}</th>
+            <th data-field="latitude" class='{{g.text_color}}'>{{_('Latitude')}}</th>
+            <th data-field="longitude" class='{{g.text_color}}'>{{_('Longitude')}}</th>
+            <th class='{{g.text_color}}'>{{_('Change')}}</th>
         </tr>
-      {% endfor %}
-      <tr>
-        <form action="{{url_for('core.add_house')}}" method="post">
-          <td class='{{g.text_color}}'><input placeholder="{{_('House')}}" type="text" id="name" name="name" required></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Address')}}" type="text" id="address" name="address" required></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('City')}}" type="text" id="city" name="city" required></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Zip Code')}}" type="text" id="postal" name="postal" required></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Country')}}" type="text" id="country" name="country" required></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Latitude')}}" type="text" id="latitude" name="latitude" required></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Longitude')}}" type="text" id="longitude" name="longitude" required></td>
-          <td class='{{g.text_color}}'><button class="btn {{ g.color }}"  name="button">{{_('Send')}}</button></td>
-        </form>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+      </thead>
 
-<div id="room" >
-<div class="card-panel {{g.panel_color}}">
-  <table class="{{g.panel_color}} responsive-table">
-    <thead>
-      <tr>
-          <th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
-          <th data-field="house" class='{{g.text_color}}'>{{_('House')}}</th>
-          <th class='{{g.text_color}}'>{{_('Change')}}</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {% for room in g.rooms %}
+      <tbody>
+        {% for house in g.houses %}
+          <tr>
+              <td class='{{g.text_color}}'>{{house.name}}</td>
+              <td class='{{g.text_color}}'>{{house.address}}</td>
+              <td class='{{g.text_color}}'>{{house.city}}</td>
+              <td class='{{g.text_color}}'>{{house.postal}}</td>
+              <td class='{{g.text_color}}'>{{house.country}}</td>
+              <td class='{{g.text_color}}'>{{house.latitude}}</td>
+              <td class='{{g.text_color}}'>{{house.longitude}}</td>
+              <td class='{{g.text_color}}'><a href="{{url_for('core.delete_house', id=house.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+          </tr>
+        {% endfor %}
         <tr>
-            <td class='{{g.text_color}}'>{{room.name}}</td>
-            <td class='{{g.text_color}}'>{{room.house}}</td>
-            <td class='{{g.text_color}}'><a href="{{url_for('core.delete_room', id=room.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+          <form action="{{url_for('core.add_house')}}" method="post">
+            <td class='{{g.text_color}}'><input placeholder="{{_('House')}}" type="text" id="name" name="name" required></td>
+            <td class='{{g.text_color}}'><input placeholder="{{_('Address')}}" type="text" id="address" name="address" required></td>
+            <td class='{{g.text_color}}'><input placeholder="{{_('City')}}" type="text" id="city" name="city" required></td>
+            <td class='{{g.text_color}}'><input placeholder="{{_('Zip Code')}}" type="text" id="postal" name="postal" required></td>
+            <td class='{{g.text_color}}'><input placeholder="{{_('Country')}}" type="text" id="country" name="country" required></td>
+            <td class='{{g.text_color}}'><input placeholder="{{_('Latitude')}}" type="text" id="latitude" name="latitude" required></td>
+            <td class='{{g.text_color}}'><input placeholder="{{_('Longitude')}}" type="text" id="longitude" name="longitude" required></td>
+            <td class='{{g.text_color}}'><button class="btn {{ g.color }}"  name="button">{{_('Send')}}</button></td>
+          </form>
         </tr>
-      {% endfor %}
-      <tr>
-        <form action="{{url_for('core.add_room')}}" method="post">
-          <td class='{{g.text_color}}'><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
-          <td>
-              <select name="house" class="browser-default">
-                {% for house in g.houses %}
-                    <option value="{{house.name}}">{{house.name}}</option>
-                {% endfor %}
-              </select>
-          </td>
-          <td><button class="btn {{ g.color }}" name="button">{{_('Send')}}</button></td>
-        </form>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+      </tbody>
+    </table>
+  </div>
+  </div>
 
-<div id="machine" >
-<div class="card-panel {{g.panel_color}}">
-  <table class="{{g.panel_color}} responsive-table">
-    <thead>
-      <tr>
-          <th data-field="id" class='{{g.text_color}}'>{{_('Id')}}</th>
-          <th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
-          <th data-field="house" class='{{g.text_color}}'>{{_('House')}}</th>
-          <th data-field="room" class='{{g.text_color}}'>{{_('Room')}}</th>
-          <th data-field="host" class='{{g.text_color}}'>{{_('Host')}}</th>
-          <th class='{{g.text_color}}'>{{_('Change')}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for machine in g.machines %}
-        <tr>
-            <td class='{{g.text_color}}'>{{machine.id}}</td>
-            <td class='{{g.text_color}}'>{{machine.name}}</td>
-            <td class='{{g.text_color}}'>{{machine.house}}</td>
-            <td class='{{g.text_color}}'>{{machine.room}}</td>
-            <td class='{{g.text_color}}'>{{machine.host}}</td>
-            <td class='{{g.text_color}}'><a href="{{url_for('core.delete_machine', id=machine.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
-        </tr>
-      {% endfor %}
-      <tr>
-        <form action="{{url_for('core.add_machine')}}" method="post">
-          <td></td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
-          <td>
-              <select name="house" class="browser-default">
-                {% for house in g.houses %}
-                    <option value="{{house.name}}">{{house.name}}</option>
-                {% endfor %}
-              </select>
-          </td>
-          <td>
-              <select name="room" class="browser-default">
-                {% for room in g.rooms %}
-                    <option value="{{room.name}}">{{room.name}}</option>
-                {% endfor %}
-              </select>
-          </td>
-          <td class='{{g.text_color}}'><input placeholder="{{_('Host')}}" type="text" id="host" name="host" required></td>
-          <td><button class="btn {{ g.color }}" name="button">{{_('Send')}}</button></td>
-        </form>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+  <div id="room" >
+    <div class="card-panel {{g.panel_color}}">
+      <table class="{{g.panel_color}} responsive-table">
+        <thead>
+          <tr>
+              <th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
+              <th data-field="house" class='{{g.text_color}}'>{{_('House')}}</th>
+              <th class='{{g.text_color}}'>{{_('Change')}}</th>
+          </tr>
+        </thead>
 
+        <tbody>
+          {% for room in g.rooms %}
+            <tr>
+                <td class='{{g.text_color}}'>{{room.name}}</td>
+                <td class='{{g.text_color}}'>{{room.house}}</td>
+                <td class='{{g.text_color}}'><a href="{{url_for('core.delete_room', id=room.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <form action="{{url_for('core.add_room')}}" method="post">
+              <td class='{{g.text_color}}'><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
+              <td>
+                  <select name="house" class="browser-default">
+                    {% for house in g.houses %}
+                        <option value="{{house.name}}">{{house.name}}</option>
+                    {% endfor %}
+                  </select>
+              </td>
+              <td><button class="btn {{ g.color }}" name="button">{{_('Send')}}</button></td>
+            </form>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-
-
-<div id="admin" >
- {% if g.user.admin == 1 %}
- <div class="card-panel {{g.panel_color}}">
-
-  <br><br>
-  <h4 class='{{g.text_color}}'>{{ _("Admin Options") }}</h4><br><br>
-  <a href="{{ url_for('core.maj') }}" class="btn {{ g.color }}">{{_("Update Onyx")}}</a>
-  <a href="{{ url_for('core.shutdown') }}" class="btn {{ g.color }}">{{_("Close Onyx")}}</a>
-  <a href="{{ url_for('auth.account_manage') }}" class="btn {{ g.color }}">{{_("Manage Account")}}</a>
-  <a href="{{ url_for('core.train_kernel') }}" class="btn {{ g.color }}">{{_("Train Kernel")}}</a>
-<br><br>
-
-  <form action="{{url_for('core.change_lang')}}" method="post">
-    <label for="lang" >{{_("Langue")}}</label>
-    <select name="lang" class="browser-default">
-          <option value="fr-FR">{{_("French")}}</option>
-          <option value="en-US">{{_("English")}}</option>
-    </select><br>
-
-    <button class="btn {{ g.color }}">{{_("Save")}}</button>
-  </form>
+  <div id="machine" >
+    <div class="card-panel {{g.panel_color}}">
+      <table class="{{g.panel_color}} responsive-table">
+        <thead>
+          <tr>
+              <th data-field="id" class='{{g.text_color}}'>{{_('Id')}}</th>
+              <th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
+              <th data-field="house" class='{{g.text_color}}'>{{_('House')}}</th>
+              <th data-field="room" class='{{g.text_color}}'>{{_('Room')}}</th>
+              <th data-field="host" class='{{g.text_color}}'>{{_('Host')}}</th>
+              <th class='{{g.text_color}}'>{{_('Change')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for machine in g.machines %}
+            <tr>
+                <td class='{{g.text_color}}'>{{machine.id}}</td>
+                <td class='{{g.text_color}}'>{{machine.name}}</td>
+                <td class='{{g.text_color}}'>{{machine.house}}</td>
+                <td class='{{g.text_color}}'>{{machine.room}}</td>
+                <td class='{{g.text_color}}'>{{machine.host}}</td>
+                <td class='{{g.text_color}}'><a href="{{url_for('core.delete_machine', id=machine.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <form action="{{url_for('core.add_machine')}}" method="post">
+              <td></td>
+              <td class='{{g.text_color}}'><input placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
+              <td>
+                  <select name="house" class="browser-default">
+                    {% for house in g.houses %}
+                        <option value="{{house.name}}">{{house.name}}</option>
+                    {% endfor %}
+                  </select>
+              </td>
+              <td>
+                  <select name="room" class="browser-default">
+                    {% for room in g.rooms %}
+                        <option value="{{room.name}}">{{room.name}}</option>
+                    {% endfor %}
+                  </select>
+              </td>
+              <td class='{{g.text_color}}'><input placeholder="{{_('Host')}}" type="text" id="host" name="host" required></td>
+              <td><button class="btn {{ g.color }}" name="button">{{_('Send')}}</button></td>
+            </form>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
 
-</div>
+
+  <div id="admin" >
+     {% if g.user.admin == 1 %}
+       <div class="card-panel {{g.panel_color}}">
+        <br><br>
+
+        <h4 class='{{g.text_color}}'>{{ _("Admin Options") }}</h4><br><br>
+        <a href="{{ url_for('core.maj') }}" class="btn {{ g.color }}">{{_("Update Onyx")}}</a>
+        <a href="{{ url_for('core.shutdown') }}" class="btn {{ g.color }}">{{_("Close Onyx")}}</a>
+        <a href="{{ url_for('auth.account_manage') }}" class="btn {{ g.color }}">{{_("Manage Account")}}</a>
+        <a href="{{ url_for('core.train_kernel') }}" class="btn {{ g.color }}">{{_("Train Kernel")}}</a>
+        <br><br>
+          <form action="{{url_for('core.change_lang')}}" method="post">
+            <label for="lang" >{{_("Langue")}}</label>
+            <select name="lang" class="browser-default">
+                  <option value="fr-FR">{{_("French")}}</option>
+                  <option value="en-US">{{_("English")}}</option>
+            </select><br>
+
+            <button class="btn {{ g.color }}">{{_("Save")}}</button>
+          </form>
+      </div>
+    {% endif %}
+  </div>
 {% endif %}
-</div>
-
-</div>
-
-{% endif %}
-
-
-
-
-
-<br><br>
-
-
-
-
-
-
 
 {% endblock %}
+
 {% block script %}
 
 <script>
   $(document).ready(function(){
     $('ul.tabs').tabs();
-});
-
-
+  });
 </script>
 
 {% endblock %}

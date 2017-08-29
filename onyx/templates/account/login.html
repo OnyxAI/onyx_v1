@@ -15,15 +15,13 @@
 <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" type="text/css" />
 
 <div class="login-page">
-<form class="register-form" method=post action="">
-<div class="form">
-    <input type="text" id="email" name="email"
-          placeholder="{{_('Email')}}" required>
-    <input type="password" id="password" name="password" class="input-xlarge"
-          placeholder="{{_('Password')}}" required>
-    <button data-no-turbolink="true">{{_("Login")}}</button>
+  <form class="register-form" method=post action="">
+    <div class="form">
+      <input type="text" id="email" name="email" placeholder="{{_('Email')}}" required>
+      <input type="password" id="password" name="password" class="input-xlarge" placeholder="{{_('Password')}}" required>
+      <button data-no-turbolink="true">{{_("Login")}}</button>
+    </div>
   </form>
-</div>
 </div>
 
 
