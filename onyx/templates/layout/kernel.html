@@ -131,8 +131,9 @@ return BuildHTML;
 }();
 
 
+
 var Config = {
-    wsUrl: "ws://127.0.0.1:8081/core"
+    wsUrl: "ws://" + window.location.hostname + ":8081/core"
 };
 
 
@@ -351,6 +352,7 @@ var Kernel = {
 
 
 window.addEventListener("load", function () {
+
     WS.connect();
     WS.setOnOpenListener(function () {
         Kernel.init();

@@ -15,12 +15,14 @@ from onyx.core.models import *
 from onyx.api.install import *
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
+from onyx.api.kernel import *
 import git, pip, onyx, os, hashlib
 from onyx.util.log import getLogger
 from git import Repo
 
 logger = getLogger('Install')
 json = Json()
+kernel = Kernel()
 
 """
     Make the Onyx installation done
@@ -47,6 +49,8 @@ class Install:
             db.session.commit()
 
             self.init_db()
+
+            kernel.train(kernel.set())
 
             logger.info('Successfully Installation')
             return json.encode({"status":"success"})

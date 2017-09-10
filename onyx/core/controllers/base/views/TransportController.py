@@ -69,8 +69,8 @@ def rer(name):
         ratp.line = name
         ratp.station = request.form['rerstation']
         ratp.direction = request.form['rerdirection']
-        json.json = ratp.get_rer_schedule()
-        result = json.decode()
+        json.url = ratp.get_rer_schedule()
+        result = json.decode_url()
         try:
             return render_template('transport/ratp/rer/result.html', result=result)
         except TransportException:
@@ -84,7 +84,7 @@ def metros():
     if request.method == 'GET':
         return render_template('transport/ratp/metro/index.html')
     elif request.method == 'POST':
-        return redirect('transport/metro/'+request.form['metroline'])
+        return redirect('transport/metro/' + request.form['metroline'])
 
 
 
@@ -104,7 +104,7 @@ def metro(name):
         @apiError NoName No Metro Name Found
         """
         try:
-            return render_template('transport/ratp/metro/'+name+'.html')
+            return render_template('transport/ratp/metro/' + name + '.html')
         except TransportException:
             return render_template('transport/ratp/metro/index.html')
     elif request.method == 'POST':
@@ -128,8 +128,8 @@ def metro(name):
         ratp.line = name
         ratp.station = request.form['metrostation']
         ratp.direction = request.form['metrodirection']
-        json.json = ratp.get_metro_schedule()
-        result = json.decode()
+        json.url = ratp.get_metro_schedule()
+        result = json.decode_url()
         try:
             return render_template('transport/ratp/metro/result.html', result=result)
         except TransportException:
