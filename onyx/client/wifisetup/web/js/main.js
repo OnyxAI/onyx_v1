@@ -32,16 +32,6 @@ var WifiSetup = {
 
         onConnected: function (data) {
             if (data.connected) {
-                // NOTE:  Once we send the "onyx.wifi.stop", the unit will
-                // be shutting down the wifi access point.  So the device
-                // hosting the browser session is probably being disconnected
-                // and hopefully automatically reconnecting to the internet.
-                //
-                // Until the reconnect happens, the user cannot actually
-                // follow the link to http://home.onyx.ai to register
-                // their device.  That is part of why we are doing this 2 sec
-                // delay.
-                //
                 WS.send("onyx.wifi.stop");
                 WS.close();
 

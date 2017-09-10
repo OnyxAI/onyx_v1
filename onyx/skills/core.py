@@ -324,6 +324,7 @@ class OnyxSkill(object):
     def speak(self, utterance, lang):
         logger.info("Speak: " + utterance)
         self.emitter.emit(Message("speak", {'utterance': utterance, 'lang': lang}))
+        tts.lang = lang
         tts.execute(utterance)
 
     def finish(self):
