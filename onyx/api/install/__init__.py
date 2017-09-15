@@ -105,6 +105,7 @@ class Install:
         try:
             repo = git.cmd.Git(onyx.__path__[0] + "/data/")
             repo.pull()
+            kernel.train(kernel.set())
             logger.info('Updating data successfully')
         except Exception as e:
             logger.error('Updating data error : ' + str(e))

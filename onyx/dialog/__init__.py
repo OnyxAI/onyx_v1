@@ -1,7 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Onyx Project
+http://onyxproject.fr
+Software under licence Creative Commons 3.0 France
+http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
+You may not use this software for commercial purposes.
+@author :: Cassim Khouani
+"""
 
 import pystache
 import os
 import random
+import codecs
 from onyx.util import log
 
 __author__ = 'seanfitz'
@@ -28,7 +38,7 @@ class MustacheDialogRenderer(object):
 
         :return:
         """
-        with open(filename, 'r') as f:
+        with codecs.open(filename, 'r', 'utf-8') as f:
             for line in f:
                 template_text = line.strip()
                 if template_name not in self.templates:
