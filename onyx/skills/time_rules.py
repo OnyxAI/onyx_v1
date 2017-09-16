@@ -156,8 +156,8 @@ class TimeRulesFrFr(AbstractTimeRules):
                 '(<week_days>)s?)*))|journalier|tous les jours'),
             'time_regex': [
                 '(<time_advs>)',
-                '((at|in the|during the|tomorrow)\s)?(<day_parts>)',
-                '(in )?(a|an|one|two|\d+\.?\d*) (<time_units>)s?( later)?',
+                '((à|dans the|during the|tomorrow)\s)?(<day_parts>)',
+                '(in )?(un|une|deux|\d+\.?\d*) (<time_units>)s?( later)?',
                 'on (<week_days>)',
                 '(on|the) (\d+(rd|st|nd|th)?\s)?(<months>)( the )?'
                 '(\s\d+(rd|st|nd|th)?)?(\s?,?\s?\d*)?',

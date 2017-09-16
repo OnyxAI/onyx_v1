@@ -42,7 +42,7 @@ class ScheduledSkill(OnyxSkill):
     def __init__(self, name, emitter=None):
         super(ScheduledSkill, self).__init__(name, emitter)
         self.timer = None
-        self.calendar = pdt.Calendar()
+        self.calendar = pdt.Calendar(pdt.Constants(localeID=self.lang.replace('-', '_'), usePyICU=False))
         self.time_rules = time_rules.create(self.lang)
         self.init_format()
 
@@ -91,11 +91,20 @@ class ScheduledSkill(OnyxSkill):
             hours, remainder = divmod(diff, self.SECONDS_PER_HOUR)
             minutes, seconds = divmod(remainder, self.SECONDS_PER_MINUTE)
             if hours:
-                return "%s hours and %s minutes from now" % \
-                       (int(hours), int(minutes))
+                if self.lang == 'en-US':
+                    return "%s hours and %s minutes from now" % \
+                           (int(hours), int(minutes))
+                elif self.lang == 'fr-FR':
+                    return "%s heures et %s minutes" % \
+                           (int(hours), int(minutes))
             else:
-                return "%s minutes and %s seconds from now" % \
-                       (int(minutes), int(seconds))
+                if self.lang == 'en-US':
+                    return "%s minutes and %s seconds from now" % \
+                           (int(minutes), int(seconds))
+                elif self.lang == 'fr-FR':
+                    return "%s minutes et %s secondes" % \
+                           (int(minutes), int(seconds))
+
         return date.strftime(self.format)
 
     @abc.abstractmethod
@@ -191,6 +200,8 @@ class ScheduledCRUDSkill(ScheduledSkill):
             self.add_sync(date, message)
             self.save_sync()
         else:
+            self.speak(str(date),self.lang)
+            self.speak(str(delay),self.lang)
             self.speak_dialog('schedule.datetime.error')
 
     def feedback_create(self, utc_time):
@@ -289,12 +300,23 @@ class ScheduledCRUDSkill(ScheduledSkill):
     def get_amount(self, message, default=None):
         size = len(self.data)
         amount = message.data.get(self.name + 'Amount', default)
-        if amount in ['all', 'my', 'all my', None]:
-            total = size
-        elif amount in ['one', 'the next', 'the following']:
-            total = 1
-        elif amount == 'two':
-            total = 2
-        else:
-            total = int(amount)
-        return min(total, size)
+        if self.lang == "en-US":
+            if amount in ['all', 'my', 'all my', None]:
+                total = size
+            elif amount in ['one', 'the next', 'the following']:
+                total = 1
+            elif amount == 'two':
+                total = 2
+            else:
+                total = int(amount)
+            return min(total, size)
+        elif self.lang == "fr-FR":
+            if amount in ['tout', 'tous', 'toutes', None]:
+                total = size
+            elif amount in ['un', 'une', 'le prochain']:
+                total = 1
+            elif amount == 'deux':
+                total = 2
+            else:
+                total = int(amount)
+            return min(total, size)
