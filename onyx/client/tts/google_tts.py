@@ -23,5 +23,5 @@ class GoogleTTS(TTS):
             p = play_mp3(self.filename)
             p.communicate()
         except:
-            p = play_mp3("http://translate.google.com/translate_tts?tl=" + self.lang + "&client=tw-ob&q=" + sentence)
+            p = play_mp3("http://translate.google.com/translate_tts?ie=utf8&tl=" + self.lang + "&client=tw-ob&q=" + sentence)
             p.communicate()

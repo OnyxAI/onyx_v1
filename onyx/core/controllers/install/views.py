@@ -86,7 +86,7 @@ def change_lang():
         options.lang = request.form.get('lang')
         options.change_lang()
         refresh()
-        flash(gettext('The lang was changed !') , 'success')
+        flash(gettext('The lang was changed ! Please reboot Onyx now') , 'success')
         return redirect(url_for('install.reboot', url='install.index', error_url='install.index'))
     except:
         flash(gettext('An error has occured !') , 'error')
