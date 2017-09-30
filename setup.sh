@@ -44,7 +44,7 @@ cd ${TOP}/onyx/client/speech/assets
 if [ ! -f ${TOP}/onyx/client/speech/assets/_snowboydetect.so ] || [ ! -f ${TOP}/onyx/client/speech/assets/snowboydetect.py ]; then
     echo "Snowboy not found not found!"
     echo "Download Snowboy"
-    wget http://download.onyxlabs.fr/snowboy/snowboy_${os}_${arch}.tar.gz
+    wget https://github.com/OnyxProject/enclosure-onyx/releases/download/1.0.0/snowboy_${os}_${arch}.tar.gz
     tar zxvf snowboy_${os}_${arch}.tar.gz
     rm snowboy_${os}_${arch}.tar.gz
 fi
