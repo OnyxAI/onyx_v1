@@ -744,7 +744,7 @@ msgstr "C'est vous !"
 
 #: onyx/templates/layout/tutorial.html:129
 msgid "To change it let's use Gravatar."
-msgstr "Vous le changer utilisez Gravatar."
+msgstr "Pour le changer utilisez Gravatar."
 
 #: onyx/templates/layout/tutorial.html:130
 msgid "Oh ! A notification !"
