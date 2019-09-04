@@ -2,18 +2,19 @@
 
 set -Ee
 
-if [ $(id -u) -eq 0 ]; then
-  echo "This script should not be run as root or with sudo."
-  exit 1
-fi
+#if [ $(id -u) -eq 0 ]; then
+#  echo "This script should not be run as root or with sudo."
+#  exit 1
+#fi
 
 TOP=$(cd $(dirname $0) && pwd -L)
 
 VIRTUALENV_ROOT="${TOP}/venv"
 
+
 if [ ! -d ${VIRTUALENV_ROOT} ]; then
    mkdir -p $(dirname ${VIRTUALENV_ROOT})
-   virtualenv -p python2.7 ${VIRTUALENV_ROOT} --system-site-packages
+   virtualenv -p python3.7 ${VIRTUALENV_ROOT} --system-site-packages
 fi
 source ${VIRTUALENV_ROOT}/bin/activate
 cd ${TOP}

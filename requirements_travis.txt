@@ -10,7 +10,7 @@ wtforms
 aniso8601
 pylibmc
 Babel
-Flask==0.10
+Flask
 onyxbabel
 Flask-FlatPages
 Flask-Mail
@@ -58,6 +58,8 @@ Flask-Login
 #Voice
 SpeechRecognition
 gtts
+
+chatterbot_corpus
 
 #Test
 webtest

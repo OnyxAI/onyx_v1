@@ -10,7 +10,7 @@ wtforms
 aniso8601
 pylibmc
 Babel
-Flask==0.10
+Flask
 onyxbabel
 Flask-FlatPages
 Flask-Mail
@@ -64,6 +64,7 @@ gtts
 webtest
 geopy
 
+chatterbot_corpus
 
 pyee==1.0.1
 tornado==4.2.1

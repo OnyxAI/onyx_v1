@@ -12,14 +12,15 @@
 
 <script type="text/javascript">$('.loader').hide();</script>
 <script type="text/javascript">$('.button-collapse').sideNav();</script>
+
 <script type="text/javascript">
-$(document).ready(function() {
-  var current_route = "{{request.url_rule.endpoint}}";
-  var tutorial = "{{g.user.tutorial}}";
+  $(document).ready(function() {
+    var current_route = "{{request.url_rule.endpoint}}";
+    var tutorial = "{{g.user.tutorial}}";
 
-  if (tutorial == 0){
-    $('.tutorial_'+current_route.split(".")[1]).tapTarget('open');
-  }
+    if (tutorial == 0){
+      $('.tutorial_'+current_route.split(".")[1]).tapTarget('open');
+    }
 
-});
+  });
 </script>

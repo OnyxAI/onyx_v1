@@ -1,10 +1,10 @@
 build-essential
-python
-python-software-properties
-python-pip
-python-setuptools
-python-dev
-python-virtualenv
+python3
+python3-software-properties
+python3-pip
+python3-setuptools
+python3-dev
+python3-virtualenv
 curl
 git
 git-core
@@ -12,12 +12,12 @@ nodejs
 openssl
 libssl-dev
 memcached
-python-memcache
+python3-memcache
 libmemcached-dev
 zlib1g-dev
 libffi-dev
 swig3.0
-python-pyaudio
+python3-pyaudio
 python3-pyaudio
 sox
 libatlas-base-dev
@@ -27,4 +27,4 @@ libportaudiocpp0
 portaudio19-dev
 flac
 mplayer
-python-alsaaudio
+python3-alsaaudio

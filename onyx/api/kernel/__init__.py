@@ -48,18 +48,12 @@ class Kernel:
     def set(self):
         try:
             kernel = ChatBot("Onyx",
-                #storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
-                storage_adapter="chatterbot.storage.MongoDatabaseAdapter",
-                logic_adapters=[
-                    {
-                        'import_path': 'onyx.api.kernel.adapters.best_adapter.BestMatchAdapter'
-                    }
-                ],
+                storage_adapter="chatterbot.storage.SQLStorageAdapter",
+               
                 input_adapter="chatterbot.input.VariableInputTypeAdapter",
                 output_adapter="chatterbot.output.OutputAdapter",
                 output_format="text",
-                #database=onyx.__path__[0] + "/db/bot_data_" + config.get('Base', 'lang') + ".db"
-                database="bot_data_" + config.get('Base', 'lang')
+                database_uri="sqlite:///" + onyx.__path__[0] + "/db/bot_data_" + config.get('Base', 'lang') + ".db"
             )
 
             return kernel
@@ -69,43 +63,52 @@ class Kernel:
 
     def train(self, kernel):
         try:
-            kernel.set_trainer(ListTrainer)
+            trainer = ChatterBotCorpusTrainer(kernel)
+
+            if config.get('Base', 'lang') == "fr_FR":
+                trainer.train('chatterbot.corpus.french')
+            else:
+                trainer.train('chatterbot.corpus.english')
+
+            
+            trainer = ChatterBotCorpusTrainer(kernel)
+            trainer.train(
+                self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/"
+            )
+
+
+            trainer = ListTrainer(kernel)
             json.path = self.app.config['ONYX_PATH'] + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
             answers = json.decode_path()
             for answer in answers:
                 for query in answer['answers']:
-                    kernel.train([
+                    trainer.train([
                         answer['label'],
                         query['text']
-
                     ])
 
 
-            kernel.set_trainer(ChatterBotCorpusTrainer)
-            kernel.train(
-                self.app.config['ONYX_PATH'] + "/data/sentences/" + config.get('Base', 'lang') + "/"
-            )
 
             LOG.info('Skill Training')
 
             all_skill = get_raw_name(self.app.config['SKILL_FOLDER'])
             for skill in all_skill:
                 try:
-                    kernel.set_trainer(ListTrainer)
+                    trainer = ListTrainer(kernel)
 
                     json.path = self.app.config['SKILL_FOLDER'] + skill + "/data/answers/" + config.get('Base', 'lang') + "/answers.json"
                     answers = json.decode_path()
                     for answer in answers:
                         for query in answer['answers']:
-                            kernel.train([
+                            trainer.train([
                                 answer['label'],
                                 query['text']
 
                             ])
 
-                    kernel.set_trainer(ChatterBotCorpusTrainer)
+                    trainer = ChatterBotCorpusTrainer(kernel)
                     try:
-                        kernel.train(
+                        trainer.train(
                             self.app.config['SKILL_FOLDER'] + skill + "/data/sentences/" + config.get('Base', 'lang') + "/"
                         )
                     except:
@@ -121,12 +124,12 @@ class Kernel:
 
     def get(self):
         try:
-            text = self.text.encode('ascii', 'ignore')
+            text = self.text
 
-            response = self.kernel.get_response(text).text.encode('utf-8')
+            response = self.kernel.get_response(text).text
 
-            return json.encode({"status":"success", "text":response})
+            return json.encode({"status":"success", "text": response})
         except Exception as e:
             LOG.error('Getting Sentence error : ' + str(e))
-            text = self.kernel.get_response('error').text.encode('utf-8')
+            text = self.kernel.get_response('error').text
             return json.encode({"status":"error", "text":text})

@@ -28,7 +28,7 @@ from onyx.messagebus.message import Message
 skills = OnyxSkill(name="cli")
 
 json = Json()
-LOG = getLogger('CliClient')
+LOG = getLogger('Client')
 
 def handle_speak(event):
     utterance = event.data.get('utterance')
@@ -53,7 +53,7 @@ def cli():
     while True:
         try:
             time.sleep(1.5)
-            result = raw_input('You: ')
+            result = input('You: ')
 
             print ("Sending message...")
             payload = {

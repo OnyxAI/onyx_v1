@@ -12,12 +12,12 @@ You may not use this software for commercial purposes.
 from signal import getsignal, signal, SIGKILL, SIGINT, SIGTERM  # signals
 import os  # Operating System functions
 
-#
+
 # Written by Daniel Mendyke [dmendyke@jaguarlandrover.com]
 __author__ = 'dmendyke'
 
 
-#
+
 # Wrapper around chain of handler functions for a specific system level signal.
 # Often used to trap Ctrl-C for specific application purposes.
 class Signal(object):  # python 3+ class Signal
@@ -87,14 +87,14 @@ class Lock(object):  # python 3+ 'class Lock'
 
     '''
     Create and maintains the PID lock file for this application process.
-    The PID lock file is located in /tmp/mycroft/*.pid.  If another process
+    The PID lock file is located in /tmp/onyx/*.pid.  If another process
     of the same type is started, this class will 'attempt' to stop the
     previously running process and then change the process ID in the lock file.
     '''
 
     #
     # Class constants
-    DIRECTORY = '/tmp/mycroft'
+    DIRECTORY = '/tmp/onyx'
     FILE = '/{}.pid'
 
     #
@@ -145,7 +145,7 @@ class Lock(object):  # python 3+ 'class Lock'
     # Create a lock file for this server process
     def touch(self):
         '''
-        If needed, create the '/tmp/mycroft' directory than open the
+        If needed, create the '/tmp/onyx' directory than open the
         lock file for writting and store the current process ID (PID)
         as text.
         '''
@@ -161,7 +161,7 @@ class Lock(object):  # python 3+ 'class Lock'
         Checks to see if a lock file for this service already exists,
         if so have it killed.  In either case write the process ID of
         the current service process to to the existing or newly created
-        lock file in /tmp/mycroft/
+        lock file in /tmp/onyx/
         '''
         self.exists()  # check for current running process
         self.touch()
