@@ -1,17 +1,17 @@
 <ul class="right hide-on-med-and-down">
   <!-- Navbar -->
   {% for nav in g.navbar %}
-  {% if nav.url == None %}
-  <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
-    <a href="{{ url_for('core.index') }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}"></a>
-  </div>
-  {% else %}
-   <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
-    <a id="menu_{{ nav.fa }}" href="{{ url_for(nav.url) }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
-      <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
-    </a>
-  </div>
-  {% endif %}
+    {% if nav.url == None %}
+      <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
+        <a href="{{ url_for('core.index') }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}"></a>
+      </div>
+    {% else %}
+      <div class="fixed-action-btn tooltip" style="height: 50px; top: 70px; right:{{ nav.pourcentage }};">
+        <a id="menu_{{ nav.fa }}" href="{{ url_for(nav.url) }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ nav.tooltip }}">
+          <i class="large fa {{ nav.fa }}" aria-hidden="true"></i>
+        </a>
+      </div>
+    {% endif %}
   {% endfor %}
 
   <!-- Avatar -->
@@ -44,7 +44,7 @@
 <!-- Logo -->
 <div class="main">
   <a href="{{ url_for('core.index') }}">
-    <img style="max-width: 100%; height:250px; " class="responsive-img" src="{{ url_for('static', filename='img/logo/'+g.color+'.png') }}" alt="Logo"/>
+    <img style="max-width: 100%; height:250px; margin-top: 10px;" class="responsive-img" src="{{ url_for('static', filename='img/logo/'+g.color+'.png') }}" alt="Logo"/>
   </a>
 </div>
 

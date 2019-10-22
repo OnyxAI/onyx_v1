@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Onyx Project
-http://onyxproject.fr
+https://onyxlabs.fr
 Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
@@ -9,10 +9,28 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-from flask import render_template
-from flask.ext.login import login_required
+from flask import render_template, g, request, redirect, url_for
+from onyx.api.weather import *
+from onyx.api.assets import Json
+from flask_login import login_required
 
-@core.route('weather')
+weather_api = Weather()
+json = Json()
+
+@core.route('weather', methods=['GET', 'POST'])
 @login_required
 def weather():
-    return render_template('weather/index.html')
+    if request.method == 'GET':
+        return render_template('weather/index.html')
+    elif request.method == 'POST':
+        try:
+            weather_api.latitude = request.form['latitude']
+            weather_api.longitude = request.form['longitude']
+
+            result = weather_api.get_temp_str()
+            img = weather_api.get_img()
+
+            return render_template('weather/index.html', result=result, img=img)
+        except:
+            return redirect(url_for('core.weather'))
+

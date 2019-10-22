@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Onyx Project
-http://onyxproject.fr
+https://onyxlabs.fr
 Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
@@ -22,23 +22,9 @@ class Weather:
         self.latitude = None
         self.longitude = None
 
-    def get_str(self):
-        try:
-            geoloc = Geolocalisation()
-            self.latitude = geoloc.get_latitude()
-            self.longitude = geoloc.get_longitude()
-            json.url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(self.latitude) + "&lon=" + str(self.longitude) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69"
-            result = json.decode_url()
-            return gettext('It is ') + str(round(result["list"][0]["temp"]["day"])) + gettext(" ° in ") + str(result["city"]["name"]) + " !"
-        except Exception as e:
-            logger.error('Getting weather error : ' + str(e))
-            raise WeatherException(str(e))
 
     def get_temp_str(self):
         try:
-            geoloc = Geolocalisation()
-            self.latitude = geoloc.get_latitude()
-            self.longitude = geoloc.get_longitude()
             json.url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(self.latitude) + "&lon=" + str(self.longitude) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69"
             result = json.decode_url()
             return str(round(result["list"][0]["temp"]["day"]))
@@ -48,9 +34,6 @@ class Weather:
 
     def get_img(self):
         try:
-            geoloc = Geolocalisation()
-            self.latitude = geoloc.get_latitude()
-            self.longitude = geoloc.get_longitude()
             json.url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(self.latitude) + "&lon=" + str(self.longitude) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69"
             result = json.decode_url()
             if result["list"][0]["weather"][0]["main"] == 'Rain':

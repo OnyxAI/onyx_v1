@@ -32,6 +32,11 @@ body {
 body.image_loaded {
     background-color: #222;
 }
+
+.logo{
+    margin-top: 50px;
+}
+
 input {
     background: transparent;
     border: none;
@@ -284,7 +289,7 @@ input:focus::-moz-placeholder {
     font-weight: 300;
     padding: 0.3em 1.5em 0.3em 0.6em;
     transition: background .3s ease, border .3s ease, color .3s ease;
-    width: 100%;
+    width: 80%;
 }
 #search_input:hover, #search_input:focus {
     border-color: transparent;

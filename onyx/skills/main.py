@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Onyx Project
-http://onyxproject.fr
+https://onyxlabs.fr
 Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
@@ -21,14 +21,11 @@ from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 from onyx.skills.core import load_skill, create_skill_descriptor, \
     MainModule, SKILLS_DIR
-from onyx.skills.intent_service import IntentService
 from onyx.util import connected
 from onyx.util.log import getLogger
-import onyx.dialog
 
 logger = getLogger("Skills")
 
-__author__ = 'seanfitz'
 
 ws = None
 loaded_skills = {}
@@ -52,10 +49,6 @@ def _load_skills():
         skill_reload_thread
 
     check_connection()
-
-    # Create the Intent manager, which converts utterances to intents
-    # This is the heart of the voice invoked skill system
-    IntentService(ws)
 
     # Create a thread that monitors the loaded skills, looking for updates
     skill_reload_thread = Timer(0, _watch_skills)
@@ -147,9 +140,6 @@ def main():
         try:
             _message = json.loads(message)
 
-            if _message.get("type") == "registration":
-                # do not log tokens from registration messages
-                _message["data"]["token"] = None
             message = json.dumps(_message)
         except:
             pass

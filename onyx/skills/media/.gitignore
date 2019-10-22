@@ -1,9 +1,0 @@
-*.py[co]
-__pycache__
-*.pyc
-.cache
-
-*.mo
-*.dropbox.attr
-venv
-dist

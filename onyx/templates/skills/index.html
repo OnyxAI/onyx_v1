@@ -6,23 +6,23 @@
 <h1 class="{{g.text_color}}">{{_("Skills")}}</h1>
 
 <div class="row">
-  <div class="col s12 ">
+  <div class="col s12 m12">
       <ul class="tabs {{g.panel_color}}">
-          <li class="tab col s3 {{g.text_color}}"><a class="active" href="#get">{{_('Skills')}}</a></li>
-          <li class="tab col s3 {{g.text_color}}"><a href="#install">{{_('Install')}}</a></li>
-          <li class="tab col s3 {{g.text_color}}"><a href="#install_url">{{_('Install With URL')}}</a></li>
+          <li class="tab col m3 s12 {{g.text_color}}"><a class="active" href="#get">{{_('Skills')}}</a></li>
+          <li class="tab col m3 s12 {{g.text_color}}"><a href="#install">{{_('Install')}}</a></li>
+          <li class="tab col m3 s12 {{g.text_color}}"><a href="#install_url">{{_('Install With URL')}}</a></li>
       </ul>
   </div>
 </div>
 
-<div id="get" >
+<div id="get">
   <div class="card-panel {{g.panel_color}}">
     <div class="row">
       {% if skills == [] %}
       <h4 class='{{g.text_color}}'>{{ _('You have not install some skill') }}</h4>
       {% else %}
       {% for skill in skills %}
-      <div class="col s4">
+      <div class="col m4 s12">
       <h2 class="header">{{skill['name']}}</h2>
       	<div class="card horizontal blue-grey darken-1 z-depth-5">
       		<div class="card-stacked">
@@ -50,7 +50,7 @@
     <div class="row">
         {% for list in lists %}
 
-        	<div class="col s4">
+        	<div class="col m4 s12">
         		<div class="card z-depth-5">
         			<div class="card-image waves-effect waves-block waves-light">
         				<img class="activator" src="{{ list['img'] }}">

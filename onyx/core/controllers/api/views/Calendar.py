@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Onyx Project
-http://onyxproject.fr
+https://onyxlabs.fr
 Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from flask import request
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 from onyx.decorators import admin_required
 from .. import api
 import json

@@ -208,6 +208,7 @@
             <td class='{{g.text_color}}'><input placeholder="{{_('Country')}}" type="text" id="country" name="country" required></td>
             <td class='{{g.text_color}}'><input placeholder="{{_('Latitude')}}" type="text" id="latitude" name="latitude" required></td>
             <td class='{{g.text_color}}'><input placeholder="{{_('Longitude')}}" type="text" id="longitude" name="longitude" required></td>
+            <td class='{{g.text_color}}'><a href="#" onClick="getLocation();" class="btn {{ g.color }}" >{{_('Position')}}</a></td>
             <td class='{{g.text_color}}'><button class="btn {{ g.color }}"  name="button">{{_('Send')}}</button></td>
           </form>
         </tr>
@@ -340,5 +341,22 @@
     $('ul.tabs').tabs();
   });
 </script>
+
+<script>
+  var lon = document.getElementById("longitude");
+  var lat = document.getElementById("latitude");
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+  
+  function showPosition(position) {
+    lon.value = position.coords.longitude;
+    lat.value = position.coords.latitude
+  }
+</script> 
 
 {% endblock %}

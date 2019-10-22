@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Onyx Project
-http://onyxproject.fr
+https://onyxlabs.fr
 Software under licence Creative Commons 3.0 France
 http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
@@ -88,6 +88,7 @@ def get_blueprints(app):
             if (hasattr(Module, 'get_blueprint') and callable(Module.get_blueprint)):
                 BLUEPRINTS.append(Module.get_blueprint())
 
+
     for blueprint in BLUEPRINTS:
         @blueprint.before_request
         def check_base_db():
@@ -100,7 +101,6 @@ def get_blueprints(app):
             elif install.value == 'False':
                 return redirect(url_for('install.index'))
                 
-
     BLUEPRINTS.append(install)
     return BLUEPRINTS
 
@@ -117,7 +117,7 @@ def extensions_fabrics(app):
     db.init_app(app)
     babel.init_app(app)
     login_manager.init_app(app)
-    cache.init_app(app)
+    #cache.init_app(app)
 
 def error_pages(app):
 

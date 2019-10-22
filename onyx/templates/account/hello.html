@@ -11,19 +11,21 @@
 <body>
 
 <center>
-  <img src="{{ url_for('static', filename='img/logo/blue darken-1.png') }}" height="200px"><br>
+  <img src="{{ url_for('static', filename='img/logo/blue darken-1.png') }}" class="logo" height="200px"><br>
+  <!--
   <h1 id="onyxtext" class="white_text"><b>{{_("Hi, I'm Onyx.")}}</b></h1>
+  -->
 </center>
 
 <div class="row">
-     <div class="col s4">
+     <div class="col m4 s12">
        <div id="search_container" class="hover_container">
-               <form target="_blank" id="search_form" action="https://google.com/search" method="get" class="hover_item">
-                   <input id="search_input" class="typeahead white_text" type="search" name="q" autocomplete="off" placeholder="{{_('Google Search')}}"></input>
+               <form target="_blank" id="search_form" action="https://qwant.com" method="get" class="hover_item">
+                   <input id="search_input" class="typeahead white_text" type="search" name="q" autocomplete="off" placeholder="{{_('Search')}}"></input>
                </form>
        </div>
      </div>
-     <div class="col s4 offset-s4">
+     <div class="col m4 offset-m4 s12">
        <div id="onyx_container" class="hover_container">
          <center>
            <div id="weather"></div>
@@ -41,30 +43,8 @@
            <span id="time" class="white_text white_text_shadow"></span>
        </div>
 
-       <!-- Weather -->
-       <a id="weather_results">
-           <div id="weather_container" class="hover_item">
-
-               <!-- Conditions and Temperature -->
-               <div id="weather_temperature_container">
-                   <span id="weather_temperature" class="white_text white_text_shadow"></span>
-                   <span id="weather_temperature_units" class="white_text white_text_shadow">°</span>
-               </div>
-
-               <!-- Loading spinner -->
-               <div id="weather_spinner" class="spinner">
-                   <div id="weather_double_bounce1" class="double_bounce1"></div>
-                   <div id="weather_double_bounce2" class="double_bounce2"></div>
-               </div>
-
-               <!-- Location -->
-               <span id="weather_location" class="white_text white_text_shadow"></span>
-           </div>
-       </a>
-
 </div>
 
-<script src="https://s3-us-west-2.amazonaws.com/reallysimpleweather/reallysimpleweather-1.1.0.min.js"></script>
 <script>
 
 $( document ).ready(function() {
@@ -75,24 +55,8 @@ $( document ).ready(function() {
     $('#time_container').css('display', 'block');
     $('#time_container').css('opacity', 1);
 
-    $('#weather_container').css('display', 'block');
-    $('#weather_container').css('opacity', 1);
-
 
 });
-
-$.get("http://ip-api.com/json", function(response) {
-    $('#weather_location').text(response.city);
-    reallySimpleWeather.weather({
-        wunderkey: '', // leave blank for Yahoo
-        location: response.city, //your location
-        woeid: '', // "Where on Earth ID"
-        unit: 'c', // 'c' also works
-        success: function(weather) {
-          $('#weather_temperature').text(weather.temp);
-        }
-    });
-}, "jsonp");
 
 
 
@@ -124,6 +88,7 @@ startTime();
 </body>
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+<!--
 <script type="text/javascript" src="{{ url_for('static', filename='js/theater.min.js') }}"></script>
 <script type="text/javascript">
     var theater = theaterJS({ locale: 'en' });
@@ -147,4 +112,5 @@ startTime();
     .addScene('Onyx')
     .addScene(900)
 </script>
+-->
 </html>
