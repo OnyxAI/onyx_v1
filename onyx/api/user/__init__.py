@@ -3,7 +3,7 @@
 Onyx Project
 https://onyxlabs.fr
 Software under licence Creative Commons 3.0 France
-http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
+https://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
@@ -282,22 +282,22 @@ class User:
         try:
             user = UsersModel.User.query.filter_by(id=current_user.id).first()
             email = str(user.email)
-            default = "http://www.gravatar.com/avatar"
+            default = "https://www.gravatar.com/avatar"
             size = 60
-            url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
+            url = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
             return url
         except Exception as e:
-            url = "http://www.gravatar.com/avatar?s=60"
+            url = "https://www.gravatar.com/avatar?s=60"
             return url
 
     def get_avatar_id(self):
         try:
             user = UsersModel.User.query.filter_by(id=self.id).first()
             email = str(user.email)
-            default = "http://www.gravatar.com/avatar"
+            default = "https://www.gravatar.com/avatar"
             size = 60
-            url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
+            url = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
             return url
         except Exception as e:
-            url = "http://www.gravatar.com/avatar?s=60"
+            url = "https://www.gravatar.com/avatar?s=60"
             return url
