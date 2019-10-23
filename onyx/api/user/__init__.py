@@ -282,9 +282,8 @@ class User:
         try:
             user = UsersModel.User.query.filter_by(id=current_user.id).first()
             email = str(user.email)
-            default = "https://www.gravatar.com/avatar"
             size = 60
-            url = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
+            url = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?s=" +str(size)
             return url
         except Exception as e:
             url = "https://www.gravatar.com/avatar?s=60"
@@ -294,9 +293,8 @@ class User:
         try:
             user = UsersModel.User.query.filter_by(id=self.id).first()
             email = str(user.email)
-            default = "https://www.gravatar.com/avatar"
             size = 60
-            url = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?d=" + default + "&s=" +str(size)
+            url = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower().encode('utf-8')).hexdigest() + "?s=" +str(size)
             return url
         except Exception as e:
             url = "https://www.gravatar.com/avatar?s=60"
