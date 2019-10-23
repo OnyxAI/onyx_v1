@@ -7,14 +7,13 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-import json
 import time
 from multiprocessing.pool import ThreadPool
 
 from pyee import EventEmitter
 from websocket import WebSocketApp
 
+from onyx.api.assets import Json
 from onyx.config import get_config
 from onyx.messagebus.message import Message
 from onyx.util import validate_param
@@ -23,7 +22,7 @@ from onyx.util.log import getLogger
 
 LOG = getLogger(__name__)
 config = get_config('onyx')
-
+json = Json()
 
 class WebsocketClient(object):
     def __init__(self, host=config.get("Websocket", "host"), port=int(config.get("Websocket", "port")),
@@ -80,7 +79,7 @@ class WebsocketClient(object):
         if hasattr(message, 'serialize'):
             self.client.send(message.serialize())
         else:
-            self.client.send(json.dumps(message.__dict__))
+            self.client.send(json.encode(message.__dict__))
 
     def on(self, event_name, func):
         self.emitter.on(event_name, func)

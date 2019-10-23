@@ -9,7 +9,8 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-from flask import render_template, g, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
+from onyxbabel import gettext
 from onyx.api.weather import *
 from onyx.api.assets import Json
 from flask_login import login_required
@@ -32,5 +33,6 @@ def weather():
 
             return render_template('weather/index.html', result=result, img=img)
         except:
+            flash(gettext('An error has occured !') , 'error')
             return redirect(url_for('core.weather'))
 

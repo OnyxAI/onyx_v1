@@ -61,7 +61,7 @@ then
   start-onyx service
   start-onyx skills
   start-onyx client
-  start-onyx voice
+  #start-onyx voice
 
   exit 0
 elif [[ "$1" == "stop" && -z "$2" ]]
@@ -69,7 +69,7 @@ then
   stop-onyx service
   stop-onyx skills
   stop-onyx client
-  stop-onyx voice
+  #stop-onyx voice
   exit 0
 elif [[ "$1" == "restart" && -z "$2" ]]
 then

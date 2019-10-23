@@ -7,13 +7,10 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-
-import time, sys, os, onyx, importlib
-from flask import g, current_app as app, url_for
+import onyx
+from flask import current_app as app
 
 from onyx.api.assets import Json
-from onyxbabel import gettext
 from onyx.util.log import getLogger
 from onyx.api.exceptions import *
 from onyx.config import get_config
@@ -22,12 +19,6 @@ from onyx.skills.core import *
 
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
-
-
-from onyx.messagebus.client.ws import WebsocketClient
-from onyx.messagebus.message import Message
-
-from onyx import *
 
 LOG = getLogger('Kernel')
 config = get_config('onyx')
@@ -58,7 +49,7 @@ class Kernel:
             return kernel
         except Exception as e:
             LOG.error('Error Set Kernel : ' + str(e))
-            pass
+            raise KernelException(str(e))
 
     def train(self, kernel):
         try:
@@ -86,8 +77,6 @@ class Kernel:
                         query['text']
                     ])
 
-
-
             LOG.info('Skill Training')
 
             all_skill = get_raw_name(self.app.config['SKILL_FOLDER'])
@@ -110,15 +99,17 @@ class Kernel:
                         trainer.train(
                             self.app.config['SKILL_FOLDER'] + skill + "/data/sentences/" + config.get('Base', 'lang') + "/"
                         )
-                    except:
+                    except Exception as e:
+                        LOG.error('Error Kernel Skill Training : ' + str(e))
                         pass
-                except:
+                except Exception as e:
+                    LOG.error('Error Kernel Skill Training : ' + str(e))
                     pass
 
             LOG.info('Kernel was train successfully')
         except Exception as e:
             LOG.error('Error Kernel Training : ' + str(e))
-            pass
+            raise KernelException(str(e))
 
 
     def get(self):
@@ -130,5 +121,4 @@ class Kernel:
             return json.encode({"status":"success", "text": response})
         except Exception as e:
             LOG.error('Getting Sentence error : ' + str(e))
-            text = self.kernel.get_response('error').text
-            return json.encode({"status":"error", "text":text})
+            raise KernelException(str(e))

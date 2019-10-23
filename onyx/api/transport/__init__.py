@@ -7,13 +7,9 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-import os
 from onyx.util.log import getLogger
-from flask import request, render_template, redirect, url_for, flash
-from onyxbabel import gettext
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-from bs4 import BeautifulSoup
 try:
 	import urllib.request
 except ImportError:

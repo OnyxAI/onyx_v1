@@ -7,11 +7,9 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 from .. import core
-from flask import render_template, request
+from flask import render_template
 from flask_login import login_required
-
 
 @core.route('app')
 @login_required

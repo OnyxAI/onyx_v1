@@ -21,6 +21,7 @@ Markdown
 PyYAML
 colorlog
 Werkzeug
+flask_jwt_extended
 itsdangerous
 requests
 speaklater

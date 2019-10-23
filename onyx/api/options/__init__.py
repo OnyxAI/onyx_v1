@@ -8,13 +8,11 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from flask_login import current_user
-from onyxbabel import gettext
-from onyx.core.models import *
+from onyx.core.models import UsersModel, ConfigModel
 from onyx.extensions import db
 from onyx.api.exceptions import *
 from onyx.api.assets import Json
 from onyx.config import get_config , get_path
-from flask import current_app as app
 from onyxbabel import refresh
 from onyx.util.log import getLogger
 

@@ -1,93 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Onyx</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Onyx</title>
     <link href="{{ url_for('static', filename='css/materialize.css') }}" rel="stylesheet" type="text/css" />
-    {% include 'dependencies/flash.html' %}  <!-- Include flash -->
     <link href="{{ url_for('static', filename='css/hello.css') }}" rel="stylesheet" type="text/css" />
+	{% include 'dependencies/flash.html' %}  <!-- Include flash -->
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
 </head>
 <body>
 
-<center>
-  <img src="{{ url_for('static', filename='img/logo/blue darken-1.png') }}" class="logo" height="200px"><br>
-  <!--
-  <h1 id="onyxtext" class="white_text"><b>{{_("Hi, I'm Onyx.")}}</b></h1>
-  -->
-</center>
+	<center>
+	<img src="{{ url_for('static', filename='img/logo/blue darken-1.png') }}" class="logo" height="200px"><br>
+	<!--
+	<h1 id="onyxtext" class="white_text"><b>{{_("Hi, I'm Onyx.")}}</b></h1>
+	-->
+	</center>
 
-<div class="row">
-     <div class="col m4 s12">
-       <div id="search_container" class="hover_container">
-               <form target="_blank" id="search_form" action="https://qwant.com" method="get" class="hover_item">
-                   <input id="search_input" class="typeahead white_text" type="search" name="q" autocomplete="off" placeholder="{{_('Search')}}"></input>
-               </form>
-       </div>
-     </div>
-     <div class="col m4 offset-m4 s12">
-       <div id="onyx_container" class="hover_container">
-         <center>
-           <div id="weather"></div>
-            <a href="{{ url_for('auth.login',next=next) }}" class="btn blue" >{{_("Login")}}</a>
-            <a href="{{ url_for('auth.register') }}" class="btn blue" >{{_("Register")}}</a>
-          </center>
-       </div>
-     </div>
-</div>
+	<div class="row">
+		<div class="col m4 s12">
+			<div id="search_container" class="hover_container">
+				<form target="_blank" id="search_form" action="https://qwant.com" method="get" class="hover_item">
+					<input id="search_input" class="typeahead white_text" type="search" name="q" autocomplete="off" placeholder="{{_('Search')}}"></input>
+				</form>
+			</div>
+		</div>
+		<div class="col m4 offset-m4 s12">
+			<div id="onyx_container" class="hover_container">
+				<center>
+					<div id="weather"></div>
+					<a href="{{ url_for('auth.login',next=next) }}" class="btn blue">{{_("Login")}}</a>
+					<a href="{{ url_for('auth.register') }}" class="btn blue">{{_("Register")}}</a>
+				</center>
+			</div>
+		</div>
+	</div>
 
-<div id="bottom_right_container" class="hover_container">
+	<div id="bottom_right_container" class="hover_container">
 
-       <!-- Time -->
-       <div id="time_container" class="hover_item">
-           <span id="time" class="white_text white_text_shadow"></span>
-       </div>
+		<!-- Time -->
+		<div id="time_container" class="hover_item">
+			<span id="time" class="white_text white_text_shadow"></span>
+		</div>
 
-</div>
+	</div>
+
+</body>
+
 
 <script>
 
-$( document ).ready(function() {
-
-    $('#search_container').css('display', 'block');
-    $('#search_container .hover_item').css('opacity', 1);
-
-    $('#time_container').css('display', 'block');
-    $('#time_container').css('opacity', 1);
-
-
-});
-
-
-
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
+  $( document ).ready(function() {
+  
+      $('#search_container').css('display', 'block');
+      $('#search_container .hover_item').css('opacity', 1);
+  
+      $('#time_container').css('display', 'block');
+      $('#time_container').css('opacity', 1);
+  
+  
+  });
+  
+  function checkTime(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
   }
-  return i;
-}
-
-function startTime() {
-  var today = new Date();
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var s = today.getSeconds();
-  // add a zero in front of numbers<10
-  m = checkTime(m);
-  s = checkTime(s);
-  $('#time').text(h+":"+m);
-  t = setTimeout(function() {
-    startTime()
-  }, 500);
-}
-startTime();
-
+  
+  function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    // add a zero in front of numbers<10
+    m = checkTime(m);
+    s = checkTime(s);
+    $('#time').text(h+":"+m);
+    t = setTimeout(function() {
+      startTime()
+    }, 500);
+  }
+  startTime();
+  
 </script>
-
-
-</body>
-<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
 <!--
 <script type="text/javascript" src="{{ url_for('static', filename='js/theater.min.js') }}"></script>
 <script type="text/javascript">

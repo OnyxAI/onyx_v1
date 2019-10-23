@@ -8,8 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from flask_login import logout_user, login_user, current_user
-from flask import request , render_template , redirect , url_for , flash, current_app as app
-from onyxbabel import gettext
+from flask import current_app as app
 from onyx.core.models import *
 from onyx.skills.core import *
 from onyx.extensions import db, login_manager
@@ -18,6 +17,7 @@ from onyx.api.navbar import *
 from onyx.api.exceptions import *
 from onyx.api.events import *
 from onyx.util.log import getLogger
+from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 import hashlib
 import onyx
 
@@ -58,11 +58,12 @@ class User:
                 users.append(user)
 
             logger.info('Getting users data successfully')
+
             return json.encode(users)
         except Exception as e:
             logger.error('Getting users data error : ' + str(e))
             raise GetException(str(e))
-            return json.encode({"status":"error"})
+            
 
     def get_user(self):
         try:
@@ -77,12 +78,14 @@ class User:
             user['password'] = query.password
             user['email'] = query.email
             user['tutorial'] = query.tutorial
+
             logger.info('Getting user data successfully')
+
             return json.encode(user)
         except Exception as e:
             logger.error('Getting user data error : ' + str(e))
             raise GetException(str(e))
-            return json.encode({"status":"error"})
+            
 
 
     def add(self):
@@ -96,36 +99,42 @@ class User:
                 db.session.commit()
                 init = self.init_navbar()
                 logger.info('User registered : ' + self.username)
-                return 1
+                return json.encode({"status":"success"})
             else:
-                logger.error('No same password Error')
-                return 0
+                logger.error('Not same password Error')
+                return json.encode({"status":"error", "message": "Not same password"})
         except Exception as e:
             db.session.rollback()
             logger.error('Error in register : ' + str(e))
             raise UserException(str(e))
-            return json.encode({"status":"error"})
+            
 
     def init_navbar(self):
         try:
             user = UsersModel.User.query.filter_by(username=self.username).first()
+
             json.path = onyx.__path__[0] + "/data/user/navbar.json"
+
             navbar = json.decode_path()
+
             for key in navbar:
                 query = NavbarModel.Navbar(user=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
+
             all_skills = get_raw_name(app.config['SKILL_FOLDER'])
+
             for skill in all_skills:
                 folder = skill
                 navbars.folder = folder
                 navbars.username = self.username
                 navbars.set_plugin_navbar_user()
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error("User Navbar Init Error : " + str(e))
             raise NavbarException(str(e))
-            return json.encode({"status":"error"})
+            
 
     def login(self):
         try:
@@ -133,52 +142,83 @@ class User:
             registered_user = UsersModel.User.query.filter_by(email=self.email,password=hashlib.sha1(password).hexdigest()).first()
             if registered_user is None:
                 logger.error("Wrong informations")
-                return 0
-            login_user(registered_user)
+                return json.encode({"status":"error", "message": "Wrong Informations"})
+
+            access_token = create_access_token(identity = registered_user.as_dict())
+            refresh_token = create_refresh_token(identity = registered_user.as_dict())
+
             registered_user.authenticated = True
+            login_user(registered_user)
+
             event.code = "user_connected"
             event.template = "user == " + str(registered_user.id)
             event.new()
+
             logger.info("User Connected : " + registered_user.username)
-            return json.encode({"status":"success"})
+
+            return json.encode({"status":"success", "access_token": access_token, "refresh_token": refresh_token})
         except Exception as e:
             logger.error("User Connected Error : " + str(e))
             raise UserException(str(e))
-            return json.encode({"status":"error"})
+            
 
-    def logout(self):
+    def logout_client(self):
         try:
             login_manager.login_view = 'auth.hello'
             logout_user()
+
             logger.info('User logout successfully')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('User logout error : ' + str(e))
-            raise Exception('Error logout')
-            return json.encode({"status":"error"})
+            raise UserException(str(e))
+
+    def logout_access(self):
+        jti = get_raw_jwt()['jti']
+        try:
+            revoked_token = RevokedTokenModel.RevokedToken(jti = jti)
+            revoked_token.add()
+            return json.encode({'message': 'Access token has been revoked'})
+        except:
+            return json.encode({'message': 'Something went wrong'}), 500
+
+    def logout_refresh(self):
+        jti = get_raw_jwt()['jti']
+        try:
+            revoked_token = RevokedTokenModel.RevokedToken(jti = jti)
+            revoked_token.add()
+            return json.encode({'message': 'Refresh token has been revoked'})
+        except:
+            return json.encode({'message': 'Something went wrong'}), 500
 
     def delete(self):
         try:
             id_delete = self.id
+
             query = UsersModel.User.query.filter_by(id=id_delete).first()
+
             db.session.delete(query)
             db.session.commit()
+
             deleteCalendar = CalendarModel.Calendar.query.filter(CalendarModel.Calendar.user.endswith(id_delete))
             for fetch in deleteCalendar:
                 deleteEvent = CalendarModel.Calendar.query.filter_by(id=fetch.id).first()
                 db.session.delete(deleteEvent)
                 db.session.commit()
+
             deleteNavbar = NavbarModel.Navbar.query.filter(NavbarModel.Navbar.user.endswith(id_delete))
             for fetch in deleteNavbar:
                 deleteNavbarRow = NavbarModel.Navbar.query.filter_by(id=fetch.id).first()
                 db.session.delete(deleteNavbarRow)
                 db.session.commit()
+
             logger.info('Delete ' + query.username + ' successfully')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Error delete user : ' + str(e))
             raise UserException(str(e))
-            return json.encode({"status":"error"})
 
     def manage_user(self):
         try:
@@ -190,12 +230,13 @@ class User:
 
             db.session.add(query)
             db.session.commit()
+
             logger.info('Getting users successfully')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Error getting users : ' + str(e))
             raise UserException(str(e))
-            return json.encode({"status":"error"})
 
     def change_user(self):
         try:
@@ -211,14 +252,15 @@ class User:
                 db.session.add(query)
                 db.session.commit()
                 logger.info('User data changed successfully')
+
                 return json.encode({"status":"success"})
             else:
-                return 0
+                return json.encode({"status":"error", "message": "Password not match"})
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('User data changed error : ' + str(e))
             raise UserException(str(e))
-            return json.encode({"status":"error"})
 
     def finish_tutorial(self):
         try:
@@ -228,12 +270,13 @@ class User:
 
             db.session.add(query)
             db.session.commit()
+
             logger.info('User tutorial changed successfully')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error("User Tutorial Error : " + str(e))
             raise UserException(str(e))
-            return json.encode({"status":"error"})
 
     def get_avatar(self):
         try:

@@ -1,13 +1,12 @@
 {
   "name": "Onyx",
-  "version": "1.0.1",
-  "description": "I'm your personnal assistant",
+  "version": "1.2.0",
+  "description": "Ultime dashboard for all your tasks",
   "keywords": [
     "home",
     "assistant",
     "automation",
     "artificial",
-    "intelligence",
-    "domotique"
+    "intelligence"
   ]
 }

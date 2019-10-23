@@ -7,19 +7,12 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 import os
 from os.path import join, expanduser, isdir
 
-__author__ = 'jdorleans'
-
 
 class FileSystemAccess(object):
-    """
-    A class for providing access to the onyx FS sandbox. Intended to be
-    attached to skills
-    at initialization time to provide a skill-specific namespace.
-    """
+
     def __init__(self, path):
         self.path = self.__init_path(path)
 
@@ -34,17 +27,6 @@ class FileSystemAccess(object):
         return path
 
     def open(self, filename, mode):
-        """
-        Get a handle to a file (with the provided mode) within the
-        skill-specific namespace.
-
-        :param filename: a str representing a path relative to the namespace.
-            subdirs not currently supported.
-
-        :param mode: a file handle mode
-
-        :return: an open file handle.
-        """
         file_path = join(self.path, filename)
         return open(file_path, mode)
 

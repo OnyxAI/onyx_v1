@@ -7,172 +7,109 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-from flask_login import LoginManager, login_required
-from flask import request, render_template, Blueprint, current_app, g, flash, redirect
-from onyxbabel import gettext
-from onyx.extensions import login_manager, db
-from onyx.api.assets import Json
-from onyx.decorators import admin_required
-from os.path import exists
-import os
-import onyx
-from onyx.api.user import *
-import hashlib
-from onyx.api.exceptions import *
 from .. import api
+from flask import request
+from onyx.api.assets import Json
+from onyx.decorators import admin_api_required, api_required
+from flask_jwt_extended import jwt_required, jwt_refresh_token_required, get_jwt_identity, create_access_token
+from onyx.api.user import User
+from onyx.api.exceptions import UserException, GetException
+
+import hashlib
 
 json = Json()
 user = User()
 
-@login_manager.user_loader
-def load_user(id):
-    db.session.rollback()
-    return UsersModel.User.query.get(int(id))
 
 #Register
 @api.route('users')
+@api_required
 def get_users():
-    """
-    @api {get} /users Get User
-    @apiName users
-    @apiGroup User
-    @apiPermission authenticated
-    @apiPermission admin
-
-    @apiSuccess (200) {Object[]} user Get All User Information
-
-    """
     try:
         users = user.get()
         return users
     except GetException:
-        return None
+        return json.encode({"status": "error"})
 
-
-
-@api.route('user',methods=['POST'])
-def register():
-    """
-    @api {post} /user Register a User
-    @apiName registerUser
-    @apiGroup User
-
-    @apiParam {String} username User Name
-    @apiParam {String} password User Password
-    @apiParam {String} verifpassword User Verification Password
-    @apiParam {String} email User Email
-
-    @apiSuccess (200) redirect Redirect to Hello
-
-    @apiError AlreadyExist This User already Exist
-
-    """
+@api.route('get_access_token')
+@jwt_refresh_token_required
+def get_access_token():
     try:
-        user.password = request.form['password']
-        user.verifpassword = request.form['verifpassword']
-        user.username = request.form['username']
-        user.email = request.form['email']
-        register = user.add()
-        if register == 0:
+        current_user = get_jwt_identity()
+        access_token = create_access_token(identity = current_user)
+        return json.encode({'access_token': access_token})
+    except GetException:
+        return json.encode({"status": "error"})
+
+#Register
+@api.route('user/register', methods=['POST'])
+def register():
+    if request.method == 'POST':
+        try:
+            user.password = request.form['password']
+            user.verifpassword = request.form['verifpassword']
+            user.username = request.form['username']
+            user.email = request.form['email']
+
+            register = user.add()
+            
             return register
-        elif register == 1:
-            return register
-    except UserException:
-        return register
+        except UserException:
+            return json.encode({"status": "error"})
 
 
 #Login
 @api.route('user/login',methods=['POST'])
 def login():
     if request.method == 'POST':
-        """
-        @api {post} /user/login Login User
-        @apiName registerUser
-        @apiGroup User
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} verifpassword User Verification Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect to Hello
-
-        @apiError AlreadyExist This User already Exist
-
-        """
         try:
             user.email = request.form['email']
             user.password = request.form['password']
+
             login = user.login()
-            if login == 0:
-                return login
-            else:
-                return login
-        except UserException:
+
             return login
+        except UserException:
+            return json.encode({"status": "error"})
 
-#Logout
-@api.route('user/logout')
-@login_required
-def logout():
-    return user.logout()
+#Logout Access
+@api.route('user/logout_access')
+@jwt_required
+def logout_access():
+    return user.logout_access()
 
+#Logout Refresh
+@api.route('user/logout_access')
+@jwt_refresh_token_required
+def logout_refresh():
+    return user.logout_refresh()
 
 
 #Delete Accounts (Admin)
 @api.route('user/delete/<id_delete>')
-@admin_required
-@login_required
+@api_required
+@admin_api_required
 def delete_account(id_delete):
-    """
-    @api {get} /user/delete/:id Delete User
-    @apiName deleteAccount
-    @apiGroup User
-    @apiPermission authenticated
-    @apiPermission admin
-
-    @apiSuccess (200) redirect Redirect To Manage Account
-
-    """
-    user.id = id_delete
-    return user.delete()
+    try:
+        user.id = id_delete
+        return user.delete()
+    except UserException:
+        return json.encode({"status": "error"})
 
 #Manage User (Admin)
 @api.route('user/manage/<id>', methods=['GET','POST'])
-@admin_required
-@login_required
+@api_required
+@admin_api_required
 def account_manage_id(id):
     if request.method == 'GET':
-        """
-        @api {get} /user/manage/:id Get User
-        @apiName manageUserGet
-        @apiGroup User
-        @apiPermission authenticated
-        @apiPermission admin
+        try:
+            user.id = id
+            manage_user = user.get_user()
 
-        @apiSuccess (200) {Object[]} user Get User Information
-
-        """
-        user.id = id
-        manage_user = user.get_user()
-        return manage_user
-
+            return manage_user
+        except UserException:
+            return json.encode({"status": "error"})
     elif request.method == 'POST':
-        """
-        @api {post} /account/delete/:id Update User
-        @apiName manageUser
-        @apiGroup User
-        @apiPermission authenticated
-        @apiPermission admin
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect To Manage Account
-
-        """
         try:
             user.id = id
             manage_user = user.get_user()
@@ -191,27 +128,15 @@ def account_manage_id(id):
                 user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
             return user.manage_user()
         except UserException:
-            return user.manage_user()
+            return json.encode({"status": "error"})
 
 #Modify Account
 @api.route('user/change' , methods=['POST'])
-@login_required
+@api_required
 def change_account():
     if request.method == 'POST':
-        """
-        @api {post} /user/change Update Account
-        @apiName changeAccount
-        @apiGroup User
-        @apiPermission authenticated
-
-        @apiParam {String} username User Name
-        @apiParam {String} password User Password
-        @apiParam {String} email User Email
-
-        @apiSuccess (200) redirect Redirect To Change Account
-
-        """
         try:
+            current_user = get_jwt_identity()
             user.id = current_user.id
             user.lastpassword = request.form['lastpassword']
             if not request.form['username']:
@@ -228,8 +153,7 @@ def change_account():
                 user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
 
             change = user.change_user()
-            if change == 0:
-                return change
+
             return change
         except UserException:
-            return change
+            return json.encode({"status": "error"})

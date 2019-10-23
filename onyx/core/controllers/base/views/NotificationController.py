@@ -38,6 +38,7 @@ def add_notif():
 def notifications():
     notif.user = current_user.id
     notif.mark_read()
+    
     return render_template('notifications/index.html')
 
 @core.route('notifications/delete/<int:id>')

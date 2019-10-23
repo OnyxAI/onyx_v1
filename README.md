@@ -56,12 +56,6 @@ That's it !
 
 ## Running Onyx Quick Start
 
-Before start Onyx you should launch mongodb:
-
-```bash
-sudo service mongod start
-```
-
 To start the essential of Onyx run `./onyx.sh start`. This will open all service (service, skills, client and voice) and after you can see the log of each service in the log folder (e.g. ./log/onyx-service.log).
 
 To stop Onyx run `./onyx.sh stop`. This will quit all screens.
@@ -98,4 +92,4 @@ This means that you are not running the `./start.sh service` process. In order t
 
 ## Social Media
 
-[![Github](https://github.frapsoft.com/social/github.png)](https://github.com/OnyxProject/Onyx)[![Docker](https://github.frapsoft.com/social/docker.png)](https://hub.docker.com/r/onyxproject/onyx/)[![Twitter](https://github.frapsoft.com/social/twitter.png)](https://twitter.com/LabsOnyx)[![Facebook](https://github.frapsoft.com/social/facebook.png)](https://www.facebook.com/LabsOnyx/)[![Gitter](https://github.frapsoft.com/social/gitter.png)](https://gitter.im/onyxproject)
+[![Github](https://github.frapsoft.com/social/github.png)](https://github.com/OnyxProject/Onyx)[![Docker](https://github.frapsoft.com/social/docker.png)](https://hub.docker.com/r/onyxproject/onyx/)[![Twitter](https://github.frapsoft.com/social/twitter.png)](https://twitter.com/LabsOnyx)[![Facebook](https://github.frapsoft.com/social/facebook.png)](https://www.facebook.com/LabsOnyx/)

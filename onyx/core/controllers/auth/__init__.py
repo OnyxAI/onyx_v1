@@ -7,5 +7,9 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
+from flask import Blueprint
+import onyx
 
-from .views import auth
+auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=onyx.__path__[0] + '/templates')
+
+from .views import *

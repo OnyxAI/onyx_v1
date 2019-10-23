@@ -13,9 +13,9 @@ from onyx.app_config import Config
 
 import sqlite3
 
-from onyx import *
+from onyx import create_db
 
-app = create_app()
+create_db()
 
 connection = sqlite3.connect(Config.ONYX_PATH + '/db/data.db')
 cursor = connection.cursor()

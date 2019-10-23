@@ -7,5 +7,9 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
+from flask import Blueprint
+
+install = Blueprint('install', __name__, url_prefix='/install/', template_folder='templates')
 
 from .views import *
+

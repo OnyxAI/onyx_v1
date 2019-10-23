@@ -16,10 +16,10 @@ from flask import json
 from flask_script import Manager, Command, Option
 from flask_migrate import Migrate, MigrateCommand
 from onyx.extensions import db
-from onyx.api.server import *
+from onyx.api.server import Server
 from onyx.app_config import *
 from onyx.util.log import getLogger
-from onyx import *
+from onyx import create_app
 
 app = create_app()
 
@@ -68,6 +68,7 @@ class Run(Command):
         LOG.info('You can close Onyx at any time with Ctrl-C')
         print('')
         print('-------------------------------------------------------')
+
         app.run(host, int(port), debug=debug, use_reloader=reload, threaded=True)
 
 

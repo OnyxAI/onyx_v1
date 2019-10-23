@@ -8,9 +8,9 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-import os
-import sys
+
 from flask import Flask, render_template, redirect, url_for
+from flask_jwt_extended import JWTManager
 from onyx.extensions import (db, login_manager, babel, cache)
 from flask_login import current_user
 from onyx.config import get_config
@@ -25,20 +25,19 @@ from onyx.api.kernel import Kernel
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 
-from onyx.core.models import ConfigModel
+from onyx.core.models import ConfigModel, RevokedTokenModel
 
 server = Server()
-LOG = getLogger(__name__)
+LOG = getLogger("App")
 json = Json()
 kernel = Kernel()
 
 from onyx.app_config import ProdConfig, Config
 
 
-__all__ = ('create_app', 'blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
+__all__ = ('create_app', 'create_db', 'blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
 
 def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
-
 
     app = Flask(app_name,
         static_folder = 'static',
@@ -50,10 +49,31 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
         app.config.from_object(config)
 
     extensions_fabrics(app)
-    gvars(app)
+
+    jwt = JWTManager(app)
+
+    gvars(app, jwt)
 
     blueprints_fabrics(app, get_blueprints(app))
     error_pages(app)
+
+    with app.app_context():
+        db.create_all()
+        
+    return app
+
+def create_db(config=ProdConfig, app_name='onyx', blueprints=None):
+
+    app = Flask(app_name,
+        static_folder = 'static',
+        template_folder = 'templates'
+    )
+
+    app.config.from_pyfile('../local.cfg', silent=True)
+    if config:
+        app.config.from_object(config)
+
+    extensions_fabrics(app)
 
     with app.app_context():
         db.create_all()
@@ -137,7 +157,13 @@ def error_pages(app):
     def server_error_page(error):
         return render_template("500.html"), 500
 
-def gvars(app):
+def gvars(app, jwt):
+
+    @jwt.token_in_blacklist_loader
+    def check_if_token_in_blacklist(decrypted_token):
+        jti = decrypted_token['jti']
+        return RevokedTokenModel.RevokedToken.is_jti_blacklisted(jti)
+
     @app.before_request
     def get_vars():
         try:
@@ -154,8 +180,7 @@ def gvars(app):
         def get_params(url):
             function = getattr(importlib.import_module(app.view_functions[url].__module__), app.view_functions[url].__name__)
             execute = function()
-            json.json = execute
-            return json.decode()
+            return json.decode(execute)
         return dict(get_params=get_params)
 
     @app.context_processor
@@ -185,8 +210,6 @@ def gvars(app):
             db.session.rollback()
             db.session.remove()
         db.session.remove()
-
-
 
     try:
         @babel.localeselector

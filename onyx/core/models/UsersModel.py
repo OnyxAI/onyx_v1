@@ -29,6 +29,9 @@ class User(db.Model):
     def is_active(self):
         return True
 
+    def as_dict(self):
+       return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+
     def get_id(self):
         try:
             return unicode(self.id)  # python 2

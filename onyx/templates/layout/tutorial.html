@@ -269,41 +269,44 @@
 </div>
 
 <script type="text/javascript">
-var tutorial = "{{g.user.tutorial}}";
-$( document ).ready(function() {
-  if(tutorial == "0"){
-    current_url = "{{request.endpoint}}".split(".");
-    $('.tutorial_'+current_url[1]).tapTarget('open');
-  }
-});
+  var tutorial = "{{g.user.tutorial}}";
+
+  $( document ).ready(function() {
+    if(tutorial == "0"){
+      current_url = "{{request.endpoint}}".split(".");
+      $('.tutorial_'+current_url[1]).tapTarget('open');
+    }
+  });
 
 
-function tutorial_add_notif(){
-  var title = "{{_('Welcome')}}";
-  var text = "{{_('I am Onyx and I am glad to meet you')}}";
-  $.ajax({
-      data: 'title='+title+'&text='+text+'&priority=0&icon=fa-bell&icon_color=blue darken-1',
-      url : '{{url_for("core.add_notif")}}',
-      type : 'POST',
-      success : function(code_html, statut){
-          window.location.replace("{{url_for('auth.change_account')}}");
-      }
-   });
-}
-function finish_tutorial(){
-  var title = "{{_('Finish')}}";
-  var text = "{{_('You have finished the Onyx tutorial! Congratulations')}}";
-  $.ajax({
-      data: 'title='+title+'&text='+text+'&priority=0&icon=fa-bell&icon_color=red',
-      url : '{{url_for("core.add_notif")}}',
-      type : 'POST'
-   });
-   $.ajax({
-       url : '{{url_for("auth.finish_tutorial")}}',
-       type : 'GET',
-       success : function(code_html, statut){
-           window.location.replace("{{url_for('core.index')}}");
-       }
+  function tutorial_add_notif(){
+    var title = "{{_('Welcome')}}";
+    var text = "{{_('I am Onyx and I am glad to meet you')}}";
+    $.ajax({
+        data: 'title='+title+'&text='+text+'&priority=0&icon=fa-bell&icon_color=blue darken-1',
+        url : '{{url_for("core.add_notif")}}',
+        type : 'POST',
+        success : function(code_html, statut){
+            window.location.replace("{{url_for('auth.change_account')}}");
+        }
     });
-}
+  }
+
+  function finish_tutorial(){
+    var title = "{{_('Finish')}}";
+    var text = "{{_('You have finished the Onyx tutorial! Congratulations')}}";
+    $.ajax({
+        data: 'title='+title+'&text='+text+'&priority=0&icon=fa-bell&icon_color=red',
+        url : '{{url_for("core.add_notif")}}',
+        type : 'POST'
+    });
+    $.ajax({
+        url : '{{url_for("auth.finish_tutorial")}}',
+        type : 'GET',
+        success : function(code_html, statut){
+            window.location.replace("{{url_for('core.index')}}");
+        }
+      });
+  }
+  
 </script>

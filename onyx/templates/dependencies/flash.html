@@ -3,9 +3,9 @@
 
     {%- for NotifText in errors %}
         <script type="text/javascript">
-          window.onload = function() {
-            Materialize.toast('{{ NotifText }}', 4000, 'red darken-1');
-          };
+			window.onload = function() {
+				Materialize.toast('{{ NotifText }}', 4000, 'red darken-1');
+			};
         </script>
     {% endfor -%}
 
@@ -18,9 +18,9 @@
 
     {%- for NotifText in info %}
         <script type="text/javascript">
-          window.onload = function() {
-            Materialize.toast('{{ NotifText }}', 4000, 'blue darken-1');
-          };
+			window.onload = function() {
+				Materialize.toast('{{ NotifText }}', 4000, 'blue darken-1');
+			};
         </script>
     {% endfor -%}
 
@@ -33,9 +33,9 @@
 
     {%- for NotifText in success %}
         <script type="text/javascript">
-          window.onload = function() {
-            Materialize.toast('{{ NotifText }}', 4000, 'green');
-          };
+			window.onload = function() {
+				Materialize.toast('{{ NotifText }}', 4000, 'green');
+			};
         </script>
     {% endfor -%}
 
@@ -48,9 +48,9 @@
 
     {%- for NotifText in notice %}
         <script type="text/javascript">
-          window.onload = function() {
-            Materialize.toast('{{ NotifText }}', 4000);
-          };
+			window.onload = function() {
+				Materialize.toast('{{ NotifText }}', 4000);
+			};
         </script>
     {% endfor -%}
 

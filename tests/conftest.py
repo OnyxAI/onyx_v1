@@ -18,7 +18,7 @@ from onyx.extensions import db as _db
 from onyx.app_config import TestConfig
 
 from onyx.core.models.UsersModel import User
-from flask.ext.login import login_user
+from flask_login import login_user
 
 @pytest.yield_fixture(scope='function')
 def app():

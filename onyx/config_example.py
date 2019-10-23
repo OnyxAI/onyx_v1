@@ -36,16 +36,21 @@ class Config(object):
     LANG_FILE = CONFIG.get('Base', 'lang')
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
+    JWT_SECRET_KEY = 'change me please'
+    JWT_BLACKLIST_ENABLED = True
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     APP_DIR = os.path.abspath(os.path.dirname(__file__))
     ASSETS_DEBUG = False
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     # default babel values
-    BABEL_DEFAULT_LOCALE = 'fr'
+    BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
     ACCEPT_LANGUAGES = ['en', 'fr' ]
+
     # available languages
     LANGUAGES = {
         'en': u'English',

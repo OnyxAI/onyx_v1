@@ -58,7 +58,6 @@ class House:
         except Exception as e:
             logger.error('Getting house error : ' + str(e))
             raise HouseException(str(e))
-            return json.encode({"status":"error"})
 
     """
         Add a new house
@@ -71,12 +70,13 @@ class House:
 
             db.session.add(query)
             db.session.commit()
+
             logger.info('House ' + query.name + ' added successfuly')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('House add error : ' + str(e))
             raise HouseException(str(e))
-            return json.encode({"status":"error"})
 
     """
         Delete a house
@@ -89,9 +89,11 @@ class House:
 
             db.session.delete(query)
             db.session.commit()
+
             logger.info('House ' + query.name + ' deleted successfuly')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('House delete error : ' + str(e))
             raise HouseException(str(e))
-            return json.encode({"status":"error"})
+

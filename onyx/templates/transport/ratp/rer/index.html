@@ -3,13 +3,14 @@
 {% set title = _("RER") %}
 
 {% block body %}
-  <br>
+
+<br>
 <a href="{{ url_for('core.rer', name='A') }}"><img width="200px" height="200" src="{{ url_for('static', filename='img/ratp/RERA.jpg') }}"></a>
 <a href="{{ url_for('core.rer', name='B') }}"><img width="200px" height="200" src="{{ url_for('static', filename='img/ratp/RERB.jpg') }}"></a>
 
 <center>
-<a class="twitter-timeline" data-lang="fr" data-width="500" data-height="400" href="https://twitter.com/rer_a">Tweets by RERA</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<a class="twitter-timeline" data-lang="fr" data-width="500" data-height="400" href="https://twitter.com/rerb">Tweets by RERB</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a class="twitter-timeline" data-lang="fr" data-width="500" data-height="400" href="https://twitter.com/rer_a">Tweets by RERA</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a class="twitter-timeline" data-lang="fr" data-width="500" data-height="400" href="https://twitter.com/rerb">Tweets by RERB</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </center>
 
 {% endblock %}

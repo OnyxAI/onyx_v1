@@ -6,124 +6,123 @@
 <h1 class="{{g.text_color}}">{{_("Skills")}}</h1>
 
 <div class="row">
-  <div class="col s12 m12">
-      <ul class="tabs {{g.panel_color}}">
-          <li class="tab col m3 s12 {{g.text_color}}"><a class="active" href="#get">{{_('Skills')}}</a></li>
-          <li class="tab col m3 s12 {{g.text_color}}"><a href="#install">{{_('Install')}}</a></li>
-          <li class="tab col m3 s12 {{g.text_color}}"><a href="#install_url">{{_('Install With URL')}}</a></li>
-      </ul>
-  </div>
+	<div class="col s12 m12">
+		<ul class="tabs {{g.panel_color}}">
+			<li class="tab col m3 s12 {{g.text_color}}"><a class="active" href="#get">{{_('Skills')}}</a></li>
+			<li class="tab col m3 s12 {{g.text_color}}"><a href="#install">{{_('Install')}}</a></li>
+			<li class="tab col m3 s12 {{g.text_color}}"><a href="#install_url">{{_('Install With URL')}}</a></li>
+		</ul>
+	</div>
 </div>
 
 <div id="get">
-  <div class="card-panel {{g.panel_color}}">
-    <div class="row">
-      {% if skills == [] %}
-      <h4 class='{{g.text_color}}'>{{ _('You have not install some skill') }}</h4>
-      {% else %}
-      {% for skill in skills %}
-      <div class="col m4 s12">
-      <h2 class="header">{{skill['name']}}</h2>
-      	<div class="card horizontal blue-grey darken-1 z-depth-5">
-      		<div class="card-stacked">
-      			<div class="card-content">
-      				<p>{{skill['desc']}}</p><br>
-      				<p>{{skill['version']}}</p>
-      			</div>
-      			<div class="card-action">
-      				{% if skill['index'] is defined %}<a href="{{ url_for(skill['index']) }}">{{ _("View") }}</a>{% endif %}
-              {% if skill['config'] is defined %}<a href="{{ url_for(skill['config']) }}">{{ _("Config") }}</a>{% endif %}
-      				<a href="{{ url_for('core.uninstall_skill', name=skill['raw']) }}">{{ _("Uninstall") }}</a>
-      				<a href="{{ url_for('core.update_skill', name=skill['raw']) }}">{{ _("Update") }}</a>
-      			</div>
-      		</div>
-      	</div>
-      </div>
-      {% endfor %}
-      {% endif %}
-    </div>
-  </div>
+	<div class="card-panel {{g.panel_color}}">
+		<div class="row">
+		{% if skills == [] %}
+			<h4 class='{{g.text_color}}'>{{ _('You have not install some skill') }}</h4>
+		{% else %}
+			{% for skill in skills %}
+				<div class="col m4 s12">
+				<h2 class="header">{{skill['name']}}</h2>
+					<div class="card horizontal blue-grey darken-1 z-depth-5">
+						<div class="card-stacked">
+							<div class="card-content">
+								<p>{{skill['desc']}}</p><br>
+								<p>{{skill['version']}}</p>
+							</div>
+							<div class="card-action">
+								{% if skill['index'] is defined %}<a href="{{ url_for(skill['index']) }}">{{ _("View") }}</a>{% endif %}
+								{% if skill['config'] is defined %}<a href="{{ url_for(skill['config']) }}">{{ _("Config") }}</a>{% endif %}
+								<a href="{{ url_for('core.uninstall_skill', name=skill['raw']) }}">{{ _("Uninstall") }}</a>
+								<a href="{{ url_for('core.update_skill', name=skill['raw']) }}">{{ _("Update") }}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+		</div>
+	</div>
 </div>
 
 <div id="install" >
-  <div class="card-panel {{g.panel_color}}">
-    <div class="row">
-        {% for list in lists %}
+	<div class="card-panel {{g.panel_color}}">
+		<div class="row">
+			{% for list in lists %}
+				<div class="col m4 s12">
+					<div class="card z-depth-5">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="{{ list['img'] }}">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">more_vert</i></span>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">close</i></span>
+									<p>{{ list['description'] }}</p>
+							<div class="progress"><div class="indeterminate"></div></div>
+							{% if list['raw'] in skills|safe %}
+								<center><p class="dl_text{{list['raw']}}">{{ _("Uninstalled") }}</p></center>
+								<button id="uninstallbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Uninstall") }}</button>
+							{% else %}
+								<center><p class="dl_text{{list['raw']}}">{{ _("Installed") }}</p></center>
+								<button id="installbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Install") }}</button>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 
-        	<div class="col m4 s12">
-        		<div class="card z-depth-5">
-        			<div class="card-image waves-effect waves-block waves-light">
-        				<img class="activator" src="{{ list['img'] }}">
-        			</div>
-        			<div class="card-content">
-        				<span class="card-title activator grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">more_vert</i></span>
-        			</div>
-        			<div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">{{ list['name'] }}<i class="material-icons right">close</i></span>
-        				<p>{{ list['description'] }}</p>
-                <div class="progress"><div class="indeterminate"></div></div>
-                {% if list['raw'] in skills|safe %}
-                  <center><p class="dl_text{{list['raw']}}">{{ _("Uninstalled") }}</p></center>
-                  <button id="uninstallbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Uninstall") }}</button>
-                {% else %}
-                  <center><p class="dl_text{{list['raw']}}">{{ _("Installed") }}</p></center>
-                  <button id="installbutton{{list['raw']}}" class="btn teal darken-3 btn-lg">{{ _("Install") }}</button>
-                {% endif %}
-        			</div>
-        		</div>
-        	</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('.progress').hide();
+					$('.dl_text{{list["raw"]}}').hide();
 
-          <script type="text/javascript">
-              $(document).ready(function() {
-                  $('.progress').hide();
-                  $('.dl_text{{list["raw"]}}').hide();
+					$("#installbutton{{list['raw']}}").click(function() {
+						$('#installbutton{{list["raw"]}}').hide();
+						$('.progress').show();
+						$.ajax({
+						url: '{{ url_for("core.install_skill", name=list["raw"] , url=list["url"]) }}',
+						type: "GET",
+						success: function(rep) {
+							$('.progress').hide();
+							$('.dl_text{{list["raw"]}}').show();
+							window.location = "{{url_for('core.skills')}}";
+						}
+						});
 
-                  $("#installbutton{{list['raw']}}").click(function() {
-                    $('#installbutton{{list["raw"]}}').hide();
-                    $('.progress').show();
-                    $.ajax({
-                       url: '{{ url_for("core.install_skill", name=list["raw"] , url=list["url"]) }}',
-                       type: "GET",
-                       success: function(rep) {
-                          $('.progress').hide();
-                          $('.dl_text{{list["raw"]}}').show();
-                          window.location = "{{url_for('core.skills')}}";
-                       }
-                    });
-
-                  });
-                  $("#uninstallbutton{{list['raw']}}").click(function() {
-                    $('#uninstallbutton{{list["raw"]}}').hide();
-                    $('.progress').show();
-                    $.ajax({
-                       url: '{{ url_for("core.uninstall_skill", name=list["raw"] , url=list["url"]) }}',
-                       type: "GET",
-                       success: function(rep) {
-                          $('.progress').hide();
-                          $('.dl_text{{list["raw"]}}').show();
-                          window.location = "{{url_for('core.skills')}}";
-                       }
-                    });
-                });
-            });
-          </script>
-        {% endfor %}
-    </div>
-  </div>
+					});
+					$("#uninstallbutton{{list['raw']}}").click(function() {
+						$('#uninstallbutton{{list["raw"]}}').hide();
+						$('.progress').show();
+						$.ajax({
+						url: '{{ url_for("core.uninstall_skill", name=list["raw"] , url=list["url"]) }}',
+						type: "GET",
+						success: function(rep) {
+							$('.progress').hide();
+							$('.dl_text{{list["raw"]}}').show();
+							window.location = "{{url_for('core.skills')}}";
+						}
+						});
+					});
+				});
+			</script>
+			{% endfor %}
+		</div>
+	</div>
 </div>
 
 <div id="install_url" >
-  <div class="card-panel {{g.panel_color}}">
-    <form action="{{ url_for('core.install_skill_url') }}" method="post">
-     	<label for="url" class='{{g.text_color}}' >{{ _('URL') }}</label>
-    	<input type="text" placeholder="{{ _('URL') }}" name="url" id="url">
+	<div class="card-panel {{g.panel_color}}">
+		<form action="{{ url_for('core.install_skill_url') }}" method="post">
+			<label for="url" class='{{g.text_color}}' >{{ _('URL') }}</label>
+			<input type="text" placeholder="{{ _('URL') }}" name="url" id="url">
 
-    	<label for="name" class='{{g.text_color}}' >{{ _('skill Name') }}</label>
-    	<input type="text" placeholder="{{ _('Skill Name') }}" name="name" id="name"><br>
+			<label for="name" class='{{g.text_color}}' >{{ _('Skill Name') }}</label>
+			<input type="text" placeholder="{{ _('Skill Name') }}" name="name" id="name"><br>
 
-    	<button class="btn {{g.color}}">{{ _('Send') }}</button>
-    </form>
-  </div>
+			<button class="btn {{g.color}}">{{ _('Send') }}</button>
+		</form>
+	</div>
 </div>
 
 {% endblock %}

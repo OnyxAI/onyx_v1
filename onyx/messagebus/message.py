@@ -7,8 +7,9 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
+from onyx.api.assets import Json
 
-import json
+json = Json()
 
 class Message(object):
     def __init__(self, type, data={}, context=None):
@@ -17,7 +18,7 @@ class Message(object):
         self.context = context
 
     def serialize(self):
-        return json.dumps({
+        return json.encode({
             'type': self.type,
             'data': self.data,
             'context': self.context
@@ -25,7 +26,7 @@ class Message(object):
 
     @staticmethod
     def deserialize(value):
-        obj = json.loads(value)
+        obj = json.decode(value)
         return Message(obj.get('type'), obj.get('data'), obj.get('context'))
 
     def reply(self, type, data, context={}):

@@ -56,6 +56,9 @@ class WeatherException(Exception):
 class WikiException(Exception):
     pass
 
+class KernelException(Exception):
+    pass
+
 class OptionsException(Exception):
     pass
 

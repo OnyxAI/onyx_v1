@@ -25,6 +25,7 @@ def update_navbar():
 		navbar.last = request.form['last']
 		navbar.new = request.form['new']
 		navbar.set_navbar()
+		
 		flash(gettext('Modified'), 'success')
 		return redirect(url_for('core.options'))
 	except NavbarException:

@@ -7,13 +7,12 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 from .. import core
 from flask import render_template, current_app as app, request, redirect, url_for, flash
+from flask_login import login_required, current_user
 from onyxbabel import gettext
-from flask_login import login_required
-import importlib
 from onyx.api.widgets import *
+import importlib
 
 box = Widgets()
 
@@ -21,18 +20,23 @@ box = Widgets()
 @login_required
 def widgets():
     if request.method == 'GET':
-        json.json = box.get_list()
-        list = json.decode()
-        json.json = box.get()
-        boxs = json.decode()
-        return render_template('widgets/index.html', list=list, boxs=boxs)
+        box.user = current_user.id
+
+        _list = json.decode(box.get_list())
+        boxs = json.decode(box.get())
+
+        return render_template('widgets/index.html', list=_list, boxs=boxs)
     try:
         elements = request.form['box'].split('|')
+
         box.color = "blue-grey darken-1"
         box.url = elements[1]
         box.name = elements[0]
         box.see_more = elements[2]
+        box.user = current_user.id
+
         box.add()
+
         flash(gettext('Added Successfuly !'), 'success')
         return redirect(url_for('core.widgets'))
     except WidgetException:
@@ -44,6 +48,8 @@ def widgets():
 def widget_delete(id):
     try:
         box.id = id
+        box.user = current_user.id
+        
         box.delete()
         flash(gettext('Deleted with success !'), 'success')
         return redirect(url_for('core.widgets'))

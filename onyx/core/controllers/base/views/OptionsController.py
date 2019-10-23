@@ -9,18 +9,17 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-import os, sys
+import subprocess
 from flask import request, render_template, flash, redirect, url_for
 from flask_login import login_required, current_user
+from onyxbabel import gettext
 from onyx.decorators import admin_required
 from onyx.api.navbar import *
 from onyx.api.options import *
 from onyx.api.server import *
-from onyx.api.events import *
 from onyx.api.exceptions import *
 from onyx.api.install import Install
 
-event = Event()
 install = Install()
 option = Options()
 server = Server()
@@ -50,7 +49,9 @@ def change_background():
 	try:
 		option.user = current_user.id
 		option.background = request.form.get('background')
+
 		option.change_background_color()
+
 		flash(gettext('Account changed successfully' ), 'success')
 		return redirect(url_for('core.options'))
 	except OptionsException:
@@ -64,6 +65,7 @@ def change_lang():
 	try:
 		option.lang = request.form.get('lang')
 		option.change_lang()
+
 		flash(gettext('Please reboot Onyx to change language' ), 'success')
 		return redirect(url_for('core.options'))
 	except OptionsException:
@@ -76,6 +78,7 @@ def change_lang():
 def shutdown():
 	try:
 		server.shutdown()
+
 		return render_template('options/close.html')
 	except ServerException:
 		flash(gettext('An error has occured !'),'error')
@@ -85,9 +88,8 @@ def shutdown():
 @login_required
 def reboot():
 	try:
-		os.system('sudo pm2 reload onyx-client')
-		#run_with_reloader()
-		#reloader.restart_with_reloader()
+		server.reboot()
+
 		flash(gettext('Onyx is now rebooted !'),'success')
 		return redirect(url_for('core.index'))
 	except:
@@ -100,9 +102,7 @@ def reboot():
 def maj():
 	try:
 		server.update()
-		event.code = "onyx_updated"
-		event.template = ""
-		event.new()
+		
 		flash(gettext("Onyx is now upgrade !"),'success')
 		return redirect(url_for('core.options'))
 	except ServerException:
@@ -115,8 +115,9 @@ def maj():
 def update_data_git():
 	try:
 		install.update_data()
+
 		flash(gettext('Data Modified'), 'success')
 		return redirect(url_for('core.options'))
 	except DataException:
-		flash(gettext('An errorhas occured'), 'error')
+		flash(gettext('An error has occured'), 'error')
 		return redirect(url_for('core.options'))

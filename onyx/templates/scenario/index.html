@@ -4,188 +4,170 @@
 
 {% block body %}
 
-  <div class="card-panel {{g.panel_color}}">
-<h1 class='{{g.text_color}}'>{{_("Scenario")}}</h1>
+<div class="card-panel {{g.panel_color}}">
+	<h1 class='{{g.text_color}}'>{{_("Scenario")}}</h1>
 
-<table class="{{g.panel_color}} responsive-table">
-    <thead>
-      <tr>
-          <th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
-          <th data-field="template" class='{{g.text_color}}'>{{_('Template')}}</th>
-          <th data-field="event" class='{{g.text_color}}'>{{_('Event')}}</th>
-          <th class='{{g.text_color}}'>{{_('Delete')}}</th>
-      </tr>
-    </thead>
+	<table class="{{g.panel_color}} responsive-table">
+		<thead>
+			<tr>
+				<th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
+				<th data-field="template" class='{{g.text_color}}'>{{_('Template')}}</th>
+				<th data-field="event" class='{{g.text_color}}'>{{_('Event')}}</th>
+				<th class='{{g.text_color}}'>{{_('Delete')}}</th>
+			</tr>
+		</thead>
 
-    <tbody>
-      {% for scenario in g.scenarios %}
-        <tr>
-            <td class='{{g.text_color}}'>{{scenario.name}}</td>
-            <td class='{{g.text_color}}'>{{scenario.template}}</td>
-            <td class='{{g.text_color}}'>{{scenario.event}}</td>
-            <td class='{{g.text_color}}'><a href="{{url_for('core.delete_scenario', id=scenario.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
-        </tr>
-      {% endfor %}
-      <tr>
-
-      </tr>
-    </tbody>
-  </table>
+		<tbody>
+			{% for scenario in g.scenarios %}
+				<tr>
+					<td class='{{g.text_color}}'>{{scenario.name}}</td>
+					<td class='{{g.text_color}}'>{{scenario.template}}</td>
+					<td class='{{g.text_color}}'>{{scenario.event}}</td>
+					<td class='{{g.text_color}}'><a href="{{url_for('core.delete_scenario', id=scenario.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+				</tr>
+			{% endfor %}
+			<tr></tr>
+		</tbody>
+	</table>
 
 
-  <br>
-  <h4 class='{{g.text_color}}'>{{_('Add')}}</h4>
-  <form enctype='application/json' action="" method="post">
-  <td><input placeholder="{{_('Name')}}" type="text" id="name" name="scenario" required></td>
-  <td><a class="waves-effect waves-light btn modal-trigger {{g.color}}" href="#modal" onclick="check_name()">{{_('Create')}}</a></td>
+	<br>
+	<h4 class='{{g.text_color}}'>{{_('Add')}}</h4>
+	<form enctype='application/json' action="" method="post">
+		<td><input placeholder="{{_('Name')}}" type="text" id="name" name="scenario" required></td>
+		<td><a class="waves-effect waves-light btn modal-trigger {{g.color}}" href="#modal" onclick="check_name()">{{_('Create')}}</a></td>
 
+		<div id="modal" class="modal">
+			<div class="modal-content">
+				<h4>{{_('Add')}}</h4>
+				<div class="row">
+					<div class="col s12">
+						<ul class="tabs">
+							<li class="tab col m3 s12"><a class="active" href='#trigger'>{{_('Event')}}</a></li>
+							<li class="tab col m3 s12"><a href="#actions">{{_('Actions')}}</a></li>
+						</ul>
+					</div>
+					<div id='trigger'>
+						<div class="card-panel white">
+							<table class="white responsive-table">
+								<thead>
+									<tr>
+										<th data-field="name">{{_('Name')}}</th>
+										<th data-field="description">{{_('Description')}}</th>
+										<th>{{_('Use')}}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% if events == [] %}
+										<p>{{_('No event in your language')}}</p>
+									{% else %}
+										{% for event in events %}
+											<tr>
+												<th>{{event.name}}</th>
+												<th>{{event.description}}</th>
+												<th><p><input name="event_code" type="radio" id="{{event.name}}" value="{{event.code}}" /><label for="{{event.name}}"></label></p></th>
+											</tr>
+											<div id="{{event.code}}" class="desc" style="display: none;">
+												{% for param in event.params %}
+													<script type="text/javascript">
+														$(document).ready(function(){
+															$("input[name='event_code']").click(function() {
+																var code = $(this).val();
+																$(".desc").hide();
+																$('select[name="param"]').val('');
+																$('input[name="param"]').val('');
+																$("#"+code).show();
+															});
+															});
+													</script>
+
+
+
+													{% if param.type == 'select' %}
+														<p>{{param.name}}</p>
+														<select name="{{event.code}}_param"  class="browser-default">
+															<option></option>
+															{% for p in get_params(param.url) %}
+																<option value="{{param.value}} == {{p.id}}">{{ p[param.variable] }}</option>
+															{% endfor %}
+														</select>
+													{% elif param.type == 'input' %}
+														<label for="{{event.code}}">{{param.name}}</label>
+														<input type="text" name="{{event.code}}_param" placeholder="" value="{{param.value}} == {{request.form.param}}" id="{{param.value}}">
+													{% endif %}
+												{% endfor %}
+											</div>
+										{% endfor %}
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+
+				<div id='actions'>
+					<div class="card-panel white">
+						<table class="white responsive-table">
+							<thead>
+								<tr>
+									<th data-field="name">{{_('Name')}}</th>
+									<th data-field="description">{{_('Description')}}</th>
+									<th>{{_('Use')}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if actions == [] %}
+									<p>{{_('No action in your language')}}</p>
+								{% else %}
+									{% for action in actions %}
+										<tr>
+											<input type="hidden" name="{{action.code}}" value="{{action.url}}">
+											<th>{{action.name}}</th>
+											<th>{{action.description}}</th>
+											<th><p><input name="action" type="radio" id="{{action.name}}" value="{{action.code}}" /><label for="{{action.name}}"></label></p></th>
+										</tr>
+										<div id="{{action.code}}" class="desc" style="display: none;">
+											{% for param in action.params %}
+												<script type="text/javascript">
+													$(document).ready(function(){
+														$("input[name='action']").click(function() {
+															var code = $(this).val();
+															$(".desc").hide();
+															$('select[name="param"]').val('');
+															$('input[name="param"]').val('');
+															$("#"+code).show();
+														});
+													});
+												</script>
+
+
+												{% if param.type == 'select' %}
+													<p>{{param.name}}</p>
+													<select name="{{action.code}}_param"  class="browser-default">
+														<option></option>
+														{% for p in get_params(param.url) %}
+															<option value="{{p.id}}">{{ p[param.variable] }}</option>
+														{% endfor %}
+													</select>
+												{% elif param.type == 'input' %}
+													<label for="{{action.code}}">{{param.name}}</label>
+													<input type="text" name="{{action.code}}_param" placeholder="" value="{{request.form.param}}" id="{{param.value}}">
+												{% endif %}
+											{% endfor %}
+										</div>
+									{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+						<br>
+						<button type="submit" name="button" class="btn {{g.color}}">{{_('Add')}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
-  </div>
-</div>
-
-
-
-
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <h4>{{_('Add')}}</h4>
-    <div class="row">
-      <div class="col s12">
-          <ul class="tabs">
-              <li class="tab col m3 s12"><a class="active" href='#trigger'>{{_('Event')}}</a></li>
-              <li class="tab col m3 s12"><a href="#actions">{{_('Actions')}}</a></li>
-        </ul>
-    </div>
-    <div id='trigger'>
-       <div class="card-panel white">
-         <table class="white responsive-table">
-             <thead>
-               <tr>
-                   <th data-field="name">{{_('Name')}}</th>
-                   <th data-field="description">{{_('Description')}}</th>
-                   <th>{{_('Use')}}</th>
-               </tr>
-             </thead>
-             <tbody>
-               {% if events == [] %}
-               <p>{{_('No event in your language')}}</p>
-               {% else %}
-               {% for event in events %}
-               <tr>
-                 <th>{{event.name}}</th>
-                 <th>{{event.description}}</th>
-                 <th><p><input name="event_code" type="radio" id="{{event.name}}" value="{{event.code}}" /><label for="{{event.name}}"></label></p></th>
-               </tr>
-               <div id="{{event.code}}" class="desc" style="display: none;">
-                   {% for param in event.params %}
-                   <script type="text/javascript">
-                       $(document).ready(function(){
-                          $("input[name='event_code']").click(function() {
-                              var code = $(this).val();
-                              $(".desc").hide();
-                              $('select[name="param"]').val('');
-                              $('input[name="param"]').val('');
-                              $("#"+code).show();
-                          });
-                        });
-                   </script>
-
-
-
-                   {% if param.type == 'select' %}
-                   <p>{{param.name}}</p>
-                   <select name="{{event.code}}_param"  class="browser-default">
-                     <option></option>
-                     {% for p in get_params(param.url) %}
-                        <option value="{{param.value}} == {{p.id}}">{{ p[param.variable] }}</option>
-                     {% endfor %}
-                   </select>
-                   {% elif param.type == 'input' %}
-                      <label for="{{event.code}}">{{param.name}}</label>
-                      <input type="text" name="{{event.code}}_param" placeholder="" value="{{param.value}} == {{request.form.param}}" id="{{param.value}}">
-                   {% endif %}
-                   {% endfor %}
-                 </div>
-               {% endfor %}
-               {% endif %}
-
-
-
-
-             </tbody>
-           </table>
-       </div>
-    </div>
-
-
-    <div id='actions'>
-      <div class="card-panel white">
-        <table class="white responsive-table">
-            <thead>
-              <tr>
-                  <th data-field="name">{{_('Name')}}</th>
-                  <th data-field="description">{{_('Description')}}</th>
-                  <th>{{_('Use')}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% if actions == [] %}
-                <p>{{_('No action in your language')}}</p>
-              {% else %}
-              {% for action in actions %}
-              <tr>
-                <input type="hidden" name="{{action.code}}" value="{{action.url}}">
-                <th>{{action.name}}</th>
-                <th>{{action.description}}</th>
-                <th><p><input name="action" type="radio" id="{{action.name}}" value="{{action.code}}" /><label for="{{action.name}}"></label></p></th>
-              </tr>
-              <div id="{{action.code}}" class="desc" style="display: none;">
-                  {% for param in action.params %}
-                  <script type="text/javascript">
-                      $(document).ready(function(){
-                         $("input[name='action']").click(function() {
-                             var code = $(this).val();
-                             $(".desc").hide();
-                             $('select[name="param"]').val('');
-                             $('input[name="param"]').val('');
-                             $("#"+code).show();
-                         });
-                       });
-                  </script>
-
-
-
-                  {% if param.type == 'select' %}
-                  <p>{{param.name}}</p>
-                  <select name="{{action.code}}_param"  class="browser-default">
-                    <option></option>
-                    {% for p in get_params(param.url) %}
-                       <option value="{{p.id}}">{{ p[param.variable] }}</option>
-                    {% endfor %}
-                  </select>
-                  {% elif param.type == 'input' %}
-                     <label for="{{action.code}}">{{param.name}}</label>
-                     <input type="text" name="{{action.code}}_param" placeholder="" value="{{request.form.param}}" id="{{param.value}}">
-                  {% endif %}
-                  {% endfor %}
-                </div>
-
-              {% endfor %}
-              {% endif %}
-
-
-
-            </tbody>
-          </table>
-          <br>
-          <button type="submit" name="button" class="btn {{g.color}}">{{_('Add')}}</button>
-      </div>
-    </div>
-    </form>
-  </div>
-</div>
-
-
 
 
 
@@ -195,18 +177,17 @@
 
 
 <script>
-  $(document).ready(function(){
-    $('.modal-trigger').leanModal();
-  });
+	$(document).ready(function(){
+		$('.modal-trigger').leanModal();
+	});
 
-  function check_name(){
-    var nameValue = document.getElementById("name").value;
-    if(nameValue == ""){
-      alert("{{_('Please enter a name')}}");
-      location.reload();
-    }
-  }
-
+	function check_name(){
+		var nameValue = document.getElementById("name").value;
+		if(nameValue == ""){
+			alert("{{_('Please enter a name')}}");
+			location.reload();
+		}
+	}
 </script>
 
 {% endblock %}

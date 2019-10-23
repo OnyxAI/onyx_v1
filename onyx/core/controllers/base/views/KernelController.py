@@ -27,10 +27,11 @@ def kernel():
             result = kernel_function.get()
             json.json = result
             data = json.decode()
+            
             return data['text']
         except Exception as e:
-            raise
-            return gettext('An error has occured !')
+            flash(gettext('An error has occured !'), "error")
+            return redirect(url_for('core.index'))
 
 @core.route('train_kernel')
 @login_required

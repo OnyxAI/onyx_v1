@@ -12,19 +12,19 @@
 				<select onChange="changePos()" name="house" id="houses" class="browser-default col m3 s12">
 					<option default value="no">{{ _("No House") }}</option>
 					{% for house in g.houses %}
-							<option value="{{house.latitude}}|{{house.longitude}}">{{house.name}}</option>
+						<option value="{{house.latitude}}|{{house.longitude}}">{{house.name}}</option>
 					{% endfor %}
 				</select>
 			
 
-					<input placeholder="{{_('Longitude')}}" class="col m3 s6" type="text" id="longitude" name="longitude" required>
-					<input placeholder="{{_('Latitude')}}" class="col m3 s6" type="text" id="latitude" name="latitude" required>
+				<input placeholder="{{_('Longitude')}}" class="col m3 s6" type="text" id="longitude" name="longitude" required>
+				<input placeholder="{{_('Latitude')}}" class="col m3 s6" type="text" id="latitude" name="latitude" required>
 
-					<div class="col m3 s12">
-						<a href="#" onClick="getLocation();" class="btn {{ g.color }} " >{{_('Position')}}</a>
-						<button class="btn {{ g.color }} " >{{_('Send')}}</button>
-					</div>
+				<div class="col m3 s12">
+					<a href="#" onClick="getLocation();" class="btn {{ g.color }} " >{{_('Position')}}</a>
+					<button class="btn {{ g.color }} " >{{_('Send')}}</button>
 				</div>
+			</div>
 		</form>
 
 		<br><br>
@@ -38,21 +38,20 @@
 
 {% block script %}
 
-
 <script>
 		var lon = document.getElementById("longitude");
 		var lat = document.getElementById("latitude");
 		function getLocation() {
-		  if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(showPosition);
-		  } else {
-			alert("Geolocation is not supported by this browser.");
-		  }
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition);
+			} else {
+				alert("Geolocation is not supported by this browser.");
+			}
 		}
 		
 		function showPosition(position) {
-		  lon.value = position.coords.longitude;
-		  lat.value = position.coords.latitude
+			lon.value = position.coords.longitude;
+			lat.value = position.coords.latitude
 		}
 
 		function changePos(){

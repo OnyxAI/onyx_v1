@@ -7,7 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 from .. import core
 from flask import request, render_template, flash, redirect, url_for
 from flask_login import login_required
@@ -31,6 +30,7 @@ def add_house():
         house.latitude = request.form['latitude']
         house.longitude = request.form['longitude']
         house.add()
+
         flash(gettext('House Add'), 'success')
         return redirect(url_for('core.options'))
     except HouseException:
@@ -45,6 +45,7 @@ def delete_house(id):
     try:
         house.id = id
         house.delete()
+
         flash(gettext('House Deleted'), 'success')
         return redirect(url_for('core.options'))
     except HouseException:

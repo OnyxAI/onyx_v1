@@ -14,12 +14,3 @@ class Room(db.Model):
     name = db.Column(db.String(256))
     house = db.Column(db.String(256))
 
-    @property
-    def is_active(self):
-        return True
-
-    def get_id_(self):
-        try:
-            return unicode(self.id)
-        except NameError:
-            return str(self.id)

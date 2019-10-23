@@ -3,7 +3,7 @@ TOP=$(cd $(dirname $0) && pwd -L)
 VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${TOP}/venv"}
 
 case $1 in
-	"client") SCRIPT=${TOP}/run.py ;;
+	"client") SCRIPT="${TOP}/manage.py run -h 0.0.0.0 -p 8080" ;;
 	"service") SCRIPT=${TOP}/onyx/messagebus/service/main.py ;;
 	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
 	"voice") SCRIPT=${TOP}/onyx/client/speech/main.py ;;

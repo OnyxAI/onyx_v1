@@ -22,13 +22,3 @@ class Calendar(db.Model):
     color = db.Column(db.String(64))
     allday = db.Column(db.String(64))
 
-
-    @property
-    def is_active(self):
-        return True
-
-    def get_id_(self):
-        try:
-            return unicode(self.id)
-        except NameError:
-            return str(self.id)

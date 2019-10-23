@@ -18,13 +18,3 @@ class House(db.Model):
     country = db.Column(db.String(256))
     latitude = db.Column(db.String(256))
     longitude = db.Column(db.String(256))
-
-    @property
-    def is_active(self):
-        return True
-
-    def get_id_(self):
-        try:
-            return unicode(self.id)
-        except NameError:
-            return str(self.id)

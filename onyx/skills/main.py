@@ -16,7 +16,7 @@ import time
 from os.path import exists, join
 from threading import Timer
 
-from onyx.lock import Lock  # Creates PID file for single instance
+from onyx.util.lock import Lock  # Creates PID file for single instance
 from onyx.messagebus.client.ws import WebsocketClient
 from onyx.messagebus.message import Message
 from onyx.skills.core import load_skill, create_skill_descriptor, \
@@ -118,10 +118,9 @@ def _watch_skills():
                 skill["instance"] = load_skill(
                     create_skill_descriptor(skill["path"]), ws)
         # get the last modified skill
-        modified_dates = map(lambda x: x.get("last_modified"),
-                             loaded_skills.values())
+        modified_dates = map(lambda x: x.get("last_modified"), loaded_skills.values())                           
 
-        if len(modified_dates) > 0:
+        if len(list(modified_dates)) > 0:
             last_modified_skill = max(modified_dates)
 
         # Pause briefly before beginning next scan
@@ -130,7 +129,7 @@ def _watch_skills():
 
 def main():
     global ws
-    lock = Lock('skills')  # prevent multiple instances of this service
+    #lock = Lock('skills')  # prevent multiple instances of this service
 
     # Connect this Skill management process to the websocket
     ws = WebsocketClient()

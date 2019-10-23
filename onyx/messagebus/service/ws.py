@@ -7,18 +7,18 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-import json
 import sys
 import traceback
 
 import tornado.websocket
 from pyee import EventEmitter
 
-import onyx.util.log
+from onyx.util.log import getLogger
+from onyx.api.assets import Json
 from onyx.messagebus.message import Message
 
-logger = onyx.util.log.getLogger(__name__)
+logger = getLogger(__name__)
+json = Json()
 
 EventBusEmitter = EventEmitter()
 
@@ -63,7 +63,7 @@ class WebsocketEventHandler(tornado.websocket.WebSocketHandler):
                 callable(getattr(channel_message, 'serialize'))):
             self.write_message(channel_message.serialize())
         else:
-            self.write_message(json.dumps(channel_message))
+            self.write_message(json.encode(channel_message))
 
     def check_origin(self, origin):
         return True

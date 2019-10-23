@@ -30,9 +30,12 @@ class Json:
 
         Cette fonction décode le json
     """
-    def decode(self):
+    def decode(self, _json=None):
         try:
-            data = json.loads(self.json)
+            if _json:
+                data = json.loads(_json)
+            else:
+                data = json.loads(self.json)
             return data
         except Exception as e:
             raise JsonException(str(e))

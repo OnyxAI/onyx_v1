@@ -7,20 +7,18 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
+from flask import current_app as app
 from onyx.core.models import *
 from onyx.extensions import db
 from onyx.api.exceptions import *
-from flask import current_app as app
 from onyx.api.assets import Json
-from flask_login import current_user
-import onyx, os
 from onyx.util.log import getLogger
+from onyx.config import get_config
+import onyx
 
 json = Json()
 logger = getLogger('Scenario')
 
-from onyx.config import get_config
 config = get_config('onyx')
 
 class Scenario:
@@ -38,7 +36,8 @@ class Scenario:
 
     def get_all(self):
         try:
-            query = ScenarioModel.Scenario.query.filter(ScenarioModel.Scenario.user.endswith(current_user.id))
+            query = ScenarioModel.Scenario.query.filter(ScenarioModel.Scenario.user.endswith(self.user))
+            
             scenarios = []
 
             for key in query:
@@ -65,6 +64,8 @@ class Scenario:
 
             db.session.add(query)
             db.session.commit()
+
+            return json.encode({"status": "success"})
         except Exception as e:
             logger.error('Adding Scenario error : ' + str(e))
             raise ScenarioException(str(e))
@@ -76,6 +77,8 @@ class Scenario:
 
             db.session.delete(query)
             db.session.commit()
+
+            return json.encode({"status": "success"})
         except Exception as e:
             logger.error('Adding Scenario error : ' + str(e))
             raise ScenarioException(str(e))
@@ -84,6 +87,8 @@ class Scenario:
         try:
             self.delete_plugin_action()
             logger.info('Plugin Scenario object deleted with success')
+
+            return json.encode({"status": "success"})
         except Exception as e:
             logger.error('Plugin Scenario delete error : ' + str(e))
             raise ScenarioException(str(e))
@@ -103,6 +108,7 @@ class Scenario:
                         db.session.commit()
                     except:
                         pass
+            return json.encode({"status": "success"})
         except Exception as e:
             logger.error('Deleting scenario plugin error : ' + str(e))
             raise ScenarioException(str(e))

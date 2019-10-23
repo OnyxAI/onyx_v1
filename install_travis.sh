@@ -8,8 +8,8 @@ fi
 echo "Onyx Install"
 echo "Dependencies Install"
 echo "***"
-apt-get --assume-yes update
-apt-get --assume-yes install build-essential python python-software-properties python-pip python-setuptools python-dev python-virtualenv openssl libssl-dev memcached python-memcache libmemcached-dev zlib1g-dev libffi-dev
+apt-get -y update
+apt-get -y install build-essential python3 python3-software-properties python3-pip python3-setuptools python3-dev python3-virtualenv openssl libssl-dev memcached python3-memcache libmemcached-dev zlib1g-dev libffi-dev
 
 TOP=$(cd $(dirname $0) && pwd -L)
 

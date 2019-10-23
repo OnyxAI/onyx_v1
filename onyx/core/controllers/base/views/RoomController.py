@@ -13,7 +13,7 @@ from flask import request, render_template, flash, redirect, url_for
 from flask_login import login_required
 from onyx.api.exceptions import *
 from onyx.decorators import admin_required
-from onyx.api.room import *
+from onyx.api.room import Room
 from onyxbabel import gettext
 
 room = Room()
@@ -25,7 +25,9 @@ def add_room():
     try:
         room.name = request.form['name']
         room.house = request.form.get('house')
+        
         room.add()
+
         flash(gettext('Room Add'), 'success')
         return redirect(url_for('core.options'))
     except RoomException:
@@ -40,6 +42,7 @@ def delete_room(id):
     try:
         room.id = id
         room.delete()
+
         flash(gettext('Room Deleted'), 'success')
         return redirect(url_for('core.options'))
     except RoomException:

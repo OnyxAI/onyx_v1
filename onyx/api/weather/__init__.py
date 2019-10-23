@@ -7,10 +7,8 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from onyx.api.geolocalisation import Geolocalisation
 from onyx.api.exceptions import *
 from onyx.api.assets import Json
-from onyxbabel import gettext
 from onyx.util import getLogger
 
 json = Json()
@@ -21,6 +19,15 @@ class Weather:
     def __init__(self):
         self.latitude = None
         self.longitude = None
+
+    def get(self):
+        try:
+            json.url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(self.latitude) + "&lon=" + str(self.longitude) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69"
+            result = json.decode_url()
+            return result
+        except Exception as e:
+            logger.error('Getting weather error : ' + str(e))
+            raise WeatherException(str(e))
 
 
     def get_temp_str(self):

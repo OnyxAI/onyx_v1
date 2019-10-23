@@ -37,6 +37,7 @@ def calendars():
 			events.startdate = request.form['start']
 			events.enddate = request.form['end']
 			events.add()
+
 			return redirect(url_for('core.calendars'))
 		except CalendarException:
 			flash(gettext('An error has occured'),'error')
@@ -49,6 +50,7 @@ def calendars():
 			events.startdate = request.form['start']
 			events.enddate = request.form['end']
 			events.update_date()
+			
 			return redirect(url_for('core.calendars'))
 		except CalendarException:
 			flash(gettext('An error has occured'),'error')

@@ -106,7 +106,6 @@ class Calendar:
                 e['color'] = fetch.color
                 events.append(e)
 
-            events.append({"status":"success"})
             return json.encode(events)
         except Exception as e:
             logger.error('Getting meet error : ' + str(e))
@@ -126,6 +125,7 @@ class Calendar:
 
             db.session.add(query)
             db.session.commit()
+
             return json.encode({'status':'success'})
         except Exception as e:
             logger.error('Event update error : ' + str(e))
@@ -142,6 +142,7 @@ class Calendar:
 
             db.session.delete(delete)
             db.session.commit()
+
             return json.encode({'status':'success'})
         except:
             return json.encode({'status':'error'})
@@ -161,9 +162,11 @@ class Calendar:
 
             db.session.add(update)
             db.session.commit()
-            logger.info('Event ' + update.title + ' update')
-            return json.encode({'status':'success'})
 
+            logger.info('Event ' + update.title + ' update')
+
+            return json.encode({'status':'success'})
         except Exception as e:
+            
             logger.error('Event update error : ' + str(e))
             raise CalendarException(str(e))

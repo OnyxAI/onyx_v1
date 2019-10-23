@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from flask import Blueprint
-import os, onyx
+import onyx
 
 core = Blueprint('core', __name__, url_prefix='/' , template_folder=onyx.__path__[0] + '/templates')
 

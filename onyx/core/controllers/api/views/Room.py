@@ -9,80 +9,40 @@ You may not use this software for commercial purposes.
 """
 
 from .. import api
-from flask import request, render_template, flash, redirect, url_for
-from flask_login import login_required
-from onyx.api.exceptions import *
+from flask import request
+from onyx.decorators import api_required
+from onyx.api.exceptions import RoomException
 from onyx.decorators import admin_required
-from onyx.api.room import *
-from onyxbabel import gettext
+from onyx.api.room import Room
+from onyx.api.assets import Json
 
+json = Json()
 room = Room()
 
 @api.route('room')
-@admin_required
-@login_required
+@api_required
 def get_room():
-    """
-    @api {get} /room Request Rooms Information
-    @apiName getRoom
-    @apiGroup Room
-    @apiPermission authenticated
-
-    @apiSuccess (200) {Object[]} rooms List of Rooms
-    @apiSuccess (200) {Number} rooms.id Id of Rooms
-    @apiSuccess (200) {String} rooms.house House of Rooms
-    @apiSuccess (200) {String} rooms.name Name of Rooms
-
-    @apiError RoomNotFound No Room Found
-
-    """
-    return room.get()
+    try:
+        return room.get()
+    except RoomException:
+        return json.encode({"status": "error"})
 
 @api.route('room/add', methods=['POST'])
-@admin_required
-@login_required
+@api_required
 def add_room():
-    """
-    @api {post} /room/add Add Room
-    @apiName addRoom
-    @apiGroup Room
-    @apiPermission authenticated
-
-    @apiParam {String} house House of Room
-    @apiParam {String} name Name of Room
-
-    @apiSuccess (200) redirect Redirect to Option
-
-    @apiError AlreadyExist This Room already Exist
-
-    """
     try:
         room.name = request.form['name']
         room.house = request.form['house']
         return room.add()
     except RoomException:
-        return room.add()
+        return json.encode({"status": "error"})
 
 
-@api.route('room/delete/<int:id>')
-@admin_required
-@login_required
-def delete_room(id):
-    """
-    @api {delete} /room/delete Delete Room
-    @apiName deleteRoom
-    @apiGroup Room
-    @apiPermission authenticated
-
-    @apiParam {Number} id Id of Room
-
-    @apiSuccess (200) delete Room Deleted
-
-    @apiError RoomNotFound No Room Found
-
-    """
+@api.route('room/delete/<int:_id>')
+@api_required
+def delete_room(_id):
     try:
-        room.id = id
+        room.id = _id
         return room.delete()
     except RoomException:
-        return room.delete()
+        return json.encode({"status": "error"})

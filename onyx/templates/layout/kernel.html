@@ -1,365 +1,360 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bot.css') }}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" type="text/javascript"></script>
-<link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" type="text/javascript"></script>
+<link rel='stylesheet prefetch' href='//s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
 
 <div class="row">
-  <div class="container">
-    <div id="search">
+    <div class="container">
+        <div id="search">
 
-      <div class="wrapper">
-        <nav id="nav" class="nav">
-          <div class="default-nav">
-            <div class="main-nav">
-              <div class="toggle"></div>
-              <div class="main-nav-item"><a href="#" class="main-nav-item-link">Onyx</a></div>
-              <div class="micro"><i class="circle fa fa fa-microphone fa-lg" id="microphone"></i></div>
+            <div class="wrapper">
+                <nav id="nav" class="nav">
+                    <div class="default-nav">
+                        <div class="main-nav">
+                            <div class="toggle"></div>
+                            <div class="main-nav-item"><a href="#" class="main-nav-item-link">Onyx</a></div>
+                            <div class="micro"><i class="circle fa fa fa-microphone fa-lg" id="microphone"></i></div>
+                        </div>
+                    </div>
+                </nav>
+                <div id="inner" class="inner">
+                    <div id="content" class="content"></div>
+                </div>
+                <div id="bottom" class="bottom">
+                    <textarea id="input" class="input"></textarea>
+                    <div id="send" class="send"></div>
+                </div>
             </div>
-          </div>
-        </nav>
-        <div id="inner" class="inner">
-          <div id="content" class="content"></div>
-        </div>
-        <div id="bottom" class="bottom">
-          <textarea id="input" class="input"></textarea>
-          <div id="send" class="send"></div>
-        </div>
-      </div>
 
+        </div>
     </div>
-  </div>
 </div>
-
 
 <script type="text/javascript">
 
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Messenger = function () {
-function Messenger() {
-  _classCallCheck(this, Messenger);
+	var Messenger = function () {
+		function Messenger() {
+			_classCallCheck(this, Messenger);
 
-  this.messageList = [];
-  this.deletedList = [];
+			this.messageList = [];
+			this.deletedList = [];
 
-  this.me = 1; // completely arbitrary id
-  this.them = 5; // and another one
+			this.me = 1; // completely arbitrary id
+			this.them = 5; // and another one
 
-  this.onRecieve = function (message) {
-    return console.log('Recieved: ' + message.text);
-  };
-  this.onSend = function (message) {
-    return console.log('Sent: ' + message.text);
-  };
-}
+			this.onRecieve = function (message) {
+			return console.log('Recieved: ' + message.text);
+			};
+			this.onSend = function (message) {
+			return console.log('Sent: ' + message.text);
+			};
+		}
 
-Messenger.prototype.send = function send() {
-  var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+		Messenger.prototype.send = function send() {
+			var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
 
-  text = this.filter(text);
+			text = this.filter(text);
 
-  if (this.validate(text)) {
-    var message = {
-      user: this.me,
-      text: text,
-      time: new Date().getTime()
-    };
+			if (this.validate(text)) {
+			var message = {
+				user: this.me,
+				text: text,
+				time: new Date().getTime()
+			};
 
-    this.messageList.push(message);
+			this.messageList.push(message);
 
-    this.onSend(message);
-  }
-};
+			this.onSend(message);
+			}
+		};
+
+		Messenger.prototype.recieve = function recieve() {
+			var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
 
-Messenger.prototype.recieve = function recieve() {
-  var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+			text = this.filter(text);
+
+			if (this.validate(text)) {
+			var message = {
+				user: this.them,
+				text: text,
+				time: new Date().getTime()
+			};
+
+			this.messageList.push(message);
+
+			this.onRecieve(message);
+			}
+		};
+
+
+		Messenger.prototype.filter = function filter(input) {
+			var output = input.replace('bad input', 'good output'); // such amazing filter there right?
+			return output;
+		};
 
-  text = this.filter(text);
+		Messenger.prototype.validate = function validate(input) {
+			return !!input.length; // an amazing example of validation I swear.
+		};
+
+		return Messenger;
+	}();
 
-  if (this.validate(text)) {
-    var message = {
-      user: this.them,
-      text: text,
-      time: new Date().getTime()
-    };
-
-    this.messageList.push(message);
-
-    this.onRecieve(message);
-  }
-};
-
-
-Messenger.prototype.filter = function filter(input) {
-  var output = input.replace('bad input', 'good output'); // such amazing filter there right?
-  return output;
-};
+	var BuildHTML = function () {
+		function BuildHTML() {
+		_classCallCheck(this, BuildHTML);
 
-Messenger.prototype.validate = function validate(input) {
-  return !!input.length; // an amazing example of validation I swear.
-};
+		this.messageWrapper = 'message-wrapper';
+		this.circleWrapper = 'circle-wrapper';
+		this.textWrapper = 'text-wrapper';
+
+		this.meClass = 'me';
+		this.themClass = 'them';
+		}
+
+		BuildHTML.prototype._build = function _build(text, who) {
+		return '<div class="' + this.messageWrapper + ' ' + this[who + 'Class'] + '">\n             \n              <div class="' + this.textWrapper + '">...</div>\n            </div>';
+		};
+
+		BuildHTML.prototype.me = function me(text) {
+		return this._build(text, 'me');
+		};
+
+		BuildHTML.prototype.them = function them(text) {
+		return this._build(text, 'them');
+		};
+
+		return BuildHTML;
+	}();
+
+
+	var Config = {
+		wsUrl: "ws://" + window.location.hostname + ":8081/core"
+	};
+
 
-return Messenger;
-}();
+	var WS = {
+		ws: null,
+		wsConnected: false,
+		listeners: {},
+		onOpenListeners: [],
+
+		connect: function () {
+			this.ws = new WebSocket(Config.wsUrl);
+			this.setWSListeners();
+		},
+
+		setWSListeners: function () {
+			this.ws.onmessage = this.onMessage.bind(this);
+			this.ws.onopen = this.onOpen.bind(this);
+		},
+
+		setOnOpenListener: function (cb) {
+			this.onOpenListeners.push(cb);
+		},
+
+		onMessage: function (evt) {
+			var msg = JSON.parse(evt.data);
+			if (this.listeners[msg.type]) {
+				this.listeners[msg.type].forEach(function (cb) {
+					cb(msg.data);
+				});
+			}
+		},
+
+		onOpen: function () {
+			this.wsConnected = true;
+			this.onOpenListeners.forEach(function (cb) {
+				cb();
+			});
+		},
+
+		send: function (type, data) {
+			this.ws.send(JSON.stringify({
+				type: type,
+				data: data
+			}));
+		},
+
+		close: function () {
+			this.ws.close();
+			this.wsConnected = false;
+			this.ws = null;
+		},
+
+		addMessageListener: function (type, callback) {
+			this.listeners[type] = this.listeners[type] || [];
+			this.listeners[type].push(callback);
+		}
+
+	};
+
+
+	var Kernel = {
+
+			setListeners: function () {
+				WS.addMessageListener("speak", this.onSpeak.bind(this));
+				WS.addMessageListener("intent_failure", this.onFail.bind(this));
+			},
+
+			onSpeak: function (data) {
+				this.messenger.recieve(data.utterance);
+			},
+
+			onFail: function (data) {
+				setTimeout(function () {
+					$.ajax({
+					url: '{{ url_for("core.kernel") }}',
+					type: "POST",
+					data: {text:data.utterance},
+					success: function(rep) {
+						send(rep);
+					}
+					});
+				}, 500);
+
+				function send(text){
+					Kernel.messenger.recieve(text);
+				}
+			},
+
+
+			init: function () {
+
+				var messenger = new Messenger();
+				var buildHTML = new BuildHTML();
+
+				var $input = $('#input');
+				var $send = $('#send');
+				var $microphone = $('#microphone');
+				var $content = $('#content');
+				var $inner = $('#inner');
+
+				function safeText(text) {
+				$content.find('.message-wrapper').last().find('.text-wrapper').text(text);
+				}
+
+				function animateText() {
+				setTimeout(function () {
+					$content.find('.message-wrapper').last().find('.text-wrapper').addClass('animated fadeIn');
+				}, 350);
+				}
+
+				function scrollBottom() {
+				$($inner).scrollTop($($inner)[0].scrollHeight);
+				}
+
+				function buildSent(message) {
+				console.log('sending: ', message.text);
+
+				$content.append(buildHTML.me(message.text));
+				safeText(message.text);
+				animateText();
 
-var BuildHTML = function () {
-function BuildHTML() {
-  _classCallCheck(this, BuildHTML);
+				scrollBottom();
+				}
+
+				function buildRecieved(message) {
+				console.log('recieving: ', message.text);
 
-  this.messageWrapper = 'message-wrapper';
-  this.circleWrapper = 'circle-wrapper';
-  this.textWrapper = 'text-wrapper';
+				$content.append(buildHTML.them(message.text));
+				safeText(message.text);
+				animateText();
 
-  this.meClass = 'me';
-  this.themClass = 'them';
-}
-
-BuildHTML.prototype._build = function _build(text, who) {
-  return '<div class="' + this.messageWrapper + ' ' + this[who + 'Class'] + '">\n             \n              <div class="' + this.textWrapper + '">...</div>\n            </div>';
-};
-
-BuildHTML.prototype.me = function me(text) {
-  return this._build(text, 'me');
-};
-
-BuildHTML.prototype.them = function them(text) {
-  return this._build(text, 'them');
-};
+				scrollBottom();
+				}
 
-return BuildHTML;
-}();
+				function sendMessage() {
+				var text = $input.val();
+				messenger.send(text);
+				$input.val('');
+				$input.focus();
 
+				setTimeout(function () {
+					var payload = {
+					'utterances': [text]
+					}
+					WS.send('recognizer_loop:utterance', payload)
 
-
-var Config = {
-    wsUrl: "ws://" + window.location.hostname + ":8081/core"
-};
-
-
-var WS = {
-    ws: null,
-    wsConnected: false,
-    listeners: {},
-    onOpenListeners: [],
-
-    connect: function () {
-        this.ws = new WebSocket(Config.wsUrl);
-        this.setWSListeners();
-    },
-
-    setWSListeners: function () {
-        this.ws.onmessage = this.onMessage.bind(this);
-        this.ws.onopen = this.onOpen.bind(this);
-    },
-
-    setOnOpenListener: function (cb) {
-        this.onOpenListeners.push(cb);
-    },
-
-    onMessage: function (evt) {
-        var msg = JSON.parse(evt.data);
-        if (this.listeners[msg.type]) {
-            this.listeners[msg.type].forEach(function (cb) {
-                cb(msg.data);
-            });
-        }
-    },
-
-    onOpen: function () {
-        this.wsConnected = true;
-        this.onOpenListeners.forEach(function (cb) {
-            cb();
-        });
-    },
-
-    send: function (type, data) {
-        this.ws.send(JSON.stringify({
-            type: type,
-            data: data
-        }));
-    },
-
-    close: function () {
-        this.ws.close();
-        this.wsConnected = false;
-        this.ws = null;
-    },
-
-    addMessageListener: function (type, callback) {
-        this.listeners[type] = this.listeners[type] || [];
-        this.listeners[type].push(callback);
-    }
-
-};
-
-
-var Kernel = {
-
-        setListeners: function () {
-            WS.addMessageListener("speak", this.onSpeak.bind(this));
-            WS.addMessageListener("intent_failure", this.onFail.bind(this));
-        },
-
-        onSpeak: function (data) {
-             this.messenger.recieve(data.utterance);
-        },
-
-        onFail: function (data) {
-              setTimeout(function () {
-                $.ajax({
-                   url: '{{ url_for("core.kernel") }}',
-                   type: "POST",
-                   data: {text:data.utterance},
-                   success: function(rep) {
-                     send(rep);
-                   }
-                });
-              }, 500);
-
-              function send(text){
-                Kernel.messenger.recieve(text);
-              }
-        },
-
-
-        init: function () {
-
-            var messenger = new Messenger();
-            var buildHTML = new BuildHTML();
-
-            var $input = $('#input');
-            var $send = $('#send');
-            var $microphone = $('#microphone');
-            var $content = $('#content');
-            var $inner = $('#inner');
-
-            function safeText(text) {
-              $content.find('.message-wrapper').last().find('.text-wrapper').text(text);
-            }
-
-            function animateText() {
-              setTimeout(function () {
-                $content.find('.message-wrapper').last().find('.text-wrapper').addClass('animated fadeIn');
-              }, 350);
-            }
-
-            function scrollBottom() {
-              $($inner).scrollTop($($inner)[0].scrollHeight);
-            }
-
-            function buildSent(message) {
-              console.log('sending: ', message.text);
-
-              $content.append(buildHTML.me(message.text));
-              safeText(message.text);
-              animateText();
+				}, 500);
 
-              scrollBottom();
-            }
-
-            function buildRecieved(message) {
-              console.log('recieving: ', message.text);
+				}
 
-              $content.append(buildHTML.them(message.text));
-              safeText(message.text);
-              animateText();
+				function microphone(){
+				if ('webkitSpeechRecognition' in window) {
+					var recognition = new webkitSpeechRecognition();
+					var text = '';
 
-              scrollBottom();
-            }
+					recognition.lang = "{{g.lang}}";
+					recognition.continuous = false;
+					recognition.interimResults = true;
+					recognition.start();
+					recognition.onresult = function (event) {
+						for (var i = event.resultIndex; i < event.results.length; ++i) {
+							if (event.results[i].isFinal) {
+								recognition.stop();
+								var transcript = event.results[i][0].transcript;
 
-            function sendMessage() {
-              var text = $input.val();
-              messenger.send(text);
-              $input.val('');
-              $input.focus();
+								messenger.send(transcript);
+								setTimeout(function () {
+									var payload = {
+									'utterances': [text]
+									}
+									WS.send('recognizer_loop:utterance', payload)
 
-              setTimeout(function () {
-                var payload = {
-                  'utterances': [text]
-                }
-                WS.send('recognizer_loop:utterance', payload)
+								}, 500);
 
-              }, 500);
+							}
+						}
+					};
+				}else{
+					alert('Your browser is not compatible !');
+				}
 
-            }
 
-            function microphone(){
-              if ('webkitSpeechRecognition' in window) {
-                  var recognition = new webkitSpeechRecognition();
-                  var text = '';
+				}
 
-                  recognition.lang = "{{g.lang}}";
-                  recognition.continuous = false;
-                  recognition.interimResults = true;
-                  recognition.start();
-                  recognition.onresult = function (event) {
-                      for (var i = event.resultIndex; i < event.results.length; ++i) {
-                          if (event.results[i].isFinal) {
-                              recognition.stop();
-                              var transcript = event.results[i][0].transcript;
 
-                              messenger.send(transcript);
-                              setTimeout(function () {
-                                var payload = {
-                                  'utterances': [text]
-                                }
-                                WS.send('recognizer_loop:utterance', payload)
+				messenger.onSend = buildSent;
+				messenger.onRecieve = buildRecieved;
 
-                              }, 500);
 
-                          }
-                      }
-                  };
-              }else{
-                  alert('Your browser is not compatible !');
-              }
+				$input.focus();
 
+				$microphone.on('click', function (e) {
+				microphone();
+				});
 
-            }
+				$send.on('click', function (e) {
+				sendMessage();
+				});
 
+				$input.on('keydown', function (e) {
+				var key = e.which || e.keyCode;
 
-            messenger.onSend = buildSent;
-            messenger.onRecieve = buildRecieved;
+				if (key === 13) {
+					// enter key
+					e.preventDefault();
 
+					sendMessage();
+				}
+				});
+				Kernel.messenger = messenger;
+				this.setListeners();
+			}
 
-            $input.focus();
 
-            $microphone.on('click', function (e) {
-              microphone();
-            });
+		};
 
-            $send.on('click', function (e) {
-              sendMessage();
-            });
 
-            $input.on('keydown', function (e) {
-              var key = e.which || e.keyCode;
+	window.addEventListener("load", function () {
 
-              if (key === 13) {
-                // enter key
-                e.preventDefault();
+		WS.connect();
+		WS.setOnOpenListener(function () {
+			Kernel.init();
+		});
 
-                sendMessage();
-              }
-            });
-            Kernel.messenger = messenger;
-            this.setListeners();
-        }
-
-
-    };
-
-
-window.addEventListener("load", function () {
-
-    WS.connect();
-    WS.setOnOpenListener(function () {
-        Kernel.init();
-    });
-
-});
-
-
+	});
 
 </script>

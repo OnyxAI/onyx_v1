@@ -13,7 +13,7 @@ from flask import request, render_template, flash, redirect, url_for
 from flask_login import login_required
 from onyx.decorators import admin_required
 from onyx.api.exceptions import *
-from onyx.api.machine import *
+from onyx.api.machine import Machine
 from onyxbabel import gettext
 
 machine = Machine()
@@ -28,6 +28,7 @@ def add_machine():
         machine.room = request.form.get('room')
         machine.host = request.form['host']
         machine.add()
+
         flash(gettext('Machine Add'), 'success')
         return redirect(url_for('core.options'))
     except MachineException:
@@ -42,6 +43,7 @@ def delete_machine(id):
     try:
         machine.id = id
         machine.delete()
+
         flash(gettext('Machine Deleted'), 'success')
         return redirect(url_for('core.options'))
     except MachineException:

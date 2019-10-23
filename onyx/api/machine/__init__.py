@@ -53,7 +53,6 @@ class Machine:
         except Exception as e:
             logger.error('Getting machine error : ' + str(e))
             raise GetException(str(e))
-            return json.encode({"status":"error"})
 
     """
         Add a new machine
@@ -66,13 +65,13 @@ class Machine:
 
             db.session.add(query)
             db.session.commit()
+            
             logger.info('Machine ' + query.name + ' added successfuly')
 
             return json.encode({"status":"success"})
         except Exception as e:
             logger.info('Machine add error : ' + str(e))
             raise MachineException(str(e))
-            return json.encode({"status":"error"})
 
     """
         Delete a machine
@@ -85,9 +84,10 @@ class Machine:
 
             db.session.delete(query)
             db.session.commit()
+
             logger.info('Machine ' + query.name + ' deleted successfuly')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Machine delete error : ' + str(e))
             raise MachineException(str(e))
-            return json.encode({"status":"error"})

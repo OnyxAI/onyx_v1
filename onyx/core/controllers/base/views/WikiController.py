@@ -7,7 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 from .. import core
 from flask import render_template, request, g
 from flask_login import login_required
@@ -23,22 +22,7 @@ config = get_config('onyx')
 raw_lang = config.get('Base', 'lang')
 if raw_lang:
     lang = raw_lang.split('-')
-"""
-	@api {post} /wiki Request Wiki Article
-	@apiName getArticle
-    @apiGroup Wiki
-    @apiPermission authenticated
 
-    @apiParam {String} search Search Input
-
-    @apiSuccess (200) {Object[]} article List
-	@apiSuccess (200) {String} article.head Header of Article
-    @apiSuccess (200) {String} article.url Url of Article
-    @apiSuccess (200) {String} article.summary Article Content
-
-    @apiError NoExist No Article Exist
-
-"""
 @core.route('wiki', methods=['GET', 'POST'])
 @login_required
 def wiki():

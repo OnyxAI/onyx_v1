@@ -5,23 +5,22 @@
 {% block body %}
 
 <div class="card-panel {{g.panel_color}}">
-  <h1 class='{{g.text_color}}'>{{_('Notifications')}}</h1>
+  	<h1 class='{{g.text_color}}'>{{_('Notifications')}}</h1>
 
-   {% if g.all_notifs == [] %}
-     <center><h3>{{_("You do not have notifications")}}</h3></center>
-   {% else %}
-     <ul class="collection">
-     {% for notif in g.all_notifs %}
-     <li class="collection-item avatar">
-       <i class="large circle fa {{ notif.icon }} {{ notif.icon_color }}"></i>
-       <span class="title">{{ notif.title }}</span>
-       <p>{{ notif.text }}<br>
-       </p>
-       <a href="{{ url_for('core.delete_notifications' , id=notif.id) }}" class="secondary-content"><i class="fa fa-times" aria-hidden="true"></i></a>
-     </li>
-     {% endfor %}
-     </ul>
-   {% endif %}
+	{% if g.all_notifs == [] %}
+		<center><h3>{{_("You do not have notifications")}}</h3></center>
+	{% else %}
+		<ul class="collection">
+			{% for notif in g.all_notifs %}
+				<li class="collection-item avatar">
+					<i class="large circle fa {{ notif.icon }} {{ notif.icon_color }}"></i>
+					<span class="title">{{ notif.title }}</span>
+					<p>{{ notif.text }}<br></p>
+					<a href="{{ url_for('core.delete_notifications' , id=notif.id) }}" class="secondary-content"><i class="fa fa-times" aria-hidden="true"></i></a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 </div>
 
 {% endblock %}

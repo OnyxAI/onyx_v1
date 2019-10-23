@@ -8,6 +8,7 @@ start:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -h 0.0.0.0 -p 80 -d -r
 
 test:
+
 	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes
 
 debug:
@@ -20,7 +21,7 @@ run:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -r
 
 setup:
-	bash dev_setup.sh
+	bash setup.sh
 
 init:
 	export PYTHONPATH=$PYTHONPATH:ROOT_DIR

@@ -7,7 +7,6 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
 import tornado.ioloop as ioloop
 import tornado.web as web
 import os
@@ -22,6 +21,7 @@ settings = {
 
 def main():
     import tornado.options
+    
     tornado.options.parse_command_line()
     config = get_config('onyx')
 

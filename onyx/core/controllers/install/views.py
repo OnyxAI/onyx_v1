@@ -7,22 +7,22 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-from flask import Blueprint, render_template, redirect, request, current_app as app, g, flash, url_for
+from . import install
+from flask import  render_template, redirect, request, flash, url_for
 from flask_login import login_required
 from onyxbabel import gettext, refresh
 from onyx.extensions import db, login_manager
 from onyx.core.models import *
+from onyx.api.assets import Json
 from onyx.api.exceptions import *
-from onyx.api.options import *
+from onyx.api.options import Options
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
-import onyx, os
 from onyx.core.models import ConfigModel
 
 options = Options()
 installation = Install()
-install = Blueprint('install', __name__, url_prefix='/install/', template_folder='templates')
+json = Json()
 
 @login_manager.user_loader
 def load_user(id):
@@ -36,6 +36,7 @@ def check_install():
         query = ConfigModel.Config(config='install', value='False')
         db.session.add(query)
         db.session.commit()
+
         return redirect(url_for('install.index'))
     elif install.value == 'True':
         return redirect(url_for('core.index'))
@@ -49,6 +50,7 @@ def index():
             installation.username = request.form['username']
             installation.password = request.form['password']
             installation.email = request.form['email']
+
             installation.set()
             return redirect(url_for("install.redirect_to_onyx"))
         except Exception as e:
@@ -59,9 +61,10 @@ def index():
 def data():
     try:
         installation.get_data()
-        return "Get Data successfully"
+
+        return json.encode({"status": "success"})
     except Exception as e:
-        return "An error has occured"
+        return json.encode({"status": "error"})
 
 
 @install.route('redirect_to_onyx')
@@ -85,7 +88,9 @@ def change_lang():
     try:
         options.lang = request.form.get('lang')
         options.change_lang()
+
         refresh()
+
         flash(gettext('The lang was changed ! Please reboot Onyx now') , 'success')
         return redirect(url_for('install.reboot', url='install.index', error_url='install.index'))
     except:

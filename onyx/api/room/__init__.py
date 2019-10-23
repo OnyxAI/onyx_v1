@@ -7,10 +7,10 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from onyx.core.models import *
+from onyx.core.models import RoomModel
 from onyx.extensions import db
 from onyx.api.assets import Json
-from onyx.api.exceptions import *
+from onyx.api.exceptions import RoomException
 from onyx.util.log import getLogger
 
 logger = getLogger('Room')
@@ -48,7 +48,6 @@ class Room:
         except Exception as e:
             logger.error('Getting room error : ' + str(e))
             raise RoomException(str(e))
-            return json.encode({"status":"error"})
 
     """
         Add a new room
@@ -61,13 +60,13 @@ class Room:
 
             db.session.add(query)
             db.session.commit()
+            
             logger.info('Room ' + query.name + ' added successfuly')
 
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Room add error : ' + str(e))
             raise RoomException(str(e))
-            return json.encode({"status":"error"})
 
     """
         Delete a room
@@ -80,9 +79,10 @@ class Room:
 
             db.session.delete(query)
             db.session.commit()
+
             logger.info('Room ' + query.name + ' deleted successfuly')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Room delete error : ' + str(e))
             raise RoomException(str(e))
-            return json.encode({"status":"error"})

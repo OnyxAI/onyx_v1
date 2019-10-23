@@ -22,9 +22,9 @@ PyYAML
 colorlog
 Werkzeug
 itsdangerous
+flask_jwt_extended
 requests
 speaklater
-flask_restplus
 pycrypto
 jsonify
 factory-boy==2.8.1
@@ -37,8 +37,6 @@ uptime
 configparser
 flask-apidoc
 gitpython
-onyxjokes
-Flask-Turbolinks
 chatterbot
 
 # Cache and Celery

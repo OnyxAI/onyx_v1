@@ -9,8 +9,6 @@ You may not use this software for commercial purposes.
 """
 from onyx.api.exceptions import *
 from onyx.api.assets import Json
-from flask_login import current_user
-from onyxbabel import gettext
 from onyx.extensions import db
 from onyx.core.models import *
 from flask import g, current_app as app
@@ -35,7 +33,7 @@ class Widgets:
 
     def get(self):
         try:
-            query = WidgetsModel.Widget.query.filter_by(user=current_user.id).all()
+            query = WidgetsModel.Widget.query.filter_by(user=self.user).all()
             widgets = []
 
             for key in query:
@@ -79,7 +77,7 @@ class Widgets:
 
     def add(self):
         try:
-            query = WidgetsModel.Widget(user=current_user.id, url=self.url, color=self.color, name=self.name, see_more=self.see_more)
+            query = WidgetsModel.Widget(user=self.user, url=self.url, color=self.color, name=self.name, see_more=self.see_more)
 
             db.session.add(query)
             db.session.commit()
@@ -89,7 +87,7 @@ class Widgets:
 
     def delete(self):
         try:
-            query = WidgetsModel.Widget.query.filter_by(user=current_user.id,id=self.id).first()
+            query = WidgetsModel.Widget.query.filter_by(user=self.user, id=self.id).first()
 
             db.session.delete(query)
             db.session.commit()

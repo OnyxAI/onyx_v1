@@ -8,7 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from git import Repo
-from flask import g, current_app as app
+from flask import current_app as app
 import importlib
 import onyx, pip, os, git, shutil
 
@@ -20,16 +20,17 @@ from onyx.api.exceptions import *
 from onyx.util import getLogger
 from onyx.skills.core import get_skill_function
 from onyx.api.kernel import Kernel
+from onyx.config import get_config
 import subprocess
 
 scenario = Scenario()
 widgets = Widgets()
 navbar = Navbar()
-logger = getLogger(__name__)
+logger = getLogger("Skill")
 kernel = Kernel()
 json = Json()
 
-from onyx.config import get_config
+
 config = get_config('onyx')
 
 class Skill:
@@ -47,29 +48,34 @@ class Skill:
                 skills.remove('__pycache__')
             except:
                 pass
+
             skill_tab = []
             for skill in skills:
                 if os.path.exists(self.app.config['SKILL_FOLDER'] + skill + "/package.json"):
                     json.path = self.app.config['SKILL_FOLDER'] + skill + "/package.json"
                     data = json.decode_path()
+
                     e = {}
                     e['name'] = data['name']
                     e['raw'] = data['raw']
                     e['desc'] = data['description']
                     e['version'] = data['version']
+
                     try:
                         e['index'] = data['index']
                     except KeyError:
-                        print('No view for ' + data['name'])
+                        logger.info('No view for ' + data['name'])
                     try:
                         e['config'] = data['config']
                     except KeyError:
-                        print('No config for ' + data['name'])
+                        logger.info('No config for ' + data['name'])
+
                     skill_tab.append(e)
+                    
             return json.encode(skill_tab)
         except Exception as e:
             logger.error("An error has occured : " + str(e))
-            return json.encode({"status":"error"})
+            raise SkillException(str(e))
 
     def get_list(self):
         try:
@@ -79,15 +85,18 @@ class Skill:
             return json.encode(data)
         except Exception as e:
             logger.error("An error has occured : " + str(e))
-            return json.encode({"status":"error"})
+            raise SkillException(str(e))
 
     def install(self):
         try:
             Repo.clone_from(self.url, self.app.config['SKILL_FOLDER'] + self.name)
+
             json.path = self.app.config['SKILL_FOLDER'] + self.name + "/package.json"
             data = json.decode_path()
+
             self.install_dep(data)
             self.install_pip(data)
+
             skill = get_skill_function(self.app.config['SKILL_FOLDER'], self.name)
             if (hasattr(skill, 'create_skill') and callable(skill.create_skill)):
                 Module = skill.create_skill()
@@ -98,31 +107,37 @@ class Skill:
                         logger.error('Install Skill error for ' + self.name + ' : ' + str(e))
                 if (hasattr(Module, 'get_blueprint') and callable(Module.get_blueprint)):
                     self.app.register_blueprint(Module.get_blueprint())
+
             if data['navbar'] == 'True':
                 navbar.folder = self.name
                 navbar.set_plugin_navbar()
-            os.system('cd ' + self.app.config['SKILL_FOLDER'] + self.name + ' && make compilelang')
+
+            os.system('cd {} && make compilelang'.format(self.app.config['SKILL_FOLDER'] + self.name))
+
             bot = kernel.set()
             kernel.train(bot)
             logger.info('Installation done with success')
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Installation error : ' + str(e))
-            return json.encode({"status":"error"})
+            raise SkillException(str(e))
 
     def update(self):
         try:
             repo = git.cmd.Git(self.app.config['SKILL_FOLDER'] + self.name)
             repo.pull()
+
             json.path = self.app.config['SKILL_FOLDER'] + self.name + "/package.json"
             data = json.decode_path()
+
             self.install_dep(data)
             self.install_pip(data)
+
             logger.info('Update done with success')
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Update error : ' + str(e))
-            return json.encode({"status":"error"})
+            raise SkillException(str(e))
 
 
     def install_dep(self, data):
@@ -130,9 +145,10 @@ class Skill:
             logger.info('Install dependencies for : ' + self.name)
             deps = data["dependencies"]
             for dep in deps:
-                os.system('sudo apt-get install --assume-yes '+dep)
+                os.system('sudo apt-get install --assume-yes {}'.format(dep))
         except Exception as e:
             logger.error("An error has occured : " + str(e))
+            raise SkillException(str(e))
 
 
 
@@ -141,11 +157,12 @@ class Skill:
             logger.info('Install pip dependencies for : ' + self.name)
             deps = data["packages"]
             for dep in deps:
-                subprocess.call(['pip', 'install', dep])
+                #subprocess.call(['pip', 'install', dep])
                 #pip.main(["install", dep])
-                #os.system('pip install ' + dep)
+                os.system('pip install ' + dep)
         except Exception as e:
             logger.error("An error has occured : " + str(e))
+            raise SkillException(str(e))
 
 
     def uninstall(self):
@@ -163,12 +180,15 @@ class Skill:
                     scenario.delete_plugin()
                 except:
                     pass
+
             if data['navbar'] == 'True':
                 navbar.folder = self.name
                 navbar.delete_plugin_navbar()
+
             shutil.rmtree(self.app.config['SKILL_FOLDER'] + self.name)
+
             logger.info('Uninstall done')
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Uninstall error : ' + str(e))
-            return json.encode({"status":"error"})
+            raise SkillException(str(e))

@@ -15,13 +15,3 @@ class Machine(db.Model):
     house = db.Column(db.String(256))
     room = db.Column(db.String(256))
     host = db.Column(db.String(256))
-
-    @property
-    def is_active(self):
-        return True
-
-    def get_id_(self):
-        try:
-            return unicode(self.id)
-        except NameError:
-            return str(self.id)

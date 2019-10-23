@@ -12,9 +12,6 @@ venv-prod
 onyxproject.egg-info
 dist
 
-/doc/*
-
-
 /onyx/client/speech/assets/_snowboydetect.so
 /onyx/client/speech/assets/snowboydetect.py
 /onyx/data/*
@@ -22,15 +19,5 @@ dist
 /onyx/config/onyx.cfg
 /onyx/db/*
 !/onyx/db/.gitkeep
-/onyx/skills/*
-!/onyx/skills/media
-!/onyx/skills/__init__.py
-!/onyx/skills/core.py
-!/onyx/skills/intent_service.py
-!/onyx/skills/main.py
-!/onyx/skills/scheduled_skills.py
-!/onyx/skills/time_rules.py
 /db/*
 !/db/.gitkeep
-/onyx/plugins/*
-!/onyx/plugins/__init__.py

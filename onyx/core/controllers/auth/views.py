@@ -7,24 +7,23 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-from flask_login import LoginManager, login_required
-from flask import request, render_template, Blueprint, current_app as app, g, flash, redirect
-from onyxbabel import gettext
-from onyx.extensions import login_manager, db
-from onyx.decorators import *
-from onyx.api.assets import Json
-from os.path import exists
-from onyx.api.events import *
-from onyx.api.exceptions import *
-import os
-import onyx
-from onyx.api.user import *
 import hashlib
 
+from flask_login import login_required, current_user
+from flask import request, render_template, g, flash, redirect, url_for, session
+from onyxbabel import gettext
+from onyx.extensions import login_manager, db
+from onyx.decorators import admin_required
+from onyx.api.assets import Json
+from onyx.api.events import Event
+from onyx.api.user import User
+from onyx.util import getLogger
+from onyx.api.exceptions import *
+from . import auth
+
+logger = getLogger('Auth')
 event = Event()
 json = Json()
-auth = Blueprint('auth', __name__, url_prefix='/auth/' , template_folder=onyx.__path__[0] + '/templates')
 user = User()
 
 @login_manager.user_loader
@@ -39,9 +38,11 @@ def hello():
 
 #Hello Home route
 @auth.route('finish_tutorial')
+@login_required
 def finish_tutorial():
     try:
         user.id = current_user.id
+
         return user.finish_tutorial()
     except:
         flash(gettext('An error has occured !'), 'error')
@@ -58,11 +59,13 @@ def register():
             user.verifpassword = request.form['verifpassword']
             user.username = request.form['username']
             user.email = request.form['email']
+
             register = user.add()
-            if register == 0:
+
+            if json.decode(register).get('status') == 'error':
                 flash(gettext('Passwords are not same !' ), 'error')
                 return redirect(url_for('auth.register'))
-            elif register == 1:
+            elif json.decode(register).get('status') == 'success':
                 flash(gettext('Account Added !') , 'success')
                 return redirect(url_for('auth.hello'))
         except UserException:
@@ -80,7 +83,9 @@ def login():
             user.email = request.form['email']
             user.password = request.form['password']
             login = user.login()
-            if login == 0:
+            session["token"] = json.decode(login).get('access_token')
+
+            if json.decode(login).get('status') == 'error':
                 flash(gettext('Incorrect email or password !'), 'error')
                 return redirect(url_for('auth.login'))
             else:
@@ -95,8 +100,10 @@ def login():
 @login_required
 def logout():
     try:
-        user.logout()
+        user.logout_client()
+
         logger.info('User Logout successfully')
+
         flash(gettext('You are now log out' ), 'info')
         return redirect(url_for('auth.hello'))
     except UserException:
@@ -109,8 +116,8 @@ def logout():
 @login_required
 def account_manage():
     users = user.get()
-    json.json = users
-    return render_template('account/manage.html', id=json.decode())
+
+    return render_template('account/manage.html', id=json.decode(users))
 
 #Delete Accounts (Admin)
 @auth.route('account/delete/<id_delete>')
@@ -120,6 +127,7 @@ def delete_account(id_delete):
     try:
         user.id = id_delete
         user.delete()
+
         flash(gettext('Account deleted !') , 'success')
         return redirect(url_for('auth.account_manage'))
     except UserException:
@@ -134,8 +142,8 @@ def account_manage_id(id):
     if request.method == 'GET':
         user.id = id
         manage_user = user.get_user()
-        json.json = manage_user
-        user_decoded = json.decode()
+
+        user_decoded = json.decode(manage_user)
         return render_template('account/change.html', username=user_decoded['username'], email=user_decoded['email'])
     elif request.method == 'POST':
         try:
@@ -155,7 +163,9 @@ def account_manage_id(id):
                 user.password = user_decoded['password']
             else:
                 user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
+
             user.manage_user()
+
             flash(gettext('Account changed !') , 'success')
             return redirect(url_for('auth.account_manage'))
         except UserException:
@@ -186,7 +196,8 @@ def change_account():
                 user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
 
             change = user.change_user()
-            if change == 0:
+            
+            if json.decode(change).get('status') == 'error':
                 flash(gettext('Passwords are not same !' ), 'error')
                 return redirect(url_for('auth.change_account'))
             flash(gettext('Account changed successfully' ), 'success')

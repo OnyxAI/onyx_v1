@@ -8,17 +8,14 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 
-from onyxbabel import gettext as _
-from flask_login import login_user, current_user, LoginManager
-from onyx.extensions import db, login_manager
+from onyx.extensions import db
 from onyx.core.models import *
-from onyx.api.install import *
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-from onyx.api.kernel import *
-import git, pip, onyx, os, hashlib
+from onyx.api.kernel import Kernel
 from onyx.util.log import getLogger
-from git import Repo
+import git, onyx, hashlib
+
 
 logger = getLogger('Install')
 json = Json()
@@ -53,11 +50,11 @@ class Install:
             kernel.train(kernel.set())
 
             logger.info('Successfully Installation')
-            return json.encode({"status":"success"})
 
+            return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Installation error : ' + str(e))
-            raise
+            raise InstallException(str(e))
 
     """
         initialize the navbar for this user
@@ -71,17 +68,17 @@ class Install:
             navbar = json.decode_path()
 
             for key in navbar:
-                query = NavbarModel.Navbar(user=user.id,fa=key['fa'],url=key['url'],pourcentage=key['pourcentage'],tooltip=key['tooltip'])
+                query = NavbarModel.Navbar(user=user.id, fa=key['fa'], url=key['url'], pourcentage=key['pourcentage'], tooltip=key['tooltip'])
                 db.session.add(query)
                 db.session.commit()
+
             logger.info('Navbar initialized for user : ' + user.username)
 
             return json.encode({"status":"success"})
         except Exception as e:
-
             logger.error('Navbar initialisation error : ' + str(e))
             raise NavbarException(str(e))
-            return json.encode({"status":"error"})
+
 
     """
         Download all Onyx data from github repo
@@ -90,7 +87,8 @@ class Install:
     """
     def get_data(self):
         try:
-            Repo.clone_from('https://github.com/OnyxProject/onyx-data', onyx.__path__[0] + "/data/")
+            git.Repo.clone_from('https://github.com/OnyxProject/onyx-data', onyx.__path__[0] + "/data/")
+
             logger.info('Successfully get Data')
         except Exception as e:
             logger.error('Get Data error : ' + str(e))
@@ -105,7 +103,9 @@ class Install:
         try:
             repo = git.cmd.Git(onyx.__path__[0] + "/data/")
             repo.pull()
+
             kernel.train(kernel.set())
+
             logger.info('Updating data successfully')
         except Exception as e:
             logger.error('Updating data error : ' + str(e))

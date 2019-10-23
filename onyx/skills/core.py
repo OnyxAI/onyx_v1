@@ -20,7 +20,7 @@ from os.path import join, dirname, splitext, isdir
 
 from onyx.client.tts import TTSFactory
 from onyx.config import get_config
-from onyx.filesystem import FileSystemAccess
+from onyx.util.filesystem import FileSystemAccess
 from onyx.messagebus.message import Message
 from onyx.util.log import getLogger
 from functools import wraps
@@ -36,7 +36,6 @@ MainModule = '__init__'
 tts = TTSFactory.create()
 
 logger = getLogger(__name__)
-
 
 
 def load_skill(skill_descriptor, emitter):

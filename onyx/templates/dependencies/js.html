@@ -1,7 +1,7 @@
 {% macro get_js(file_name , extension='js') -%}
-  {% for file in file_name %}
-      <script src="{{ url_for('static', filename='js/' + file + '.' + extension) }}"></script>
-  {% endfor %}
+	{% for file in file_name %}
+		<script src="{{ url_for('static', filename='js/' + file + '.' + extension) }}"></script>
+	{% endfor %}
 {%- endmacro %}
 
 {{ get_js(['jquery.min', 'jquery-ui.min', 'moment.min', 'wikipedia', 'bot', 'utilities', 'tutorial']) }}
@@ -14,13 +14,13 @@
 <script type="text/javascript">$('.button-collapse').sideNav();</script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    var current_route = "{{request.url_rule.endpoint}}";
-    var tutorial = "{{g.user.tutorial}}";
+	$(document).ready(function() {
+		var current_route = "{{request.url_rule.endpoint}}";
+		var tutorial = "{{g.user.tutorial}}";
 
-    if (tutorial == 0){
-      $('.tutorial_'+current_route.split(".")[1]).tapTarget('open');
-    }
+		if (tutorial == 0){
+			$('.tutorial_'+current_route.split(".")[1]).tapTarget('open');
+		}
 
-  });
+	});
 </script>
