@@ -40,4 +40,8 @@ if [ ! -f ${TOP}/onyx/client/speech/assets/_snowboydetect.so ] || [ ! -f ${TOP}/
     rm snowboy_${os}_${arch}.tar.gz
 fi
 
+cd ${TOP}/onyx/
+
+git clone https://github.com/OnyxProject/onyx-data data
+
 mkdir $HOME/skills
