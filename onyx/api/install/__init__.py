@@ -14,7 +14,8 @@ from onyx.api.assets import Json
 from onyx.api.exceptions import *
 from onyx.api.kernel import Kernel
 from onyx.util.log import getLogger
-import git, onyx, hashlib
+from passlib.hash import sha256_crypt
+import git, onyx
 
 
 logger = getLogger('Install')
@@ -40,7 +41,7 @@ class Install:
     """
     def set(self):
         try:
-            hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
+            hashpass = sha256_crypt.hash(self.password.encode('utf-8'))
             user = UsersModel.User(admin=1, username=self.username, password=hashpass, email=self.email, tutorial=0, background_color='#efefef', color='indigo darken-1')
             db.session.add(user)
             db.session.commit()

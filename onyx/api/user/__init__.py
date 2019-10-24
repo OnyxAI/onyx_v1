@@ -7,6 +7,7 @@ https://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
+import hashlib
 from flask_login import logout_user, login_user, current_user
 from flask import current_app as app
 from onyx.core.models import *
@@ -18,7 +19,7 @@ from onyx.api.exceptions import *
 from onyx.api.events import *
 from onyx.util.log import getLogger
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-import hashlib
+from passlib.hash import sha256_crypt
 import onyx
 
 event = Event()
@@ -92,7 +93,7 @@ class User:
         try:
             db.session.rollback()
             if self.password == self.verifpassword:
-                hashpass = hashlib.sha1(self.password.encode('utf-8')).hexdigest()
+                hashpass = sha256_crypt.hash(self.password.encode('utf-8'))
                 user = UsersModel.User(admin=0, username=self.username, password=hashpass, email=self.email, tutorial=self.tutorial, background_color=self.background_color, color=self.color)
 
                 db.session.add(user)
@@ -139,8 +140,11 @@ class User:
     def login(self):
         try:
             password = self.password.encode('utf-8')
-            registered_user = UsersModel.User.query.filter_by(email=self.email,password=hashlib.sha1(password).hexdigest()).first()
+            registered_user = UsersModel.User.query.filter_by(email=self.email).first()
             if registered_user is None:
+                logger.error("Wrong informations")
+                return json.encode({"status":"error", "message": "Wrong Informations"})
+            elif sha256_crypt.verify(password, registered_user.password) == False:
                 logger.error("Wrong informations")
                 return json.encode({"status":"error", "message": "Wrong Informations"})
 
@@ -243,7 +247,7 @@ class User:
             query = UsersModel.User.query.filter_by(id=self.id).first()
             lastpassword = query.password
 
-            if hashlib.sha1(self.lastpassword.encode('utf-8')).hexdigest() == lastpassword:
+            if sha256_crypt.verify(self.lastpassword.encode('utf-8'), lastpassword):
 
                 query.username = self.username
                 query.password = self.password

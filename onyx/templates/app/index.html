@@ -19,40 +19,6 @@
         </div>
     </div>
 
-    <div class="col m4 s6">
-        <div class="card blue-grey darken-1 z-depth-5">
-            <div class="card-content">
-                <span class="card-title">{{_("Translate")}}</span><br>
-                <a href="{{ url_for('core.translate') }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Translate")}}' title="Traduction">
-		 			<i class="large material-icons">g_translate</i>
-		 		</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col m4 s6">
-        <div class="card blue-grey darken-1 z-depth-5">
-            <div class="card-content">
-                <span class="card-title">{{_("Transport")}}</span><br>
-                <a href="{{ url_for('core.transport') }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Transport")}}' title="Transports en commun">
-		 			<i class="large fa fa-train" aria-hidden="true"></i>
-		 		</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col m4 s6">
-        <div class="card  blue-grey darken-1 z-depth-5">
-            <div class="card-content">
-                <span class="card-title">{{_("Tv Program")}}</span><br>
-                <a href="{{ url_for('core.tv') }}" class="btn-floating btn-large {{ g.color }} tooltipped" data-position="top" data-delay="50" data-tooltip='{{_("Tv Program")}}' title="Programme Tv">
-		 			<i class="large material-icons">tv</i>
-		 		</a>
-            </div>
-        </div>
-    </div>
-
-
 
 	{% for list in g.list %} 
 		{% if list.url != None %}

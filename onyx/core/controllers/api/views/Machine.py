@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from .. import api
-from flask import request
+from flask import request, Response
 from onyx.decorators import api_required
 from onyx.api.exceptions import MachineException
 from onyx.api.machine import Machine
@@ -22,9 +22,9 @@ json = Json()
 @api_required
 def get_machine():
     try:
-        return machine.get()
+        return Response(machine.get(), mimetype='application/json')
     except MachineException:
-        return json.encore({"status": "error"})
+        return Response(json.encore({"status": "error"}), mimetype='application/json')
 
 @api.route('machine/add', methods=['POST'])
 @api_required
@@ -34,9 +34,9 @@ def add_machine():
         machine.house = request.form['house']
         machine.room = request.form['room']
         machine.host = request.form['host']
-        return machine.add()
+        return Response(machine.add(), mimetype='application/json')
     except MachineException:
-        return json.encore({"status": "error"})
+        return Response(json.encore({"status": "error"}), mimetype='application/json')
 
 
 @api.route('machine/delete/<int:_id>')
@@ -44,6 +44,6 @@ def add_machine():
 def delete_machine(_id):
     try:
         machine.id = _id
-        return machine.delete()
+        return Response(machine.delete(), mimetype='application/json')
     except MachineException:
-        return json.encore({"status": "error"})
+        return Response(json.encore({"status": "error"}), mimetype='application/json')

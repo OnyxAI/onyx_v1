@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from .. import api
-from flask import request
+from flask import request, Response
 from onyx.decorators import api_required
 from onyx.api.exceptions import RoomException
 from onyx.decorators import admin_required
@@ -23,9 +23,9 @@ room = Room()
 @api_required
 def get_room():
     try:
-        return room.get()
+        return Response(room.get(), mimetype='application/json')
     except RoomException:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')
 
 @api.route('room/add', methods=['POST'])
 @api_required
@@ -33,9 +33,10 @@ def add_room():
     try:
         room.name = request.form['name']
         room.house = request.form['house']
-        return room.add()
+        
+        return Response(room.add(), mimetype='application/json')
     except RoomException:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')
 
 
 @api.route('room/delete/<int:_id>')
@@ -43,6 +44,6 @@ def add_room():
 def delete_room(_id):
     try:
         room.id = _id
-        return room.delete()
+        return Response(room.delete(), mimetype='application/json')
     except RoomException:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')

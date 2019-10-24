@@ -38,6 +38,7 @@ configparser
 flask-apidoc
 gitpython
 chatterbot
+passlib
 
 # Cache and Celery
 Flask-Cache

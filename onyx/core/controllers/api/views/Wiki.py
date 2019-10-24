@@ -8,7 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from .. import api
-from flask import  request
+from flask import  request, Response
 from onyx.decorators import api_required
 from onyx.api.wiki import Wikipedia
 from onyx.api.assets import Json
@@ -22,11 +22,11 @@ json = Json()
 def wiki():
     if request.method == 'POST':
         try:
-            wikipedia.lang = "en-US" # CHANGE THIS
+            wikipedia.lang = "en" # CHANGE THIS
             wikipedia.search = request.form['search']
             article = wikipedia.get_article()
             summary = wikipedia.get_summary()
 
-            return json.encode({"status": "success", "article": article, "summary": summary})
+            return Response(json.encode({"status": "success", "url": article.url, "title": article.title, "summary": summary}), mimetype='application/json')
         except WikiException:
-            return json.encode({"status": "error"})
+            return Response(json.encode({"status": "error"}), mimetype='application/json')

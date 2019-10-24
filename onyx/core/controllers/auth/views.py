@@ -7,8 +7,7 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-import hashlib
-
+from passlib.hash import sha256_crypt
 from flask_login import login_required, current_user
 from flask import request, render_template, g, flash, redirect, url_for, session
 from onyxbabel import gettext
@@ -162,7 +161,8 @@ def account_manage_id(id):
             if not request.form['password']:
                 user.password = user_decoded['password']
             else:
-                user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
+                user.password = sha256_crypt.hash(request.form['password'].encode('utf-8'))
+                
 
             user.manage_user()
 
@@ -193,7 +193,7 @@ def change_account():
             if not request.form['password']:
                 user.password = current_user.password
             else:
-                user.password = hashlib.sha1(request.form['password'].encode('utf-8')).hexdigest()
+                user.password = sha256_crypt.hash(request.form['password'].encode('utf-8'))
 
             change = user.change_user()
             

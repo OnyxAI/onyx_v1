@@ -52,6 +52,7 @@ flask-restless
 onyx_sqlalchemy
 flask_migrate
 SQLAlchemy-migrate
+passlib
 
 # auth
 Flask-Login

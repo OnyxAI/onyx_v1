@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from .. import api
-from flask import request
+from flask import request, Response
 from onyx.decorators import api_required
 from onyx.api.kernel import Kernel
 from onyx.api.assets import Json
@@ -26,9 +26,9 @@ def kernel():
             result = kernel_function.get()
             json.json = result
             data = json.decode()
-            return data['text']
+            return Response(json.encode({"text": data['text']}), mimetype='application/json')
         except Exception as e:
-            return json.encode({"status": "error"})
+            return Response(json.encode({"status": "error"}), mimetype='application/json')
 
 @api.route('train_kernel')
 @api_required
@@ -37,6 +37,6 @@ def train_kernel():
         bot = kernel_function.set()
         kernel_function.train(bot)
 
-        return json.encode({"status": "error", "message": "Kernel was train successfully"})
+        return Response(json.encode({"status": "error", "message": "Kernel was train successfully"}), mimetype='application/json')
     except Exception as e:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')

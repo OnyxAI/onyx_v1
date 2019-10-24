@@ -7,42 +7,39 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-from onyx.api.house import *
+from onyx.api.room import *
 from onyx.core.models import *
 import json
 import pytest
 
-house = House()
+room = Room()
 
 @pytest.mark.usefixtures('db')
-class Test_House:
+class Test_Room:
 
     def test_get_rooms(self):
-        get_house = HouseModel.House(name='My House', address='12 place Mandela', city='London', postal='4450', country='England', latitude='52.1243', longitude='2.1452' )
-        db.session.add(get_house)
+        delete_room = RoomModel.Room(name='boo', house='foo')
+        db.session.add(delete_room)
         db.session.commit()
 
-        result = json.loads(house.get())
+        result = json.loads(room.get())
 
-        assert result[0]['name'] == 'My House'
+        assert result[0]['name'] == 'boo'
 
-    def test_add_houses(self):
-        house.name = 'My House'
-        house.address = '12 place Mandela'
-        house.city = 'London'
-        house.postal = '4450'
-        house.country = 'England'
-        house.latitude = '52.1243'
-        house.longitude = '2.1452'
-        result = json.loads(house.add())
+    def test_add_rooms(self):
+        room.house = 'foo'
+        room.name = 'boo'
+
+        result = json.loads(room.add())
 
         assert result['status'] == 'success'
 
-    def test_delete_houses(self, db):
-        delete_house = HouseModel.House(name='My House', address='12 place Mandela', city='London', postal='4450', country='England', latitude='52.1243', longitude='2.1452' )
-        db.session.add(delete_house)
+    def test_delete_rooms(self, db):
+        delete_room = RoomModel.Room(name='boo', house='foo')
+        db.session.add(delete_room)
         db.session.commit()
 
-        house.id = delete_house.id
-        result = json.loads(house.delete())
+        room.id = delete_room.id
+        result = json.loads(room.delete())
+
         assert result['status'] == 'success'

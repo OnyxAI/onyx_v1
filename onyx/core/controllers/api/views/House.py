@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from .. import api
-from flask import request
+from flask import request, Response
 from onyx.decorators import api_required
 from onyx.api.exceptions import HouseException
 from onyx.api.house import House
@@ -22,9 +22,9 @@ house = House()
 @api_required
 def get_house():
     try:
-        return house.get()
+        return Response(house.get(), mimetype='application/json')
     except HouseException:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')
 
 
 @api.route('house/add', methods=['POST'])
@@ -39,9 +39,9 @@ def add_house():
         house.latitude = request.form['latitude']
         house.longitude = request.form['longitude']
 
-        return house.add()
+        return Response(house.add(), mimetype='application/json')
     except HouseException:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')
 
 
 @api.route('house/delete/<int:_id>')
@@ -50,6 +50,6 @@ def delete_house(_id):
     try:
         house.id = _id
 
-        return house.delete()
+        return Response(house.delete(), mimetype='application/json')
     except HouseException:
-        return json.encode({"status": "error"})
+        return Response(json.encode({"status": "error"}), mimetype='application/json')
