@@ -21,6 +21,7 @@ from onyx.util.log import getLogger
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from passlib.hash import sha256_crypt
 import onyx
+import datetime
 
 event = Event()
 navbars = Navbar()
@@ -148,7 +149,9 @@ class User:
                 logger.error("Wrong informations")
                 return json.encode({"status":"error", "message": "Wrong Informations"})
 
-            access_token = create_access_token(identity = registered_user.as_dict())
+            expires = datetime.timedelta(days=20)
+
+            access_token = create_access_token(identity = registered_user.as_dict(), expires_delta=expires)
             refresh_token = create_refresh_token(identity = registered_user.as_dict())
 
             registered_user.authenticated = True

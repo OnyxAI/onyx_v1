@@ -266,18 +266,20 @@
 				}
 
 				function sendMessage() {
-				var text = $input.val();
-				messenger.send(text);
-				$input.val('');
-				$input.focus();
+					var text = $input.val();
+					messenger.send(text);
+					$input.val('');
+					$input.focus();
 
-				setTimeout(function () {
-					var payload = {
-					'utterances': [text]
-					}
-					WS.send('recognizer_loop:utterance', payload)
+					setTimeout(function () {
+						var payload = {
+							'utterances': [text],
+							'user': "{{session['token']}}",
+							'lang': "{{g.lang}}"
+						}
+						WS.send('onyx_recognizer:utterance', payload)
 
-				}, 500);
+					}, 500);
 
 				}
 
@@ -301,7 +303,7 @@
 									var payload = {
 									'utterances': [text]
 									}
-									WS.send('recognizer_loop:utterance', payload)
+									WS.send('onyx_recognizer:utterance', payload)
 
 								}, 500);
 

@@ -4,7 +4,7 @@ VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${TOP}/venv"}
 
 case $1 in
 	"client") SCRIPT="${TOP}/manage.py run -h 0.0.0.0 -p 8080" ;;
-	"service") SCRIPT=${TOP}/onyx/messagebus/service/main.py ;;
+	"service") SCRIPT=${TOP}/onyx/sockyx/service/main.py ;;
 	"skills") SCRIPT=${TOP}/onyx/skills/main.py ;;
 	"voice") SCRIPT=${TOP}/onyx/client/speech/main.py ;;
 	"wifi") SCRIPT=${TOP}/onyx/client/wifisetup/main.py ;;

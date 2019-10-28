@@ -80,7 +80,7 @@ To use it just do this :
 
 # FAQ/Common Errors
 
-#### When running onyx, I get the error `onyx.messagebus.client.ws - ERROR - Exception("Uncaught 'error' event.",)`
+#### When running onyx, I get the error `onyx.sockyx.client.ws - ERROR - Exception("Uncaught 'error' event.",)`
 
 This means that you are not running the `./start.sh service` process. In order to fully run Onyx, you must run `./start.sh service`, `./start.sh skills`, `./start.sh voice` and `./start.sh client` all at the same time. This can be done using different terminal windows, or by using the included `./onyx.sh start`, which runs all four process using `screen`.
 

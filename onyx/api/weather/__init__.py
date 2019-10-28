@@ -20,10 +20,11 @@ class Weather:
         self.latitude = None
         self.longitude = None
 
-    def get(self):
+    def get_daily(self):
         try:
             json.url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + str(self.latitude) + "&lon=" + str(self.longitude) + "&cnt=14&mode=json&units=metric&lang=fr&appid=184b6f0b48a04263c59b93aee56c4d69"
             result = json.decode_url()
+
             return result
         except Exception as e:
             logger.error('Getting weather error : ' + str(e))

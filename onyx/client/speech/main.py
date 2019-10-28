@@ -24,8 +24,8 @@ config = get_config('onyx')
 import threading
 from threading import Thread
 
-from onyx.messagebus.client.ws import WebsocketClient
-from onyx.messagebus.message import Message
+from onyx.sockyx.client.ws import WebsocketClient
+from onyx.sockyx.message import Message
 
 skills = OnyxSkill(name="speech")
 
@@ -62,7 +62,7 @@ class Detector:
 					payload = {
 					        'utterances': [result]
 					}
-					ws.emit(Message('recognizer_loop:utterance', payload))
+					ws.emit(Message('onyx_recognizer:utterance', payload))
 					t.close()
 					#self.detector.start(self.detected_callback)
 

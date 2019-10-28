@@ -10,11 +10,13 @@ You may not use this software for commercial purposes.
 from passlib.hash import sha256_crypt
 from flask_login import login_required, current_user
 from flask import request, render_template, g, flash, redirect, url_for, session
+from flask_jwt_extended import get_jti
 from onyxbabel import gettext
 from onyx.extensions import login_manager, db
 from onyx.decorators import admin_required
 from onyx.api.assets import Json
 from onyx.api.events import Event
+from onyx.api.token import Token
 from onyx.api.user import User
 from onyx.util import getLogger
 from onyx.api.exceptions import *
@@ -22,6 +24,7 @@ from . import auth
 
 logger = getLogger('Auth')
 event = Event()
+token_api = Token()
 json = Json()
 user = User()
 
@@ -93,6 +96,50 @@ def login():
         except UserException:
             flash(gettext('An error has occured !'), 'error')
             return redirect(url_for('auth.hello'))
+
+#Add Token
+@auth.route('add_token',methods=['GET','POST'])
+@admin_required
+@login_required
+def add_token():
+    if request.method == 'POST':
+        try:
+            token_api.name = request.form['name']
+            
+            result = token_api.add()
+
+            if json.decode(result).get('status') == 'error':
+                flash(gettext('An error has occured !'), 'error')
+                return redirect(url_for('core.options'))
+            else:
+                flash(gettext('Token Added'), 'success')
+                return redirect(url_for('core.options'))
+        except TokenException:
+            flash(gettext('An error has occured !'), 'error')
+            return redirect(url_for('core.options'))
+
+
+#Delete Token
+@auth.route('delete_token/<id>', methods=['GET','POST'])
+@admin_required
+@login_required
+def delete_token(id):
+    if request.method == 'GET':
+        try:
+            token_api.id = id
+            token_api.token = get_jti(session['token'])
+            
+            result = token_api.delete()
+
+            if json.decode(result).get('status') == 'error':
+                flash(gettext('An error has occured !'), 'error')
+                return redirect(url_for('core.options'))
+            else:
+                flash(gettext('Token Deleted'), 'success')
+                return redirect(url_for('core.options'))
+        except TokenException:
+            flash(gettext('An error has occured !'), 'error')
+            return redirect(url_for('core.options'))
 
 #Logout
 @auth.route('logout')

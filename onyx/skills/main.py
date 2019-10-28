@@ -16,11 +16,10 @@ import time
 from os.path import exists, join
 from threading import Timer
 
-from onyx.util.lock import Lock  # Creates PID file for single instance
-from onyx.messagebus.client.ws import WebsocketClient
-from onyx.messagebus.message import Message
-from onyx.skills.core import load_skill, create_skill_descriptor, \
-    MainModule, SKILLS_DIR
+from onyx.sockyx.client.ws import WebsocketClient
+from onyx.sockyx.message import Message
+from onyx.skills.core import load_skill, create_skill_descriptor, MainModule, SKILLS_DIR
+from onyx.skills.intent_service import IntentService
 from onyx.util import connected
 from onyx.util.log import getLogger
 
@@ -40,15 +39,13 @@ def connect():
     ws.run_forever()
 
 
-def _skills_manager_dispatch():
-    ws.emit(Message("skill_manager", {}))
-
-
 def _load_skills():
-    global ws, loaded_skills, last_modified_skill, skills_directories, \
-        skill_reload_thread
+    global ws, loaded_skills, last_modified_skill, skills_directories, skill_reload_thread
 
     check_connection()
+
+    # Create the Intent manager, which converts utterances to intents
+    IntentService(ws)
 
     # Create a thread that monitors the loaded skills, looking for updates
     skill_reload_thread = Timer(0, _watch_skills)
@@ -73,23 +70,23 @@ def _get_last_modified_date(path):
         # checking if is a hidden path
         if not f.startswith(".") and not f.startswith("/."):
             last_date = max(last_date, os.path.getmtime(path + f))
-
+            
     return last_date
 
 
 def _watch_skills():
-    global ws, loaded_skills, last_modified_skill, \
-        id_counter
+    global ws, loaded_skills, last_modified_skill, id_counter
 
     # Scan the file folder that contains Skills.  If a Skill is updated,
     # unload the existing version from memory and reload from the disk.
     while True:
+
         if exists(SKILLS_DIR):
             # checking skills dir and getting all skills there
-            list = filter(lambda x: os.path.isdir(
-                os.path.join(SKILLS_DIR, x)), os.listdir(SKILLS_DIR))
-
+            list = filter(lambda x: os.path.isdir(os.path.join(SKILLS_DIR, x)), os.listdir(SKILLS_DIR))
+            
             for skill_folder in list:
+
                 if skill_folder not in loaded_skills:
                     loaded_skills[skill_folder] = {}
                 skill = loaded_skills.get(skill_folder)
@@ -115,12 +112,13 @@ def _watch_skills():
                     skill["instance"].shutdown()
                     del skill["instance"]
                 skill["loaded"] = True
-                skill["instance"] = load_skill(
-                    create_skill_descriptor(skill["path"]), ws)
+                skill["instance"] = load_skill(create_skill_descriptor(skill["path"]), ws)
         # get the last modified skill
-        modified_dates = map(lambda x: x.get("last_modified"), loaded_skills.values())                           
+        modified_dates = []
+        for i in loaded_skills.values():
+            modified_dates.append(i.get("last_modified"))
 
-        if len(list(modified_dates)) > 0:
+        if len(modified_dates) > 0:
             last_modified_skill = max(modified_dates)
 
         # Pause briefly before beginning next scan
@@ -136,12 +134,6 @@ def main():
 
     # Listen for messages and echo them for logging
     def _echo(message):
-        try:
-            _message = json.loads(message)
-
-            message = json.dumps(_message)
-        except:
-            pass
         logger.debug(message)
 
     ws.on('message', _echo)
@@ -155,11 +147,15 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        skills_manager_timer.cancel()
+
         for skill in loaded_skills:
             skill.shutdown()
         if skill_reload_thread:
             skill_reload_thread.cancel()
+
+        skills_manager_timer.cancel()
+
+        
 
     finally:
         sys.exit()

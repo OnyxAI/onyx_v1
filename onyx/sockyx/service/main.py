@@ -11,7 +11,7 @@ import tornado.ioloop as ioloop
 import tornado.web as web
 import os
 
-from onyx.messagebus.service.ws import WebsocketEventHandler
+from onyx.sockyx.service.ws import WebsocketEventHandler
 from onyx.util import validate_param
 from onyx.config import get_config
 

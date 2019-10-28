@@ -83,4 +83,5 @@ pyalsaaudio
 parsedatetime
 apiclient
 google-api-python-client
-onyx-parser
+adapt-parser
+collections

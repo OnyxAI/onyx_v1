@@ -27,5 +27,5 @@ class Time:
 
         Retourne une chaine de caractère avec l'heure
     """
-    def get_str(self):
-        return gettext('He is actually ') + time.strftime("%H : %M")
+    def get(self):
+        return time.strftime("%H : %M")

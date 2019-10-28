@@ -15,7 +15,7 @@ from pyee import EventEmitter
 
 from onyx.util.log import getLogger
 from onyx.api.assets import Json
-from onyx.messagebus.message import Message
+from onyx.sockyx.message import Message
 
 logger = getLogger(__name__)
 json = Json()

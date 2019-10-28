@@ -22,8 +22,8 @@ import threading
 
 from onyx.api.kernel import Kernel
 
-from onyx.messagebus.client.ws import WebsocketClient
-from onyx.messagebus.message import Message
+from onyx.sockyx.client.ws import WebsocketClient
+from onyx.sockyx.message import Message
 
 from onyx.core.models import ConfigModel, RevokedTokenModel
 

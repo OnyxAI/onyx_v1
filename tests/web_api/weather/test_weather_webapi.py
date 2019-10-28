@@ -12,14 +12,14 @@ import pytest
 from flask import session
 
 @pytest.mark.usefixtures('db', 'connected_app')
-class Test_WeatherApi:
+class Test_WikiApi:
 
-    def test_weather_get_daily(self, connected_app):
-        response = connected_app.post('/api/weather/daily', {"latitude": "50", "longitude": "2"})
+    def test_wiki_get(self, connected_app):
+        response = connected_app.post('/api/wiki', {"search": "Ada Lovelace"})
         
         assert response.status_code == 200
         assert response.content_type == 'application/json'
-        assert response.json != {"status": "error"}
+        assert response.json['status'] == 'success'
 
 
 

@@ -25,8 +25,8 @@ def kernel():
         try:
             kernel_function.text = request.form['text']
             result = kernel_function.get()
-            json.json = result
-            data = json.decode()
+
+            data = json.decode(result)
             
             return data['text']
         except Exception as e:

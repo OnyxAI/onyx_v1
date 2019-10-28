@@ -15,7 +15,7 @@ from websocket import WebSocketApp
 
 from onyx.api.assets import Json
 from onyx.config import get_config
-from onyx.messagebus.message import Message
+from onyx.sockyx.message import Message
 from onyx.util import validate_param
 from onyx.util.log import getLogger
 
@@ -108,7 +108,7 @@ def echo():
         ws.emit(message)
 
     ws.on('message', echo)
-    ws.on('recognizer_loop:utterance', repeat_utterance)
+    ws.on('onyx_recognizer:utterance', repeat_utterance)
     ws.run_forever()
 
 

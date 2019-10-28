@@ -16,6 +16,7 @@
 				<li class="tab col s3"><a href="#house">{{_('House')}}</a></li>
 				<li class="tab col s3"><a href="#room">{{_('Room')}}</a></li>
 				<li class="tab col s3"><a href="#machine">{{_('Machine')}}</a></li>
+				<li class="tab col s3"><a href="#token">{{_('Token')}}</a></li>
 				<li class="tab col s3"><a href="#admin">{{_('Admin')}}</a></li>
             {% endif %}
         </ul>
@@ -305,7 +306,37 @@
     	</div>
   	</div>
 
-
+	<div id="token" >
+		<div class="card-panel {{g.panel_color}}">
+			<table class="{{g.panel_color}} responsive-table">
+				<thead>
+					<tr>
+						<th data-field="id" class='{{g.text_color}}'>{{_('Id')}}</th>
+						<th data-field="name" class='{{g.text_color}}'>{{_('Name')}}</th>
+						<th data-field="token" class='{{g.text_color}}'>{{_('Token')}}</th>
+						<th class='{{g.text_color}}'>{{_('Change')}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for token in g.tokens %}
+						<tr>
+							<td class='{{g.text_color}}'>{{token.id}}</td>
+							<td class='{{g.text_color}}'>{{token.name}}</td>
+							<td class='{{g.text_color}}'><input type="text" class="hide hidden" id="token_{{token.id}}" value="{{token.token}}"><button class="btn {{g.color}}" onClick="copy('{{token.id}}')">{{_('Copy')}}</button></td>
+							<td class='{{g.text_color}}'><a href="{{url_for('auth.delete_token', id=token.id)}}" class="btn {{g.color}}">{{_('Delete')}}</a></td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<form action="{{url_for('auth.add_token')}}" method="post">
+							<td></td>
+							<td class='{{g.text_color}}'><input class= placeholder="{{_('Name')}}" type="text" id="name" name="name" required></td>
+							<td><button class="btn {{ g.color }}" name="button">{{_('Send')}}</button></td>
+						</form>
+					</tr>
+				</tbody>
+			</table>
+	 	</div>
+   </div>
 
 
   	<div id="admin" >
@@ -354,6 +385,19 @@
 	function showPosition(position) {
 		lon.value = position.coords.longitude;
 		lat.value = position.coords.latitude
+	}
+
+	function copy(id){
+		var copyText = document.getElementById("token_" + id);
+		console.log(copyText)
+
+		/* Select the text field */
+		copyText.select();
+		//copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+		/* Copy the text inside the text field */
+		document.execCommand("copy");
+
 	}
 </script> 
 

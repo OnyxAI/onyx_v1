@@ -16,8 +16,8 @@ from time import sleep
 from pyric import pyw
 from wifi import Cell
 
-from onyx.messagebus.client.ws import WebsocketClient
-from onyx.messagebus.message import Message
+from onyx.sockyx.client.ws import WebsocketClient
+from onyx.sockyx.message import Message
 from onyx.util import connected
 from onyx.util.log import getLogger
 

@@ -17,6 +17,7 @@ from onyx.api.assets import Json
 from onyx.api.navbar import Navbar
 from onyx.api.house import House
 from onyx.api.room import Room
+from onyx.api.token import Token
 from onyx.api.machine import Machine
 from onyx.api.scenario import Scenario
 from onyx.api.notification import Notification
@@ -124,6 +125,9 @@ class Server:
 
 			houses = House() 
 			g.houses = json.decode(houses.get())
+
+			tokens = Token() 
+			g.tokens = json.decode(tokens.get())
 
 			rooms = Room()
 			g.rooms = json.decode(rooms.get())
