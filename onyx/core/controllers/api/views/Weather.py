@@ -28,3 +28,15 @@ def weather_daily():
             return Response(json.encode(weather.get_daily()), mimetype='application/json')
         except WeatherException:
             return Response(json.encode({"status": "error"}), mimetype='application/json')
+
+@api.route('weather/set_token', methods=['POST'])
+@api_required
+def weather_set_token():
+    if request.method == 'POST':
+        try:
+            weather.token = request.form['weather_token']
+
+            return Response(weather.set_token(), mimetype='application/json')
+        except Exception as e:
+            return Response(json.encode({"status": "error"}), mimetype='application/json')
+

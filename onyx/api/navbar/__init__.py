@@ -188,6 +188,7 @@ class Navbar:
                     query.fa = None
                     db.session.add(query)
                     db.session.commit()
+                    
             logger.info('Navbar object deleted with success')
         except Exception as e:
             logger.error('Navbar delete error : ' + str(e))

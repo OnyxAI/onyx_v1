@@ -12,6 +12,7 @@ You may not use this software for commercial purposes.
 import sys
 import os
 
+from os import path, walk
 from flask import json
 from flask_script import Manager, Command, Option
 from flask_migrate import Migrate, MigrateCommand
@@ -19,9 +20,13 @@ from onyx.extensions import db
 from onyx.api.server import Server
 from onyx.app_config import *
 from onyx.util.log import getLogger
-from onyx import create_app
+from onyx import create_app, AppReloader
+
+from werkzeug.serving import run_simple
 
 app = create_app()
+
+application = AppReloader(create_app)
 
 migrate = Migrate(app, db)
 manager = Manager(app, with_default_commands=False)
@@ -35,13 +40,14 @@ class Run(Command):
         Option('--host', '-h', dest='host', default="0.0.0.0"),
         Option('--port', '-p', dest='port', default=8080),
         Option('--debug', '-d', dest='debug', default=False, action="store_true"),
-        Option('--reload', '-r', dest='reload', default=False, action="store_true")
+        Option('--reload', '-r', dest='reload', default=True, action="store_true")
     )
 
-    def run(self, host='0.0.0.0', port=8080, debug=False, reload=False):
+    def run(self, host='0.0.0.0', port=8080, debug=False, reload=True):
         self.runserver(host, port, debug, reload)
 
     def runserver(self, host, port, debug, reload):
+
         print(' _____   __   _  __    __ __    __ ')
         print('/  _  \ |  \ | | \ \  / / \ \  / / ')
         print('| | | | |   \| |  \ \/ /   \ \/ /')
@@ -69,7 +75,19 @@ class Run(Command):
         print('')
         print('-------------------------------------------------------')
 
-        app.run(host, int(port), debug=debug, use_reloader=reload, threaded=True)
+        """
+        extra_dirs = [app.config['SKILL_FOLDER']]
+        extra_files = extra_dirs[:]
+        for extra_dir in extra_dirs:
+            for dirname, dirs, files in walk(extra_dir):
+                for filename in files:
+                    filename = path.join(dirname, filename)
+                    if path.isfile(filename):
+                        extra_files.append(filename)
+        """
+
+
+        run_simple(host, int(port), application, use_debugger=debug, use_reloader=reload, threaded=True)
 
 
 manager.add_command('run', Run())

@@ -7,8 +7,7 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-
-
+import importlib
 from flask import Flask, render_template, redirect, url_for, Blueprint
 from flask_jwt_extended import JWTManager
 from onyx.extensions import (db, login_manager, babel, cache)
@@ -32,10 +31,30 @@ LOG = getLogger("App")
 json = Json()
 kernel = Kernel()
 
+to_reload = False
+
 from onyx.app_config import ProdConfig, Config
 
 
-__all__ = ('create_app', 'create_db', 'blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws')
+__all__ = ('create_app', 'create_db', 'blueprints_fabrics', 'get_blueprints', 'error_pages', 'ws', 'AppReloader')
+
+class AppReloader(object):
+    def __init__(self, create):
+        self.create = create
+        self.app = create()
+
+    def get_application(self):
+        global to_reload
+        if to_reload:
+            self.app = self.create()
+            to_reload = False
+
+        return self.app
+
+    def __call__(self, environ, start_response):
+        app = self.get_application()
+        return app(environ, start_response)
+
 
 def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
 
@@ -59,6 +78,13 @@ def create_app(config=ProdConfig, app_name='onyx', blueprints=None):
 
     with app.app_context():
         db.create_all()
+
+    @app.route('/reload/<next>')
+    def reload(next):
+        global to_reload
+        to_reload = True
+
+        return redirect(url_for(next))
         
     return app
 
@@ -68,6 +94,7 @@ def create_db(config=ProdConfig, app_name='onyx', blueprints=None):
         static_folder = 'static',
         template_folder = 'templates'
     )
+    
 
     app.config.from_pyfile('../local.cfg', silent=True)
     if config:
@@ -77,6 +104,8 @@ def create_db(config=ProdConfig, app_name='onyx', blueprints=None):
 
     with app.app_context():
         db.create_all()
+
+    
         
     return app
 
@@ -134,6 +163,8 @@ def blueprints_fabrics(app, blueprints):
     except:
         app.register_blueprint(blueprints)
 
+    
+
 def extensions_fabrics(app):
     db.init_app(app)
     babel.init_app(app)
@@ -181,7 +212,8 @@ def gvars(app, jwt):
         def get_params(url):
             function = getattr(importlib.import_module(app.view_functions[url].__module__), app.view_functions[url].__name__)
             execute = function()
-            return json.decode(execute)
+           
+            return json.decode(execute.get_data().decode('utf8'))
         return dict(get_params=get_params)
 
     @app.context_processor

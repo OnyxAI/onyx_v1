@@ -71,6 +71,7 @@ class Event:
                 except Exception as e:
                     logger.error('Error get skills : ' + str(e))
 
+
             return json.encode(data)
         except Exception as e:
             logger.error('Error getting events : ' + str(e))

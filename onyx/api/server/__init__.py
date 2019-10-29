@@ -101,6 +101,9 @@ class Server:
 			query = ConfigModel.Config.query.filter_by(config='lang').first()
 			g.lang = query.value
 
+			weather_token = ConfigModel.Config.query.filter_by(config='weather_api').first()
+			g.weather_token = weather_token.value
+
 			g.version = self.get_version()
 			g.ram = "width: "+str(self.get_ram())+"%"
 			g.uptime = self.get_up_stats()

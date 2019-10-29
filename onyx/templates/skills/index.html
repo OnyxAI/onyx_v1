@@ -23,12 +23,12 @@
 		{% else %}
 			{% for skill in skills %}
 				<div class="col m4 s12">
-				<h2 class="header">{{skill['name']}}</h2>
-					<div class="card horizontal blue-grey darken-1 z-depth-5">
+				<h2 class="header ">{{skill['name']}}</h2>
+					<div class="card horizontal {{g.color}} z-depth-5">
 						<div class="card-stacked">
 							<div class="card-content">
-								<p>{{skill['desc']}}</p><br>
-								<p>{{skill['version']}}</p>
+								<p class='white-text'>{{skill['desc']}}</p><br>
+								<p class='white-text'> {{skill['version']}}</p>
 							</div>
 							<div class="card-action">
 								{% if skill['index'] is defined %}<a href="{{ url_for(skill['index']) }}">{{ _("View") }}</a>{% endif %}
@@ -86,7 +86,7 @@
 						success: function(rep) {
 							$('.progress').hide();
 							$('.dl_text{{list["raw"]}}').show();
-							window.location = "{{url_for('core.skills')}}";
+							window.location = "{{url_for('reload', next='core.skills')}}";
 						}
 						});
 
@@ -100,7 +100,7 @@
 						success: function(rep) {
 							$('.progress').hide();
 							$('.dl_text{{list["raw"]}}').show();
-							window.location = "{{url_for('core.skills')}}";
+							window.location = "{{url_for('reload', next='core.skills')}}";
 						}
 						});
 					});

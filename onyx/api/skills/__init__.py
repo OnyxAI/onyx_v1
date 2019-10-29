@@ -136,6 +136,7 @@ class Skill:
             os.system('cd {} && make compilelang'.format(self.app.config['SKILL_FOLDER'] + self.name))
 
             logger.info('Update done with success')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Update error : ' + str(e))
@@ -149,6 +150,7 @@ class Skill:
 
             for dep in deps:
                 os.system('apt-get install --assume-yes {}'.format(dep))
+
         except Exception as e:
             logger.error("An error has occured : " + str(e))
             raise SkillException(str(e))
@@ -164,6 +166,7 @@ class Skill:
                 #pip.main(["install", dep])
 
                 os.system('pip install ' + dep)
+                
         except Exception as e:
             logger.error("An error has occured : " + str(e))
             raise SkillException(str(e))

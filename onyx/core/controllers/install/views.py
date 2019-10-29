@@ -18,10 +18,14 @@ from onyx.api.exceptions import *
 from onyx.api.options import Options
 from onyx.config import get_config , get_path
 from onyx.api.install import Install
+from onyx.api.house import House
+from onyx.api.weather import Weather
 from onyx.core.models import ConfigModel
 
 options = Options()
 installation = Install()
+house = House()
+weather = Weather()
 json = Json()
 
 @login_manager.user_loader
@@ -52,6 +56,19 @@ def index():
             installation.email = request.form['email']
 
             installation.set()
+
+            house.name = request.form['name']
+            house.address = request.form['address']
+            house.city = request.form['city']
+            house.postal = request.form['postal']
+            house.country = request.form['country']
+            house.latitude = request.form['latitude']
+            house.longitude = request.form['longitude']
+            house.add()
+
+            weather.token = request.form['weather_api']
+            weather.set_token()
+
             return redirect(url_for("install.redirect_to_onyx"))
         except Exception as e:
             flash(gettext('An error has occured !') , 'error')

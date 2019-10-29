@@ -16,6 +16,8 @@ from onyx.decorators import admin_required
 from onyx.api.exceptions import *
 from onyxbabel import gettext
 
+import os
+
 json = Json()
 skill = Skill()
 
@@ -39,15 +41,16 @@ def install_skill(name):
 		decoded = json.decode(result)
 
 		if decoded['status'] == "success":
+			#os.system("pm2 restart onyx-client onyx-skills")
 
 			flash(gettext('Skill Installed !'), 'success')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('reload', next='core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.skills'))
+			return redirect(url_for('reload', next='core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.skills'))
+		return redirect(url_for('reload', next='core.skills'))
 
 
 @core.route('skills/install_url', methods=['POST'])
@@ -61,14 +64,15 @@ def install_skill_url():
 		decoded = json.decode(result)
 
 		if decoded['status'] == "success":
+			
 			flash(gettext('Skill Installed !'), 'success')
-			return redirect(url_for('core.skills'))
+			return redirect(url_for('reload', next='core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.skills'))
+			return redirect(url_for('reload', next='core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.skills'))
+		return redirect(url_for('reload', next='core.skills'))
 
 
 @core.route('skills/uninstall/<string:name>')
@@ -82,13 +86,13 @@ def uninstall_skill(name):
 
 		if decoded['status'] == "success":
 			flash(gettext('Skill Uninstalled !'), 'success')
-			return redirect(url_for('core.skills'))
+			return redirect(url_for('reload', next='core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
-			return redirect(url_for('core.skills'))
+			return redirect(url_for('reload', next='core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.skills'))
+		return redirect(url_for('reload', next='core.skills'))
 
 @core.route('skills/update/<string:name>')
 @login_required
@@ -98,10 +102,10 @@ def update_skill(name):
 		skill.update()
 		
 		flash(gettext('Skill Updated !'), 'success')
-		return redirect(url_for('core.skills'))
+		return redirect(url_for('reload', next='core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
-		return redirect(url_for('core.skills'))
+		return redirect(url_for('reload', next='core.skills'))
 
 @core.route('skills/reboot')
 @login_required

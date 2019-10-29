@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 from .. import core
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, g
 from onyxbabel import gettext
 from onyx.api.weather import *
 from onyx.api.assets import Json
@@ -25,6 +25,7 @@ def weather():
         return render_template('weather/index.html')
     elif request.method == 'POST':
         try:
+            weather_api.token = g.weather_token
             weather_api.latitude = request.form['latitude']
             weather_api.longitude = request.form['longitude']
 
@@ -35,4 +36,19 @@ def weather():
         except:
             flash(gettext('An error has occured !') , 'error')
             return redirect(url_for('core.weather'))
+
+@core.route('weather/set_token', methods=['POST'])
+@login_required
+def weather_set_token():
+    if request.method == 'POST':
+        try:
+            weather_api.token = request.form['weather_token']
+
+            weather_api.set_token()
+
+            return redirect(url_for('core.weather'))
+        except:
+            flash(gettext('An error has occured !') , 'error')
+            return redirect(url_for('core.weather'))
+
 

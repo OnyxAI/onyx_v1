@@ -308,6 +308,7 @@
 
 	<div id="token" >
 		<div class="card-panel {{g.panel_color}}">
+			<h2>{{_('Onyx Token')}}</h2>
 			<table class="{{g.panel_color}} responsive-table">
 				<thead>
 					<tr>
@@ -334,7 +335,15 @@
 						</form>
 					</tr>
 				</tbody>
-			</table>
+			</table><br>
+
+			<h2>{{_('Weather Token')}}</h2>
+			<p>{{_("We need your DarkSky API key to access to the weather : ")}} <a href="https://darksky.net/dev">DarkSky</a> </p><br>
+
+			<form action="{{url_for('core.weather_set_token')}}" method="post">
+				<input type="text" id="weather_token" name="weather_token" placeholder='{{_("API Token")}}' value="{{ g.weather_token }}" required><br>
+				<button class="btn {{ g.color }}" name="button">{{_('Send')}}</button>
+			</form>
 	 	</div>
    </div>
 
