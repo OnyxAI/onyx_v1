@@ -8,7 +8,7 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 from .. import core
-from flask import render_template, request , redirect , url_for, flash
+from flask import render_template, request , redirect , url_for, flash, current_app as app
 from flask_login import login_required
 from onyx.api.skills import Skill
 from onyx.api.assets import Json
@@ -39,6 +39,7 @@ def install_skill(name):
 		decoded = json.decode(result)
 
 		if decoded['status'] == "success":
+
 			flash(gettext('Skill Installed !'), 'success')
 			return redirect(url_for('core.reboot_skill'))
 		else:
@@ -61,7 +62,7 @@ def install_skill_url():
 
 		if decoded['status'] == "success":
 			flash(gettext('Skill Installed !'), 'success')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
 			return redirect(url_for('core.skills'))
@@ -81,7 +82,7 @@ def uninstall_skill(name):
 
 		if decoded['status'] == "success":
 			flash(gettext('Skill Uninstalled !'), 'success')
-			return redirect(url_for('core.reboot_skill'))
+			return redirect(url_for('core.skills'))
 		else:
 			flash(gettext('An error has occured !'), 'error')
 			return redirect(url_for('core.skills'))
@@ -97,7 +98,7 @@ def update_skill(name):
 		skill.update()
 		
 		flash(gettext('Skill Updated !'), 'success')
-		return redirect(url_for('core.reboot_skill'))
+		return redirect(url_for('core.skills'))
 	except Exception as e:
 		flash(gettext('An error has occured !'), 'error')
 		return redirect(url_for('core.skills'))

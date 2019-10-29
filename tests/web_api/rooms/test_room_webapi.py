@@ -21,6 +21,7 @@ class Test_RoomApi:
         
         assert response.status_code == 200
         assert response.content_type == 'application/json'
+        assert response.json != {"status": "error"}
 
     def test_add_room(self, connected_app):
         response = connected_app.post('/api/room/add', {"name": "My Room", "house": 1})

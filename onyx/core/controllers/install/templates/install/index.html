@@ -1,185 +1,182 @@
 {% extends "layout/install.html" %}
+
+
 {% block body %}
 
-
 <div class="col s12">
-  <ul class="tabs teal darken-3">
-    <li class="step1 tab col m4 s12"><a href="#step1" class="active">{{_("onyx.install.welcome")}}</a>
-    </li>
-    <li class="step2 tab col m4 s12 disabled"><a href="#step2">{{_("onyx.install.data_download")}}</a>
-    </li>
-    <li class="step3 tab col m4 s12 disabled"><a href="#step3">{{_("onyx.install.create_admin_account")}}</a>
-    </li>
-    <li class="step4 tab col m4 s12 disabled"><a href="#step4">{{_("onyx.install.final")}}</a>
-    </li>
-  </ul>
+    <ul class="tabs teal darken-3">
+        <li class="step1 tab col m4 s12"><a href="#step1" class="active">{{_("onyx.install.welcome")}}</a>
+        </li>
+        <li class="step2 tab col m4 s12 disabled"><a href="#step2">{{_("onyx.install.data_download")}}</a>
+        </li>
+        <li class="step3 tab col m4 s12 disabled"><a href="#step3">{{_("onyx.install.create_admin_account")}}</a>
+        </li>
+        <li class="step4 tab col m4 s12 disabled"><a href="#step4">{{_("onyx.install.final")}}</a>
+        </li>
+    </ul>
 </div>
 
 
-<div class="row" id="step1">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="well well-sm">
-      <div class="card-panel blue-grey grey lighten-3">
-        <p>{{_("onyx.install.welcome_to_onyx")}}</p>
 
-        <form method="POST" action="{{url_for('install.change_lang')}}">
-        <p>{{_("onyx.install.choice_lang")}}</p>
-        <select id="lang" name="lang" class="browser-default">
-          <option value="fr-FR">{{_("onyx.install.french")}}</option>
-          <option value="en-US">{{_("onyx.install.english")}}</option>
-        </select><br>
-        <button class="btn teal darken-3 btn-lg" name="button">{{_("onyx.change_lang")}}</button>
-        </form>
-        <br>
-        <button id="etape1" class="btn teal darken-3 btn-lg">{{_("onyx.install.next")}}</button>
-      </div>
+<div class="row" id="step1">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well well-sm">
+            <div class="card-panel blue-grey grey lighten-3">
+                <p>{{_("onyx.install.welcome_to_onyx")}}</p>
+
+                <form method="POST" action="{{url_for('install.change_lang')}}">
+                    <p>{{_("onyx.install.choice_lang")}}</p>
+                    <select id="lang" name="lang" class="browser-default">
+						<option value="fr-FR">{{_("onyx.install.french")}}</option>
+						<option value="en-US">{{_("onyx.install.english")}}</option>
+					</select><br>
+                    <button class="btn teal darken-3 btn-lg" name="button">{{_("onyx.change_lang")}}</button>
+				</form>
+				
+                <br>
+                <button id="etape1" class="btn teal darken-3 btn-lg">{{_("onyx.install.next")}}</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <div class="row" id="step2">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="well well-sm">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well well-sm">
 
-      <div class="card-panel blue-grey grey lighten-3">
-        <legend class="text-center">{{_("onyx.install.data_download")}}</legend><br><br>
+            <div class="card-panel blue-grey grey lighten-3">
+                <legend class="text-center">{{_("onyx.install.data_download")}}</legend><br><br>
 
-        <center><p class="dl_text">{{_("Downloaded")}} !</p></center>
-        <div class="progress"><div class="indeterminate"></div></div>
+                <center>
+                    <p class="dl_text">{{_("Downloaded")}} !</p>
+                </center>
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
 
-        <button id="data" class="btn teal darken-3 btn-lg">{{_("Download")}}</button><br><br>
+                <button id="data" class="btn teal darken-3 btn-lg">{{_("Download")}}</button><br><br>
 
 
-        <button id="etape2" class="btn teal darken-3 btn-lg">{{_("onyx.install.next")}}</button>
+                <button id="etape2" class="btn teal darken-3 btn-lg">{{_("onyx.install.next")}}</button>
+            </div>
+
         </div>
-
-      </div>
     </div>
-  </div>
+</div>
 
+<form class="register-form" method=post action="">
 
 <div class="row" id="step3">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="well well-sm">
-
-
-
-      <div class="card-panel blue-grey grey lighten-3">
-        <legend class="text-center">{{_("onyx.install.create_admin_account")}}</legend>
-        <form class="register-form" method=post action="">
-
-          <input type="text" id="username" name="username"
-          placeholder='{{_("Username")}}' value="{{ request.form.username }}" required>
-
-          <input type="password" id="password" name="password"
-          placeholder='{{_("Password")}}' value="{{ request.form.password }}" required>
-
-          <input type="email" id="email" name="email" class="input-xlarge"
-          placeholder='{{_("Email")}}' value="{{ request.form.email }}" required>
-
-
-          <div class="form-group">
-            <div class="col-md-12 text-right">
-              <span id="etape3" class="btn teal darken-3 btn-lg">{{_("onyx.install.next")}}</span>
-            </div>
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row" id="step4">
     <div class="col-md-8 col-md-offset-2">
-      <div class="well well-sm">
-        <div class="card-panel blue-grey grey lighten-3">
-          <legend class="text-center">Finalisation</legend>
+        <div class="well well-sm">
+            <div class="card-panel blue-grey grey lighten-3">
+                <legend class="text-center">{{_("onyx.install.create_admin_account")}}</legend>
 
-          <p>Votre assistant est maintenant correctement réglé ! Vous pourrez néanmoins modifier tous ces paramètres depuis votre panneau d'administration !</p>
-          <p>Je vous invite maintenant à vous connecter au panneau de contrôle, et à l'ajouter à vos favoris.</p>
-          <div>Faites connaître le projet ! </div>
-          
-             <div class="form-group">
-            <div class="col-md-12 text-right">
-              <button class="btn teal darken-3 btn-lg">Accéder à Onyx</button>
-            </form>
-          </div>
+                    <input type="text" id="username" name="username" placeholder='{{_("Username")}}' value="{{ request.form.username }}" required>
+
+                    <input type="password" id="password" name="password" placeholder='{{_("Password")}}' value="{{ request.form.password }}" required>
+
+                    <input type="email" id="email" name="email" class="input-xlarge" placeholder='{{_("Email")}}' value="{{ request.form.email }}" required>
+
+
+                    <div class="form-group">
+                        <div class="col-md-12 text-right">
+                            <span id="etape3" class="btn teal darken-3 btn-lg">{{_("onyx.install.next")}}</span>
+                        </div>
+                    </div>
+            </div>
+
         </div>
-
-
-
-          </div>
-
-
-
-
-      </div>
-
     </div>
-  </div>
 </div>
 
 
+<div class="row" id="step4">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well well-sm">
+            <div class="card-panel blue-grey grey lighten-3">
+                <legend class="text-center">{{_("Final")}}</legend>
 
+                <p>{{_("Your assistant is now correctly set! You can still change all these settings from your admin panel!")}}</p>
+                <p>{{_("You can now connect to the control panel, and add it to your favorites.")}}</p>
+                <div>{{_("Share the project !")}}</div><br>
+
+                <div class="form-group">
+                    <div class="col-md-12 text-right">
+                        <button class="btn teal darken-3 btn-lg">{{_("Access to Onyx")}}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+</form>
+
 
 {% endblock %}
 
 {% block script %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
 <script type="text/javascript">
-      $(document).ready(function() {
-          $('#etape2').hide();
-          $('.progress').hide();
-          $('.dl_text').hide();
-          $('ul.tabs').tabs();
-          $("#etape1").click(function() {
+
+    $(document).ready(function() {
+        $('#etape2').hide();
+        $('.progress').hide();
+		$('.dl_text').hide();
+		
+		$('ul.tabs').tabs();
+		
+        $("#etape1").click(function() {
             $('.step2').removeClass('disabled');
             $('ul.tabs').tabs('select_tab', 'step2');
-          });
-          $("#etape2").click(function() {
+		});
+		
+        $("#etape2").click(function() {
             $('.step3').removeClass('disabled');
             $('ul.tabs').tabs('select_tab', 'step3');
-          });
-          $("#etape3").click(function() {
+		});
+		
+        $("#etape3").click(function() {
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
-            var email = document.getElementById('email').value;
+			var email = document.getElementById('email').value;
+			
             if (username == "" || password == "" || email == "") {
                 alert('{{_("onyx.install.field_required")}}');
                 return false;
-            }
+			}
+			
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
             {
-              $('.step4').removeClass('disabled');
-              $('ul.tabs').tabs('select_tab', 'step4');
+				$('.step4').removeClass('disabled');
+				$('ul.tabs').tabs('select_tab', 'step4');
             }else{
-              alert('{{_("onyx.install.invalid_email")}}');
-              return false;
+				alert('{{_("onyx.install.invalid_email")}}');
+				return false;
             }
-          });
+        });
 
-          $("#data").click(function() {
+        $("#data").click(function() {
             $('#data').hide();
-            $('.progress').show();
-              $.ajax({
-                 url: '{{ url_for("install.data") }}',
-                 type: "GET",
-                 success: function(rep) {
+			$('.progress').show();
+			
+            $.ajax({
+                url: '{{ url_for("install.data") }}',
+                type: "GET",
+                success: function(rep) {
                     $('.progress').hide();
                     $('.dl_text').show();
                     $('#etape2').show();
-                 }
-              });
-          });
-
+                }
+            });
         });
-  </script>
+    });
+</script>
 
 {% endblock %}

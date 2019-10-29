@@ -21,6 +21,7 @@ class Test_HouseApi:
         
         assert response.status_code == 200
         assert response.content_type == 'application/json'
+        assert response.json != {"status": "error"}
 
     def test_add_house(self, connected_app):
         response = connected_app.post('/api/house/add', {"name": "My House", "address": "My Address", "city": "My City", "postal": "59000", "country": "FR", "latitude": "52", "longitude": "2"})

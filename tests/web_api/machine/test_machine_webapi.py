@@ -21,6 +21,7 @@ class Test_MachineApi:
         
         assert response.status_code == 200
         assert response.content_type == 'application/json'
+        assert response.json != {"status": "error"}
 
     def test_add_machine(self, connected_app):
         response = connected_app.post('/api/machine/add', {"name": "My Machine", "house": 1, "room": 1, "host": "localhost"})

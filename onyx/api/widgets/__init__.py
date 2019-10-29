@@ -98,10 +98,13 @@ class Widgets:
     def delete_plugin(self):
         try:
             json.path = app.config['SKILL_FOLDER'] + self.plugin_name + "/data/widgets.json"
+
             data = json.decode_path()
             user = UsersModel.User.query.all()
+
             for key in user:
                 for plugin in data:
+                    
                     query = WidgetsModel.Widget.query.filter_by(user=key.id,url=plugin['url']).first()
 
                     db.session.delete(query)

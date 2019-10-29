@@ -105,8 +105,6 @@ class Skill:
                         Module.install()
                     except Exception as e:
                         logger.error('Install Skill error for ' + self.name + ' : ' + str(e))
-                if (hasattr(Module, 'get_blueprint') and callable(Module.get_blueprint)):
-                    self.app.register_blueprint(Module.get_blueprint())
 
             if data['navbar'] == 'True':
                 navbar.folder = self.name
@@ -116,7 +114,9 @@ class Skill:
 
             bot = kernel.set()
             kernel.train(bot)
+
             logger.info('Installation done with success')
+            
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Installation error : ' + str(e))
@@ -133,6 +133,8 @@ class Skill:
             self.install_dep(data)
             self.install_pip(data)
 
+            os.system('cd {} && make compilelang'.format(self.app.config['SKILL_FOLDER'] + self.name))
+
             logger.info('Update done with success')
             return json.encode({"status":"success"})
         except Exception as e:
@@ -144,8 +146,9 @@ class Skill:
         try:
             logger.info('Install dependencies for : ' + self.name)
             deps = data["dependencies"]
+
             for dep in deps:
-                os.system('sudo apt-get install --assume-yes {}'.format(dep))
+                os.system('apt-get install --assume-yes {}'.format(dep))
         except Exception as e:
             logger.error("An error has occured : " + str(e))
             raise SkillException(str(e))
@@ -159,6 +162,7 @@ class Skill:
             for dep in deps:
                 #subprocess.call(['pip', 'install', dep])
                 #pip.main(["install", dep])
+
                 os.system('pip install ' + dep)
         except Exception as e:
             logger.error("An error has occured : " + str(e))
@@ -169,12 +173,14 @@ class Skill:
         try:
             json.path = self.app.config['SKILL_FOLDER'] + self.name + "/package.json"
             data = json.decode_path()
+
             if data['data'] == 'True':
                 try:
                     widgets.plugin_name = self.name
                     widgets.delete_plugin()
                 except:
                     pass
+
                 try:
                     scenario.plugin_name = self.name
                     scenario.delete_plugin()
@@ -182,8 +188,11 @@ class Skill:
                     pass
 
             if data['navbar'] == 'True':
-                navbar.folder = self.name
-                navbar.delete_plugin_navbar()
+                try:
+                    navbar.folder = self.name
+                    navbar.delete_plugin_navbar()
+                except:
+                    pass
 
             shutil.rmtree(self.app.config['SKILL_FOLDER'] + self.name)
 

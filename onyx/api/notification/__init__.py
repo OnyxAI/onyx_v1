@@ -122,6 +122,7 @@ class Notification:
                 db.session.add(fetch)
                 db.session.commit()
             logger.info('Notification mark as read successfully')
+            
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Mark read error : ' + str(e))
@@ -139,6 +140,7 @@ class Notification:
             db.session.delete(query)
             db.session.commit()
             logger.info('Delete notification successfully')
+
             return json.encode({"status":"success"})
         except Exception as e:
             logger.error('Delete Notif error : ' + str(e))

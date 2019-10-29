@@ -9,7 +9,7 @@ You may not use this software for commercial purposes.
 """
 
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, Blueprint
 from flask_jwt_extended import JWTManager
 from onyx.extensions import (db, login_manager, babel, cache)
 from flask_login import current_user
@@ -98,6 +98,7 @@ def get_blueprints(app):
     from onyx.core.controllers.api import api
     from onyx.core.widgets import widgets
     from onyx.core.controllers.install import install
+    
 
     BLUEPRINTS = [core, auth, api, action, widgets]
 

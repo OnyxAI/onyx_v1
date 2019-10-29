@@ -34,7 +34,8 @@ class Geolocalisation:
         try:
             json.url = "http://ip-api.com/json"
             result = json.decode_url()
-            return json.encode({"latitude":result['lat'],"longitude":result['lon'],"status":"success"})
+
+            return json.encode({"latitude":result['lat'],"longitude":result['lon'], "status":"success"})
         except Exception as e:
             logger.error('Get geolocalisation error : ' + str(e))
             raise GeolocException(str(e))
@@ -48,6 +49,7 @@ class Geolocalisation:
         try:
             json.url = "http://ip-api.com/json"
             data = json.decode_url()
+
             return data
         except Exception as e:
             logger.error('Get geolocalisation error : ' + str(e))
@@ -63,6 +65,7 @@ class Geolocalisation:
             data = self.get()
             json.json = data
             result = json.decode()
+
             return result['latitude']
         except Exception as e:
             logger.error('Get geolocalisation error : ' + str(e))
@@ -78,6 +81,7 @@ class Geolocalisation:
             data = self.get()
             json.json = data
             result = json.decode()
+
             return result['longitude']
         except Exception as e:
             logger.error('Get geolocalisation error : ' + str(e))
