@@ -22,7 +22,7 @@ json = Json()
 def wiki():
     if request.method == 'POST':
         try:
-            wikipedia.lang = "en" # CHANGE THIS
+            wikipedia.lang = request.form['lang']
             wikipedia.search = request.form['search']
             article = wikipedia.get_article()
             summary = wikipedia.get_summary()

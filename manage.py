@@ -87,7 +87,7 @@ class Run(Command):
         """
 
 
-        run_simple(host, int(port), application, use_debugger=debug, use_reloader=reload, threaded=True)
+        run_simple(host, int(port), application, use_debugger=debug, use_reloader=reload, threaded=True, use_evalex=True)
 
 
 manager.add_command('run', Run())

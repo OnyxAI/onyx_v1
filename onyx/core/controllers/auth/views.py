@@ -105,6 +105,7 @@ def add_token():
     if request.method == 'POST':
         try:
             token_api.name = request.form['name']
+            token_api.user = current_user.id
             
             result = token_api.add()
 

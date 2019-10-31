@@ -22,6 +22,7 @@ json = Json()
 def weather_daily():
     if request.method == 'POST':
         try:
+            weather.token = request.form['token']
             weather.latitude = request.form['latitude']
             weather.longitude = request.form['longitude']
 

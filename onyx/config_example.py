@@ -25,6 +25,7 @@ class Config(object):
     CONFIG.read(CONFIG_PATH)
     SKILL_FOLDER = expanduser("~") + "/skills/"
     DATA_FOLDER = ONYX_PATH + "/data/"
+    TEMPLATES_AUTO_RELOAD = True
 
     try:
         connection = sqlite3.connect(ONYX_PATH + '/db/data.db')

@@ -20,6 +20,9 @@ class UserException(Exception):
 class NavbarException(Exception):
     pass
 
+class TokenException(Exception):
+    pass
+
 class InstallException(Exception):
     pass
 

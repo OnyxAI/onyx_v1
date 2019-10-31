@@ -20,7 +20,7 @@ json = Json()
 user = User()
 
 
-#Register
+#Get Users
 @api.route('users')
 @api_required
 def get_users():
@@ -28,6 +28,15 @@ def get_users():
         users = user.get()
         return Response(users, mimetype='application/json')
     except GetException:
+        return Response(json.encode({"status": "error"}), mimetype='application/json')
+
+#Test token
+@api.route('token_valid')
+@api_required
+def token_valid():
+    try:
+        return Response(json.encode({"status": "success"}), mimetype='application/json')
+    except:
         return Response(json.encode({"status": "error"}), mimetype='application/json')
 
 @api.route('get_access_token')

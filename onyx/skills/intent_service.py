@@ -37,6 +37,8 @@ class IntentService(object):
 
         user = message.data.get('user', None)
 
+        url = message.data.get('url', None)
+
         utterances = message.data.get('utterances', '')
 
         best_intent = None

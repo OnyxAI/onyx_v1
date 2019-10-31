@@ -37,6 +37,6 @@ def train_kernel():
         bot = kernel_function.set()
         kernel_function.train(bot)
 
-        return Response(json.encode({"status": "error", "message": "Kernel was train successfully"}), mimetype='application/json')
+        return Response(json.encode({"status": "success", "message": "Kernel was train successfully"}), mimetype='application/json')
     except Exception as e:
         return Response(json.encode({"status": "error"}), mimetype='application/json')

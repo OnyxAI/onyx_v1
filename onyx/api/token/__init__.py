@@ -24,7 +24,7 @@ class Token:
 
     def __init__(self):
         self.id = None
-        self.current_user = None
+        self.user = None
         self.name = None
         self.token = None
 
@@ -48,7 +48,10 @@ class Token:
     def add(self):
         try:
             expires = datetime.timedelta(days=365)
-            self.token = create_access_token(self.current_user, expires_delta=expires)
+
+            user = UsersModel.User.query.filter_by(id=self.user).first()
+            
+            self.token = create_access_token(identity = user.as_dict(), expires_delta=expires)
 
             query = TokenModel.Token(name=self.name, token=self.token)
 
