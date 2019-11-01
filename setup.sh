@@ -14,7 +14,7 @@ VIRTUALENV_ROOT="${TOP}/venv"
 
 if [ ! -d ${VIRTUALENV_ROOT} ]; then
    mkdir -p $(dirname ${VIRTUALENV_ROOT})
-   python3 -m virtualenv -p python3.7 ${VIRTUALENV_ROOT} --system-site-packages
+   python3 -m virtualenv -p python3 ${VIRTUALENV_ROOT} --system-site-packages
 fi
 source ${VIRTUALENV_ROOT}/bin/activate
 cd ${TOP}
