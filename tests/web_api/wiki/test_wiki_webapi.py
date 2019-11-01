@@ -15,7 +15,7 @@ from flask import session
 class Test_WikiApi:
 
     def test_wiki_get(self, connected_app):
-        response = connected_app.post('/api/wiki', {"search": "Ada Lovelace"})
+        response = connected_app.post('/api/wiki', {"search": "Ada Lovelace", "lang": "en"})
         
         assert response.status_code == 200
         assert response.content_type == 'application/json'
