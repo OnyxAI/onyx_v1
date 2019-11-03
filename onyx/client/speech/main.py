@@ -58,13 +58,19 @@ class Detector:
 		t.start()
 
 		self.detector.terminate()
+
 		play_wav(onyx.__path__[0] + "/client/speech/resources/ding.wav")
 
 		r = sr.Recognizer()
 
-		with sr.Microphone() as source:
-			print("Say something!")
-			audio = r.listen(source, timeout=1, phrase_time_limit=5)
+		try:
+			with sr.Microphone() as source:
+				print("Say something!")
+				audio = r.listen(source, timeout=1, phrase_time_limit=5)
+		except:
+			self.detector.terminate()
+			time.sleep(5)
+			self.detector.start(self.detected_callback)
 
 		try:
 
@@ -89,15 +95,24 @@ class Detector:
 
 			t = threading.Thread(target=create_ws_send)
 			t.start()
-			time.sleep(2)
+			self.detector.terminate()
+			time.sleep(5)
+
 			self.detector.start(self.detected_callback)
 
 
 		except sr.UnknownValueError:
 			print("Speech Recognition could not understand audio")
+			self.detector.terminate()
+			time.sleep(5)
+
 			self.detector.start(self.detected_callback)
+			
 		except sr.RequestError as e:
 			print("Could not request results from Speech Recognition service; {0}".format(e))
+			self.detector.terminate()
+			time.sleep(5)
+
 			self.detector.start(self.detected_callback)
 
 	def start(self):
