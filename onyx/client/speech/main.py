@@ -43,6 +43,20 @@ class Detector:
 		self.lang = config.get('Base', 'lang')
 
 	def detected_callback(self):
+
+		def create_ws_detect():
+				def onConnected(event=None):
+					ws.emit(Message('onyx_detect'))
+					t.close()
+
+				ws = WebsocketClient()
+				ws.on('connected', onConnected)
+				# This will block until the client gets closed
+				ws.run_forever()
+
+		t = threading.Thread(target=create_ws_detect)
+		t.start()
+
 		self.detector.terminate()
 		play_wav(onyx.__path__[0] + "/client/speech/resources/ding.wav")
 
@@ -53,18 +67,19 @@ class Detector:
 			audio = r.listen(source, timeout=1, phrase_time_limit=5)
 
 		try:
+
 			result = stt.execute(audio, language=self.lang)
 			print("You said: " + result)
 
-			def create_ws():
+			def create_ws_send():
 				def onConnected(event=None):
 					print ("Sending message...")
 					payload = {
 					        'utterances': [result]
 					}
 					ws.emit(Message('onyx_recognizer:utterance', payload))
+					ws.emit(Message('onyx_detect_finish'))
 					t.close()
-					#self.detector.start(self.detected_callback)
 
 
 				ws = WebsocketClient()
@@ -72,7 +87,7 @@ class Detector:
 				# This will block until the client gets closed
 				ws.run_forever()
 
-			t = threading.Thread(target=create_ws)
+			t = threading.Thread(target=create_ws_send)
 			t.start()
 			time.sleep(2)
 			self.detector.start(self.detected_callback)
@@ -80,8 +95,10 @@ class Detector:
 
 		except sr.UnknownValueError:
 			print("Speech Recognition could not understand audio")
+			self.detector.start(self.detected_callback)
 		except sr.RequestError as e:
 			print("Could not request results from Speech Recognition service; {0}".format(e))
+			self.detector.start(self.detected_callback)
 
 	def start(self):
 		self.detector = snowboydecoder.HotwordDetector(onyx.__path__[0] + "/client/speech/resources/Onyx.pmdl", sensitivity=0.5, audio_gain=1)

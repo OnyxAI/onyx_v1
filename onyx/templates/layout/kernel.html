@@ -203,9 +203,10 @@
 			},
 
 			onFail: function (data) {
+				/*
 				setTimeout(function () {
 					$.ajax({
-					url: '{{ url_for("core.kernel") }}',
+					url: ' url_for("core.kernel") ',
 					type: "POST",
 					data: {text:data.utterance},
 					success: function(rep) {
@@ -213,6 +214,7 @@
 					}
 					});
 				}, 500);
+				*/ 
 
 				function send(text){
 					Kernel.messenger.recieve(text);

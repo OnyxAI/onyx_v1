@@ -37,7 +37,7 @@ uptime
 configparser
 flask-apidoc
 gitpython
-chatterbot
+#chatterbot
 passlib
 
 # Cache and Celery

@@ -200,8 +200,8 @@ class ScheduledCRUDSkill(ScheduledSkill):
             self.add_sync(date, message)
             self.save_sync()
         else:
-            self.speak(str(date),self.lang)
-            self.speak(str(delay),self.lang)
+            #self.speak(str(date),self.lang)
+            #self.speak(str(delay),self.lang)
             self.speak_dialog('schedule.datetime.error')
 
     def feedback_create(self, utc_time):

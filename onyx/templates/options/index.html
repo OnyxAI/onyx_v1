@@ -355,7 +355,7 @@
 				<h4 class='{{g.text_color}}'>{{ _("Admin Options") }}</h4><br><br>
 				<a href="{{ url_for('core.shutdown') }}" class="btn {{ g.color }}">{{_("Close Onyx")}}</a>
 				<a href="{{ url_for('auth.account_manage') }}" class="btn {{ g.color }}">{{_("Manage Account")}}</a>
-				<a href="{{ url_for('core.train_kernel') }}" class="btn {{ g.color }}">{{_("Train Kernel")}}</a>
+				<!-- <a href="{{ url_for('core.train_kernel') }}" class="btn {{ g.color }}">{{_("Train Kernel")}}</a> -->
 				<br><br>
 				<form action="{{url_for('core.change_lang')}}" method="post">
 					<label for="lang" >{{_("Langue")}}</label>

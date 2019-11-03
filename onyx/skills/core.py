@@ -48,7 +48,6 @@ def load_vocab_from_file(path, vocab_type, emitter):
                 emitter.emit(Message("register_vocab", {
                     'start': entity, 'end': vocab_type
                 }))
-
                 for alias in parts[1:]:
                     emitter.emit(Message("register_vocab", {
                         'start': alias, 'end': vocab_type, 'alias_of': entity
@@ -60,7 +59,6 @@ def load_regex_from_file(path, emitter):
         with open(path, 'r') as reg_file:
             for line in reg_file.readlines():
                 re.compile(line.strip())
-
                 emitter.emit(
                     Message("register_vocab", {'regex': line.strip()}))
 
@@ -68,13 +66,15 @@ def load_regex_from_file(path, emitter):
 def load_vocabulary(basedir, emitter):
     for vocab_type in os.listdir(basedir):
         if vocab_type.endswith(".voc"):
-            load_vocab_from_file(join(basedir, vocab_type), splitext(vocab_type)[0], emitter)
+            load_vocab_from_file(
+                join(basedir, vocab_type), splitext(vocab_type)[0], emitter)
 
 
 def load_regex(basedir, emitter):
     for regex_type in os.listdir(basedir):
         if regex_type.endswith(".rx"):
-            load_regex_from_file(join(basedir, regex_type), emitter)
+            load_regex_from_file(
+                join(basedir, regex_type), emitter)
 
 
 def open_intent_envelope(message):
@@ -95,23 +95,25 @@ def load_skill(skill_descriptor, emitter):
             skill_descriptor["name"] + MainModule, *skill_descriptor["info"])
         if (hasattr(skill_module, 'create_skill') and
                 callable(skill_module.create_skill)):
-
+            # v2 skills framework
             skill = skill_module.create_skill()
             skill.bind(emitter)
+            skill.load_data_files(dirname(skill_descriptor['info'][1]))
             skill.initialize()
-
             if (hasattr(skill, 'at_run') and callable(skill.at_run)):
                 try:
                     skill.at_run()
                 except Exception as e:
                     logger.error('Error at_run for ' + Module.name + ' : ' + str(e))
-
             logger.info("Loaded " + skill_descriptor["name"])
             return skill
         else:
-            logger.warn("Module %s does not appear to be skill" % (skill_descriptor["name"]))
+            logger.warn(
+                "Module %s does not appear to be skill" % (
+                    skill_descriptor["name"]))
     except:
-        logger.error("Failed to load skill: " + skill_descriptor["name"], exc_info=True)
+        logger.error(
+            "Failed to load skill: " + skill_descriptor["name"], exc_info=True)
     return None
 
 
@@ -121,13 +123,16 @@ def get_skills(skills_folder):
     possible_skills = os.listdir(skills_folder)
     for i in possible_skills:
         location = join(skills_folder, i)
-        if (isdir(location) and not MainModule + ".py" in os.listdir(location)):
+        if (isdir(location) and
+                not MainModule + ".py" in os.listdir(location)):
             for j in os.listdir(location):
                 name = join(location, j)
-                if (not isdir(name) or not MainModule + ".py" in os.listdir(name)):
+                if (not isdir(name) or
+                        not MainModule + ".py" in os.listdir(name)):
                     continue
                 skills.append(create_skill_descriptor(name))
-        if (not isdir(location) or not MainModule + ".py" in os.listdir(location)):
+        if (not isdir(location) or
+                not MainModule + ".py" in os.listdir(location)):
             continue
 
         skills.append(create_skill_descriptor(location))
@@ -178,6 +183,7 @@ def unload_skills(skills):
 _intent_list = []
 _intent_file_list = []
 
+
 def intent_handler(intent_parser):
     """ Decorator for adding a method as an intent handler. """
 
@@ -194,7 +200,6 @@ def intent_handler(intent_parser):
 
 def intent_file_handler(intent_file):
     """ Decorator for adding a method as an intent file handler. """
-
     def real_decorator(func):
         @wraps(func)
         def handler_method(*args, **kwargs):
@@ -202,7 +207,6 @@ def intent_file_handler(intent_file):
         _intent_file_list.append((intent_file, func))
         return handler_method
     return real_decorator
-
 
 class OnyxSkill(object):
 
@@ -219,7 +223,7 @@ class OnyxSkill(object):
 
     @property
     def lang(self):
-        return self.config.get('Base','lang')
+        return self.config.get('Base', 'lang')
 
     def bind(self, emitter):
         if emitter:
@@ -285,11 +289,12 @@ class OnyxSkill(object):
     def speak(self, utterance, lang):
         logger.info("Speak: " + utterance)
         self.emitter.emit(Message("speak", {'utterance': utterance, 'lang': lang}))
-        #tts.lang = lang
-        #tts.execute(utterance)
+        tts.lang = lang
+        tts.execute(utterance)
 
     def speak_dialog(self, key, data=None, lang="en-US"):
         data = data or {}
+        lang = self.lang
         self.speak(self.dialog_renderer.render(key, data), lang)
 
     def finish(self):

@@ -16,6 +16,8 @@ from onyxbabel import gettext
 from onyx.api.assets import Json
 
 json = Json()
+
+"""
 kernel_function = Kernel()
 
 @core.route('kernel', methods=['GET','POST'])
@@ -44,3 +46,4 @@ def train_kernel():
     except Exception as e:
         flash(gettext('An error has occured !'), "error")
         return redirect(url_for('core.index'))
+"""
