@@ -101,7 +101,7 @@ class Detector:
 			self.detector.start(self.detected_callback)
 
 	def start(self):
-		self.detector = snowboydecoder.HotwordDetector(onyx.__path__[0] + "/client/speech/resources/Onyx.pmdl", sensitivity=0.5, audio_gain=1)
+		self.detector = snowboydecoder.HotwordDetector(onyx.__path__[0] + "/client/speech/resources/Onyx.pmdl", sensitivity=0.6, audio_gain=1)
 		print('Starting...')
 		self.detector.start(self.detected_callback)
 
