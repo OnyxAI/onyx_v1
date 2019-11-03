@@ -11,7 +11,7 @@ You may not use this software for commercial purposes.
 from .. import core
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required
-from onyx.api.kernel import Kernel
+#from onyx.api.kernel import Kernel
 from onyxbabel import gettext
 from onyx.api.assets import Json
 

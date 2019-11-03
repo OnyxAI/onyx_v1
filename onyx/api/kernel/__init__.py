@@ -17,13 +17,14 @@ from onyx.config import get_config
 
 from onyx.skills.core import *
 
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
+#from chatterbot import ChatBot
+#from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
 LOG = getLogger('Kernel')
 config = get_config('onyx')
 json = Json()
 
+"""
 class Kernel:
 
     def __init__(self):
@@ -122,3 +123,4 @@ class Kernel:
         except Exception as e:
             LOG.error('Getting Sentence error : ' + str(e))
             raise KernelException(str(e))
+"""

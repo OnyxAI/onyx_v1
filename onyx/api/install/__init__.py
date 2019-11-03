@@ -12,7 +12,7 @@ from onyx.extensions import db
 from onyx.core.models import *
 from onyx.api.assets import Json
 from onyx.api.exceptions import *
-from onyx.api.kernel import Kernel
+#from onyx.api.kernel import Kernel
 from onyx.util.log import getLogger
 from passlib.hash import sha256_crypt
 import git, onyx
@@ -20,7 +20,7 @@ import git, onyx
 
 logger = getLogger('Install')
 json = Json()
-kernel = Kernel()
+#kernel = Kernel()
 
 """
     Make the Onyx installation done
@@ -48,7 +48,7 @@ class Install:
 
             self.init_db()
 
-            kernel.train(kernel.set())
+            #kernel.train(kernel.set())
 
             logger.info('Successfully Installation')
 
@@ -105,7 +105,7 @@ class Install:
             repo = git.cmd.Git(onyx.__path__[0] + "/data/")
             repo.pull()
 
-            kernel.train(kernel.set())
+            #kernel.train(kernel.set())
 
             logger.info('Updating data successfully')
         except Exception as e:

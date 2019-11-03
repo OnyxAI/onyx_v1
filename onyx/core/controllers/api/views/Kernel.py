@@ -11,12 +11,13 @@ You may not use this software for commercial purposes.
 from .. import api
 from flask import request, Response
 from onyx.decorators import api_required
-from onyx.api.kernel import Kernel
+#from onyx.api.kernel import Kernel
 from onyx.api.assets import Json
 
 json = Json()
-kernel_function = Kernel()
+#kernel_function = Kernel()
 
+"""
 @api.route('kernel', methods=['POST'])
 @api_required
 def kernel():
@@ -40,3 +41,4 @@ def train_kernel():
         return Response(json.encode({"status": "success", "message": "Kernel was train successfully"}), mimetype='application/json')
     except Exception as e:
         return Response(json.encode({"status": "error"}), mimetype='application/json')
+"""

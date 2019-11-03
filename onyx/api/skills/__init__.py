@@ -19,7 +19,7 @@ from onyx.api.assets import Json
 from onyx.api.exceptions import *
 from onyx.util import getLogger
 from onyx.skills.core import get_skill_function
-from onyx.api.kernel import Kernel
+#from onyx.api.kernel import Kernel
 from onyx.config import get_config
 import subprocess
 
@@ -27,7 +27,7 @@ scenario = Scenario()
 widgets = Widgets()
 navbar = Navbar()
 logger = getLogger("Skill")
-kernel = Kernel()
+#kernel = Kernel()
 json = Json()
 
 
@@ -112,8 +112,8 @@ class Skill:
 
             os.system('cd {} && make compilelang'.format(self.app.config['SKILL_FOLDER'] + self.name))
 
-            bot = kernel.set()
-            kernel.train(bot)
+            #bot = kernel.set()
+            #kernel.train(bot)
 
             logger.info('Installation done with success')
             

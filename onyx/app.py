@@ -19,7 +19,7 @@ from onyx.util.log import getLogger
 from onyx.skills.core import *
 import threading
 
-from onyx.api.kernel import Kernel
+#from onyx.api.kernel import Kernel
 
 from onyx.sockyx.client.ws import WebsocketClient
 from onyx.sockyx.message import Message
@@ -29,7 +29,7 @@ from onyx.core.models import ConfigModel, RevokedTokenModel
 server = Server()
 LOG = getLogger("App")
 json = Json()
-kernel = Kernel()
+#kernel = Kernel()
 
 to_reload = False
 
